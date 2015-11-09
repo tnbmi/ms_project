@@ -88,7 +88,7 @@ void Polygon2D::Draw(LPD3DXCONSTANTTABLE vsc, LPD3DXCONSTANTTABLE psc, D3DXMATRI
 	// ワールドマトリックスの初期化
 	D3DXMatrixIdentity(&m_world);
 	// スケールの反映
-/*	D3DXMatrixScaling(&scaling, m_scl.x, m_scl.y, m_scl.z);
+	D3DXMatrixScaling(&scaling, m_scl.x, m_scl.y, m_scl.z);
 	D3DXMatrixMultiply(&m_world, &m_world, &scaling);
 	// 回転の反映
 	D3DXMatrixRotationYawPitchRoll(&rotation, m_rot.y, m_rot.x, m_rot.z);
@@ -96,9 +96,6 @@ void Polygon2D::Draw(LPD3DXCONSTANTTABLE vsc, LPD3DXCONSTANTTABLE psc, D3DXMATRI
 	// 位置の反映
 	D3DXMatrixTranslation(&translate, m_pos.x, m_pos.y, m_pos.z);
 	D3DXMatrixMultiply(&m_world, &m_world, &translate);
-
-	// 行列合成
-	wvp = m_world * vp;*/
 
 	//----------------------------
 	// ワールドデータ設定
@@ -108,16 +105,7 @@ void Polygon2D::Draw(LPD3DXCONSTANTTABLE vsc, LPD3DXCONSTANTTABLE psc, D3DXMATRI
 	{
 		// ワールドマトリックスの設定
 		vsc->SetMatrix(m_device, "gWorld", &m_world);
-		//vsc->SetMatrix(m_device, "gWVP", &wvp);
 	}
-
-	// ピクセル
-	/*if(psc != nullptr)
-	{
-		// ワールドマトリックスの設定
-		psc->SetMatrix(m_device, "gWorld", &m_world);
-		psc->SetMatrix(m_device, "gWVP", &wvp);
-	}*/
 
 	//----------------------------
 	// サンプラー準備
@@ -136,8 +124,6 @@ void Polygon2D::Draw(LPD3DXCONSTANTTABLE vsc, LPD3DXCONSTANTTABLE psc, D3DXMATRI
 		m_device->SetSamplerState(texSumpler, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);		// テクスチャ拡大フィルタモードを設定
 		m_device->SetSamplerState(texSumpler, D3DSAMP_MAXANISOTROPY, 16);
 }
-
-	//m_device->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 
 	//----------------------------
 	// テクスチャ設定
@@ -172,11 +158,6 @@ void Polygon2D::SetVertex(void)
 	m_vtx[1].position = D3DXVECTOR3( half.x, -half.y, half.z);
 	m_vtx[2].position = D3DXVECTOR3(-half.x,  half.y, half.z);
 	m_vtx[3].position = D3DXVECTOR3( half.x,  half.y, half.z);
-
-	//m_vtx[0].position = D3DXVECTOR3(0.0f,	0.0f,	half.z);
-	//m_vtx[1].position = D3DXVECTOR3(half.x,	0.0f,	half.z);
-	//m_vtx[2].position = D3DXVECTOR3(0.0f,	half.y,	half.z);
-	//m_vtx[3].position = D3DXVECTOR3(half.x,	half.y,	half.z);
 
 	// 反射光
 	m_vtx[0].color = D3DXCOLOR(1.0f, 1.0f, 0.0f, 1.0f);

@@ -153,25 +153,10 @@ void DrawListManager::AllDraw(D3DXMATRIX vp)
 		{
 			// 2D頂点設定
 			m_device->SetVertexDeclaration(m_decl2D);
-			m_device->SetFVF(D3DFVF_XYZ/* | D3DFVF_DIFFUSE | D3DFVF_TEX1*/);
 		}
 
 		// シェーダー設定
 		m_shader->SetShader(&vsc, &psc, (Shader::PATTERN)cnt);
-
-		if(cnt == Shader::PAT_2D)
-		{
-			// 2D用プロジェクション
-			/*D3DXMATRIX	proj2D(2/SCREEN_WIDTH,	0.0f,			 0.0f, 0.0f,
-								0.0f,			2/SCREEN_HEIGHT, 0.0f, 0.0f,
-								0.0f,			0.0f,			 1.0f, 0.0f,
-								0.0f,			0.0f,			 0.0f, 1.0f);
-			D3DXMATRIX	proj2D(SCREEN_HEIGHT/SCREEN_WIDTH,	0.0f,			 0.0f, 0.0f,
-								0.0f,			1.0f, 0.0f, 0.0f,
-								0.0f,			0.0f,			 1.0f, 0.0f,
-								0.0f,			0.0f,			 0.0f, 1.0f);
-			vsc->SetMatrix(m_device, "gProj", &proj2D);*/
-		}
 
 		// 描画
 		m_drawList[cnt]->AllDraw(vsc, psc, vp);
