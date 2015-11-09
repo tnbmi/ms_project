@@ -1,0 +1,297 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="main">
+      <UniqueIdentifier>{96dd5fe8-dae8-4d1d-b622-95773e21bcec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\window">
+      <UniqueIdentifier>{45a4370b-238b-478e-b2e5-a6c1b70869d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="common">
+      <UniqueIdentifier>{0d5e359b-77df-43d0-b607-974d97384b58}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="manager">
+      <UniqueIdentifier>{d55359ca-4792-489d-82b9-38fa74ebe004}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="renderer">
+      <UniqueIdentifier>{17ed3bba-3d9a-493c-bbff-efa3bb9f7b51}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="debugproc">
+      <UniqueIdentifier>{3f749eff-b1a1-4690-802d-c830bcb83123}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="input">
+      <UniqueIdentifier>{392a76c6-4d64-43d6-9150-9caa29687773}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="input\keyboard">
+      <UniqueIdentifier>{1532b276-b472-4bbe-80e0-be8037e94712}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="input\padX">
+      <UniqueIdentifier>{512bf9b3-8088-4ba1-8ec5-9cae9f721345}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="import">
+      <UniqueIdentifier>{8924a9bd-13f1-4563-b1f0-de042abea8e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="phase">
+      <UniqueIdentifier>{25dbc2c7-7346-41f9-8e76-280f97d07135}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="phase\title">
+      <UniqueIdentifier>{c198dec6-763f-48ba-86bf-bb48a3372eb0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="phase\game">
+      <UniqueIdentifier>{987fe575-56a2-4d58-878b-74417a6f17d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="phase\result">
+      <UniqueIdentifier>{332e1d03-12d7-4061-a006-903f711657fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="phase\demo">
+      <UniqueIdentifier>{67e119fe-83eb-4253-af4b-3662eb378b3f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="view">
+      <UniqueIdentifier>{fc808cba-4f6d-486c-a554-4f0f2f21af2d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="view\camera">
+      <UniqueIdentifier>{bdecafb8-e201-4011-8f2c-d3fb3b27d751}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="view\light">
+      <UniqueIdentifier>{3e81e516-77e9-4d1a-9c34-b7a7ca19d43b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sound">
+      <UniqueIdentifier>{88af0a65-73b2-43ab-b0ee-ed999880479f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="object">
+      <UniqueIdentifier>{69d6f969-cc6d-4e78-9a3f-e701d85db38a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="objectBase">
+      <UniqueIdentifier>{3610b354-c583-4e37-b914-5282e204601b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="shader">
+      <UniqueIdentifier>{71a3790d-971c-47dc-80d2-d7efdbbb83d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="import\demo">
+      <UniqueIdentifier>{c2dfe9db-bd5e-46f2-9b34-6ed5d0045e59}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="import\game">
+      <UniqueIdentifier>{12217eeb-87ef-4676-a3d1-0e6ab8d0233e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="import\result">
+      <UniqueIdentifier>{9c93fe32-6d8c-4c1b-ae51-6e0e72c03c49}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="import\title">
+      <UniqueIdentifier>{f5a355f7-7760-4ea2-9c34-77d99db06282}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="fade">
+      <UniqueIdentifier>{96daaa9c-06fb-4b21-a132-d51f0fc9e6c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="objectBase\polygon2D">
+      <UniqueIdentifier>{b5b1f17b-f7eb-45b0-a5f9-9e643c7ee25c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="objectBase\polygon3D">
+      <UniqueIdentifier>{48bbecd8-a962-4983-a4ae-0d5b1dbabc68}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="objectBase\modelX">
+      <UniqueIdentifier>{7348fcd9-3628-4c4a-b5c5-1cedc3abf553}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="list">
+      <UniqueIdentifier>{8dc7aaea-ce93-4201-8309-b535385b67d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="list\objectList">
+      <UniqueIdentifier>{f7136821-6635-443a-8492-6d3cbe3beff0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="list\updateList">
+      <UniqueIdentifier>{bc29ed71-2b1e-4dba-b7f3-836c6d7bf98f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="list\drawList">
+      <UniqueIdentifier>{b2785f7e-ae41-4add-94c3-9c7fc6ec9a56}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="シェーダーファイル">
+      <UniqueIdentifier>{49226417-936a-488b-9bd7-9c187f7c5349}</UniqueIdentifier>
+      <Extensions>.hlsl</Extensions>
+    </Filter>
+    <Filter Include="シェーダーファイル\twoDimensions">
+      <UniqueIdentifier>{07572823-7aaf-4f40-91a5-e847507c2e79}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="main\main.h">
+      <Filter>main</Filter>
+    </ClInclude>
+    <ClInclude Include="main\window\window.h">
+      <Filter>main\window</Filter>
+    </ClInclude>
+    <ClInclude Include="common\safe.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="manager\manager.h">
+      <Filter>manager</Filter>
+    </ClInclude>
+    <ClInclude Include="renderer\renderer.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="debugproc\debugproc.h">
+      <Filter>debugproc</Filter>
+    </ClInclude>
+    <ClInclude Include="input\keyboard\keyboard.h">
+      <Filter>input\keyboard</Filter>
+    </ClInclude>
+    <ClInclude Include="input\padX\padX.h">
+      <Filter>input\padX</Filter>
+    </ClInclude>
+    <ClInclude Include="input\padX\padXManager.h">
+      <Filter>input\padX</Filter>
+    </ClInclude>
+    <ClInclude Include="phase\phase.h">
+      <Filter>phase</Filter>
+    </ClInclude>
+    <ClInclude Include="phase\title\title.h">
+      <Filter>phase\title</Filter>
+    </ClInclude>
+    <ClInclude Include="phase\game\game.h">
+      <Filter>phase\game</Filter>
+    </ClInclude>
+    <ClInclude Include="phase\demo\demo.h">
+      <Filter>phase\demo</Filter>
+    </ClInclude>
+    <ClInclude Include="phase\result\result.h">
+      <Filter>phase\result</Filter>
+    </ClInclude>
+    <ClInclude Include="view\camera\camera.h">
+      <Filter>view\camera</Filter>
+    </ClInclude>
+    <ClInclude Include="objectBase\objectBase.h">
+      <Filter>objectBase</Filter>
+    </ClInclude>
+    <ClInclude Include="objectBase\polygon2D\polygon2D.h">
+      <Filter>objectBase\polygon2D</Filter>
+    </ClInclude>
+    <ClInclude Include="shader\shader.h">
+      <Filter>shader</Filter>
+    </ClInclude>
+    <ClInclude Include="import\demo\demoImport.h">
+      <Filter>import\demo</Filter>
+    </ClInclude>
+    <ClInclude Include="import\game\gameImport.h">
+      <Filter>import\game</Filter>
+    </ClInclude>
+    <ClInclude Include="import\title\titleImport.h">
+      <Filter>import\title</Filter>
+    </ClInclude>
+    <ClInclude Include="import\result\resultImport.h">
+      <Filter>import\result</Filter>
+    </ClInclude>
+    <ClInclude Include="list\list.h">
+      <Filter>list</Filter>
+    </ClInclude>
+    <ClInclude Include="list\objectList\objectList.h">
+      <Filter>list\objectList</Filter>
+    </ClInclude>
+    <ClInclude Include="list\updateList\updateList.h">
+      <Filter>list\updateList</Filter>
+    </ClInclude>
+    <ClInclude Include="list\drawList\drawList.h">
+      <Filter>list\drawList</Filter>
+    </ClInclude>
+    <ClInclude Include="list\drawList\drawListManager.h">
+      <Filter>list\drawList</Filter>
+    </ClInclude>
+    <ClInclude Include="import\import.h">
+      <Filter>import</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main\main.cpp">
+      <Filter>main</Filter>
+    </ClCompile>
+    <ClCompile Include="main\window\window.cpp">
+      <Filter>main\window</Filter>
+    </ClCompile>
+    <ClCompile Include="manager\manager.cpp">
+      <Filter>manager</Filter>
+    </ClCompile>
+    <ClCompile Include="renderer\renderer.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="debugproc\debugproc.cpp">
+      <Filter>debugproc</Filter>
+    </ClCompile>
+    <ClCompile Include="input\keyboard\keyboard.cpp">
+      <Filter>input\keyboard</Filter>
+    </ClCompile>
+    <ClCompile Include="input\padX\padX.cpp">
+      <Filter>input\padX</Filter>
+    </ClCompile>
+    <ClCompile Include="input\padX\padXManager.cpp">
+      <Filter>input\padX</Filter>
+    </ClCompile>
+    <ClCompile Include="phase\phase.cpp">
+      <Filter>phase</Filter>
+    </ClCompile>
+    <ClCompile Include="phase\title\title.cpp">
+      <Filter>phase\title</Filter>
+    </ClCompile>
+    <ClCompile Include="phase\game\game.cpp">
+      <Filter>phase\game</Filter>
+    </ClCompile>
+    <ClCompile Include="phase\demo\demo.cpp">
+      <Filter>phase\demo</Filter>
+    </ClCompile>
+    <ClCompile Include="phase\result\result.cpp">
+      <Filter>phase\result</Filter>
+    </ClCompile>
+    <ClCompile Include="view\camera\camera.cpp">
+      <Filter>view\camera</Filter>
+    </ClCompile>
+    <ClCompile Include="objectBase\objectBase.cpp">
+      <Filter>objectBase</Filter>
+    </ClCompile>
+    <ClCompile Include="objectBase\polygon2D\polygon2D.cpp">
+      <Filter>objectBase\polygon2D</Filter>
+    </ClCompile>
+    <ClCompile Include="shader\shader.cpp">
+      <Filter>shader</Filter>
+    </ClCompile>
+    <ClCompile Include="import\demo\demoImport.cpp">
+      <Filter>import\demo</Filter>
+    </ClCompile>
+    <ClCompile Include="import\game\gameImport.cpp">
+      <Filter>import\game</Filter>
+    </ClCompile>
+    <ClCompile Include="import\title\titleImport.cpp">
+      <Filter>import\title</Filter>
+    </ClCompile>
+    <ClCompile Include="import\result\resultImport.cpp">
+      <Filter>import\result</Filter>
+    </ClCompile>
+    <ClCompile Include="list\list.cpp">
+      <Filter>list</Filter>
+    </ClCompile>
+    <ClCompile Include="list\objectList\objectList.cpp">
+      <Filter>list\objectList</Filter>
+    </ClCompile>
+    <ClCompile Include="list\updateList\updateList.cpp">
+      <Filter>list\updateList</Filter>
+    </ClCompile>
+    <ClCompile Include="list\drawList\drawList.cpp">
+      <Filter>list\drawList</Filter>
+    </ClCompile>
+    <ClCompile Include="list\drawList\drawListManager.cpp">
+      <Filter>list\drawList</Filter>
+    </ClCompile>
+    <ClCompile Include="import\import.cpp">
+      <Filter>import</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\resources\shader\lightVS.hlsl">
+      <Filter>シェーダーファイル</Filter>
+    </None>
+    <None Include="..\resources\shader\basicPS.hlsl">
+      <Filter>シェーダーファイル</Filter>
+    </None>
+    <None Include="..\resources\shader\twoDimensionsPS.hlsl">
+      <Filter>シェーダーファイル\twoDimensions</Filter>
+    </None>
+    <None Include="..\resources\shader\twoDimensionsVS.hlsl">
+      <Filter>シェーダーファイル\twoDimensions</Filter>
+    </None>
+  </ItemGroup>
+</Project>

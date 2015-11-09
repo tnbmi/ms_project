@@ -1,0 +1,146 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="debugproc\debugproc.cpp" />
+    <ClCompile Include="import\demo\demoImport.cpp" />
+    <ClCompile Include="import\game\gameImport.cpp" />
+    <ClCompile Include="import\import.cpp" />
+    <ClCompile Include="import\result\resultImport.cpp" />
+    <ClCompile Include="import\title\titleImport.cpp" />
+    <ClCompile Include="input\keyboard\keyboard.cpp" />
+    <ClCompile Include="input\padX\padX.cpp" />
+    <ClCompile Include="input\padX\padXManager.cpp" />
+    <ClCompile Include="list\drawList\drawList.cpp" />
+    <ClCompile Include="list\drawList\drawListManager.cpp" />
+    <ClCompile Include="list\list.cpp" />
+    <ClCompile Include="list\objectList\objectList.cpp" />
+    <ClCompile Include="list\updateList\updateList.cpp" />
+    <ClCompile Include="main\main.cpp" />
+    <ClCompile Include="main\window\window.cpp" />
+    <ClCompile Include="manager\manager.cpp" />
+    <ClCompile Include="objectBase\objectBase.cpp" />
+    <ClCompile Include="objectBase\polygon2D\polygon2D.cpp" />
+    <ClCompile Include="phase\demo\demo.cpp" />
+    <ClCompile Include="phase\game\game.cpp" />
+    <ClCompile Include="phase\phase.cpp" />
+    <ClCompile Include="phase\result\result.cpp" />
+    <ClCompile Include="phase\title\title.cpp" />
+    <ClCompile Include="renderer\renderer.cpp" />
+    <ClCompile Include="shader\shader.cpp" />
+    <ClCompile Include="view\camera\camera.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="common\safe.h" />
+    <ClInclude Include="debugproc\debugproc.h" />
+    <ClInclude Include="import\demo\demoImport.h" />
+    <ClInclude Include="import\game\gameImport.h" />
+    <ClInclude Include="import\import.h" />
+    <ClInclude Include="import\result\resultImport.h" />
+    <ClInclude Include="import\title\titleImport.h" />
+    <ClInclude Include="input\keyboard\keyboard.h" />
+    <ClInclude Include="input\padX\padX.h" />
+    <ClInclude Include="input\padX\padXManager.h" />
+    <ClInclude Include="list\drawList\drawList.h" />
+    <ClInclude Include="list\drawList\drawListManager.h" />
+    <ClInclude Include="list\list.h" />
+    <ClInclude Include="list\objectList\objectList.h" />
+    <ClInclude Include="list\updateList\updateList.h" />
+    <ClInclude Include="main\main.h" />
+    <ClInclude Include="main\window\window.h" />
+    <ClInclude Include="manager\manager.h" />
+    <ClInclude Include="objectBase\objectBase.h" />
+    <ClInclude Include="objectBase\polygon2D\polygon2D.h" />
+    <ClInclude Include="phase\demo\demo.h" />
+    <ClInclude Include="phase\game\game.h" />
+    <ClInclude Include="phase\phase.h" />
+    <ClInclude Include="phase\result\result.h" />
+    <ClInclude Include="phase\title\title.h" />
+    <ClInclude Include="renderer\renderer.h" />
+    <ClInclude Include="shader\shader.h" />
+    <ClInclude Include="view\camera\camera.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\resources\shader\basicPS.hlsl" />
+    <None Include="..\resources\shader\lightVS.hlsl" />
+    <None Include="..\resources\shader\twoDimensionsPS.hlsl" />
+    <None Include="..\resources\shader\twoDimensionsVS.hlsl" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{7F4B6A1D-5C52-4CC7-96EF-6126108B8DA0}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>gameProgram</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)</OutDir>
+    <TargetName>H411_Game</TargetName>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
