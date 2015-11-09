@@ -165,12 +165,12 @@ void DrawListManager::AllDraw(D3DXMATRIX vp)
 			/*D3DXMATRIX	proj2D(2/SCREEN_WIDTH,	0.0f,			 0.0f, 0.0f,
 								0.0f,			2/SCREEN_HEIGHT, 0.0f, 0.0f,
 								0.0f,			0.0f,			 1.0f, 0.0f,
-								0.0f,			0.0f,			 0.0f, 1.0f);
+								0.0f,			0.0f,			 0.0f, 1.0f);*/
 			D3DXMATRIX	proj2D(SCREEN_HEIGHT/SCREEN_WIDTH,	0.0f,			 0.0f, 0.0f,
 								0.0f,			1.0f, 0.0f, 0.0f,
 								0.0f,			0.0f,			 1.0f, 0.0f,
 								0.0f,			0.0f,			 0.0f, 1.0f);
-			vsc->SetMatrix(m_device, "gProj", &proj2D);*/
+			vsc->SetMatrix(m_device, "gProj", &proj2D);
 		}
 
 		// •`‰æ

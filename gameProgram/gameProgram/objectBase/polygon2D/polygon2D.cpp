@@ -96,10 +96,7 @@ void Polygon2D::Draw(LPD3DXCONSTANTTABLE vsc, LPD3DXCONSTANTTABLE psc, D3DXMATRI
 	// 位置の反映
 	D3DXMatrixTranslation(&translate, m_pos.x, m_pos.y, m_pos.z);
 	D3DXMatrixMultiply(&m_world, &m_world, &translate);
-
-	// 行列合成
-	wvp = m_world * vp;*/
-
+*/
 	//----------------------------
 	// ワールドデータ設定
 	//----------------------------
