@@ -111,7 +111,7 @@
       <UniqueIdentifier>{07572823-7aaf-4f40-91a5-e847507c2e79}</UniqueIdentifier>
     </Filter>
     <Filter Include="commandmanager">
-      <UniqueIdentifier>{6370be2c-c3ed-4dd7-a69e-df45a1843ef1}</UniqueIdentifier>
+      <UniqueIdentifier>{b53bd45a-e536-4678-9158-b309c7f769c5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

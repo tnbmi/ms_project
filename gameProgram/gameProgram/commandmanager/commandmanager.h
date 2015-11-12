@@ -1,53 +1,46 @@
 //*****************************************************************************
 //
-// タイトルフェーズ [title.h]
-// Author : MAI TANABE
+// コマンドチェック処理 [commandmanager.h]
+// Author : KEN MATSUURA
 //
 //*****************************************************************************
 
-#ifndef MY_TITLE_H_
-#define MY_TITLE_H_
+#ifndef MY_COMMANDMANAGER_H_
+#define MY_COMMANDMANAGER_H_
 //=============================================================================
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // インクルードファイル
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-#include "..\..\main\main.h"
-#include "..\phase.h"
-#include "..\..\commandmanager\commandmanager.h"
+#include "..\main\main.h"
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // クラス定義
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-class TitleImport;
-class Camera;
-class ObjectList;
-class UpdateList;
-class DrawListManager;
-class Commandmanager;
+class Keyboard;
+class Debugproc;
 
-class Title : public Phase
+class Commandmanager
 {
 public:
-	Title(LPDIRECT3DDEVICE9 device);
-	virtual ~Title(void);
+	Commandmanager(void);
+	virtual ~Commandmanager(void);
 
+	static bool Create(Commandmanager** outPointer);
 	bool Initialize(void);
 	void Finalize(void);
 	void Update(void);
 	void Draw(void);
 
+	void keyboard(Keyboard* keyboard) {m_keyboard = keyboard;}
+	void debugproc(Debugproc* debugproc) {m_debugproc = debugproc;}
+
 private:
-	bool InitObject(void);
-
-	TitleImport* m_import;
-	Camera*		 m_camera;
-
-	ObjectList*		 m_objectList;
-	UpdateList*		 m_updateList;
-	DrawListManager* m_drawListManager;
-
-	Commandmanager*	m_cm;
+	int			m_command_list[6];
+	Keyboard*	m_keyboard;
+	Debugproc*	m_debugproc;
+	int			m_command_count;
+	int			m_time_penalty;
 };
 
 //=============================================================================

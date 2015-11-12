@@ -27,6 +27,8 @@
 
 #include "..\..\objectBase\polygon2D\polygon2D.h"
 
+#include "..\..\commandmanager\commandmanager.h"
+
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // マクロ定義
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -47,6 +49,8 @@ Title::Title(LPDIRECT3DDEVICE9 device) : Phase(device)
 	m_objectList		= nullptr;
 	m_updateList		= nullptr;
 	m_drawListManager	= nullptr;
+
+	m_cm				= nullptr;
 }
 
 //=============================================================================
@@ -107,6 +111,9 @@ bool Title::Initialize(void)
 	//----------------------------
 	// ステータス初期化
 	//----------------------------
+	Commandmanager::Create(&m_cm);
+	m_cm->debugproc(m_debugproc);
+	m_cm->keyboard(m_keyboard);
 
 	Commandmanager::Create(&m_cm);
 	m_cm->debugproc(m_debugproc);
@@ -189,6 +196,7 @@ void Title::Draw(void)
 	// 2D描画
 	//----------------------------
 	m_drawListManager->AllDraw(m_camera->viewProjection());
+
 	m_cm->Draw();
 }
 

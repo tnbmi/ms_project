@@ -85,12 +85,6 @@ bool Manager::Initialize(HINSTANCE hInstance, HWND hWnd, bool windowFlg)
 	if(!PadXManager::Create(&m_padXManager))
 		return false;
 
-	//----------------------------
-	// フェーズ
-	//----------------------------
-	m_phase = (Phase*)new Title(device);
-	m_phase->keyboard(m_keyboard);
-	m_phase->padXManager(m_padXManager);
 #ifdef _DEBUG
 	//----------------------------
 	// デバッグコメント
@@ -99,8 +93,24 @@ bool Manager::Initialize(HINSTANCE hInstance, HWND hWnd, bool windowFlg)
 		return false;
 	m_renderer->debugproc(m_debugproc);
 	m_padXManager->debugproc(m_debugproc);
+#endif
+
+	//----------------------------
+	// フェーズ
+	//----------------------------
+	// 生成
+	m_phase = (Phase*)new Title(device);
+
+	// 入力設定
+	m_phase->padXManager(m_padXManager);
+	m_phase->keyboard(m_keyboard);
+
+#ifdef _DEBUG
+	// デバッグ設定
 	m_phase->debugproc(m_debugproc);
 #endif
+
+	// 初期化
 	if(!m_phase->Initialize())
 		return false;
 	m_nextPhase = m_phase;
