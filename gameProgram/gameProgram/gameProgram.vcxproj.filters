@@ -110,6 +110,9 @@
     <Filter Include="シェーダーファイル\twoDimensions">
       <UniqueIdentifier>{07572823-7aaf-4f40-91a5-e847507c2e79}</UniqueIdentifier>
     </Filter>
+    <Filter Include="commandmanager">
+      <UniqueIdentifier>{b53bd45a-e536-4678-9158-b309c7f769c5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main\main.h">
@@ -196,6 +199,9 @@
     <ClInclude Include="import\import.h">
       <Filter>import</Filter>
     </ClInclude>
+    <ClInclude Include="commandmanager\commandmanager.h">
+      <Filter>commandmanager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main\main.cpp">
@@ -278,6 +284,9 @@
     </ClCompile>
     <ClCompile Include="import\import.cpp">
       <Filter>import</Filter>
+    </ClCompile>
+    <ClCompile Include="commandmanager\commandmanager.cpp">
+      <Filter>commandmanager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
