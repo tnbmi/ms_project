@@ -108,6 +108,10 @@ bool Title::Initialize(void)
 	// ステータス初期化
 	//----------------------------
 
+	Commandmanager::Create(&m_cm);
+	m_cm->debugproc(m_debugproc);
+	m_cm->keyboard(m_keyboard);
+
 	return true;
 }
 
@@ -137,7 +141,6 @@ void Title::Finalize(void)
 	//----------------------------
 	// サウンドの停止
 	//----------------------------
-
 }
 
 //=============================================================================
@@ -158,6 +161,8 @@ void Title::Update(void)
 	// オブジェクト更新
 	//----------------------------
 	m_updateList->AllUpdate();
+
+	m_cm->Update();
 
 	//----------------------------
 	// 画面遷移
@@ -184,6 +189,7 @@ void Title::Draw(void)
 	// 2D描画
 	//----------------------------
 	m_drawListManager->AllDraw(m_camera->viewProjection());
+	m_cm->Draw();
 }
 
 //=============================================================================

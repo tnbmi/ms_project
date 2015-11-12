@@ -14,6 +14,7 @@
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 #include "..\..\main\main.h"
 #include "..\phase.h"
+#include "..\..\commandmanager\commandmanager.h"
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // ƒNƒ‰ƒX’è‹`
@@ -44,6 +45,8 @@ private:
 	ObjectList*		 m_objectList;
 	UpdateList*		 m_updateList;
 	DrawListManager* m_drawListManager;
+
+	Commandmanager*	m_cm;
 };
 
 //=============================================================================
