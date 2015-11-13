@@ -50,7 +50,7 @@ Title::Title(LPDIRECT3DDEVICE9 device) : Phase(device)
 	m_updateList		= nullptr;
 	m_drawListManager	= nullptr;
 
-	m_cm				= nullptr;
+	m_command_manager	= nullptr;
 }
 
 //=============================================================================
@@ -111,13 +111,6 @@ bool Title::Initialize(void)
 	//----------------------------
 	// ステータス初期化
 	//----------------------------
-	Commandmanager::Create(&m_cm);
-	m_cm->debugproc(m_debugproc);
-	m_cm->keyboard(m_keyboard);
-
-	Commandmanager::Create(&m_cm);
-	m_cm->debugproc(m_debugproc);
-	m_cm->keyboard(m_keyboard);
 
 	return true;
 }
@@ -131,6 +124,9 @@ void Title::Finalize(void)
 	// オブジェクト
 	//----------------------------
 	// シーン
+
+	// コマンド
+	SafeFinalizeDelete(m_command_manager);
 
 	//----------------------------
 	// インポート
@@ -169,14 +165,14 @@ void Title::Update(void)
 	//----------------------------
 	m_updateList->AllUpdate();
 
-	m_cm->Update();
+	m_command_manager->Update();
 
 	//----------------------------
 	// 画面遷移
 	//----------------------------
 	if(pad->buttonTrigger(XINPUT_GAMEPAD_A))
 	{
-		Manager::nextPhase((Phase*)new Demo(m_device));
+	//	Manager::nextPhase((Phase*)new Demo(m_device));
 	}
 }
 
@@ -197,7 +193,7 @@ void Title::Draw(void)
 	//----------------------------
 	m_drawListManager->AllDraw(m_camera->viewProjection());
 
-	m_cm->Draw();
+	m_command_manager->Draw();
 }
 
 //=============================================================================
@@ -205,6 +201,7 @@ void Title::Draw(void)
 //=============================================================================
 bool Title::InitObject(void)
 {
+	Commandmanager::Create(&m_command_manager, m_padXManager, m_debugproc);
 
 	return true;
 }

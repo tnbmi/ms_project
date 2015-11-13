@@ -113,6 +113,9 @@
     <Filter Include="commandmanager">
       <UniqueIdentifier>{b53bd45a-e536-4678-9158-b309c7f769c5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="commandmanager\commandteam">
+      <UniqueIdentifier>{3adc7b59-0bdb-4da3-9ade-ba53708d1834}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main\main.h">
@@ -202,6 +205,9 @@
     <ClInclude Include="commandmanager\commandmanager.h">
       <Filter>commandmanager</Filter>
     </ClInclude>
+    <ClInclude Include="commandmanager\commandteam\commandteam.h">
+      <Filter>commandmanager\commandteam</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main\main.cpp">
@@ -287,6 +293,9 @@
     </ClCompile>
     <ClCompile Include="commandmanager\commandmanager.cpp">
       <Filter>commandmanager</Filter>
+    </ClCompile>
+    <ClCompile Include="commandmanager\commandteam\commandteam.cpp">
+      <Filter>commandmanager\commandteam</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

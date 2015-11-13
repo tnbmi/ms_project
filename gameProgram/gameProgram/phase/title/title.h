@@ -47,7 +47,7 @@ private:
 	UpdateList*		 m_updateList;
 	DrawListManager* m_drawListManager;
 
-	Commandmanager*	m_cm;
+	Commandmanager*	m_command_manager;
 };
 
 //=============================================================================
