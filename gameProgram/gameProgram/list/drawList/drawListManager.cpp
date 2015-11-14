@@ -110,7 +110,14 @@ bool DrawListManager::Initialize(void)
 //=============================================================================
 void DrawListManager::Finalize(void)
 {
+	// シェーダー
 	SafeFinalizeDelete(m_shader);
+
+	// 描画リスト達
+	for(int cnt = 0; cnt < Shader::PATTERN_MAX; ++cnt)
+	{
+		SafeDelete(m_drawList[cnt]);
+	}
 }
 
 //=============================================================================
@@ -157,6 +164,20 @@ void DrawListManager::AllDraw(D3DXMATRIX vp)
 
 		// シェーダー設定
 		m_shader->SetShader(&vsc, &psc, (Shader::PATTERN)cnt);
+
+		if(cnt == Shader::PAT_2D)
+		{
+			// 2D用プロジェクション
+			/*D3DXMATRIX	proj2D(2/SCREEN_WIDTH,	0.0f,			 0.0f, 0.0f,
+								0.0f,			2/SCREEN_HEIGHT, 0.0f, 0.0f,
+								0.0f,			0.0f,			 1.0f, 0.0f,
+								0.0f,			0.0f,			 0.0f, 1.0f);*/
+			D3DXMATRIX	proj2D(SCREEN_HEIGHT/SCREEN_WIDTH,	0.0f,			 0.0f, 0.0f,
+								0.0f,			1.0f, 0.0f, 0.0f,
+								0.0f,			0.0f,			 1.0f, 0.0f,
+								0.0f,			0.0f,			 0.0f, 1.0f);
+			vsc->SetMatrix(m_device, "gProj", &proj2D);
+		}
 
 		// 描画
 		m_drawList[cnt]->AllDraw(vsc, psc, vp);

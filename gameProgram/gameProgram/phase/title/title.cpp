@@ -25,8 +25,6 @@
 #include "..\..\list\updateList\updateList.h"
 #include "..\..\list\drawList\drawListManager.h"
 
-#include "..\..\objectBase\polygon2D\polygon2D.h"
-
 #include "..\..\commandmanager\commandmanager.h"
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -83,12 +81,15 @@ bool Title::Initialize(void)
 	//----------------------------
 	// 管理リスト
 	//----------------------------
+	// オブジェクトリスト
 	if(!ObjectList::Create(&m_objectList))
 		return false;
 
+	// 更新リスト
 	if(!UpdateList::Create(&m_updateList))
 		return false;
 
+	// 描画リスト
 	if(!DrawListManager::Create(&m_drawListManager, m_device))
 		return false;
 
@@ -123,7 +124,17 @@ void Title::Finalize(void)
 	//----------------------------
 	// オブジェクト
 	//----------------------------
-	// シーン
+	// 存在するオブジェクト全て削除
+	m_objectList->AllDarelete();
+
+	// 描画リストマネージャー
+	SafeFinalizeDelete(m_drawListManager);
+
+	// 更新リスト
+	SafeDelete(m_updateList);
+
+	// オブジェクトリスト
+	SafeDelete(m_objectList);
 
 	// コマンド
 	SafeFinalizeDelete(m_command_manager);

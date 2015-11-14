@@ -58,7 +58,7 @@ inline void SafeFinalizeDelete(TEM*& p)
 	if(p != nullptr)
 	{
 		p->Finalize();
-		delete[] p;
+		delete p;
 		p = nullptr;
 	}
 }
