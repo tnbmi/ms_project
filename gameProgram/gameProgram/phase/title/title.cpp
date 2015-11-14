@@ -25,8 +25,6 @@
 #include "..\..\list\updateList\updateList.h"
 #include "..\..\list\drawList\drawListManager.h"
 
-#include "..\..\objectBase\polygon2D\polygon2D.h"
-
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // マクロ定義
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -204,13 +202,6 @@ void Title::Draw(void)
 //=============================================================================
 bool Title::InitObject(void)
 {
-	// 2Dポリゴンテスト中
-/*	Polygon2D* poly2d;
-	if(!Polygon2D::Create(&poly2d, m_device, m_objectList, m_import->texture(TitleImport::TEST_0)))
-		return false;
-	m_updateList->Link(poly2d);
-	m_drawListManager->Link(poly2d, 4, Shader::PAT_2D);
-	poly2d->pos(200.0f, 100.0f, 0.0f);*/
 
 	return true;
 }
