@@ -22,7 +22,7 @@ DrawListManager::DrawListManager(LPDIRECT3DDEVICE9 device)
 	// メンバー初期化
 	//----------------------------
 	m_device = device;
-	m_shader = nullptr;
+	//m_shader = nullptr;
 
 	// リスト
 	for(int cnt = 0; cnt < Shader::PATTERN_MAX; ++cnt)
@@ -92,8 +92,8 @@ bool DrawListManager::Initialize(void)
 	//----------------------------
 	// シェーダー初期化
 	//----------------------------
-	if(!Shader::Create(&m_shader, m_device))
-		return false;
+	//if(!Shader::Create(&m_shader, m_device))
+	//	return false;
 
 	//----------------------------
 	// 描画管理リスト初期化
@@ -111,7 +111,7 @@ bool DrawListManager::Initialize(void)
 void DrawListManager::Finalize(void)
 {
 	// シェーダー
-	SafeFinalizeDelete(m_shader);
+	//SafeFinalizeDelete(m_shader);
 
 	// 描画リスト達
 	for(int cnt = 0; cnt < Shader::PATTERN_MAX; ++cnt)
@@ -147,7 +147,7 @@ void DrawListManager::UnLink(ObjectBase* object, Shader::PATTERN shaderPatternId
 //=============================================================================
 void DrawListManager::AllDraw(D3DXMATRIX vp)
 {
-	ObjectBase*			 cur = nullptr;
+/*	ObjectBase*			 cur = nullptr;
 	LPD3DXCONSTANTTABLE	 vsc;
 	LPD3DXCONSTANTTABLE	 psc;
 
@@ -168,10 +168,10 @@ void DrawListManager::AllDraw(D3DXMATRIX vp)
 		if(cnt == Shader::PAT_2D)
 		{
 			// 2D用プロジェクション
-			/*D3DXMATRIX	proj2D(2/SCREEN_WIDTH,	0.0f,			 0.0f, 0.0f,
-								0.0f,			2/SCREEN_HEIGHT, 0.0f, 0.0f,
-								0.0f,			0.0f,			 1.0f, 0.0f,
-								0.0f,			0.0f,			 0.0f, 1.0f);*/
+			//D3DXMATRIX	proj2D(2/SCREEN_WIDTH,	0.0f,			 0.0f, 0.0f,
+			//					0.0f,			2/SCREEN_HEIGHT, 0.0f, 0.0f,
+			//					0.0f,			0.0f,			 1.0f, 0.0f,
+			//					0.0f,			0.0f,			 0.0f, 1.0f);
 			D3DXMATRIX	proj2D(SCREEN_HEIGHT/SCREEN_WIDTH,	0.0f,			 0.0f, 0.0f,
 								0.0f,			1.0f, 0.0f, 0.0f,
 								0.0f,			0.0f,			 1.0f, 0.0f,
@@ -181,7 +181,7 @@ void DrawListManager::AllDraw(D3DXMATRIX vp)
 
 		// 描画
 		m_drawList[cnt]->AllDraw(vsc, psc, vp);
-	}
+	}*/
 }
 
 // EOF

@@ -9,6 +9,7 @@
 // インクルードファイル
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 #include "shader.h"
+#include "..\common\safe.h"
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // シェーダーデータ
@@ -193,6 +194,17 @@ bool Shader::Initialize(void)
 //=============================================================================
 void Shader::Finalize(void)
 {
+	for(int cnt = 0; cnt < m_vsSize; ++cnt)
+	{
+		SafeRelease(m_vertexShader[cnt]);
+		SafeRelease(m_vsConstantTable[cnt]);
+	}
+
+	for(int cnt = 0; cnt < m_psSize; ++cnt)
+	{
+		SafeRelease(m_pixelShader[cnt]);
+		SafeRelease(m_psConstantTable[cnt]);
+	}
 }
 
 //=============================================================================
