@@ -174,11 +174,6 @@ bool Renderer::Initialize(HWND hWnd, bool windowFlg)
 void Renderer::Finalize(void)
 {
 	//----------------------------
-	// フォーマット
-	//----------------------------
-	SafeRelease(m_decl);
-
-	//----------------------------
 	// デバイスオブジェクトの開放
 	//----------------------------
 	SafeRelease(m_device);

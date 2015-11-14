@@ -41,9 +41,6 @@ private:
 	LPDIRECT3DDEVICE9	m_device;
 	Debugproc*			m_debugproc;
 	Phase*				m_phase;
-
-	// フォーマット
-	LPDIRECT3DVERTEXDECLARATION9 m_decl;	// 頂点宣言のポインタ
 };
 
 //=============================================================================

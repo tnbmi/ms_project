@@ -79,12 +79,15 @@ bool Title::Initialize(void)
 	//----------------------------
 	// 管理リスト
 	//----------------------------
+	// オブジェクトリスト
 	if(!ObjectList::Create(&m_objectList))
 		return false;
 
+	// 更新リスト
 	if(!UpdateList::Create(&m_updateList))
 		return false;
 
+	// 描画リスト
 	if(!DrawListManager::Create(&m_drawListManager, m_device))
 		return false;
 
@@ -119,7 +122,17 @@ void Title::Finalize(void)
 	//----------------------------
 	// オブジェクト
 	//----------------------------
-	// シーン
+	// 存在するオブジェクト全て削除
+	m_objectList->AllDarelete();
+
+	// 描画リストマネージャー
+	SafeFinalizeDelete(m_drawListManager);
+
+	// 更新リスト
+	SafeDelete(m_updateList);
+
+	// オブジェクトリスト
+	SafeDelete(m_objectList);
 
 	//----------------------------
 	// インポート
@@ -192,12 +205,12 @@ void Title::Draw(void)
 bool Title::InitObject(void)
 {
 	// 2Dポリゴンテスト中
-	Polygon2D* poly2d;
+/*	Polygon2D* poly2d;
 	if(!Polygon2D::Create(&poly2d, m_device, m_objectList, m_import->texture(TitleImport::TEST_0)))
 		return false;
 	m_updateList->Link(poly2d);
 	m_drawListManager->Link(poly2d, 4, Shader::PAT_2D);
-	poly2d->pos(200.0f, 100.0f, 0.0f);
+	poly2d->pos(200.0f, 100.0f, 0.0f);*/
 
 	return true;
 }

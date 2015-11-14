@@ -110,7 +110,14 @@ bool DrawListManager::Initialize(void)
 //=============================================================================
 void DrawListManager::Finalize(void)
 {
+	// シェーダー
 	SafeFinalizeDelete(m_shader);
+
+	// 描画リスト達
+	for(int cnt = 0; cnt < Shader::PATTERN_MAX; ++cnt)
+	{
+		SafeDelete(m_drawList[cnt]);
+	}
 }
 
 //=============================================================================

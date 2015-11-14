@@ -15,7 +15,7 @@
 template <typename TEM>
 inline void SafeDelete(TEM*& p)
 {
-	if(p == nullptr)
+	if(p != nullptr)
 	{
 		delete p;
 		p = nullptr;
@@ -25,7 +25,7 @@ inline void SafeDelete(TEM*& p)
 template <typename TEM>
 inline void SafeDeleteArray(TEM*& p)
 {
-	if(p == nullptr)
+	if(p != nullptr)
 	{
 		delete[] p;
 		p = nullptr;
@@ -35,7 +35,7 @@ inline void SafeDeleteArray(TEM*& p)
 template <typename TEM>
 inline void SafeRelease(TEM*& p)
 {
-	if(p == nullptr)
+	if(p != nullptr)
 	{
 		p->Release();
 		p = nullptr;
@@ -45,7 +45,7 @@ inline void SafeRelease(TEM*& p)
 template <typename TEM>
 inline void SafeFinalize(TEM*& p)
 {
-	if(p == nullptr)
+	if(p != nullptr)
 	{
 		p->Finalize();
 		p = nullptr;
@@ -55,10 +55,10 @@ inline void SafeFinalize(TEM*& p)
 template <typename TEM>
 inline void SafeFinalizeDelete(TEM*& p)
 {
-	if(p == nullptr)
+	if(p != nullptr)
 	{
 		p->Finalize();
-		delete[] p;
+		delete p;
 		p = nullptr;
 	}
 }
