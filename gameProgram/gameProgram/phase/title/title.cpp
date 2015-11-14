@@ -26,6 +26,7 @@
 #include "..\..\list\drawList\drawListManager.h"
 
 #include "..\..\commandmanager\commandmanager.h"
+#include "..\..\objectBase\polygon2D\polygon2D.h"
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // ƒ}ƒNƒ’è‹`

@@ -194,17 +194,23 @@ bool Shader::Initialize(void)
 //=============================================================================
 void Shader::Finalize(void)
 {
+	// バーテックス
 	for(int cnt = 0; cnt < m_vsSize; ++cnt)
 	{
 		SafeRelease(m_vertexShader[cnt]);
 		SafeRelease(m_vsConstantTable[cnt]);
 	}
+	SafeDeleteArray(m_vertexShader);
+	SafeDeleteArray(m_vsConstantTable);
 
+	// ピクセル
 	for(int cnt = 0; cnt < m_psSize; ++cnt)
 	{
 		SafeRelease(m_pixelShader[cnt]);
 		SafeRelease(m_psConstantTable[cnt]);
 	}
+	SafeDeleteArray(m_pixelShader);
+	SafeDeleteArray(m_psConstantTable);
 }
 
 //=============================================================================

@@ -40,7 +40,7 @@ public:
 private:
 	LPDIRECT3DDEVICE9 m_device;
 
-	//Shader*		m_shader;
+	Shader*		m_shader;
 	DrawList*	m_drawList[Shader::PATTERN_MAX];
 
 	LPDIRECT3DVERTEXDECLARATION9 m_decl2D;
