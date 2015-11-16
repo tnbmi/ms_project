@@ -13,11 +13,11 @@ sampler texSampler;
 //=============================================================================
 // シェーダー関数
 //=============================================================================
-float4 PS(/*float4 color		: COLOR0,
-		  float2 texcoord	: TEXCOORD0*/) : COLOR0
+float4 PS(float4 color		: COLOR0,
+		  float2 texcoord	: TEXCOORD0) : COLOR0
 {
-	//return tex2D(texSampler, texcoord) * color;
-	return float4(1.0f, 1.0f, 1.0f, 1.0f);
+	return tex2D(texSampler, texcoord) * color;
+	//return color;
 }
 
 // EOF

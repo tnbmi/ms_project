@@ -40,7 +40,6 @@ DrawList::DrawList(Shader::PATTERN shaderPatternId) : List(m_priorityLevel)
 //=============================================================================
 DrawList::~DrawList(void)
 {
-	List::~List();
 }
 
 //=============================================================================
@@ -131,7 +130,7 @@ void DrawList::UnLink(ObjectBase* object)
 		// 終端オブジェクトを変更
 		m_end[priority] = prev;
 
-		if(m_end != nullptr)
+		if(m_end[priority] != nullptr)
 			// 終端をnullptrに
 			m_end[priority]->drawNext(nullptr, m_shaderPatternId);
 	}

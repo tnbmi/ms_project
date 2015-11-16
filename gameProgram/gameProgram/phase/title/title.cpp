@@ -215,6 +215,23 @@ bool Title::InitObject(void)
 {
 	Commandmanager::Create(&m_command_manager, m_padXManager, m_debugproc);
 
+	//----------------------------
+	// 2Dポリゴンテスト
+	//----------------------------
+	Polygon2D* poly2d;
+	if(!Polygon2D::Create(&poly2d, m_device, m_objectList, m_import->texture(TitleImport::TEST_0)))
+		return false;
+	m_updateList->Link(poly2d);
+	m_drawListManager->Link(poly2d, 4, Shader::PAT_2D);
+	poly2d->pos(200.0f, 200.0f, 0.0f);
+	poly2d->scl(128.0f, 128.0f, 0.0f);
+
+	if(!Polygon2D::Create(&poly2d, m_device, m_objectList, m_import->texture(TitleImport::TEST_0)))
+		return false;
+	m_updateList->Link(poly2d);
+	m_drawListManager->Link(poly2d, 4, Shader::PAT_2D);
+	poly2d->pos(250.0f, 250.0f, 0.0f);
+
 	return true;
 }
 

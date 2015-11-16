@@ -30,7 +30,6 @@ UpdateList::UpdateList(void) : List(1)
 //=============================================================================
 UpdateList::~UpdateList(void)
 {
-	List::~List();
 }
 
 //=============================================================================
@@ -120,7 +119,7 @@ void UpdateList::UnLink(ObjectBase* object)
 		// 終端オブジェクトを変更
 		m_end[0] = prev;
 
-		if(m_end != nullptr)
+		if(m_end[0] != nullptr)
 			// 終端をnullptrに
 			m_end[0]->updateNext(nullptr);
 	}

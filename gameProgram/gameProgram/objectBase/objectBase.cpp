@@ -67,18 +67,12 @@ ObjectBase::~ObjectBase(void)
 {
 	// 描画リスト除外
 	for(int cnt = 0; cnt < Shader::PATTERN_MAX; ++cnt)
-	{
 		if(m_drawList[cnt] != nullptr)
-		{
 			m_drawList[cnt]->UnLink(this);
-		}
-	}
 
 	// 更新リスト除外
 	if(m_updateList)
-	{
 		m_updateList->UnLink(this);
-	}
 
 	// オブジェクトリスト除外
 	m_objectList->UnLink(this);

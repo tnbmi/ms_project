@@ -26,25 +26,21 @@ DrawListManager::DrawListManager(LPDIRECT3DDEVICE9 device)
 
 	// リスト
 	for(int cnt = 0; cnt < Shader::PATTERN_MAX; ++cnt)
-	{
 		m_drawList[cnt] = nullptr;
-	}
 
 	// 2D頂点宣言
 	HRESULT hr;
 	D3DVERTEXELEMENT9 velement2D[] =
 	{
 		{0,  0, D3DDECLTYPE_FLOAT3,		D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_POSITIONT,	0},		// 座標
-		//{0, 12, D3DDECLTYPE_D3DCOLOR,	D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_COLOR,		0},		// 色
-		//{0, 16, D3DDECLTYPE_FLOAT2,		D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_TEXCOORD,	0},		// テクスチャ
+		{0, 12, D3DDECLTYPE_D3DCOLOR,	D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_COLOR,		0},		// 色
+		{0, 16, D3DDECLTYPE_FLOAT2,		D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_TEXCOORD,	0},		// テクスチャ
 		D3DDECL_END(),
 	};
 
 	hr = m_device->CreateVertexDeclaration(&velement2D[0], &m_decl2D);
 	if(FAILED(hr))
-	{
 		MessageBox(NULL, "2D頂点宣言失敗", "CreateVertexDeclaration", MB_OK);
-	}
 
 	// 3D頂点宣言
 	D3DVERTEXELEMENT9 velement3D[] =
@@ -58,9 +54,7 @@ DrawListManager::DrawListManager(LPDIRECT3DDEVICE9 device)
 
 	hr = m_device->CreateVertexDeclaration(&velement3D[0], &m_decl3D);
 	if(FAILED(hr))
-	{
 		MessageBox(NULL, "3D頂点宣言失敗", "CreateVertexDeclaration", MB_OK);
-	}
 
 }
 
@@ -115,9 +109,7 @@ void DrawListManager::Finalize(void)
 
 	// 描画リスト達
 	for(int cnt = 0; cnt < Shader::PATTERN_MAX; ++cnt)
-	{
 		SafeDelete(m_drawList[cnt]);
-	}
 }
 
 //=============================================================================
@@ -147,37 +139,40 @@ void DrawListManager::UnLink(ObjectBase* object, Shader::PATTERN shaderPatternId
 //=============================================================================
 void DrawListManager::AllDraw(D3DXMATRIX vp)
 {
-	ObjectBase*			 cur = nullptr;
-	LPD3DXCONSTANTTABLE	 vsc;
-	LPD3DXCONSTANTTABLE	 psc;
+	HRESULT				hr = S_OK;
+	ObjectBase*			cur = nullptr;
+	LPD3DXCONSTANTTABLE	vsc;
+	LPD3DXCONSTANTTABLE	psc;
 
 	for(int cnt = 0; cnt < Shader::PATTERN_MAX; ++cnt)
 	{
 		if(cnt != Shader::PAT_2D)
 			// 3D頂点設定
-			m_device->SetVertexDeclaration(m_decl3D);
+			hr = m_device->SetVertexDeclaration(m_decl3D);
 		else
-		{
 			// 2D頂点設定
-			m_device->SetVertexDeclaration(m_decl2D);
-		}
+			m_device->SetFVF(D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_TEX1);
+			//hr = m_device->SetVertexDeclaration(m_decl2D);
+
+		if(FAILED(hr))
+			MessageBox(NULL, "頂点設定失敗", "SetVertexDeclaration", MB_OK);
 
 		// シェーダー設定
 		m_shader->SetShader(&vsc, &psc, (Shader::PATTERN)cnt);
 
-		if(cnt == Shader::PAT_2D)
+		/*if(cnt == Shader::PAT_2D)
 		{
 			// 2D用プロジェクション
 			//D3DXMATRIX	proj2D(2/SCREEN_WIDTH,	0.0f,			 0.0f, 0.0f,
 			//					0.0f,			2/SCREEN_HEIGHT, 0.0f, 0.0f,
 			//					0.0f,			0.0f,			 1.0f, 0.0f,
 			//					0.0f,			0.0f,			 0.0f, 1.0f);
-			D3DXMATRIX	proj2D(SCREEN_HEIGHT/SCREEN_WIDTH,	0.0f,			 0.0f, 0.0f,
-								0.0f,			1.0f, 0.0f, 0.0f,
-								0.0f,			0.0f,			 1.0f, 0.0f,
-								0.0f,			0.0f,			 0.0f, 1.0f);
+			D3DXMATRIX	proj2D(1.0f,	0.0f, 0.0f, 0.0f,
+								0.0f,	1.0f, 0.0f, 0.0f,
+								0.0f,	0.0f, 1.0f, 0.0f,
+								0.0f,	0.0f, 0.0f, 1.0f);
 			vsc->SetMatrix(m_device, "gProj", &proj2D);
-		}
+		}*/
 
 		// 描画
 		m_drawList[cnt]->AllDraw(vsc, psc, vp);

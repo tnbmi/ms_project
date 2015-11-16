@@ -18,7 +18,7 @@ Polygon2D::Polygon2D(LPDIRECT3DDEVICE9 device, ObjectList* objectList, int prior
 	//----------------------------
 	// メンバー初期化
 	//----------------------------
-	m_scl = D3DXVECTOR3(128.0f, 128.0f, 0.0f);
+	m_scl = D3DXVECTOR3(64.0f, 64.0f, 0.0f);
 }
 
 //=============================================================================
@@ -64,7 +64,6 @@ bool Polygon2D::Initialize(LPDIRECT3DTEXTURE9 texture)
 //=============================================================================
 void Polygon2D::Finalize(void)
 {
-	ObjectBase::~ObjectBase();
 }
 
 //=============================================================================
@@ -102,10 +101,8 @@ void Polygon2D::Draw(LPD3DXCONSTANTTABLE vsc, LPD3DXCONSTANTTABLE psc, D3DXMATRI
 	//----------------------------
 	// バーテックス
 	if(vsc != nullptr)
-	{
 		// ワールドマトリックスの設定
 		vsc->SetMatrix(m_device, "gWorld", &m_world);
-	}
 
 	//----------------------------
 	// サンプラー準備
@@ -123,20 +120,16 @@ void Polygon2D::Draw(LPD3DXCONSTANTTABLE vsc, LPD3DXCONSTANTTABLE psc, D3DXMATRI
 		m_device->SetSamplerState(texSumpler, D3DSAMP_MIPFILTER, D3DTEXF_LINEAR);
 		m_device->SetSamplerState(texSumpler, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);		// テクスチャ拡大フィルタモードを設定
 		m_device->SetSamplerState(texSumpler, D3DSAMP_MAXANISOTROPY, 16);
-}
+	}
 
 	//----------------------------
 	// テクスチャ設定
 	//----------------------------
 	if(texSumpler >= 0)
-	{
 		//テクスチャの設定
 		m_device->SetTexture(texSumpler, m_texture);
-	}
 	else
-	{
 		m_device->SetTexture(0, m_texture);
-	}
 
 	//----------------------------
 	// 描画
@@ -153,17 +146,17 @@ void Polygon2D::Draw(LPD3DXCONSTANTTABLE vsc, LPD3DXCONSTANTTABLE psc, D3DXMATRI
 void Polygon2D::SetVertex(void)
 {
 	// 座標
-	D3DXVECTOR3 half = D3DXVECTOR3(m_scl.x * 0.5f, m_scl.y * 0.5f, 0.0f);
+	D3DXVECTOR3 half = D3DXVECTOR3(0.5f, 0.5f, 0.0f);
 	m_vtx[0].position = D3DXVECTOR3(-half.x, -half.y, half.z);
 	m_vtx[1].position = D3DXVECTOR3( half.x, -half.y, half.z);
 	m_vtx[2].position = D3DXVECTOR3(-half.x,  half.y, half.z);
 	m_vtx[3].position = D3DXVECTOR3( half.x,  half.y, half.z);
 
 	// 反射光
-	m_vtx[0].color = D3DXCOLOR(1.0f, 1.0f, 0.0f, 1.0f);
-	m_vtx[1].color = D3DXCOLOR(1.0f, 0.0f, 1.0f, 1.0f);
-	m_vtx[2].color = D3DXCOLOR(0.0f, 1.0f, 1.0f, 1.0f);
-	m_vtx[3].color = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+	m_vtx[0].color = m_color;
+	m_vtx[1].color = m_color;
+	m_vtx[2].color = m_color;
+	m_vtx[3].color = m_color;
 
 	// テクスチャ座標
 	m_vtx[0].uv = D3DXVECTOR2(0.0f, 0.0f);
