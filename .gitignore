@@ -1,0 +1,15 @@
+# Debugフォルダを無視
+gameProgram/Debug
+
+# ipchフォルダを無視
+gameProgram/ipch
+
+# ソリューションフォルダのDebugフォルダを無視
+gameProgram/gameProgram/Debug
+
+# ログファイルを無視
+*.log
+
+# その他無視するもの
+.opensdf
+.suo

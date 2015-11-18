@@ -29,7 +29,10 @@
     <ClCompile Include="list\updateList\updateList.cpp" />
     <ClCompile Include="main\main.cpp" />
     <ClCompile Include="main\window\window.cpp" />
+    <ClCompile Include="manager\effectManager\effectManager.cpp" />
     <ClCompile Include="manager\manager.cpp" />
+    <ClCompile Include="objectBase\fbxModel\fbxModel.cpp" />
+    <ClCompile Include="objectBase\instancingBillboard\instancingBillboard.cpp" />
     <ClCompile Include="objectBase\objectBase.cpp" />
     <ClCompile Include="objectBase\polygon2D\polygon2D.cpp" />
     <ClCompile Include="objectBase\polygon3D\polygon3D.cpp" />
@@ -62,7 +65,10 @@
     <ClInclude Include="list\updateList\updateList.h" />
     <ClInclude Include="main\main.h" />
     <ClInclude Include="main\window\window.h" />
+    <ClInclude Include="manager\effectManager\effectManager.h" />
     <ClInclude Include="manager\manager.h" />
+    <ClInclude Include="objectBase\fbxModel\fbxModel.h" />
+    <ClInclude Include="objectBase\instancingBillboard\instancingBillboard.h" />
     <ClInclude Include="objectBase\objectBase.h" />
     <ClInclude Include="objectBase\polygon2D\polygon2D.h" />
     <ClInclude Include="objectBase\polygon3D\polygon3D.h" />

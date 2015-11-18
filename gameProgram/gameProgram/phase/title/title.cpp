@@ -29,11 +29,20 @@
 #include "..\..\objectBase\polygon2D\polygon2D.h"
 #include "..\..\objectBase\polygon3D\polygon3D.h"
 
+#include "..\..\objectBase\fbxModel\fbxModel.h"
+#include "..\..\objectBase\instancingBillboard\instancingBillboard.h"
+#include "..\..\manager\effectManager\effectManager.h"
+
+#include "..\..\input\keyboard\keyboard.h"
+#include "..\..\objectBase\fbxModel\fbxModel.h"
+
+
+
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // マクロ定義
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-const D3DXVECTOR3 _at	= D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-const D3DXVECTOR3 _eye	= D3DXVECTOR3(0.0f, 0.0f, -50.0f);
+const D3DXVECTOR3 _at	= D3DXVECTOR3(0.0f, 50.0f, 0.0f);
+const D3DXVECTOR3 _eye	= D3DXVECTOR3(0.0f, 100.0f, 250.0f);
 
 //=============================================================================
 // コンストラクタ
@@ -51,6 +60,7 @@ Title::Title(LPDIRECT3DDEVICE9 device) : Phase(device)
 	m_drawListManager	= nullptr;
 
 	m_command_manager	= nullptr;
+	m_effectManager		= nullptr;
 }
 
 //=============================================================================
@@ -141,6 +151,9 @@ void Title::Finalize(void)
 	// コマンド
 	SafeFinalizeDelete(m_command_manager);
 
+	//エフェクトマネージャ
+	SafeFinalizeDelete(m_effectManager);
+
 	//----------------------------
 	// インポート
 	//----------------------------
@@ -180,9 +193,17 @@ void Title::Update(void)
 
 	m_command_manager->Update();
 
+	m_effectManager->Update();
+
 	//----------------------------
 	// 画面遷移
 	//----------------------------
+
+	if( m_keyboard->trigger( DIK_1 ) )
+	{
+		m_effectManager->AddEffectFromDataBase( 0,D3DXVECTOR3(0,0,0) );
+	}
+
 	if(pad->buttonTrigger(XINPUT_GAMEPAD_A))
 	{
 	//	Manager::nextPhase((Phase*)new Demo(m_device));
@@ -202,6 +223,11 @@ void Title::Draw(void)
 					D3DCOLOR_RGBA(32, 0, 0, 255), 1.0f, 0);
 
 	//----------------------------
+	// カメラセット
+	//----------------------------
+	m_camera->SetCamera();
+
+	//----------------------------
 	// 2D描画
 	//----------------------------
 	m_drawListManager->AllDraw(m_camera->viewProjection());
@@ -215,7 +241,7 @@ void Title::Draw(void)
 bool Title::InitObject(void)
 {
 	Commandmanager::Create(&m_command_manager, m_padXManager, m_debugproc);
-
+	
 	//----------------------------
 	// 2Dポリゴンテスト
 	//----------------------------
@@ -232,6 +258,30 @@ bool Title::InitObject(void)
 	m_updateList->Link(poly2d);
 	m_drawListManager->Link(poly2d, 4, Shader::PAT_2D);
 	poly2d->pos(250.0f, 250.0f, 0.0f);
+	
+	//------------------------------
+	//エフェクト　ｆｂｘテスト
+	//------------------------------
+	InstancingBillboard *bill;
+	if( !InstancingBillboard::Create( &bill,m_device,m_objectList,1,ObjectBase::TYPE_NONE,5000,
+		"../resources/texture/effect.jpg",D3DXVECTOR2(1,1),D3DXVECTOR2(1,1)))
+		return false;
+	m_drawListManager->Link( bill,1,Shader::PAT_NONE );
+
+	if( !EffectManager::Create( &m_effectManager,bill ) )
+		return false;
+	m_effectManager->LoadEffectData( "../resources/effect/FireWorks3.OEF" );
+	m_effectManager->SetOption( InstancingBillboard::OPTION(true,false,false));
+
+	//fbx
+	FbxModel *fbx;
+	if( !FbxModel::Create( &fbx,m_device,m_objectList,0,ObjectBase::TYPE_NONE,"../resources/fbxmodel/ggy.bin" ) )
+		return false;
+
+	m_drawListManager->Link( fbx,0,Shader::PAT_NONE );
+	m_updateList->Link( fbx );
+	fbx->StartAnimation(61,91,true );
+
 
 	//----------------------------
 	// 3Dポリゴンテスト

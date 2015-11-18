@@ -136,7 +136,7 @@ void Camera::SetCamera(void)
 	// ビューマトリックスの作成
 	D3DXMatrixLookAtLH(&m_view, &m_eye, &m_at, &m_vecU);
 	// ビューマトリックスの設定
-	//m_device->SetTransform(D3DTS_VIEW, &m_view);
+	m_device->SetTransform(D3DTS_VIEW, &m_view);
 
 	//----------------------------
 	// プロジェクションマトリックス
@@ -153,11 +153,13 @@ void Camera::SetCamera(void)
 	//m_device->SetTransform(D3DTS_PROJECTION, &m_projection);
 
 #ifdef _DEBUG
+	/*
 	// カメラ情報表示
 	m_debugproc->PrintDebugProc("***カメラ情報**********\nPos x:%f y:%f z:%f\nAt  x:%f y:%f z:%f\nRot x:%f y:%f z:%f\n",
 								m_eye.x, m_eye.y, m_eye.z,
 								m_at.x,  m_at.y,  m_at.z,
 								m_rot.x, m_rot.y, m_rot.z);
+								*/
 #endif
 }
 

@@ -116,6 +116,15 @@
     <Filter Include="commandmanager\commandteam">
       <UniqueIdentifier>{3adc7b59-0bdb-4da3-9ade-ba53708d1834}</UniqueIdentifier>
     </Filter>
+    <Filter Include="objectBase\instancingBillboard">
+      <UniqueIdentifier>{1a80459b-766f-42b6-8edd-3442b098e347}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="objectBase\fbxModel">
+      <UniqueIdentifier>{e6267e24-6b7e-4e8f-aed4-2871a0b52e8e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="manager\effectManager">
+      <UniqueIdentifier>{ec80397c-ac3d-4e4e-9751-8e9d6bbec489}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main\main.h">
@@ -211,6 +220,15 @@
     <ClInclude Include="objectBase\polygon3D\polygon3D.h">
       <Filter>objectBase\polygon3D</Filter>
     </ClInclude>
+    <ClInclude Include="objectBase\fbxModel\fbxModel.h">
+      <Filter>objectBase\fbxModel</Filter>
+    </ClInclude>
+    <ClInclude Include="objectBase\instancingBillboard\instancingBillboard.h">
+      <Filter>objectBase\instancingBillboard</Filter>
+    </ClInclude>
+    <ClInclude Include="manager\effectManager\effectManager.h">
+      <Filter>manager\effectManager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main\main.cpp">
@@ -302,6 +320,15 @@
     </ClCompile>
     <ClCompile Include="objectBase\polygon3D\polygon3D.cpp">
       <Filter>objectBase\polygon3D</Filter>
+    </ClCompile>
+    <ClCompile Include="objectBase\fbxModel\fbxModel.cpp">
+      <Filter>objectBase\fbxModel</Filter>
+    </ClCompile>
+    <ClCompile Include="objectBase\instancingBillboard\instancingBillboard.cpp">
+      <Filter>objectBase\instancingBillboard</Filter>
+    </ClCompile>
+    <ClCompile Include="manager\effectManager\effectManager.cpp">
+      <Filter>manager\effectManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
