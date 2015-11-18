@@ -194,6 +194,7 @@ void FbxModel::Draw(LPD3DXCONSTANTTABLE vsc, LPD3DXCONSTANTTABLE psc, D3DXMATRIX
 	vsc->SetMatrix( m_device,"mtx_vp",&vp );
 	vsc->SetInt( m_device,"no_bone",m_noBone);
 	vsc->SetMatrix( m_device,"mtx_world",&mtxWorld );
+	vsc->SetFloatArray( m_device,"light_vec",D3DXVECTOR3(0.5,-0.5,0 ),3 );
 
 	for( int i = 0 ; i < m_partSum ; i++ )
 	{

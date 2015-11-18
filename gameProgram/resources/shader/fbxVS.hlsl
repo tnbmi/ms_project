@@ -3,6 +3,8 @@ float4 mat_diffuse;
 
 float4x4 mtx_bone[50];
 
+float3 light_vec;
+
 sampler samp;
 void VS( in float3 Pos : POSITION,in float3 Nor : NORMAL,in float2 Uv : TEXCOORD0,in float4 Weight : TEXCOORD1,in float4 BoneIdx :TEXCOORD2,
          out float4 OutPos : POSITION,out float4 OutCol : COLOR,out float2 OutUv : TEXCOORD0 )
@@ -35,5 +37,5 @@ void VS( in float3 Pos : POSITION,in float3 Nor : NORMAL,in float2 Uv : TEXCOORD
     OutUv = Uv;
     OutPos = outp;
     float3 n = mul( Nor,mtx_comb_world );
-    OutCol = mat_diffuse * (dot( n,-float3(0.5,-0.5,0) ) * 0.5 + 0.5);
+    OutCol = mat_diffuse * (dot( n,-light_vec ) * 0.5 + 0.5);
 }
