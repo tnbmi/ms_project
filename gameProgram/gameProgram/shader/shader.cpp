@@ -25,14 +25,18 @@ enum VS_TABLE
 {
 	VS_NONE	 = -1,
 	VS_2D	 = 0,
-	VS_LIGHT
+	VS_LIGHT,
+	VS_FBX,
+	VS_INS,
 };
 
 // ファイルパス
 const char* _vsName[] =
 {
 	{"/twoDimensionsVS.hlsl"},
-	{"/lightVS.hlsl"}
+	{"/lightVS.hlsl"},
+	{"/fbxVS.hlsl"},
+	{"/instancingVS.hlsl"}
 };
 
 //----------------------------
@@ -43,14 +47,18 @@ enum PS_TABLE
 {
 	PS_NONE = -1,
 	PS_2D = 0,
-	PS_BASIC
+	PS_BASIC,
+	PS_FBX,
+	PS_INS
 };
 
 // ファイルパス
 const char* _psName[] =
 {
 	{"/twoDimensionsPS.hlsl"},
-	{"/basicPS.hlsl"}
+	{"/basicPS.hlsl"},
+	{"/fbxPS.hlsl"},
+	{"/instancingPS.hlsl"}
 };
 
 //----------------------------
@@ -69,6 +77,8 @@ const SHADER_SET _shader_set[Shader::PATTERN_MAX] =
 	{VS_NONE,	PS_NONE},		// NONE
 	{VS_2D,		PS_2D},			// 2D
 	{VS_LIGHT,	PS_BASIC},		// LIGHT
+	{VS_FBX,	PS_FBX},		// FBX
+	{VS_INS,	PS_INS}
 };
 
 //=============================================================================

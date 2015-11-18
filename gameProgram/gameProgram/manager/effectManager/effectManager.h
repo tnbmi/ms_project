@@ -62,7 +62,7 @@ public:
 		ANIMATION anim;//アニメーションあるならやるよ
 		int animFrame;
 
-		float compErase;
+		int compErase;
 		float animErase;
 
 		float lifeSpan;//今のところ補完フレームと寿命は同じ

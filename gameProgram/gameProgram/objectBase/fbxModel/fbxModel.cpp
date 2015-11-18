@@ -21,12 +21,9 @@ FbxModel::FbxModel(LPDIRECT3DDEVICE9 device, ObjectList* objectList, int priorit
 	// メンバー初期化
 	//----------------------------
 
-	//シェーダーは外になる可能性大なので
-	TempInit();
-
 	m_pos = D3DXVECTOR3(0,0,0);
 	m_rot = D3DXVECTOR3(0,0,0);
-	m_scl = D3DXVECTOR3(1,1,1);
+	m_scl = D3DXVECTOR3(-1,1,1);
 
 	//アニメーションループ
 	m_isAnimRoop = false;
@@ -81,6 +78,18 @@ bool FbxModel::Initialize(void)
 	//----------------------------
 	// コメント
 	//----------------------------
+	//シェーダーやらなんやらの汎用性とかは無視
+	//頂点要素配列を作る
+	D3DVERTEXELEMENT9 elem[] ={
+		{0,0,D3DDECLTYPE_FLOAT3,D3DDECLMETHOD_DEFAULT,D3DDECLUSAGE_POSITION, 0},
+		{0,12,D3DDECLTYPE_FLOAT3,D3DDECLMETHOD_DEFAULT,D3DDECLUSAGE_NORMAL,  0},
+		{0,24,D3DDECLTYPE_FLOAT2,D3DDECLMETHOD_DEFAULT,D3DDECLUSAGE_TEXCOORD,0},
+		{0,32,D3DDECLTYPE_FLOAT4,D3DDECLMETHOD_DEFAULT,D3DDECLUSAGE_TEXCOORD,1},
+		{0,48,D3DDECLTYPE_FLOAT4,D3DDECLMETHOD_DEFAULT,D3DDECLUSAGE_TEXCOORD,2},
+		D3DDECL_END()
+	};
+	//デカール作成
+	m_device->CreateVertexDeclaration(elem,&m_decl);
 
 	return true;
 }
@@ -144,8 +153,6 @@ void FbxModel::Finalize(void)
 		}
 
 	}
-
-	TempUninit();
 }
 
 //=============================================================================
@@ -163,10 +170,10 @@ void FbxModel::Draw(LPD3DXCONSTANTTABLE vsc, LPD3DXCONSTANTTABLE psc, D3DXMATRIX
 {
 	D3DXMATRIX mtxWorld,mtxScl,mtxTrans,mtxRot;
 
-	vsc = m_vs_constant_table;
-	psc = m_ps_constant_table;
-
-	m_device->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+	if( m_scl.x <= -1 )
+	{
+		m_device->SetRenderState(D3DRS_CULLMODE, D3DCULL_CW);
+	}
 
 	//ワールドマトリックス
 	D3DXMatrixIdentity(&mtxWorld);
@@ -183,9 +190,6 @@ void FbxModel::Draw(LPD3DXCONSTANTTABLE vsc, LPD3DXCONSTANTTABLE psc, D3DXMATRIX
 	}
 
 	m_device->SetVertexDeclaration( m_decl );
-
-	m_device->SetVertexShader( m_vertex_shader );
-	m_device->SetPixelShader( m_pixel_shader );
 
 	vsc->SetMatrix( m_device,"mtx_vp",&vp );
 	vsc->SetInt( m_device,"no_bone",m_noBone);
@@ -217,8 +221,7 @@ void FbxModel::Draw(LPD3DXCONSTANTTABLE vsc, LPD3DXCONSTANTTABLE psc, D3DXMATRIX
 		}
 	}
 
-	m_device->SetVertexShader( NULL );
-	m_device->SetPixelShader( NULL );
+	m_device->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }
 
 //=============================================================================
@@ -273,13 +276,13 @@ void FbxModel::UpdateAnimation()
 			D3DXVECTOR3 scl,trans;
 			D3DXQUATERNION q ;
 			
-			scl.x = time * m_boneArray[i].keyFrameArray[m_curKeyFrame+1].scl.x + (1.0 - time ) *m_boneArray[i].keyFrameArray[m_curKeyFrame].scl.x;
-			scl.y = time * m_boneArray[i].keyFrameArray[m_curKeyFrame+1].scl.y + (1.0 - time ) *m_boneArray[i].keyFrameArray[m_curKeyFrame].scl.y;
-			scl.z = time * m_boneArray[i].keyFrameArray[m_curKeyFrame+1].scl.z + (1.0 - time ) *m_boneArray[i].keyFrameArray[m_curKeyFrame].scl.z;
+			scl.x = time * m_boneArray[i].keyFrameArray[m_curKeyFrame+1].scl.x + (1.0f - time ) *m_boneArray[i].keyFrameArray[m_curKeyFrame].scl.x;
+			scl.y = time * m_boneArray[i].keyFrameArray[m_curKeyFrame+1].scl.y + (1.0f - time ) *m_boneArray[i].keyFrameArray[m_curKeyFrame].scl.y;
+			scl.z = time * m_boneArray[i].keyFrameArray[m_curKeyFrame+1].scl.z + (1.0f - time ) *m_boneArray[i].keyFrameArray[m_curKeyFrame].scl.z;
 														
-			trans.x = time * m_boneArray[i].keyFrameArray[m_curKeyFrame+1].trans.x + (1.0 - time ) *m_boneArray[i].keyFrameArray[m_curKeyFrame].trans.x;
-			trans.y = time * m_boneArray[i].keyFrameArray[m_curKeyFrame+1].trans.y + (1.0 - time ) *m_boneArray[i].keyFrameArray[m_curKeyFrame].trans.y;
-			trans.z = time * m_boneArray[i].keyFrameArray[m_curKeyFrame+1].trans.z + (1.0 - time ) *m_boneArray[i].keyFrameArray[m_curKeyFrame].trans.z;
+			trans.x = time * m_boneArray[i].keyFrameArray[m_curKeyFrame+1].trans.x + (1.0f - time ) *m_boneArray[i].keyFrameArray[m_curKeyFrame].trans.x;
+			trans.y = time * m_boneArray[i].keyFrameArray[m_curKeyFrame+1].trans.y + (1.0f - time ) *m_boneArray[i].keyFrameArray[m_curKeyFrame].trans.y;
+			trans.z = time * m_boneArray[i].keyFrameArray[m_curKeyFrame+1].trans.z + (1.0f - time ) *m_boneArray[i].keyFrameArray[m_curKeyFrame].trans.z;
 
 			D3DXQuaternionSlerp( &q,&m_boneArray[i].keyFrameArray[m_curKeyFrame].rot,&m_boneArray[i].keyFrameArray[m_curKeyFrame+1].rot,time );
 
@@ -287,13 +290,13 @@ void FbxModel::UpdateAnimation()
 			D3DXVECTOR3 bscl,btrans;
 			D3DXQUATERNION bq;
 
-			bscl.x = btime * m_boneArray[i].keyFrameArray[m_blendCurKeyFrame+1].scl.x + (1.0 - btime ) *m_boneArray[i].keyFrameArray[m_blendCurKeyFrame].scl.x;
-			bscl.y = btime * m_boneArray[i].keyFrameArray[m_blendCurKeyFrame+1].scl.y + (1.0 - btime ) *m_boneArray[i].keyFrameArray[m_blendCurKeyFrame].scl.y;
-			bscl.z = btime * m_boneArray[i].keyFrameArray[m_blendCurKeyFrame+1].scl.z + (1.0 - btime ) *m_boneArray[i].keyFrameArray[m_blendCurKeyFrame].scl.z;
+			bscl.x = btime * m_boneArray[i].keyFrameArray[m_blendCurKeyFrame+1].scl.x + (1.0f - btime ) *m_boneArray[i].keyFrameArray[m_blendCurKeyFrame].scl.x;
+			bscl.y = btime * m_boneArray[i].keyFrameArray[m_blendCurKeyFrame+1].scl.y + (1.0f - btime ) *m_boneArray[i].keyFrameArray[m_blendCurKeyFrame].scl.y;
+			bscl.z = btime * m_boneArray[i].keyFrameArray[m_blendCurKeyFrame+1].scl.z + (1.0f - btime ) *m_boneArray[i].keyFrameArray[m_blendCurKeyFrame].scl.z;
 														
-			btrans.x = btime * m_boneArray[i].keyFrameArray[m_blendCurKeyFrame+1].trans.x + (1.0 - btime ) *m_boneArray[i].keyFrameArray[m_blendCurKeyFrame].trans.x;
-			btrans.y = btime * m_boneArray[i].keyFrameArray[m_blendCurKeyFrame+1].trans.y + (1.0 - btime ) *m_boneArray[i].keyFrameArray[m_blendCurKeyFrame].trans.y;
-			btrans.z = btime * m_boneArray[i].keyFrameArray[m_blendCurKeyFrame+1].trans.z + (1.0 - btime ) *m_boneArray[i].keyFrameArray[m_blendCurKeyFrame].trans.z;
+			btrans.x = btime * m_boneArray[i].keyFrameArray[m_blendCurKeyFrame+1].trans.x + (1.0f - btime ) *m_boneArray[i].keyFrameArray[m_blendCurKeyFrame].trans.x;
+			btrans.y = btime * m_boneArray[i].keyFrameArray[m_blendCurKeyFrame+1].trans.y + (1.0f - btime ) *m_boneArray[i].keyFrameArray[m_blendCurKeyFrame].trans.y;
+			btrans.z = btime * m_boneArray[i].keyFrameArray[m_blendCurKeyFrame+1].trans.z + (1.0f - btime ) *m_boneArray[i].keyFrameArray[m_blendCurKeyFrame].trans.z;
 
 			D3DXQuaternionSlerp( &bq,&m_boneArray[i].keyFrameArray[m_blendCurKeyFrame].rot,&m_boneArray[i].keyFrameArray[m_blendCurKeyFrame+1].rot,btime ); 
 
@@ -301,13 +304,13 @@ void FbxModel::UpdateAnimation()
 
 
 
-			s._11 = scl.x * rate + bscl.x * (1.0-rate);
-			s._22 = scl.y * rate + bscl.y * (1.0-rate);
-			s._33 = scl.z * rate + bscl.z * (1.0-rate);
+			s._11 = scl.x * rate + bscl.x * (1.0f-rate);
+			s._22 = scl.y * rate + bscl.y * (1.0f-rate);
+			s._33 = scl.z * rate + bscl.z * (1.0f-rate);
 
-			t._41 = trans.x * rate + btrans.x * (1.0 - rate );
-			t._42 = trans.y * rate + btrans.y * (1.0 - rate );
-			t._43 = trans.z * rate + btrans.z * (1.0 - rate );
+			t._41 = trans.x * rate + btrans.x * (1.0f - rate );
+			t._42 = trans.y * rate + btrans.y * (1.0f - rate );
+			t._43 = trans.z * rate + btrans.z * (1.0f - rate );
 
 			D3DXQuaternionSlerp( &q,&bq,&q,rate );
 
@@ -426,7 +429,7 @@ bool FbxModel::LoadFbxModel( const char *loadModelPath )
 {
 	LPDIRECT3DDEVICE9 device = m_device;
 	FILE *file;
-	file = fopen( loadModelPath,"rb" );
+	fopen_s( &file,loadModelPath,"rb" );
 
 	//パーツ数読み込み
 	fread( &m_partSum,sizeof( int ),1,file );
@@ -444,9 +447,6 @@ bool FbxModel::LoadFbxModel( const char *loadModelPath )
 
 		for( int j = 0 ; j < data ; j++ )
 		{
-			bool is_use;
-			//使用フラグ取得
-			//fread( &is_use,sizeof(bool),1,file );
 				int len;
 
 				//文字数読み込み
@@ -470,7 +470,7 @@ bool FbxModel::LoadFbxModel( const char *loadModelPath )
 
 					//バッファ生成
 					char *c = new char[len];
-					strcpy( c,m_part[ i ].dataArray[j].texName);
+					strcpy_s( c,len,m_part[ i ].dataArray[j].texName);
 
 					//一旦削除
 					delete []m_part[ i ].dataArray[j].texName;
@@ -478,7 +478,7 @@ bool FbxModel::LoadFbxModel( const char *loadModelPath )
 					//生成
 					m_part[ i ].dataArray[j].texName = new char[ tlen ];
 					//パス連結
-					sprintf( m_part[ i ].dataArray[j].texName,"%s%s",texPath,c );
+					sprintf_s( m_part[ i ].dataArray[j].texName,tlen,"%s%s",texPath,c );
 
 					//バッファ削除
 					delete []c;
@@ -575,11 +575,11 @@ bool FbxModel::LoadFbxModel( const char *loadModelPath )
 
 					//バッファに書き込み
 					//test
-					vtx[v].vtx = D3DXVECTOR3( pos[0],pos[1],pos[2] );
-					vtx[v].nor = D3DXVECTOR3( nor[0],nor[1],nor[2] );
-					vtx[v].uv  = D3DXVECTOR2( uv[0],uv[1] );
-					vtx[v].weight = D3DXVECTOR4( weight[0],weight[1],weight[2],weight[3] );
-					vtx[v].boneIdx= D3DXVECTOR4( boneidx[0],boneidx[1],boneidx[2],boneidx[3]);
+					vtx[v].vtx = D3DXVECTOR3( (float)pos[0],(float)pos[1],(float)pos[2] );
+					vtx[v].nor = D3DXVECTOR3( (float)nor[0],(float)nor[1],(float)nor[2] );
+					vtx[v].uv  = D3DXVECTOR2( (float)uv[0],(float)uv[1] );
+					vtx[v].weight = D3DXVECTOR4( (float)weight[0],(float)weight[1],(float)weight[2],(float)weight[3] );
+					vtx[v].boneIdx= D3DXVECTOR4( (float)boneidx[0],(float)boneidx[1],(float)boneidx[2],(float)boneidx[3]);
 				
 				}
 
@@ -685,9 +685,9 @@ bool FbxModel::LoadFbxModel( const char *loadModelPath )
 			fread( trans,sizeof(double),4,file );
 			fread( &time,sizeof( float ),1,file );
 
-			m_boneArray[ i ].keyFrameArray[ j ].rot   = D3DXQUATERNION( rot[0],rot[1],rot[2],rot[3] );
-			m_boneArray[ i ].keyFrameArray[ j ].scl   = D3DXVECTOR3( scl[0],scl[1],scl[2] );
-			m_boneArray[ i ].keyFrameArray[ j ].trans = D3DXVECTOR3( trans[0],trans[1],trans[2] );
+			m_boneArray[ i ].keyFrameArray[ j ].rot   = D3DXQUATERNION( (float)rot[0],(float)rot[1],(float)rot[2],(float)rot[3] );
+			m_boneArray[ i ].keyFrameArray[ j ].scl   = D3DXVECTOR3( (float)scl[0],(float)scl[1],(float)scl[2] );
+			m_boneArray[ i ].keyFrameArray[ j ].trans = D3DXVECTOR3( (float)trans[0],(float)trans[1],(float)trans[2] );
 			m_boneArray[ i ].keyFrameArray[ j ].time  = time;
 			
 		}
@@ -697,61 +697,4 @@ bool FbxModel::LoadFbxModel( const char *loadModelPath )
 
 	return true;
 
-}
-
-void FbxModel::TempInit()
-{
-	
-	LPD3DXBUFFER error = NULL;
-	LPD3DXBUFFER code = NULL;
-
-	char ShaderFilePath[128] = "../resources/shader/fbxshader.hlsl";
-
-	//シェーダー作る
-	D3DXCompileShaderFromFile( ShaderFilePath,NULL,NULL,"VS","vs_2_0",0,&code,&error,&m_vs_constant_table);
-
-	if( error != NULL )
-	{
-		MessageBox(NULL,(LPSTR)error->GetBufferPointer(),"エラー",MB_OK);
-		error->Release();
-	}
-	
-
-	m_device->CreateVertexShader((DWORD*)code->GetBufferPointer(),&m_vertex_shader);
-
-	code->Release();
-
-
-	//シェーダー作る
-	D3DXCompileShaderFromFile(ShaderFilePath,NULL,NULL,"PS","ps_2_0",0,&code,&error,&m_ps_constant_table);
-
-	if( error )
-	{
-		MessageBox(NULL,(LPSTR)error->GetBufferPointer(),"エラー",MB_OK);
-		error->Release();
-	}
-	m_device->CreatePixelShader((DWORD*)code->GetBufferPointer(),&m_pixel_shader);
-	code->Release();
-
-	//シェーダーやらなんやらの汎用性とかは無視
-	//頂点要素配列を作る
-	D3DVERTEXELEMENT9 elem[] ={
-		{0,0,D3DDECLTYPE_FLOAT3,D3DDECLMETHOD_DEFAULT,D3DDECLUSAGE_POSITION, 0},
-		{0,12,D3DDECLTYPE_FLOAT3,D3DDECLMETHOD_DEFAULT,D3DDECLUSAGE_NORMAL,  0},
-		{0,24,D3DDECLTYPE_FLOAT2,D3DDECLMETHOD_DEFAULT,D3DDECLUSAGE_TEXCOORD,0},
-		{0,32,D3DDECLTYPE_FLOAT4,D3DDECLMETHOD_DEFAULT,D3DDECLUSAGE_TEXCOORD,1},
-		{0,48,D3DDECLTYPE_FLOAT4,D3DDECLMETHOD_DEFAULT,D3DDECLUSAGE_TEXCOORD,2},
-		D3DDECL_END()
-	};
-	//デカール作成
-	m_device->CreateVertexDeclaration(elem,&m_decl);
-}
-
-void FbxModel::TempUninit()
-{
-	m_vertex_shader->Release();
-	m_pixel_shader->Release();
-	m_decl->Release();
-	m_vs_constant_table->Release();
-	m_ps_constant_table->Release();
 }

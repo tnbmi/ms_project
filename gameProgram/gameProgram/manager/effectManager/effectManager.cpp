@@ -120,26 +120,26 @@ void EffectManager::Update(void)
 			switch( m_particleArray[i].mode )
 			{
 				case EffectManager::COMP_MODE_LINE:
-					pos = Lerp( m_particleArray[i].key[0].pos,m_particleArray[i].key[1].pos,0,m_particleArray[i].compFrame,m_particleArray[i].compErase,Linear );
-					scl = Lerp( m_particleArray[i].key[0].scl,m_particleArray[i].key[1].scl,0,m_particleArray[i].compFrame,m_particleArray[i].compErase,Linear );
-					col = Lerp( m_particleArray[i].key[0].col,m_particleArray[i].key[1].col,0,m_particleArray[i].compFrame,m_particleArray[i].compErase,Linear );
+					pos = Lerp( m_particleArray[i].key[0].pos,m_particleArray[i].key[1].pos,0.0f,(float)m_particleArray[i].compFrame,m_particleArray[i].compErase,Linear );
+					scl = Lerp( m_particleArray[i].key[0].scl,m_particleArray[i].key[1].scl,0.0f,(float)m_particleArray[i].compFrame,m_particleArray[i].compErase,Linear );
+					col = Lerp( m_particleArray[i].key[0].col,m_particleArray[i].key[1].col,0.0f,(float)m_particleArray[i].compFrame,m_particleArray[i].compErase,Linear );
 					break;																														  
 				case EffectManager::COMP_MODE_EASEIN:																							  
-					pos = Lerp( m_particleArray[i].key[0].pos,m_particleArray[i].key[1].pos,0,m_particleArray[i].compFrame,m_particleArray[i].compErase,EaseIn );
-					scl = Lerp( m_particleArray[i].key[0].scl,m_particleArray[i].key[1].scl,0,m_particleArray[i].compFrame,m_particleArray[i].compErase,EaseIn );
-					col = Lerp( m_particleArray[i].key[0].col,m_particleArray[i].key[1].col,0,m_particleArray[i].compFrame,m_particleArray[i].compErase,EaseIn );
+					pos = Lerp( m_particleArray[i].key[0].pos,m_particleArray[i].key[1].pos,0.0f,(float)m_particleArray[i].compFrame,m_particleArray[i].compErase,EaseIn );
+					scl = Lerp( m_particleArray[i].key[0].scl,m_particleArray[i].key[1].scl,0.0f,(float)m_particleArray[i].compFrame,m_particleArray[i].compErase,EaseIn );
+					col = Lerp( m_particleArray[i].key[0].col,m_particleArray[i].key[1].col,0.0f,(float)m_particleArray[i].compFrame,m_particleArray[i].compErase,EaseIn );
 																																				  
 					break;																														  
 				case EffectManager::COMP_MODE_EASEOUT:																							  
-					pos = Lerp( m_particleArray[i].key[0].pos,m_particleArray[i].key[1].pos,0,m_particleArray[i].compFrame,m_particleArray[i].compErase,EaseOut );
-					scl = Lerp( m_particleArray[i].key[0].scl,m_particleArray[i].key[1].scl,0,m_particleArray[i].compFrame,m_particleArray[i].compErase,EaseOut );
-					col = Lerp( m_particleArray[i].key[0].col,m_particleArray[i].key[1].col,0,m_particleArray[i].compFrame,m_particleArray[i].compErase,EaseOut );
+					pos = Lerp( m_particleArray[i].key[0].pos,m_particleArray[i].key[1].pos,0.0f,(float)m_particleArray[i].compFrame,m_particleArray[i].compErase,EaseOut );
+					scl = Lerp( m_particleArray[i].key[0].scl,m_particleArray[i].key[1].scl,0.0f,(float)m_particleArray[i].compFrame,m_particleArray[i].compErase,EaseOut );
+					col = Lerp( m_particleArray[i].key[0].col,m_particleArray[i].key[1].col,0.0f,(float)m_particleArray[i].compFrame,m_particleArray[i].compErase,EaseOut );
 																																				  
 					break;																														  
 				case EffectManager::COMP_MODE_CUBE:																								  
-					pos = Lerp( m_particleArray[i].key[0].pos,m_particleArray[i].key[1].pos,0,m_particleArray[i].compFrame,m_particleArray[i].compErase,Cube );
-					scl = Lerp( m_particleArray[i].key[0].scl,m_particleArray[i].key[1].scl,0,m_particleArray[i].compFrame,m_particleArray[i].compErase,Cube );
-					col = Lerp( m_particleArray[i].key[0].col,m_particleArray[i].key[1].col,0,m_particleArray[i].compFrame,m_particleArray[i].compErase,Cube );
+					pos = Lerp( m_particleArray[i].key[0].pos,m_particleArray[i].key[1].pos,0.0f,(float)m_particleArray[i].compFrame,m_particleArray[i].compErase,Cube );
+					scl = Lerp( m_particleArray[i].key[0].scl,m_particleArray[i].key[1].scl,0.0f,(float)m_particleArray[i].compFrame,m_particleArray[i].compErase,Cube );
+					col = Lerp( m_particleArray[i].key[0].col,m_particleArray[i].key[1].col,0.0f,(float)m_particleArray[i].compFrame,m_particleArray[i].compErase,Cube );
 					break;
 			}
 
@@ -379,7 +379,7 @@ void EffectManager::SetCamPos( const D3DXVECTOR3 &camPos )
 void EffectManager::LoadEffectData( const char *filePath )
 {
 	FILE *file = NULL;
-	file = fopen( filePath,"rb");
+	fopen_s( &file,filePath,"rb");
 	int size;
 
 	//ÉOÉãÅ[Évêîï€ë∂
