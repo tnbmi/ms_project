@@ -40,8 +40,8 @@
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // マクロ定義
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-const D3DXVECTOR3 _at	= D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-const D3DXVECTOR3 _eye	= D3DXVECTOR3(0.0f, 0.0f, 10.0f);
+const D3DXVECTOR3 _at	= D3DXVECTOR3(0.0f, 50.0f, 0.0f);
+const D3DXVECTOR3 _eye	= D3DXVECTOR3(0.0f, 100.0f, 250.0f);
 
 //=============================================================================
 // コンストラクタ
@@ -222,9 +222,13 @@ void Title::Draw(void)
 					D3DCOLOR_RGBA(32, 0, 0, 255), 1.0f, 0);
 
 	//----------------------------
-	// 2D描画
+	// カメラセット
 	//----------------------------
 	m_camera->SetCamera();
+
+	//----------------------------
+	// 2D描画
+	//----------------------------
 	m_drawListManager->AllDraw(m_camera->viewProjection());
 
 	m_command_manager->Draw();
@@ -258,10 +262,10 @@ bool Title::InitObject(void)
 	//エフェクト　ｆｂｘテスト
 	//------------------------------
 	InstancingBillboard *bill;
-	if( !InstancingBillboard::Create( &bill,m_device,m_objectList,1,ObjectBase::OBJECT_TYPE::TYPE_NONE,5000,
+	if( !InstancingBillboard::Create( &bill,m_device,m_objectList,1,ObjectBase::TYPE_NONE,5000,
 		"../resources/texture/effect.jpg",D3DXVECTOR2(1,1),D3DXVECTOR2(1,1)))
 		return false;
-	m_drawListManager->Link( bill,1,Shader::PATTERN::PAT_NONE );
+	m_drawListManager->Link( bill,1,Shader::PAT_NONE );
 
 	if( !EffectManager::Create( &m_effectManager,bill ) )
 		return false;
@@ -270,10 +274,10 @@ bool Title::InitObject(void)
 
 	//fbx
 	FbxModel *fbx;
-	if( !FbxModel::Create( &fbx,m_device,m_objectList,0,ObjectBase::OBJECT_TYPE::TYPE_NONE,"../resources/fbxmodel/ggy.bin" ) )
+	if( !FbxModel::Create( &fbx,m_device,m_objectList,0,ObjectBase::TYPE_NONE,"../resources/fbxmodel/ggy.bin" ) )
 		return false;
 
-	m_drawListManager->Link( fbx,0,Shader::PATTERN::PAT_NONE );
+	m_drawListManager->Link( fbx,0,Shader::PAT_NONE );
 	m_updateList->Link( fbx );
 	fbx->StartAnimation(61,91,true );
 
