@@ -114,9 +114,7 @@ void Polygon3D::Draw(LPD3DXCONSTANTTABLE vsc, LPD3DXCONSTANTTABLE psc, D3DXMATRI
 		texSumpler = psc->GetSamplerIndex("texSampler");
 
 		// サンプラーステートパラメータ
-		m_device->SetSamplerState(texSumpler, D3DSAMP_ADDRESSU, D3DTADDRESS_BORDER);	// テクスチャアドレッシング方法(U値)を設定
-		m_device->SetSamplerState(texSumpler, D3DSAMP_ADDRESSV, D3DTADDRESS_BORDER);	// テクスチャアドレッシング方法(V値)を設定
-		m_device->SetSamplerState(texSumpler, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);		// テクスチャ縮小フィルタモードを設定
+		m_device->SetSamplerState(texSumpler, D3DSAMP_MINFILTER, D3DTEXF_ANISOTROPIC);	// テクスチャ縮小フィルタモードを設定
 		m_device->SetSamplerState(texSumpler, D3DSAMP_MIPFILTER, D3DTEXF_LINEAR);
 		m_device->SetSamplerState(texSumpler, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);		// テクスチャ拡大フィルタモードを設定
 		m_device->SetSamplerState(texSumpler, D3DSAMP_MAXANISOTROPY, 16);
@@ -131,6 +129,8 @@ void Polygon3D::Draw(LPD3DXCONSTANTTABLE vsc, LPD3DXCONSTANTTABLE psc, D3DXMATRI
 	else
 		m_device->SetTexture(0, m_texture);
 
+	m_device->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+
 	//----------------------------
 	// 描画
 	//----------------------------
@@ -138,6 +138,8 @@ void Polygon3D::Draw(LPD3DXCONSTANTTABLE vsc, LPD3DXCONSTANTTABLE psc, D3DXMATRI
 								2,
 								m_vtx,
 								sizeof(VERTEX));
+
+	m_device->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 }
 
 //=============================================================================
@@ -151,12 +153,6 @@ void Polygon3D::SetVertex(void)
 	m_vtx[1].position = D3DXVECTOR3( half.x, -half.y, half.z);
 	m_vtx[2].position = D3DXVECTOR3(-half.x,  half.y, half.z);
 	m_vtx[3].position = D3DXVECTOR3( half.x,  half.y, half.z);
-
-	// 反射光
-	m_vtx[0].color = m_color;
-	m_vtx[1].color = m_color;
-	m_vtx[2].color = m_color;
-	m_vtx[3].color = m_color;
 
 	// テクスチャ座標
 	m_vtx[0].uv = D3DXVECTOR2(0.0f, 0.0f);

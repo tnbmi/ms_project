@@ -15,6 +15,7 @@
 #include "..\..\manager\manager.h"
 #include "..\demo\demo.h"
 
+#include "..\..\input\keyboard\keyboard.h"
 #include "..\..\input\padX\padXManager.h"
 #include "..\..\input\padX\padX.h"
 
@@ -33,10 +34,7 @@
 #include "..\..\objectBase\instancingBillboard\instancingBillboard.h"
 #include "..\..\manager\effectManager\effectManager.h"
 
-#include "..\..\input\keyboard\keyboard.h"
 #include "..\..\objectBase\fbxModel\fbxModel.h"
-
-
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // マクロ定義
@@ -282,7 +280,6 @@ bool Title::InitObject(void)
 	m_updateList->Link( fbx );
 	fbx->StartAnimation(61,91,true );
 
-
 	//----------------------------
 	// 3Dポリゴンテスト
 	//----------------------------
@@ -291,8 +288,8 @@ bool Title::InitObject(void)
 		return false;
 	m_updateList->Link(poly3d);
 	m_drawListManager->Link(poly3d, 4, Shader::PAT_LIGHT);
-	//poly2d->pos(200.0f, 200.0f, 0.0f);
-	poly3d->scl(128.0f, 128.0f, 0.0f);
+	poly3d->pos(200.0f, 200.0f, 0.0f);
+	poly3d->scl(512.0f, 512.0f, 0.0f);
 
 	return true;
 }
