@@ -264,7 +264,7 @@ bool Title::InitObject(void)
 	if( !InstancingBillboard::Create( &bill,m_device,m_objectList,1,ObjectBase::TYPE_NONE,5000,
 		"../resources/texture/effect.jpg",D3DXVECTOR2(1,1),D3DXVECTOR2(1,1)))
 		return false;
-	m_drawListManager->Link( bill,1,Shader::PAT_NONE );
+	m_drawListManager->Link( bill,1,Shader::PAT_INS );
 
 	if( !EffectManager::Create( &m_effectManager,bill ) )
 		return false;
@@ -276,7 +276,7 @@ bool Title::InitObject(void)
 	if( !FbxModel::Create( &fbx,m_device,m_objectList,0,ObjectBase::TYPE_NONE,"../resources/fbxmodel/ggy.bin" ) )
 		return false;
 
-	m_drawListManager->Link( fbx,0,Shader::PAT_NONE );
+	m_drawListManager->Link( fbx,0,Shader::PAT_FBX );
 	m_updateList->Link( fbx );
 	fbx->StartAnimation(61,91,true );
 

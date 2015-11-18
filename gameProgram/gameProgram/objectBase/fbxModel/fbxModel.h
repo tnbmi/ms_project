@@ -40,17 +40,8 @@ private:
 
 	inline float Cube( float T ){ return T * T * ( 3.0f - 2.0f * T ); }
 
-	//後でけします
-	void TempInit();
-	void TempUninit();
-
 	int m_noBone;//int値として使いたいんで
 	
-
-	LPD3DXCONSTANTTABLE m_vs_constant_table;
-	LPD3DXCONSTANTTABLE m_ps_constant_table;
-	IDirect3DVertexShader9 *m_vertex_shader;
-	IDirect3DPixelShader9  *m_pixel_shader;
 	LPDIRECT3DVERTEXDECLARATION9 m_decl;
 
 	
@@ -159,19 +150,6 @@ private:
 	//ロードするんご
 	bool LoadFbxModel( const char *loadModelPath );
 };
-
-/*
-class FbxMode
-{
-	private:
-	FbxModel *m_fbxModel;
-	public:
-	FbxMode( FbxModel *model ){ m_fbxModel = model; }
-	virtual ~FbxMode(){}
-	virtual void Update();
-	virtual void Draw();
-}
-*/
 
 //=============================================================================
 #endif

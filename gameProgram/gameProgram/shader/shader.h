@@ -25,6 +25,8 @@ public:
 		PAT_NONE = 0,
 		PAT_2D,
 		PAT_LIGHT,
+		PAT_FBX,
+		PAT_INS,
 
 		PATTERN_MAX
 	};

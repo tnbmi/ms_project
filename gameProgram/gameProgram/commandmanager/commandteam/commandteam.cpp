@@ -12,11 +12,14 @@
 #include "..\..\debugproc\debugproc.h"
 #include "..\..\input\padX\padX.h"
 
-#define TIME_PENALTY (30)
-#define COMMAND_MAX (6)
-#define COMMAND_MIN (4)
-
-const char* _comtex[6] = {"UP\n","Y\n","RIGHT\n","DOWN\n","A\n","X\n"};
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+// マクロ定義
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+const int	_time_penalty = 30;
+const int	_command_max = 6;
+const int	_command_min = 4;
+const int	_upper_limit = 2;
+const char*	_comtex[6] = {"UP\n","Y\n","RIGHT\n","DOWN\n","A\n","X\n"};
 
 //=============================================================================
 // コンストラクタ
@@ -26,12 +29,11 @@ Commandteam::Commandteam(void)
 	//----------------------------
 	// メンバー初期化
 	//----------------------------
-	m_command_list[0] = XINPUT_GAMEPAD_DPAD_UP;
-	m_command_list[1] = XINPUT_GAMEPAD_Y;
-	m_command_list[2] = XINPUT_GAMEPAD_DPAD_RIGHT;
-	m_command_list[3] = XINPUT_GAMEPAD_DPAD_DOWN;
-	m_command_list[4] = XINPUT_GAMEPAD_A;
-	m_command_list[5] = XINPUT_GAMEPAD_X;
+	/*for(int i = 0; i < COMMAND_MAX; i++)
+	{
+		m_command_list[i] = 0;
+	}*/
+	m_command = nullptr;
 
 	m_pad[0]		= nullptr;
 	m_pad[1]		= nullptr;
@@ -39,6 +41,8 @@ Commandteam::Commandteam(void)
 
 	m_command_count = 0;
 	m_time_penalty = 0;
+	m_command_long = 0;
+	m_flag_lose = false;
 }
 
 //=============================================================================
@@ -69,6 +73,7 @@ bool Commandteam::Initialize(void)
 	//----------------------------
 	// コメント
 	//----------------------------
+	m_command_long = _command_max;
 
 	return true;
 }
@@ -83,7 +88,7 @@ void Commandteam::Finalize(void)
 //=============================================================================
 // 更新
 //=============================================================================
-void Commandteam::Update(void)
+bool Commandteam::Update(void)
 {
 #ifdef _DEBUG
 	m_debugproc->PrintDebugProc( _comtex[m_command_count] );
@@ -102,15 +107,24 @@ void Commandteam::Update(void)
 
 		if( m_pad[current_user]->buttonTrigger( 0xf00f ) )
 		{
-			if( m_pad[current_user]->buttonTrigger( m_command_list[m_command_count] ) )
+			if( m_pad[current_user]->buttonTrigger( *(m_command + m_command_count) ) )
 				m_command_count++;
 			else
-				m_time_penalty = TIME_PENALTY;
+				m_time_penalty = _time_penalty;
 		}
 	}
 
-	if(m_command_count >= COMMAND_MAX)
+	if(m_command_count >= m_command_long)
+	{
 		m_command_count = 0;
+
+		if(m_flag_lose)
+			m_command_long = _command_min;
+
+		return true;
+	}
+
+	return false;
 }
 
 //=============================================================================
@@ -118,6 +132,22 @@ void Commandteam::Update(void)
 //=============================================================================
 void Commandteam::Draw(void)
 {
+}
+
+//=============================================================================
+// フラグセット
+//=============================================================================
+void Commandteam::SetFragLose(bool flag)
+{
+	m_flag_lose = flag;
+
+	if(flag)
+	{
+		if(m_command_count <= _upper_limit)
+		{
+			m_command_long = _command_min;
+		}
+	}
 }
 
 // EOF
