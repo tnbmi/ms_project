@@ -1,0 +1,61 @@
+﻿2015/11/17 13:03:11 にビルドを開始しました。
+     1>ノード 2 上のプロジェクト "C:\Users\AT11原田優人\Documents\Git\みそてん\gameProgram\gameProgram\gameProgram.vcxproj" (build ターゲット)。
+     1>InitializeBuildStatus:
+         "AlwaysCreate" が指定されたため "Debug\gameProgram.unsuccessfulbuild" を作成しています。
+       ClCompile:
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt phase\title\title.cpp
+         title.cpp
+     1>c:\users\at11原田優人\documents\git\みそてん\gameprogram\gameprogram\phase\title\title.cpp(260): warning C4482: 非標準の拡張機能が使用されています: enum 'ObjectBase::OBJECT_TYPE' が限定名で使用されます
+     1>c:\users\at11原田優人\documents\git\みそてん\gameprogram\gameprogram\phase\title\title.cpp(263): warning C4482: 非標準の拡張機能が使用されています: enum 'Shader::PATTERN' が限定名で使用されます
+     1>c:\users\at11原田優人\documents\git\みそてん\gameprogram\gameprogram\phase\title\title.cpp(272): warning C4482: 非標準の拡張機能が使用されています: enum 'ObjectBase::OBJECT_TYPE' が限定名で使用されます
+     1>c:\users\at11原田優人\documents\git\みそてん\gameprogram\gameprogram\phase\title\title.cpp(275): warning C4482: 非標準の拡張機能が使用されています: enum 'Shader::PATTERN' が限定名で使用されます
+       ManifestResourceCompile:
+         すべての出力が最新のものです。
+       Link:
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\AT11原田優人\Documents\Git\みそてん\gameProgram\Debug\gameProgram.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\gameProgram.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"C:\Users\AT11原田優人\Documents\Git\みそてん\gameProgram\Debug\gameProgram.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\AT11原田優人\Documents\Git\みそてん\gameProgram\Debug\gameProgram.lib" /MACHINE:X86 Debug\gameProgram.exe.embed.manifest.res
+         Debug\commandmanager.obj
+         Debug\commandteam.obj
+         Debug\debugproc.obj
+         Debug\demoImport.obj
+         Debug\gameImport.obj
+         Debug\import.obj
+         Debug\resultImport.obj
+         Debug\titleImport.obj
+         Debug\keyboard.obj
+         Debug\padX.obj
+         Debug\padXManager.obj
+         Debug\drawList.obj
+         Debug\drawListManager.obj
+         Debug\list.obj
+         Debug\objectList.obj
+         Debug\updateList.obj
+         Debug\main.obj
+         Debug\window.obj
+         Debug\effectManager.obj
+         Debug\manager.obj
+         Debug\fbxModel.obj
+         Debug\instancingBillboard.obj
+         Debug\objectBase.obj
+         Debug\polygon2D.obj
+         Debug\demo.obj
+         Debug\game.obj
+         Debug\phase.obj
+         Debug\result.obj
+         Debug\title.obj
+         Debug\renderer.obj
+         Debug\shader.obj
+         Debug\camera.obj
+       Manifest:
+         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /out:"Debug\gameProgram.exe.embed.manifest" /manifest Debug\gameProgram.exe.intermediate.manifest
+         すべての出力が最新のものです。
+       LinkEmbedManifest:
+         すべての出力が最新のものです。
+         gameProgram.vcxproj -> C:\Users\AT11原田優人\Documents\Git\みそてん\gameProgram\Debug\gameProgram.exe
+       FinalizeBuildStatus:
+         ファイル "Debug\gameProgram.unsuccessfulbuild" を削除しています。
+         "Debug\gameProgram.lastbuildstate" のタッチ タスクを実行しています。
+     1>プロジェクト "C:\Users\AT11原田優人\Documents\Git\みそてん\gameProgram\gameProgram\gameProgram.vcxproj" (build ターゲット) のビルドが完了しました。
+
+ビルドに成功しました。
+
+経過時間 00:00:01.24
