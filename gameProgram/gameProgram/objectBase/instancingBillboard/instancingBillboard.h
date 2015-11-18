@@ -71,15 +71,14 @@ public:
 		void SetCameraPos( const D3DXVECTOR3 camPos ){ m_cameraPos = camPos; }
 		int GetPolygonMax(){ return m_polygonMax; }
 
+		void SetViewMtx( const D3DXMATRIX &viewMtx ){ m_viewMtx = viewMtx; }
+
 private:
 
-	//シェーダー 多分消える
-	IDirect3DVertexShader9 *m_vertex_shader;
-	IDirect3DPixelShader9  *m_pixel_shader;
-	LPD3DXCONSTANTTABLE m_vs_constant_table;
-	LPD3DXCONSTANTTABLE m_ps_constant_table;
 	LPDIRECT3DVERTEXDECLARATION9 m_decl;
 
+	//ビュー行列
+	D3DXMATRIX m_viewMtx;
 
 	//バッファ
 	LPDIRECT3DVERTEXBUFFER9 m_vtxBuff;//板ポリ用

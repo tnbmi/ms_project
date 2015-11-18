@@ -91,8 +91,9 @@ void EffectManager::Finalize(void)
 	for( int i = 0 ; i < m_databaseCursol ; i++ )
 	{
 		delete []m_effectDatabase[i].particleArray;
-		m_databaseCursol = 0;
 	}
+
+	m_databaseCursol = 0;
 }
 
 //=============================================================================
@@ -458,6 +459,15 @@ void EffectManager::LoadEffectData( const char *filePath )
 void EffectManager::SetOption( InstancingBillboard::OPTION option )
 {
 	m_insBill->SetOption( option );
+}
+
+//---------------------------------------------------------------------------------------
+//ビュー行列を保持しているインスタンシング
+//---------------------------------------------------------------------------------------
+
+void EffectManager::SetViewMtx( const D3DXMATRIX &viewMtx )
+{
+	m_insBill->SetViewMtx( viewMtx );
 }
 
 

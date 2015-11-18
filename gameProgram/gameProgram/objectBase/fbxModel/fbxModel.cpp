@@ -223,6 +223,7 @@ void FbxModel::Draw(LPD3DXCONSTANTTABLE vsc, LPD3DXCONSTANTTABLE psc, D3DXMATRIX
 	}
 
 	m_device->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+
 }
 
 //=============================================================================

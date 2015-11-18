@@ -107,6 +107,8 @@ public:
 	//‰ÁZ‡¬“™‚ÌƒIƒvƒVƒ‡ƒ“
 	void SetOption( InstancingBillboard::OPTION option );
 
+	void SetViewMtx( const D3DXMATRIX &viewMtx );
+
 private:
 
 	LPDIRECT3DDEVICE9 m_device;
