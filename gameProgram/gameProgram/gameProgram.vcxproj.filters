@@ -208,6 +208,9 @@
     <ClInclude Include="commandmanager\commandteam\commandteam.h">
       <Filter>commandmanager\commandteam</Filter>
     </ClInclude>
+    <ClInclude Include="objectBase\polygon3D\polygon3D.h">
+      <Filter>objectBase\polygon3D</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main\main.cpp">
@@ -296,6 +299,9 @@
     </ClCompile>
     <ClCompile Include="commandmanager\commandteam\commandteam.cpp">
       <Filter>commandmanager\commandteam</Filter>
+    </ClCompile>
+    <ClCompile Include="objectBase\polygon3D\polygon3D.cpp">
+      <Filter>objectBase\polygon3D</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

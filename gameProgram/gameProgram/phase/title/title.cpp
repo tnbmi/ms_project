@@ -27,6 +27,7 @@
 
 #include "..\..\commandmanager\commandmanager.h"
 #include "..\..\objectBase\polygon2D\polygon2D.h"
+#include "..\..\objectBase\polygon3D\polygon3D.h"
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // マクロ定義
@@ -231,6 +232,17 @@ bool Title::InitObject(void)
 	m_updateList->Link(poly2d);
 	m_drawListManager->Link(poly2d, 4, Shader::PAT_2D);
 	poly2d->pos(250.0f, 250.0f, 0.0f);
+
+	//----------------------------
+	// 3Dポリゴンテスト
+	//----------------------------
+	Polygon3D* poly3d;
+	if(!Polygon3D::Create(&poly3d, m_device, m_objectList, m_import->texture(TitleImport::TEST_0)))
+		return false;
+	m_updateList->Link(poly3d);
+	m_drawListManager->Link(poly3d, 4, Shader::PAT_LIGHT);
+	//poly2d->pos(200.0f, 200.0f, 0.0f);
+	poly3d->scl(128.0f, 128.0f, 0.0f);
 
 	return true;
 }

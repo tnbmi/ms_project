@@ -29,7 +29,8 @@ public:
 	enum OBJECT_TYPE
 	{
 		TYPE_NONE = 0,
-		TYPE_2D
+		TYPE_2D,
+		TYPE_3D
 	};
 
 	ObjectBase(LPDIRECT3DDEVICE9 device, ObjectList* objectList, int priority = 0, OBJECT_TYPE type = TYPE_NONE);

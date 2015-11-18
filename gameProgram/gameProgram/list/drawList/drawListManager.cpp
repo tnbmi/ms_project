@@ -30,17 +30,17 @@ DrawListManager::DrawListManager(LPDIRECT3DDEVICE9 device)
 
 	// 2D頂点宣言
 	HRESULT hr;
-	D3DVERTEXELEMENT9 velement2D[] =
+	/*D3DVERTEXELEMENT9 velement2D[] =
 	{
 		{0,  0, D3DDECLTYPE_FLOAT3,		D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_POSITIONT,	0},		// 座標
 		{0, 12, D3DDECLTYPE_D3DCOLOR,	D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_COLOR,		0},		// 色
 		{0, 16, D3DDECLTYPE_FLOAT2,		D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_TEXCOORD,	0},		// テクスチャ
 		D3DDECL_END(),
-	};
+	}
 
 	hr = m_device->CreateVertexDeclaration(&velement2D[0], &m_decl2D);
 	if(FAILED(hr))
-		MessageBox(NULL, "2D頂点宣言失敗", "CreateVertexDeclaration", MB_OK);
+		MessageBox(NULL, "2D頂点宣言失敗", "CreateVertexDeclaration", MB_OK);;*/
 
 	// 3D頂点宣言
 	D3DVERTEXELEMENT9 velement3D[] =

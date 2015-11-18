@@ -32,6 +32,7 @@
     <ClCompile Include="manager\manager.cpp" />
     <ClCompile Include="objectBase\objectBase.cpp" />
     <ClCompile Include="objectBase\polygon2D\polygon2D.cpp" />
+    <ClCompile Include="objectBase\polygon3D\polygon3D.cpp" />
     <ClCompile Include="phase\demo\demo.cpp" />
     <ClCompile Include="phase\game\game.cpp" />
     <ClCompile Include="phase\phase.cpp" />
@@ -64,6 +65,7 @@
     <ClInclude Include="manager\manager.h" />
     <ClInclude Include="objectBase\objectBase.h" />
     <ClInclude Include="objectBase\polygon2D\polygon2D.h" />
+    <ClInclude Include="objectBase\polygon3D\polygon3D.h" />
     <ClInclude Include="phase\demo\demo.h" />
     <ClInclude Include="phase\game\game.h" />
     <ClInclude Include="phase\phase.h" />

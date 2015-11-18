@@ -43,7 +43,7 @@ private:
 	Shader*		m_shader;
 	DrawList*	m_drawList[Shader::PATTERN_MAX];
 
-	LPDIRECT3DVERTEXDECLARATION9 m_decl2D;
+	//LPDIRECT3DVERTEXDECLARATION9 m_decl2D;
 	LPDIRECT3DVERTEXDECLARATION9 m_decl3D;
 };
 
