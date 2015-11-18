@@ -5,8 +5,8 @@
 //
 //*****************************************************************************
 
-#ifndef MY_COMMANDMANAGER_H_
-#define MY_COMMANDMANAGER_H_
+#ifndef MY_COMMAND_MANAGER_H_
+#define MY_COMMAND_MANAGER_H_
 //=============================================================================
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -34,7 +34,10 @@ public:
 	void Draw(void);
 
 private:
-	Commandteam* m_team[2];
+	Commandteam*	m_team[2];
+	int*			m_command_list;
+	int				m_progress;
+	Debugproc*		m_debugproc;
 };
 
 //=============================================================================
