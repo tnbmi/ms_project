@@ -41,7 +41,7 @@
 // マクロ定義
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 const D3DXVECTOR3 _at	= D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-const D3DXVECTOR3 _eye	= D3DXVECTOR3(0.0f, 0.0f, 10.0f);
+const D3DXVECTOR3 _eye	= D3DXVECTOR3(0.0f, 0.0f, 500.0f);
 
 //=============================================================================
 // コンストラクタ
@@ -261,7 +261,7 @@ bool Title::InitObject(void)
 	if( !InstancingBillboard::Create( &bill,m_device,m_objectList,1,ObjectBase::OBJECT_TYPE::TYPE_NONE,5000,
 		"../resources/texture/effect.jpg",D3DXVECTOR2(1,1),D3DXVECTOR2(1,1)))
 		return false;
-	m_drawListManager->Link( bill,1,Shader::PATTERN::PAT_NONE );
+	m_drawListManager->Link( bill,1,Shader::PATTERN::PAT_INS );
 
 	if( !EffectManager::Create( &m_effectManager,bill ) )
 		return false;
@@ -273,7 +273,7 @@ bool Title::InitObject(void)
 	if( !FbxModel::Create( &fbx,m_device,m_objectList,0,ObjectBase::OBJECT_TYPE::TYPE_NONE,"../resources/fbxmodel/ggy.bin" ) )
 		return false;
 
-	m_drawListManager->Link( fbx,0,Shader::PATTERN::PAT_NONE );
+	m_drawListManager->Link( fbx,0,Shader::PATTERN::PAT_FBX );
 	m_updateList->Link( fbx );
 	fbx->StartAnimation(61,91,true );
 

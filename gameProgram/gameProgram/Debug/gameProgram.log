@@ -1,14 +1,10 @@
-﻿2015/11/17 13:03:11 にビルドを開始しました。
+﻿2015/11/18 12:11:04 にビルドを開始しました。
      1>ノード 2 上のプロジェクト "C:\Users\AT11原田優人\Documents\Git\みそてん\gameProgram\gameProgram\gameProgram.vcxproj" (build ターゲット)。
      1>InitializeBuildStatus:
          "AlwaysCreate" が指定されたため "Debug\gameProgram.unsuccessfulbuild" を作成しています。
        ClCompile:
-         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt phase\title\title.cpp
-         title.cpp
-     1>c:\users\at11原田優人\documents\git\みそてん\gameprogram\gameprogram\phase\title\title.cpp(260): warning C4482: 非標準の拡張機能が使用されています: enum 'ObjectBase::OBJECT_TYPE' が限定名で使用されます
-     1>c:\users\at11原田優人\documents\git\みそてん\gameprogram\gameprogram\phase\title\title.cpp(263): warning C4482: 非標準の拡張機能が使用されています: enum 'Shader::PATTERN' が限定名で使用されます
-     1>c:\users\at11原田優人\documents\git\みそてん\gameprogram\gameprogram\phase\title\title.cpp(272): warning C4482: 非標準の拡張機能が使用されています: enum 'ObjectBase::OBJECT_TYPE' が限定名で使用されます
-     1>c:\users\at11原田優人\documents\git\みそてん\gameprogram\gameprogram\phase\title\title.cpp(275): warning C4482: 非標準の拡張機能が使用されています: enum 'Shader::PATTERN' が限定名で使用されます
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt objectBase\instancingBillboard\instancingBillboard.cpp
+         instancingBillboard.cpp
        ManifestResourceCompile:
          すべての出力が最新のものです。
        Link:
@@ -58,4 +54,4 @@
 
 ビルドに成功しました。
 
-経過時間 00:00:01.24
+経過時間 00:00:01.10

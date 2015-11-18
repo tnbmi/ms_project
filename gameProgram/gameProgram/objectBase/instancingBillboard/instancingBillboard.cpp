@@ -163,30 +163,6 @@ void InstancingBillboard::Finalize(void)
 		m_decl = nullptr;
 	}
 
-	if( m_vertex_shader != nullptr )
-	{
-		m_vertex_shader->Release();
-		m_vertex_shader = nullptr;
-	}
-
-	if( m_pixel_shader != nullptr )
-	{
-		m_pixel_shader->Release();
-		m_pixel_shader = nullptr;
-	}
-
-	if( m_ps_constant_table != nullptr )
-	{
-		m_ps_constant_table->Release();
-		m_ps_constant_table = nullptr;
-	}
-
-	if( m_vs_constant_table != nullptr )
-	{
-		m_vs_constant_table->Release();
-		m_vs_constant_table = nullptr;
-	}
-
 	if( m_texture != nullptr )
 	{
 		m_texture->Release();
@@ -235,13 +211,6 @@ void InstancingBillboard::Draw(LPD3DXCONSTANTTABLE vsc, LPD3DXCONSTANTTABLE psc,
 		m_device->SetStreamSource( 0,m_vtxBuff,0,m_vtxSize );
 		m_device->SetStreamSource( 1,m_instancingBuff,0,sizeof( INSTANCINGDATA ) );
 
-		//シェーダーセット
-
-		HRESULT test;
-		test = m_device->SetVertexShader( m_vertex_shader );
-		test = m_device->SetPixelShader(  m_pixel_shader  );
-
-
 		/*
 		//テクスチャのセット
 		m_device->SetSamplerState( m_ps_constant_table->GetSamplerIndex( "samp" ),D3DSAMP_ADDRESSU, D3DTADDRESS_WRAP );
@@ -249,20 +218,20 @@ void InstancingBillboard::Draw(LPD3DXCONSTANTTABLE vsc, LPD3DXCONSTANTTABLE psc,
 		m_device->SetSamplerState( m_ps_constant_table->GetSamplerIndex( "samp" ), D3DSAMP_MINFILTER, D3DTEXF_LINEAR);	// テクスチャ縮小フィルタモードを設定
 		m_device->SetSamplerState( m_ps_constant_table->GetSamplerIndex( "samp" ), D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);	// テクスチャ拡大フィルタモードを設定
 	*/
-		m_device->SetTexture( m_ps_constant_table->GetSamplerIndex( "samp" ),m_texture );
+		m_device->SetTexture( psc->GetSamplerIndex( "samp" ),m_texture );
 
 		D3DXMATRIX mtx_view,mtx_proj;
 		m_device->GetTransform( D3DTS_VIEW,&mtx_view );
 		m_device->GetTransform( D3DTS_PROJECTION,&mtx_proj );
 
-		m_vs_constant_table->SetMatrix( m_device,"mtx_vp",&vp );
+		vsc->SetMatrix( m_device,"mtx_vp",&vp );
 
 		//offsetで動く量
 		D3DXVECTOR2 uv_size;
 		uv_size.x = m_oneSize.x / m_texSize.x;
 		uv_size.y = m_oneSize.y / m_texSize.y;
 
-		m_vs_constant_table->SetFloatArray( m_device,"uv_size",uv_size,2 );
+		vsc->SetFloatArray( m_device,"uv_size",uv_size,2 );
 
 
 		m_device->SetIndices( m_idxBuff );
@@ -277,10 +246,6 @@ void InstancingBillboard::Draw(LPD3DXCONSTANTTABLE vsc, LPD3DXCONSTANTTABLE psc,
 
 		//アルファテスト解除
 		m_device->SetRenderState( D3DRS_ALPHATESTENABLE,false );
-
-		//シェーダー解除
-		m_device->SetVertexShader( NULL );
-		m_device->SetPixelShader(  NULL );
 
 		//後処理
 		m_device->SetStreamSourceFreq( 0,1 );
@@ -437,37 +402,6 @@ void InstancingBillboard::LoadShaderBill()
 
 	code = NULL;
 	err = NULL;
-
-	//pass
-	char shader_file_path[256] = "../resources/shader/Instancing.hlsl";
-	char shader_func_vs[256] = "VSBILL";
-	char shader_func_ps[256] = "PSBILL";
-
-	//バーテックスシェーダー
-	D3DXCompileShaderFromFile( shader_file_path,NULL,NULL,shader_func_vs,"vs_2_0",0,&code,&err,&m_vs_constant_table);
-
-	if( err != NULL )
-	{
-		MessageBox(NULL,(LPSTR)err->GetBufferPointer(),"エラー",MB_OK);
-		err->Release();
-		err = NULL;
-	}
-
-	m_device->CreateVertexShader((DWORD*)code->GetBufferPointer(),&m_vertex_shader);
-	code->Release();
-
-	//ピクセルシェーダー
-	D3DXCompileShaderFromFile(  shader_file_path,NULL,NULL,shader_func_ps,"ps_2_0",0,&code,NULL,&m_ps_constant_table);
-
-	if( err != NULL )
-	{
-		MessageBox(NULL,(LPSTR)err->GetBufferPointer(),"エラー",MB_OK);
-		err->Release();
-		err = NULL;
-	}
-
-	m_device->CreatePixelShader((DWORD*)code->GetBufferPointer(),&m_pixel_shader);
-	code->Release();
 
 	//データ構造定義
 	//頂点要素配列を作る
