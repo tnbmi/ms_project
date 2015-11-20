@@ -20,6 +20,14 @@
 class Light
 {
 public:
+	// ïΩçsåıåπ
+	struct DIR_LIGHT
+	{
+		D3DXVECTOR3	dir;
+		D3DXCOLOR	diffuse;
+		D3DXCOLOR	ambient;
+	};
+
 	Light(void);
 	virtual ~Light(void);
 
@@ -30,6 +38,7 @@ public:
 	void Draw(void);
 
 private:
+	DIR_LIGHT m_dirLight;
 };
 
 //=============================================================================

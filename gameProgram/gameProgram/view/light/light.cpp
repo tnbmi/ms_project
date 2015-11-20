@@ -18,6 +18,11 @@ Light::Light(void)
 	//----------------------------
 	// ÉÅÉìÉoÅ[èâä˙âª
 	//----------------------------
+	// ïΩçsåıåπ
+	m_dirLight.dir		= D3DXVECTOR3(0.0f, -1.0f, 0.0f);
+	m_dirLight.diffuse	= D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+	m_dirLight.ambient	= D3DXCOLOR(0.1f, 0.1f, 0.1f, 1.0f);
+	D3DXVec3Normalize(&m_dirLight.dir, &m_dirLight.dir);
 }
 
 //=============================================================================
