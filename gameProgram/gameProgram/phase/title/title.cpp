@@ -36,8 +36,6 @@
 #include "..\..\input\keyboard\keyboard.h"
 #include "..\..\objectBase\fbxModel\fbxModel.h"
 
-
-
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // マクロ定義
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -272,18 +270,8 @@ bool Title::InitObject(void)
 	if( !EffectManager::Create( &m_effectManager,bill ) )
 		return false;
 	m_effectManager->LoadEffectData( "../resources/effect/FireWorks3.OEF" );
-	m_effectManager->LoadEffectData( "../resources/effect/Mario.OEF" );
+	m_effectManager->LoadEffectData( "../resources/effect/Chino.OEF" );
 	m_effectManager->SetOption( InstancingBillboard::OPTION(true,false,false));
-
-	//fbx
-	FbxModel *fbx;
-	if( !FbxModel::Create( &fbx,m_device,m_objectList,0,ObjectBase::TYPE_NONE,"../resources/fbxmodel/ggy.bin" ) )
-		return false;
-
-	m_drawListManager->Link( fbx,0,Shader::PAT_FBX );
-	m_updateList->Link( fbx );
-	fbx->StartAnimation(61,91,true );
-
 
 	//----------------------------
 	// 3Dポリゴンテスト
