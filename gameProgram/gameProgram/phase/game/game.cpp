@@ -27,11 +27,17 @@
 
 #include "..\..\commandmanager\commandmanager.h"
 
+#include "..\..\manager\effectManager\effectManager.h"
+#include "..\..\objectBase\instancingBillboard\instancingBillboard.h"
+#include "..\..\object\player.h"
+#include "..\..\objectBase\fbxModel\fbxModel.h"
+#include "..\..\input\keyboard\keyboard.h"
+
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // マクロ定義
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 const D3DXVECTOR3 _at	= D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-const D3DXVECTOR3 _eye	= D3DXVECTOR3(0.0f, 0.0f, -50.0f);
+const D3DXVECTOR3 _eye	= D3DXVECTOR3(0.0f, 0.0f, -550.0f);
 
 //=============================================================================
 // コンストラクタ
@@ -139,6 +145,16 @@ void Game::Finalize(void)
 	// コマンド
 	SafeFinalizeDelete(m_command_manager);
 
+	//エフェクト
+	m_effectManager->Finalize();
+	SafeFinalizeDelete( m_effectManager );
+
+	//プレイヤー削除
+	m_redTeam->Finalize();
+	m_blueTeam->Finalize();
+	SafeFinalizeDelete( m_redTeam );
+	SafeFinalizeDelete( m_blueTeam );
+
 	//----------------------------
 	// インポート
 	//----------------------------
@@ -167,6 +183,7 @@ void Game::Update(void)
 	m_debugproc->PrintDebugProc("===ゲームフェーズ===\n");
 #endif
 
+	m_camera->SetCamera();
 	//----------------------------
 	// 更新内容
 	//----------------------------
@@ -181,6 +198,42 @@ void Game::Update(void)
 	// コマンドマネージャ
 	//----------------------------
 	m_command_manager->Update();
+
+	//----------------------------
+	//Player更新
+	//----------------------------
+	m_redTeam->Update();
+	m_blueTeam->Update();
+
+	//----------------------------
+	//EffectManager更新
+	//----------------------------
+	m_effectManager->Update();
+
+	if( m_keyboard->trigger(DIK_1 ) )
+	{
+		m_effectManager->AddEffectFromDataBase(0,D3DXVECTOR3(0,0,0) );
+	}
+
+	if( m_keyboard->trigger(DIK_2 ) )
+	{
+		m_effectManager->AddEffectFromDataBase(1,D3DXVECTOR3(0,0,0) );
+	}
+
+	if( m_keyboard->trigger(DIK_3 ) )
+	{
+		m_effectManager->AddEffectFromDataBase(2,D3DXVECTOR3(0,0,0) );
+	}
+
+	if( m_keyboard->trigger(DIK_4 ) )
+	{
+		m_effectManager->AddEffectFromDataBase(3,D3DXVECTOR3(0,0,0) );
+	}
+
+	if( m_keyboard->trigger(DIK_5 ) )
+	{
+		m_effectManager->AddEffectFromDataBase(4,D3DXVECTOR3(0,0,0) );
+	}
 
 	//----------------------------
 	// 画面遷移
@@ -226,6 +279,57 @@ bool Game::InitObject(void)
 {
 	// コマンドマネージャ生成
 	Commandmanager::Create(&m_command_manager, m_padXManager, m_debugproc, m_objectList, m_updateList, m_drawListManager, m_device, m_import);
+
+	//エフェクトマネージャ生成
+	InstancingBillboard *bill;
+	InstancingBillboard::Create(&bill,m_device,m_objectList,1,ObjectBase::TYPE_3D,10000,"../resources/texture/effect.jpg",D3DXVECTOR2(1,1),D3DXVECTOR2(1,1));
+	m_drawListManager->Link( bill,0,Shader::PAT_INS );
+	m_updateList->Link( bill );
+	EffectManager::Create( &m_effectManager,bill );
+	m_effectManager->SetOption( InstancingBillboard::OPTION(true,false,false ) );
+	//エフェクトロードするんごおおおおおおおおおおおお
+	m_effectManager->LoadEffectData("../resources/effect/Chino.OEF" );
+	m_effectManager->LoadEffectData("../resources/effect/Cocoa.OEF" );
+	m_effectManager->LoadEffectData("../resources/effect/Rize.OEF" );
+	m_effectManager->LoadEffectData("../resources/effect/Chiya.OEF" );
+	m_effectManager->LoadEffectData("../resources/effect/Syaro.OEF" );
+
+	//プレイヤー生成
+	FbxModel *part1,*part2;
+
+	FbxModel::Create( &part1,m_device,m_objectList,0,ObjectBase::TYPE_3D,"../resources/fbxModel/ggy.bin" );
+	FbxModel::Create( &part2,m_device,m_objectList,0,ObjectBase::TYPE_3D,"../resources/fbxModel/ggy.bin" );
+	//list
+	m_drawListManager->Link( part1,0,Shader::PAT_FBX );
+	m_updateList->Link(part1);
+	m_drawListManager->Link( part2,0,Shader::PAT_FBX );
+	m_updateList->Link(part2);
+
+	part1->StartAnimation( 1,60,true );
+	part2->StartAnimation( 61,91,true );
+
+	Player::Create( &m_redTeam,part1,part2 );
+
+	FbxModel::Create( &part1,m_device,m_objectList,0,ObjectBase::TYPE_3D,"../resources/fbxModel/ggy.bin" );
+	FbxModel::Create( &part2,m_device,m_objectList,0,ObjectBase::TYPE_3D,"../resources/fbxModel/ggy.bin" );
+
+	//list
+	m_drawListManager->Link( part1,0,Shader::PAT_FBX );
+	m_updateList->Link(part1);
+	m_drawListManager->Link( part2,0,Shader::PAT_FBX );
+	m_updateList->Link(part2);
+
+	part1->StartAnimation( 1,60,true );
+	part2->StartAnimation( 61,91,true );
+
+	Player::Create( &m_blueTeam,part1,part2 );
+
+	m_redTeam->pos( D3DXVECTOR3( -100,0,0 ));
+	m_redTeam->rot( D3DXVECTOR3(0,D3DX_PI/2,0 ) );
+	m_blueTeam->pos( D3DXVECTOR3(100,0,0 ) );
+	m_redTeam->offsetPos( D3DXVECTOR3(0,150,0 ) );
+	m_blueTeam->offsetPos( D3DXVECTOR3(0,150,0 ) );
+
 
 	return true;
 }

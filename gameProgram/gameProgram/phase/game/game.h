@@ -24,6 +24,8 @@ class ObjectList;
 class UpdateList;
 class DrawListManager;
 class Commandmanager;
+class EffectManager;
+class Player;
 
 class Game : public Phase
 {
@@ -46,6 +48,10 @@ private:
 	GameImport*	m_import;
 	Camera*		m_camera;
 	Commandmanager*	m_command_manager;
+
+	EffectManager *m_effectManager;
+	Player *m_redTeam;
+	Player *m_blueTeam;
 };
 
 //=============================================================================
