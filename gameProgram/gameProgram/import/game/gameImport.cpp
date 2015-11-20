@@ -22,7 +22,16 @@ const char* _game_texture_name[] =
 	nullptr,
 
 	"/test_0.png",
-	"/test_1.png"
+	"/test_1.png",
+
+	"/BUTTON_A.png",
+	"/BUTTON_B.png",
+	"/BUTTON_X.png",
+	"/BUTTON_Y.png",
+	"/BUTTON_UP.png",
+	"/BUTTON_DOWN.png",
+	"/BUTTON_RIGHT.png",
+	"/BUTTON_LEFT.png",
 };
 
 //=============================================================================

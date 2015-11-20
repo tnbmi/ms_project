@@ -10,8 +10,16 @@
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 #include "commandmanager.h"
 #include "..\common\safe.h"
+
 #include "..\input\padX\padXManager.h"
+
 #include "..\debugproc\debugproc.h"
+
+#include "..\list\objectList\objectList.h"
+#include "..\list\updateList\updateList.h"
+#include "..\list\drawList\drawListManager.h"
+#include "..\import\game\gameImport.h"
+
 #include "..\commandmanager\commandteam\commandteam.h"
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -38,6 +46,9 @@ Commandmanager::Commandmanager(void)
 	}
 	m_progress = 0;
 	m_command_list = nullptr;
+	m_objectList = nullptr;
+	m_updateList = nullptr;
+	m_drawListManager = nullptr;
 }
 
 //=============================================================================
@@ -50,10 +61,17 @@ Commandmanager::~Commandmanager(void)
 //=============================================================================
 // ê∂ê¨
 //=============================================================================
-bool Commandmanager::Create(Commandmanager** outPointer, PadXManager* padXManager, Debugproc* debugproc)
+bool Commandmanager::Create(Commandmanager** outPointer,
+							PadXManager* padXManager,
+							Debugproc* debugproc,
+							ObjectList* objList,
+							UpdateList* updList,
+							DrawListManager* drwList,
+							LPDIRECT3DDEVICE9 device,
+							GameImport* import)
 {
 	Commandmanager* pointer = new Commandmanager();
-	if(!pointer->Initialize(padXManager, debugproc))
+	if(!pointer->Initialize(padXManager, debugproc, objList, updList, drwList, device, import))
 		return false;
 
 	*outPointer = pointer;
@@ -63,12 +81,22 @@ bool Commandmanager::Create(Commandmanager** outPointer, PadXManager* padXManage
 //=============================================================================
 // èâä˙âª
 //=============================================================================
-bool Commandmanager::Initialize(PadXManager* padXManager, Debugproc* debugproc)
+bool Commandmanager::Initialize(PadXManager* padXManager,
+								Debugproc* debugproc,
+								ObjectList* objList,
+								UpdateList* updList,
+								DrawListManager* drwList,
+								LPDIRECT3DDEVICE9 device,
+								GameImport* import)
 {
 	//----------------------------
 	// ÉRÉÅÉìÉg
 	//----------------------------
 	m_progress = _progress_neutral;
+
+	m_objectList = objList;
+	m_updateList = updList;
+	m_drawListManager = drwList;
 
 	m_debugproc = debugproc;
 
@@ -86,7 +114,7 @@ bool Commandmanager::Initialize(PadXManager* padXManager, Debugproc* debugproc)
 
 	for(int i = 0; i < _team_max; i++)
 	{
-		Commandteam::Create(&m_team[i]);
+		Commandteam::Create(&m_team[i], m_objectList, m_updateList, m_drawListManager, device, import);
 		m_team[i]->debugproc(debugproc);
 #ifdef _DEBUG
 		m_team[i]->SetPlayer( padXManager->pad(i), padXManager->pad(i) );

@@ -15,11 +15,17 @@
 #include "..\..\manager\manager.h"
 #include "..\result\result.h"
 
+#include "..\..\list\objectList\objectList.h"
+#include "..\..\list\updateList\updateList.h"
+#include "..\..\list\drawList\drawListManager.h"
+
 #include "..\..\input\padX\padXManager.h"
 #include "..\..\input\padX\padX.h"
 
 #include "..\..\import\game\gameImport.h"
 #include "..\..\view\camera\camera.h"
+
+#include "..\..\commandmanager\commandmanager.h"
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // マクロ定義
@@ -37,6 +43,12 @@ Game::Game(LPDIRECT3DDEVICE9 device) : Phase(device)
 	//----------------------------
 	m_import = nullptr;
 	m_camera = nullptr;
+
+	m_objectList		= nullptr;
+	m_updateList		= nullptr;
+	m_drawListManager	= nullptr;
+
+	m_command_manager	= nullptr;
 }
 
 //=============================================================================
@@ -64,6 +76,21 @@ bool Game::Initialize(void)
 	// インポート
 	//----------------------------
 	if(!GameImport::Create(&m_import, m_device))
+		return false;
+
+	//----------------------------
+	// 管理リスト
+	//----------------------------
+	// オブジェクトリスト
+	if(!ObjectList::Create(&m_objectList))
+		return false;
+
+	// 更新リスト
+	if(!UpdateList::Create(&m_updateList))
+		return false;
+
+	// 描画リスト
+	if(!DrawListManager::Create(&m_drawListManager, m_device))
 		return false;
 
 	//----------------------------
@@ -97,7 +124,20 @@ void Game::Finalize(void)
 	//----------------------------
 	// オブジェクト
 	//----------------------------
-	// シーン
+	// 存在するオブジェクト全て削除
+	m_objectList->AllDarelete();
+
+	// 描画リストマネージャー
+	SafeFinalizeDelete(m_drawListManager);
+
+	// 更新リスト
+	SafeDelete(m_updateList);
+
+	// オブジェクトリスト
+	SafeDelete(m_objectList);
+
+	// コマンド
+	SafeFinalizeDelete(m_command_manager);
 
 	//----------------------------
 	// インポート
@@ -133,6 +173,16 @@ void Game::Update(void)
 	PadX* pad = m_padXManager->pad(0);
 
 	//----------------------------
+	// オブジェクト更新
+	//----------------------------
+	m_updateList->AllUpdate();
+
+	//----------------------------
+	// コマンドマネージャ
+	//----------------------------
+	m_command_manager->Update();
+
+	//----------------------------
 	// 画面遷移
 	//----------------------------
 	if(pad->buttonTrigger(XINPUT_GAMEPAD_A))
@@ -152,6 +202,21 @@ void Game::Draw(void)
 	m_device->Clear(0, NULL,
 					(D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER | D3DCLEAR_STENCIL),
 					D3DCOLOR_RGBA(0, 0, 32, 256), 1.0f, 0);
+
+	//----------------------------
+	// カメラセット
+	//----------------------------
+	m_camera->SetCamera();
+
+	//----------------------------
+	// 2D描画
+	//----------------------------
+	m_drawListManager->AllDraw(m_camera->viewProjection());
+
+	//----------------------------
+	// コマンドマネージャ描画
+	//----------------------------
+	m_command_manager->Draw();
 }
 
 //=============================================================================
@@ -159,6 +224,9 @@ void Game::Draw(void)
 //=============================================================================
 bool Game::InitObject(void)
 {
+	// コマンドマネージャ生成
+	Commandmanager::Create(&m_command_manager, m_padXManager, m_debugproc, m_objectList, m_updateList, m_drawListManager, m_device, m_import);
+
 	return true;
 }
 

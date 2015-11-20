@@ -20,6 +20,10 @@
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 class GameImport;
 class Camera;
+class ObjectList;
+class UpdateList;
+class DrawListManager;
+class Commandmanager;
 
 class Game : public Phase
 {
@@ -35,8 +39,13 @@ public:
 private:
 	bool InitObject(void);
 
+	ObjectList*		 m_objectList;
+	UpdateList*		 m_updateList;
+	DrawListManager* m_drawListManager;
+
 	GameImport*	m_import;
 	Camera*		m_camera;
+	Commandmanager*	m_command_manager;
 };
 
 //=============================================================================

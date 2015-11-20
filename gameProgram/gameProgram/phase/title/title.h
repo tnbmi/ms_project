@@ -24,7 +24,6 @@ class Camera;
 class ObjectList;
 class UpdateList;
 class DrawListManager;
-class Commandmanager;
 class EffectManager;
 
 class Title : public Phase
@@ -48,7 +47,6 @@ private:
 	UpdateList*		 m_updateList;
 	DrawListManager* m_drawListManager;
 
-	Commandmanager*	m_command_manager;
 	EffectManager * m_effectManager;
 
 };
