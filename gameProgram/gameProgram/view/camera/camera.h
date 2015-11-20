@@ -59,6 +59,7 @@ public:
 	void	distance(float distance) {m_distance = distance;}
 	float	distance(void) {return m_distance;}
 
+	D3DXMATRIX view(void) {return m_view;}
 	D3DXMATRIX viewProjection(void) {return (m_view * m_projection);}
 
 private:

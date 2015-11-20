@@ -38,9 +38,10 @@ void VS(in float3 inPos			: POSITION0,
 	outUV = inUV;
 
 	// ライト計算
-	float light = (dot(worldNormal, -gLightDir) * 0.5f) + 0.5f;
+	//float light = (dot(worldNormal, -gLightDir) * 0.5f) + 0.5f;
 
 	// 出力カラー
-	outDiffuse	 = light * gMatDiffuse * gLightDiffuse + gMatAmbient * gLightAmbient;
-	outDiffuse.a = 1.0f;
+	//outDiffuse = light * gMatDiffuse * gLightDiffuse + gMatAmbient * gLightAmbient;
+	//outDiffuse.a = 1.0f;
+	outDiffuse = float4(1.0f, 1.0f, 1.0f, 1.0f);
 }

@@ -40,7 +40,7 @@
 // マクロ定義
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 const D3DXVECTOR3 _at	= D3DXVECTOR3(0.0f, 50.0f, 0.0f);
-const D3DXVECTOR3 _eye	= D3DXVECTOR3(0.0f, 100.0f, 250.0f);
+const D3DXVECTOR3 _eye	= D3DXVECTOR3(0.0f, 100.0f, -250.0f);
 
 //=============================================================================
 // コンストラクタ
@@ -218,7 +218,7 @@ void Title::Draw(void)
 	//----------------------------
 	m_device->Clear(0, NULL,
 					(D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER | D3DCLEAR_STENCIL),
-					D3DCOLOR_RGBA(32, 0, 0, 255), 1.0f, 0);
+					D3DCOLOR_RGBA(128, 64, 64, 255), 1.0f, 0);
 
 	//----------------------------
 	// カメラセット
@@ -288,8 +288,8 @@ bool Title::InitObject(void)
 		return false;
 	m_updateList->Link(poly3d);
 	m_drawListManager->Link(poly3d, 4, Shader::PAT_LIGHT);
-	poly3d->pos(200.0f, 200.0f, 0.0f);
-	poly3d->scl(512.0f, 512.0f, 0.0f);
+	poly3d->pos(30.0f, 50.0f, -10.0f);
+	poly3d->scl(32.0f, 32.0f, 0.0f);
 
 	return true;
 }

@@ -96,13 +96,21 @@ void Polygon3D::Draw(LPD3DXCONSTANTTABLE vsc, LPD3DXCONSTANTTABLE psc, D3DXMATRI
 	D3DXMatrixTranslation(&translate, m_pos.x, m_pos.y, m_pos.z);
 	D3DXMatrixMultiply(&m_world, &m_world, &translate);
 
+	// ワールドビュープロジェクションマトリックス
+	wvp = m_world * vp;
+
 	//----------------------------
 	// ワールドデータ設定
 	//----------------------------
 	// バーテックス
 	if(vsc != nullptr)
+	{
 		// ワールドマトリックスの設定
 		vsc->SetMatrix(m_device, "gWorld", &m_world);
+
+		// ワールドビュープロジェクションマトリックスの設定
+		vsc->SetMatrix(m_device, "gWVP", &wvp);
+	}
 
 	//----------------------------
 	// サンプラー準備
@@ -129,7 +137,7 @@ void Polygon3D::Draw(LPD3DXCONSTANTTABLE vsc, LPD3DXCONSTANTTABLE psc, D3DXMATRI
 	else
 		m_device->SetTexture(0, m_texture);
 
-	m_device->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+	//m_device->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 
 	//----------------------------
 	// 描画
@@ -149,16 +157,22 @@ void Polygon3D::SetVertex(void)
 {
 	// 座標
 	D3DXVECTOR3 half = D3DXVECTOR3(0.5f, 0.5f, 0.0f);
-	m_vtx[0].position = D3DXVECTOR3(-half.x, -half.y, half.z);
-	m_vtx[1].position = D3DXVECTOR3( half.x, -half.y, half.z);
-	m_vtx[2].position = D3DXVECTOR3(-half.x,  half.y, half.z);
-	m_vtx[3].position = D3DXVECTOR3( half.x,  half.y, half.z);
+	m_vtx[0].position = D3DXVECTOR3(-half.x,  half.y, half.z);
+	m_vtx[1].position = D3DXVECTOR3( half.x,  half.y, half.z);
+	m_vtx[2].position = D3DXVECTOR3(-half.x, -half.y, half.z);
+	m_vtx[3].position = D3DXVECTOR3( half.x, -half.y, half.z);
 
 	// テクスチャ座標
 	m_vtx[0].uv = D3DXVECTOR2(0.0f, 0.0f);
 	m_vtx[1].uv = D3DXVECTOR2(1.0f, 0.0f);
 	m_vtx[2].uv = D3DXVECTOR2(0.0f, 1.0f);
 	m_vtx[3].uv = D3DXVECTOR2(1.0f, 1.0f);
+
+	// 法線ベクトル
+	m_vtx[0].normal =  D3DXVECTOR3(0.0f, 0.0f, -1.0f);
+	m_vtx[1].normal =  D3DXVECTOR3(0.0f, 0.0f, -1.0f);
+	m_vtx[2].normal =  D3DXVECTOR3(0.0f, 0.0f, -1.0f);
+	m_vtx[3].normal =  D3DXVECTOR3(0.0f, 0.0f, -1.0f);
 }
 
 // EOF

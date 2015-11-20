@@ -44,6 +44,7 @@
     <ClCompile Include="renderer\renderer.cpp" />
     <ClCompile Include="shader\shader.cpp" />
     <ClCompile Include="view\camera\camera.cpp" />
+    <ClCompile Include="view\light\light.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="commandmanager\commandmanager.h" />
@@ -80,6 +81,7 @@
     <ClInclude Include="renderer\renderer.h" />
     <ClInclude Include="shader\shader.h" />
     <ClInclude Include="view\camera\camera.h" />
+    <ClInclude Include="view\light\light.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\resources\shader\basicPS.hlsl" />
