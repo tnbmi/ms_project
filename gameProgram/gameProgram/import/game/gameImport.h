@@ -29,6 +29,15 @@ public:
 		TEST_0,
 		TEST_1,
 
+		BUTTON_A,
+		BUTTON_B,
+		BUTTON_X,
+		BUTTON_Y,
+		BUTTON_UP,
+		BUTTON_DOWN,
+		BUTTON_RIGHT,
+		BUTTON_LEFT,
+
 		TEX_MAX
 	};
 

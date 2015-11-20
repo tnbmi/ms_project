@@ -26,7 +26,6 @@
 #include "..\..\list\updateList\updateList.h"
 #include "..\..\list\drawList\drawListManager.h"
 
-#include "..\..\commandmanager\commandmanager.h"
 #include "..\..\objectBase\polygon2D\polygon2D.h"
 #include "..\..\objectBase\polygon3D\polygon3D.h"
 
@@ -57,7 +56,6 @@ Title::Title(LPDIRECT3DDEVICE9 device) : Phase(device)
 	m_updateList		= nullptr;
 	m_drawListManager	= nullptr;
 
-	m_command_manager	= nullptr;
 	m_effectManager		= nullptr;
 }
 
@@ -146,9 +144,6 @@ void Title::Finalize(void)
 	// オブジェクトリスト
 	SafeDelete(m_objectList);
 
-	// コマンド
-	SafeFinalizeDelete(m_command_manager);
-
 	//エフェクトマネージャ
 	SafeFinalizeDelete(m_effectManager);
 
@@ -189,8 +184,6 @@ void Title::Update(void)
 	//----------------------------
 	m_updateList->AllUpdate();
 
-	m_command_manager->Update();
-
 	m_effectManager->Update();
 
 	//----------------------------
@@ -229,8 +222,6 @@ void Title::Draw(void)
 	// 2D描画
 	//----------------------------
 	m_drawListManager->AllDraw(m_camera->viewProjection());
-
-	m_command_manager->Draw();
 }
 
 //=============================================================================
@@ -238,12 +229,10 @@ void Title::Draw(void)
 //=============================================================================
 bool Title::InitObject(void)
 {
-	Commandmanager::Create(&m_command_manager, m_padXManager, m_debugproc);
-	
 	//----------------------------
 	// 2Dポリゴンテスト
 	//----------------------------
-	Polygon2D* poly2d;
+	/*Polygon2D* poly2d;
 	if(!Polygon2D::Create(&poly2d, m_device, m_objectList, m_import->texture(TitleImport::TEST_0)))
 		return false;
 	m_updateList->Link(poly2d);
@@ -255,7 +244,7 @@ bool Title::InitObject(void)
 		return false;
 	m_updateList->Link(poly2d);
 	m_drawListManager->Link(poly2d, 4, Shader::PAT_2D);
-	poly2d->pos(250.0f, 250.0f, 0.0f);
+	poly2d->pos(250.0f, 250.0f, 0.0f);*/
 	
 	//------------------------------
 	//エフェクト　ｆｂｘテスト
