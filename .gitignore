@@ -11,5 +11,6 @@ gameProgram/gameProgram/Debug
 *.log
 
 # ‚»‚Ì‘¼–³Ž‹‚·‚é‚à‚Ì
-.opensdf
-.suo
+*.opensdf
+*.suo
+*.user
