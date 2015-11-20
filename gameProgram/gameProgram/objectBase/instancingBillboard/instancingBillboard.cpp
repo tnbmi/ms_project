@@ -211,13 +211,13 @@ void InstancingBillboard::Draw(LPD3DXCONSTANTTABLE vsc, LPD3DXCONSTANTTABLE psc,
 		m_device->SetStreamSource( 0,m_vtxBuff,0,m_vtxSize );
 		m_device->SetStreamSource( 1,m_instancingBuff,0,sizeof( INSTANCINGDATA ) );
 
-		/*
+		
 		//テクスチャのセット
-		m_device->SetSamplerState( m_ps_constant_table->GetSamplerIndex( "samp" ),D3DSAMP_ADDRESSU, D3DTADDRESS_WRAP );
-		m_device->SetSamplerState( m_ps_constant_table->GetSamplerIndex( "samp" ), D3DSAMP_ADDRESSV, D3DTADDRESS_WRAP);	// テクスチャアドレッシング方法(V値)を設定
-		m_device->SetSamplerState( m_ps_constant_table->GetSamplerIndex( "samp" ), D3DSAMP_MINFILTER, D3DTEXF_LINEAR);	// テクスチャ縮小フィルタモードを設定
-		m_device->SetSamplerState( m_ps_constant_table->GetSamplerIndex( "samp" ), D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);	// テクスチャ拡大フィルタモードを設定
-	*/
+		m_device->SetSamplerState( psc->GetSamplerIndex( "samp" ),D3DSAMP_ADDRESSU, D3DTADDRESS_WRAP );
+		m_device->SetSamplerState( psc->GetSamplerIndex( "samp" ), D3DSAMP_ADDRESSV, D3DTADDRESS_WRAP);	// テクスチャアドレッシング方法(V値)を設定
+		m_device->SetSamplerState( psc->GetSamplerIndex( "samp" ), D3DSAMP_MINFILTER, D3DTEXF_LINEAR);	// テクスチャ縮小フィルタモードを設定
+		m_device->SetSamplerState( psc->GetSamplerIndex( "samp" ), D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);	// テクスチャ拡大フィルタモードを設定
+	
 		m_device->SetTexture( psc->GetSamplerIndex( "samp" ),m_texture );
 
 		D3DXMATRIX mtx_view,mtx_proj;
@@ -275,8 +275,10 @@ void InstancingBillboard::ApplyInstancingBuff()
 	//ビルボードモードの時のみビューの逆行列を作成
 	D3DXMATRIX mtx_view;
 	m_device->GetTransform( D3DTS_VIEW,&mtx_view );
+	//mtx_view = m_viewMtx;//実装されたら使う
 	D3DXMatrixInverse( &mtx_view_inv,NULL,&mtx_view );
 
+	//ソートオプション
 	if( m_option.is_zsort )
 	{
 		//データセット

@@ -192,7 +192,8 @@ void Title::Update(void)
 
 	if( m_keyboard->trigger( DIK_1 ) )
 	{
-		m_effectManager->AddEffectFromDataBase( 0,D3DXVECTOR3(0,0,0) );
+		//m_effectManager->AddEffectFromDataBase( 0,D3DXVECTOR3(0,0,0) );
+		m_effectManager->AddEffectFromDataBase( 1,D3DXVECTOR3(0,0,0) );
 	}
 
 	if(pad->buttonTrigger(XINPUT_GAMEPAD_A))
@@ -258,6 +259,7 @@ bool Title::InitObject(void)
 	if( !EffectManager::Create( &m_effectManager,bill ) )
 		return false;
 	m_effectManager->LoadEffectData( "../resources/effect/FireWorks3.OEF" );
+	m_effectManager->LoadEffectData( "../resources/effect/Chino.OEF" );
 	m_effectManager->SetOption( InstancingBillboard::OPTION(true,false,false));
 
 	//fbx

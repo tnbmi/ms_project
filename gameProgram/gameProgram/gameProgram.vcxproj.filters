@@ -232,6 +232,9 @@
     <ClInclude Include="view\light\light.h">
       <Filter>view\light</Filter>
     </ClInclude>
+    <ClInclude Include="object\player.h">
+      <Filter>object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main\main.cpp">
@@ -335,6 +338,9 @@
     </ClCompile>
     <ClCompile Include="view\light\light.cpp">
       <Filter>view\light</Filter>
+    </ClCompile>
+    <ClCompile Include="object\player.cpp">
+      <Filter>object</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
