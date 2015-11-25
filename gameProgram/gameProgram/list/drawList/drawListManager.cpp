@@ -16,13 +16,13 @@
 //=============================================================================
 // コンストラクタ
 //=============================================================================
-DrawListManager::DrawListManager(LPDIRECT3DDEVICE9 device)
+DrawListManager::DrawListManager(LPDIRECT3DDEVICE9 device, Shader* shader)
 {
 	//----------------------------
 	// メンバー初期化
 	//----------------------------
 	m_device = device;
-	m_shader = nullptr;
+	m_shader = shader;
 
 	// リスト
 	for(int cnt = 0; cnt < Shader::PATTERN_MAX; ++cnt)
@@ -68,9 +68,9 @@ DrawListManager::~DrawListManager(void)
 //=============================================================================
 // 生成
 //=============================================================================
-bool DrawListManager::Create(DrawListManager** outPointer, LPDIRECT3DDEVICE9 device)
+bool DrawListManager::Create(DrawListManager** outPointer, LPDIRECT3DDEVICE9 device, Shader* shader)
 {
-	DrawListManager* pointer = new DrawListManager(device);
+	DrawListManager* pointer = new DrawListManager(device, shader);
 	if(!pointer->Initialize())
 		return false;
 
@@ -83,12 +83,6 @@ bool DrawListManager::Create(DrawListManager** outPointer, LPDIRECT3DDEVICE9 dev
 //=============================================================================
 bool DrawListManager::Initialize(void)
 {
-	//----------------------------
-	// シェーダー初期化
-	//----------------------------
-	if(!Shader::Create(&m_shader, m_device))
-		return false;
-
 	//----------------------------
 	// 描画管理リスト初期化
 	//----------------------------
@@ -104,9 +98,6 @@ bool DrawListManager::Initialize(void)
 //=============================================================================
 void DrawListManager::Finalize(void)
 {
-	// シェーダー
-	SafeFinalizeDelete(m_shader);
-
 	// 描画リスト達
 	for(int cnt = 0; cnt < Shader::PATTERN_MAX; ++cnt)
 		SafeDelete(m_drawList[cnt]);

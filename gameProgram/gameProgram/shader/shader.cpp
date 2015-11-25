@@ -93,11 +93,11 @@ Shader::Shader(LPDIRECT3DDEVICE9 device)
 
 	m_vsSize = 0;
 	m_vertexShader		= nullptr;
-	m_vsConstantTable	= nullptr;
+	m_vsc	= nullptr;
 
 	m_psSize = 0;
 	m_pixelShader		= nullptr;
-	m_psConstantTable	= nullptr;
+	m_psc	= nullptr;
 }
 
 //=============================================================================
@@ -135,7 +135,7 @@ bool Shader::Initialize(void)
 	//------------------------------
 	m_vsSize			= sizeof(_vsName) / sizeof(char*);
 	m_vertexShader		= new LPDIRECT3DVERTEXSHADER9[m_vsSize];
-	m_vsConstantTable	= new LPD3DXCONSTANTTABLE[m_vsSize];
+	m_vsc	= new LPD3DXCONSTANTTABLE[m_vsSize];
 
 	for(int cnt = 0; cnt < m_vsSize; ++cnt)
 	{
@@ -146,7 +146,7 @@ bool Shader::Initialize(void)
 
 		// シェーダーファイル読み込み
 		hr = D3DXCompileShaderFromFile(str, NULL, NULL,
-										"VS", "vs_3_0", 0, &code, &err, &m_vsConstantTable[cnt]);
+										"VS", "vs_3_0", 0, &code, &err, &m_vsc[cnt]);
 		if(FAILED(hr))
 		{
 			MessageBox(NULL, (LPCSTR)err->GetBufferPointer(), "D3DXCompileShaderFromFile", MB_OK);
@@ -168,7 +168,7 @@ bool Shader::Initialize(void)
 	//------------------------------
 	m_psSize			= sizeof(_psName) / sizeof(char*);
 	m_pixelShader		= new LPDIRECT3DPIXELSHADER9[m_psSize];
-	m_psConstantTable	= new LPD3DXCONSTANTTABLE[m_psSize];
+	m_psc	= new LPD3DXCONSTANTTABLE[m_psSize];
 
 	for(int cnt = 0; cnt < m_psSize; ++cnt)
 	{
@@ -179,7 +179,7 @@ bool Shader::Initialize(void)
 
 		// シェーダーファイル読み込み
 		hr = D3DXCompileShaderFromFile(str, NULL, NULL,
-										"PS", "ps_3_0", 0, &code, &err,&m_psConstantTable[cnt]);
+										"PS", "ps_3_0", 0, &code, &err,&m_psc[cnt]);
 		if(FAILED(hr))
 		{
 			MessageBox(NULL, (LPCSTR)err->GetBufferPointer(), "D3DXCompileShaderFromFile", MB_OK);
@@ -208,19 +208,19 @@ void Shader::Finalize(void)
 	for(int cnt = 0; cnt < m_vsSize; ++cnt)
 	{
 		SafeRelease(m_vertexShader[cnt]);
-		SafeRelease(m_vsConstantTable[cnt]);
+		SafeRelease(m_vsc[cnt]);
 	}
 	SafeDeleteArray(m_vertexShader);
-	SafeDeleteArray(m_vsConstantTable);
+	SafeDeleteArray(m_vsc);
 
 	// ピクセル
 	for(int cnt = 0; cnt < m_psSize; ++cnt)
 	{
 		SafeRelease(m_pixelShader[cnt]);
-		SafeRelease(m_psConstantTable[cnt]);
+		SafeRelease(m_psc[cnt]);
 	}
 	SafeDeleteArray(m_pixelShader);
-	SafeDeleteArray(m_psConstantTable);
+	SafeDeleteArray(m_psc);
 }
 
 //=============================================================================
@@ -239,7 +239,7 @@ void Shader::SetShader(LPD3DXCONSTANTTABLE* outVSC, LPD3DXCONSTANTTABLE* outPSC,
 		m_device->SetVertexShader(m_vertexShader[vsID]);
 
 		// バーテックスシェーダーテーブル
-		*outVSC = m_vsConstantTable[vsID];
+		*outVSC = m_vsc[vsID];
 	}
 	else
 	{
@@ -261,7 +261,7 @@ void Shader::SetShader(LPD3DXCONSTANTTABLE* outVSC, LPD3DXCONSTANTTABLE* outPSC,
 		m_device->SetPixelShader(m_pixelShader[psID]);
 
 		// ピクセルシェーダーテーブル
-		*outPSC = m_psConstantTable[psID];
+		*outPSC = m_psc[psID];
 	}
 	else
 	{

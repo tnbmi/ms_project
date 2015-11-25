@@ -13,21 +13,21 @@
 
 #include "..\..\debugproc\debugproc.h"
 #include "..\..\manager\manager.h"
-#include "..\demo\demo.h"
+#include "..\game\game.h"
 
 #include "..\..\input\keyboard\keyboard.h"
 #include "..\..\input\padX\padXManager.h"
 #include "..\..\input\padX\padX.h"
 
 #include "..\..\import\title\titleImport.h"
+
+#include "..\..\shader\shader.h"
 #include "..\..\view\camera\camera.h"
+#include "..\..\view\light\light.h"
 
 #include "..\..\list\objectList\objectList.h"
 #include "..\..\list\updateList\updateList.h"
 #include "..\..\list\drawList\drawListManager.h"
-
-#include "..\..\objectBase\polygon2D\polygon2D.h"
-#include "..\..\objectBase\polygon3D\polygon3D.h"
 
 #include "..\..\objectBase\fbxModel\fbxModel.h"
 #include "..\..\objectBase\instancingBillboard\instancingBillboard.h"
@@ -50,7 +50,10 @@ Title::Title(LPDIRECT3DDEVICE9 device) : Phase(device)
 	// メンバー初期化
 	//----------------------------
 	m_import = nullptr;
+
+	m_shader = nullptr;
 	m_camera = nullptr;
+	m_light	 = nullptr;
 
 	m_objectList		= nullptr;
 	m_updateList		= nullptr;
@@ -72,6 +75,18 @@ Title::~Title(void)
 bool Title::Initialize(void)
 {
 	//----------------------------
+	// インポート
+	//----------------------------
+	if(!TitleImport::Create(&m_import, m_device))
+		return false;
+
+	//----------------------------
+	// シェーダー
+	//----------------------------
+	if(!Shader::Create(&m_shader, m_device))
+		return false;
+
+	//----------------------------
 	// ビュー
 	//----------------------------
 	// カメラ
@@ -79,11 +94,7 @@ bool Title::Initialize(void)
 		return false;
 
 	// ライト
-
-	//----------------------------
-	// インポート
-	//----------------------------
-	if(!TitleImport::Create(&m_import, m_device))
+	if(!Light::Create(&m_light, m_device, m_shader->vsc(0)))
 		return false;
 
 	//----------------------------
@@ -98,7 +109,7 @@ bool Title::Initialize(void)
 		return false;
 
 	// 描画リスト
-	if(!DrawListManager::Create(&m_drawListManager, m_device))
+	if(!DrawListManager::Create(&m_drawListManager, m_device, m_shader))
 		return false;
 
 	//----------------------------
@@ -148,21 +159,28 @@ void Title::Finalize(void)
 	SafeFinalizeDelete(m_effectManager);
 
 	//----------------------------
-	// インポート
-	//----------------------------
-	SafeFinalizeDelete(m_import);
-
-	//----------------------------
 	// ビュー
 	//----------------------------
 	// カメラ
 	SafeFinalizeDelete(m_camera);
 
 	// ライト
+	SafeFinalizeDelete(m_light);
+
+	//----------------------------
+	// シェーダー
+	//----------------------------
+	SafeFinalizeDelete(m_shader);
+
+	//----------------------------
+	// インポート
+	//----------------------------
+	SafeFinalizeDelete(m_import);
 
 	//----------------------------
 	// サウンドの停止
 	//----------------------------
+
 }
 
 //=============================================================================
@@ -198,7 +216,7 @@ void Title::Update(void)
 
 	if(pad->buttonTrigger(XINPUT_GAMEPAD_A))
 	{
-	//	Manager::nextPhase((Phase*)new Demo(m_device));
+		Manager::nextPhase((Phase*)new Game(m_device));
 	}
 }
 
@@ -215,12 +233,16 @@ void Title::Draw(void)
 					D3DCOLOR_RGBA(128, 64, 64, 255), 1.0f, 0);
 
 	//----------------------------
-	// カメラセット
+	// ビューセット
 	//----------------------------
+	// カメラ
 	m_camera->SetCamera();
 
+	// ライト
+	m_light->SetLight();
+
 	//----------------------------
-	// 2D描画
+	// オブジェクト描画
 	//----------------------------
 	m_drawListManager->AllDraw(m_camera->viewProjection());
 }
@@ -230,23 +252,6 @@ void Title::Draw(void)
 //=============================================================================
 bool Title::InitObject(void)
 {
-	//----------------------------
-	// 2Dポリゴンテスト
-	//----------------------------
-	/*Polygon2D* poly2d;
-	if(!Polygon2D::Create(&poly2d, m_device, m_objectList, m_import->texture(TitleImport::TEST_0)))
-		return false;
-	m_updateList->Link(poly2d);
-	m_drawListManager->Link(poly2d, 4, Shader::PAT_2D);
-	poly2d->pos(200.0f, 200.0f, 0.0f);
-	poly2d->scl(128.0f, 128.0f, 0.0f);
-
-	if(!Polygon2D::Create(&poly2d, m_device, m_objectList, m_import->texture(TitleImport::TEST_0)))
-		return false;
-	m_updateList->Link(poly2d);
-	m_drawListManager->Link(poly2d, 4, Shader::PAT_2D);
-	poly2d->pos(250.0f, 250.0f, 0.0f);*/
-	
 	//------------------------------
 	//エフェクト　ｆｂｘテスト
 	//------------------------------
@@ -270,17 +275,6 @@ bool Title::InitObject(void)
 	m_drawListManager->Link( fbx,0,Shader::PAT_FBX );
 	m_updateList->Link( fbx );
 	fbx->StartAnimation(61,91,true );
-
-	//----------------------------
-	// 3Dポリゴンテスト
-	//----------------------------
-	Polygon3D* poly3d;
-	if(!Polygon3D::Create(&poly3d, m_device, m_objectList, m_import->texture(TitleImport::TEST_0)))
-		return false;
-	m_updateList->Link(poly3d);
-	m_drawListManager->Link(poly3d, 4, Shader::PAT_LIGHT);
-	poly3d->pos(30.0f, 50.0f, -10.0f);
-	poly3d->scl(32.0f, 32.0f, 0.0f);
 
 	return true;
 }

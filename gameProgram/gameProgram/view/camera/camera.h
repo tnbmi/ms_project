@@ -22,11 +22,11 @@ class Debugproc;
 class Camera
 {
 public:
-	Camera(void);
-	virtual ~Camera(void);
+	Camera(LPDIRECT3DDEVICE9 device);
+	~Camera(void);
 
 	static bool Create(Camera** outPointer, LPDIRECT3DDEVICE9 device, D3DXVECTOR3 at, D3DXVECTOR3 eye);
-	bool Initialize(LPDIRECT3DDEVICE9 device, D3DXVECTOR3 at, D3DXVECTOR3 eye);
+	bool Initialize(D3DXVECTOR3 at, D3DXVECTOR3 eye);
 	void Finalize(void);
 	void Update(void);
 

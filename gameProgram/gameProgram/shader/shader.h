@@ -40,16 +40,19 @@ public:
 
 	void SetShader(LPD3DXCONSTANTTABLE* outVSC, LPD3DXCONSTANTTABLE* outPSC, PATTERN patternId);
 
+	LPD3DXCONSTANTTABLE vsc(int id){return m_vsc[id];}
+	LPD3DXCONSTANTTABLE psc(int id){return m_psc[id];}
+
 private:
 	LPDIRECT3DDEVICE9 m_device;
 
 	int m_vsSize;
 	LPDIRECT3DVERTEXSHADER9* m_vertexShader;	// バーテックスシェーダー
-	LPD3DXCONSTANTTABLE*	 m_vsConstantTable;	// バーテックスシェーダーコンスタントテーブル
+	LPD3DXCONSTANTTABLE*	 m_vsc;				// バーテックスシェーダーコンスタントテーブル
 
 	int m_psSize;
 	LPDIRECT3DPIXELSHADER9*	m_pixelShader;		// ピクセルシェーダー
-	LPD3DXCONSTANTTABLE*	m_psConstantTable;	// ピクセルシェーダーコンスタントテーブル
+	LPD3DXCONSTANTTABLE*	m_psc;				// ピクセルシェーダーコンスタントテーブル
 };
 
 //=============================================================================

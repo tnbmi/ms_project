@@ -35,11 +35,14 @@ inline float _distance(D3DXVECTOR3 start, D3DXVECTOR3 end)
 //=============================================================================
 // コンストラクタ
 //=============================================================================
-Camera::Camera(void)
+Camera::Camera(LPDIRECT3DDEVICE9 device)
 {
 	//----------------------------
 	// メンバー初期化
 	//----------------------------
+	m_device	= device;
+	m_debugproc	= nullptr;
+
 	D3DXMatrixIdentity(&m_view);
 	D3DXMatrixIdentity(&m_projection);
 
@@ -65,8 +68,8 @@ Camera::~Camera(void)
 //=============================================================================
 bool Camera::Create(Camera** outPointer, LPDIRECT3DDEVICE9 device, D3DXVECTOR3 at, D3DXVECTOR3 eye)
 {
-	Camera* pointer = new Camera();
-	if(!pointer->Initialize(device, at, eye))
+	Camera* pointer = new Camera(device);
+	if(!pointer->Initialize(at, eye))
 		return false;
 
 	*outPointer = pointer;
@@ -76,13 +79,8 @@ bool Camera::Create(Camera** outPointer, LPDIRECT3DDEVICE9 device, D3DXVECTOR3 a
 //=============================================================================
 // 初期化
 //=============================================================================
-bool Camera::Initialize(LPDIRECT3DDEVICE9 device, D3DXVECTOR3 at, D3DXVECTOR3 eye)
+bool Camera::Initialize(D3DXVECTOR3 at, D3DXVECTOR3 eye)
 {
-	//----------------------------
-	// デバイス取得
-	//----------------------------
-	m_device = device;
-
 	//----------------------------
 	// 位置と距離
 	//----------------------------
@@ -152,15 +150,13 @@ void Camera::SetCamera(void)
 	// プロジェクションマトリックスの設定
 	//m_device->SetTransform(D3DTS_PROJECTION, &m_projection);
 
-#ifdef _DEBUG
-	/*
+/*#ifdef _DEBUG
 	// カメラ情報表示
 	m_debugproc->PrintDebugProc("***カメラ情報**********\nPos x:%f y:%f z:%f\nAt  x:%f y:%f z:%f\nRot x:%f y:%f z:%f\n",
 								m_eye.x, m_eye.y, m_eye.z,
 								m_at.x,  m_at.y,  m_at.z,
 								m_rot.x, m_rot.y, m_rot.z);
-								*/
-#endif
+#endif*/
 }
 
 //=============================================================================

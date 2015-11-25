@@ -14,16 +14,20 @@
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 #include "..\..\main\main.h"
 #include "..\phase.h"
-#include "..\..\commandmanager\commandmanager.h"
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // ƒNƒ‰ƒX’è‹`
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 class TitleImport;
+
+class Shader;
 class Camera;
+class Light;
+
 class ObjectList;
 class UpdateList;
 class DrawListManager;
+
 class EffectManager;
 
 class Title : public Phase
@@ -41,14 +45,16 @@ private:
 	bool InitObject(void);
 
 	TitleImport* m_import;
-	Camera*		 m_camera;
+
+	Shader*	m_shader;
+	Camera*	m_camera;
+	Light*	m_light;
 
 	ObjectList*		 m_objectList;
 	UpdateList*		 m_updateList;
 	DrawListManager* m_drawListManager;
 
 	EffectManager * m_effectManager;
-
 };
 
 //=============================================================================

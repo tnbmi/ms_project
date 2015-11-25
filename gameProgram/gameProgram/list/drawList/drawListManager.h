@@ -25,10 +25,10 @@ class ObjectBase;
 class DrawListManager
 {
 public:
-	DrawListManager(LPDIRECT3DDEVICE9 device);
+	DrawListManager(LPDIRECT3DDEVICE9 device, Shader* shader);
 	~DrawListManager(void);
 
-	static bool Create(DrawListManager** outPointer, LPDIRECT3DDEVICE9 device);
+	static bool Create(DrawListManager** outPointer, LPDIRECT3DDEVICE9 device, Shader* shader);
 	bool Initialize(void);
 	void Finalize(void);
 

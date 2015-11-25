@@ -13,16 +13,19 @@
 //=============================================================================
 // コンストラクタ
 //=============================================================================
-Light::Light(void)
+Light::Light(LPDIRECT3DDEVICE9 device)
 {
 	//----------------------------
 	// メンバー初期化
 	//----------------------------
+	m_device = device;
+	m_vsc	 = nullptr;
+
 	// 平行光源
-	m_dirLight.dir		= D3DXVECTOR3(0.0f, -1.0f, 0.0f);
-	m_dirLight.diffuse	= D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
-	m_dirLight.ambient	= D3DXCOLOR(0.1f, 0.1f, 0.1f, 1.0f);
-	D3DXVec3Normalize(&m_dirLight.dir, &m_dirLight.dir);
+	m_dirLight.vector	= D3DXVECTOR3(0.0f, 1.0f, 0.0f);
+	m_dirLight.diffuse	= D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f);
+	m_dirLight.ambient	= D3DXCOLOR(0.0f, 0.0f, 0.0f, 1.0f);
+	D3DXVec3Normalize(&m_dirLight.vector, &m_dirLight.vector);
 }
 
 //=============================================================================
@@ -35,10 +38,10 @@ Light::~Light(void)
 //=============================================================================
 // 生成
 //=============================================================================
-bool Light::Create(Light** outPointer)
+bool Light::Create(Light** outPointer, LPDIRECT3DDEVICE9 device, LPD3DXCONSTANTTABLE vsc)
 {
-	Light* pointer = new Light();
-	if(!pointer->Initialize())
+	Light* pointer = new Light(device);
+	if(!pointer->Initialize(vsc))
 		return false;
 
 	*outPointer = pointer;
@@ -48,11 +51,9 @@ bool Light::Create(Light** outPointer)
 //=============================================================================
 // 初期化
 //=============================================================================
-bool Light::Initialize(void)
+bool Light::Initialize(LPD3DXCONSTANTTABLE vsc)
 {
-	//----------------------------
-	// コメント
-	//----------------------------
+	m_vsc = vsc;
 
 	return true;
 }
@@ -72,10 +73,14 @@ void Light::Update(void)
 }
 
 //=============================================================================
-// 描画
+// ライト設定
 //=============================================================================
-void Light::Draw(void)
+void Light::SetLight(void)
 {
+	// 平行光源の設定
+	m_vsc->SetFloatArray(m_device, "gDirLightVector", (float*)&m_dirLight.vector, 3);
+	m_vsc->SetVector(m_device, "gDirLightDiffuse", (D3DXVECTOR4*)&m_dirLight.diffuse);
+	m_vsc->SetVector(m_device, "gDirLightAmbient", (D3DXVECTOR4*)&m_dirLight.ambient);
 }
 
 // EOF

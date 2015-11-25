@@ -19,6 +19,7 @@ Polygon3D::Polygon3D(LPDIRECT3DDEVICE9 device, ObjectList* objectList, int prior
 	// メンバー初期化
 	//----------------------------
 	m_scl = D3DXVECTOR3(64.0f, 64.0f, 0.0f);
+	m_rot.x += 1.0f;
 }
 
 //=============================================================================
@@ -100,9 +101,8 @@ void Polygon3D::Draw(LPD3DXCONSTANTTABLE vsc, LPD3DXCONSTANTTABLE psc, D3DXMATRI
 	wvp = m_world * vp;
 
 	//----------------------------
-	// ワールドデータ設定
-	//----------------------------
 	// バーテックス
+	//----------------------------
 	if(vsc != nullptr)
 	{
 		// ワールドマトリックスの設定
@@ -110,6 +110,11 @@ void Polygon3D::Draw(LPD3DXCONSTANTTABLE vsc, LPD3DXCONSTANTTABLE psc, D3DXMATRI
 
 		// ワールドビュープロジェクションマトリックスの設定
 		vsc->SetMatrix(m_device, "gWVP", &wvp);
+
+		// マテリアル設定
+		D3DXVECTOR3 ambient = D3DXCOLOR(0.0f, 0.0f, 0.0f, 1.0f);
+		vsc->SetVector(m_device, "gMatDiffuse", (D3DXVECTOR4*)&m_color);
+		vsc->SetVector(m_device, "gMatAmbient", (D3DXVECTOR4*)&ambient);
 	}
 
 	//----------------------------
@@ -169,10 +174,11 @@ void Polygon3D::SetVertex(void)
 	m_vtx[3].uv = D3DXVECTOR2(1.0f, 1.0f);
 
 	// 法線ベクトル
-	m_vtx[0].normal =  D3DXVECTOR3(0.0f, 0.0f, -1.0f);
-	m_vtx[1].normal =  D3DXVECTOR3(0.0f, 0.0f, -1.0f);
-	m_vtx[2].normal =  D3DXVECTOR3(0.0f, 0.0f, -1.0f);
-	m_vtx[3].normal =  D3DXVECTOR3(0.0f, 0.0f, -1.0f);
+	for(int cnt = 0; cnt < 4; ++cnt)
+	{
+		m_vtx[cnt].normal =  D3DXVECTOR3(0.0f, 0.0f, -1.0f);
+		D3DXVec3Normalize(&m_vtx[cnt].normal, &m_vtx[cnt].normal);
+	}
 }
 
 // EOF
