@@ -68,6 +68,10 @@ public:
 	virtual void		color_b(float b) {m_color.b = b;}
 	virtual void		color_a(float a) {m_color.a = a;}
 
+	virtual void	texcoord(int num, D3DXVECTOR2 uv) {m_vtx[num].uv = uv;}
+	virtual void	texcoord(int num, float u, float v) {m_vtx[num].uv.x = u; m_vtx[num].uv.y = v;}
+	virtual void	texcoord_u(int num, float u) {m_vtx[num].uv.x = u;}
+
 protected:
 	void SetVertex(void);
 

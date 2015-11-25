@@ -181,6 +181,8 @@ void Commandteam::SetFragLose(bool flag)
 		if(m_command_count <= _upper_limit)
 		{
 			m_command_long = _command_min;
+			m_drawListManager->UnLink(m_command_poly[4], Shader::PAT_2D);
+			m_drawListManager->UnLink(m_command_poly[5], Shader::PAT_2D);
 		}
 	}
 	else
@@ -215,6 +217,11 @@ void Commandteam::SetSuccess(void)
 {
 	m_drawListManager->UnLink(m_command_poly[m_command_count], Shader::PAT_2D);
 
+	for(int i = 1; i < (6 - m_command_count); i++)
+	{
+		m_command_poly[m_command_count + i]->pos_y(m_command_poly[m_command_count + i]->pos().y + _polygon_size_x);
+	}
+
 	m_command_count++;
 }
 
@@ -232,6 +239,13 @@ void Commandteam::SetPenalty(void)
 void Commandteam::StateReset(void)
 {
 	m_command_count = 0;
+
+	for(int i = 0; i < 6; i++)
+	{
+		m_drawListManager->Link(m_command_poly[i], 4, Shader::PAT_2D);
+		m_command_poly[i]->pos(m_polygon_pos.x + _polygon_size_x*(i % 2), m_polygon_pos.y - _polygon_size_x * i, 0.0f);
+		m_command_poly[i]->scl(_polygon_size_x, _polygon_size_x, 0.0f);
+	}
 
 	if(m_flag_lose)
 		m_command_long = _command_min;

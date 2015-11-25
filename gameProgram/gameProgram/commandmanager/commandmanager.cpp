@@ -159,23 +159,23 @@ void Commandmanager::Update(void)
 				m_progress--;
 			else
 				m_progress++;
-		}
-	}
 
-	if(m_progress > _progress_team0_lead && m_progress < _progress_team1_lead)
-	{
-		m_team[0]->SetFragLose(false);
-		m_team[1]->SetFragLose(false);
-	}
-	else if(m_progress >= _progress_team1_lead)
-	{
-		m_team[0]->SetFragLose(true);
-		m_team[1]->SetFragLose(false);
-	}
-	else if(m_progress <= _progress_team0_lead)
-	{
-		m_team[0]->SetFragLose(false);
-		m_team[1]->SetFragLose(true);
+			if(m_progress > _progress_team0_lead && m_progress < _progress_team1_lead)
+			{
+				m_team[0]->SetFragLose(false);
+				m_team[1]->SetFragLose(false);
+			}
+			else if(m_progress >= _progress_team1_lead)
+			{
+				m_team[0]->SetFragLose(true);
+				m_team[1]->SetFragLose(false);
+			}
+			else if(m_progress <= _progress_team0_lead)
+			{
+				m_team[0]->SetFragLose(false);
+				m_team[1]->SetFragLose(true);
+			}
+		}
 	}
 }
 
