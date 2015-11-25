@@ -210,7 +210,7 @@ void Game::Update(void)
 	//----------------------------
 	if(pad->buttonTrigger(XINPUT_GAMEPAD_A))
 	{
-		Manager::nextPhase((Phase*)new Result(m_device));
+		//Manager::nextPhase((Phase*)new Result(m_device));
 	}
 }
 

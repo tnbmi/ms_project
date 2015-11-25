@@ -62,6 +62,7 @@ void DrawList::Link(ObjectBase* object, int priority)
 	// 描画リストを設定
 	//----------------------------
 	object->drawList(this, m_shaderPatternId);
+	object->priority(m_shaderPatternId, priority);
 
 	//----------------------------
 	// 前オブジェクトの設定
@@ -75,14 +76,14 @@ void DrawList::Link(ObjectBase* object, int priority)
 	else
 	{
 		// 前オブジェクトから連結
-		m_end[priority]->drawNext(object, m_shaderPatternId);
-		object->drawPrev(m_end[priority], m_shaderPatternId);
+		m_end[priority]->drawNext(m_shaderPatternId, object);
+		object->drawPrev(m_shaderPatternId, m_end[priority]);
 	}
 
 	//----------------------------
 	// 次オブジェクトの設定
 	//----------------------------
-	object->drawNext(nullptr, m_shaderPatternId);
+	object->drawNext(m_shaderPatternId, nullptr);
 
 	//----------------------------
 	// 終端オブジェクトの設定
@@ -95,17 +96,22 @@ void DrawList::Link(ObjectBase* object, int priority)
 //=============================================================================
 void DrawList::UnLink(ObjectBase* object)
 {
+	// 存在チェック
+	if(object->drawList(m_shaderPatternId) == nullptr)
+		return;
+
 	ObjectBase*	prev	 = object->drawPrev(m_shaderPatternId);
 	ObjectBase*	next	 = object->drawNext(m_shaderPatternId);
-	int			priority = object->priority();
+	int			priority = object->priority(m_shaderPatternId);
 
 	//----------------------------
 	// 前オブジェクトの再設定
 	//----------------------------
+	object->drawPrev(m_shaderPatternId, nullptr);
 	if(prev != nullptr)
 	{
 		// 前オブジェクトに次オブジェクトを連結
-		prev->drawNext(next, m_shaderPatternId);
+		prev->drawNext(m_shaderPatternId, next);
 	}
 	else
 	{
@@ -114,16 +120,17 @@ void DrawList::UnLink(ObjectBase* object)
 
 		if(m_top[priority] != nullptr)
 			// 先頭の前をnullptrに
-			m_top[priority]->drawPrev(nullptr, m_shaderPatternId);
+			m_top[priority]->drawPrev(m_shaderPatternId, nullptr);
 	}
 
 	//----------------------------
 	// 次オブジェクトの再設定
 	//----------------------------
+	object->drawNext(m_shaderPatternId, nullptr);
 	if(next != nullptr)
 	{
 		// 次オブジェクトに前オブジェクトを連結
-		next->drawPrev(prev, m_shaderPatternId);
+		next->drawPrev(m_shaderPatternId, prev);
 	}
 	else
 	{
@@ -132,7 +139,7 @@ void DrawList::UnLink(ObjectBase* object)
 
 		if(m_end[priority] != nullptr)
 			// 終端をnullptrに
-			m_end[priority]->drawNext(nullptr, m_shaderPatternId);
+			m_end[priority]->drawNext(m_shaderPatternId, nullptr);
 	}
 
 	//----------------------------

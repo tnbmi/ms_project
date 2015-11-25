@@ -18,7 +18,7 @@ int ZComp( const void *c1,const void *c2 )
 //=============================================================================
 // コンストラクタ
 //=============================================================================
-InstancingBillboard::InstancingBillboard(LPDIRECT3DDEVICE9 device, ObjectList* objectList, int priority, OBJECT_TYPE type ) :ObjectBase(device, objectList, priority, type)
+InstancingBillboard::InstancingBillboard(LPDIRECT3DDEVICE9 device, ObjectList* objectList, int priority, OBJECT_TYPE type ) :ObjectBase(device, objectList, type)
 {
 	//----------------------------
 	// メンバー初期化

@@ -13,7 +13,7 @@
 //=============================================================================
 // コンストラクタ
 //=============================================================================
-Polygon2D::Polygon2D(LPDIRECT3DDEVICE9 device, ObjectList* objectList, int priority, OBJECT_TYPE type) : ObjectBase(device, objectList, priority, type)
+Polygon2D::Polygon2D(LPDIRECT3DDEVICE9 device, ObjectList* objectList, OBJECT_TYPE type) : ObjectBase(device, objectList, type)
 {
 	//----------------------------
 	// メンバー初期化
@@ -31,9 +31,9 @@ Polygon2D::~Polygon2D(void)
 //=============================================================================
 // 生成
 //=============================================================================
-bool Polygon2D::Create(Polygon2D** outPointer, LPDIRECT3DDEVICE9 device, ObjectList* objectList, LPDIRECT3DTEXTURE9 texture, int priority, OBJECT_TYPE type)
+bool Polygon2D::Create(Polygon2D** outPointer, LPDIRECT3DDEVICE9 device, ObjectList* objectList, LPDIRECT3DTEXTURE9 texture, OBJECT_TYPE type)
 {
-	Polygon2D* pointer = new Polygon2D(device, objectList, priority, type);
+	Polygon2D* pointer = new Polygon2D(device, objectList, type);
 	if(!pointer->Initialize(texture))
 		return false;
 
