@@ -24,6 +24,7 @@ const char* _game_texture_name[] =
 	"/test_0.png",
 	"/test_1.png",
 
+	"/COMMAND_TEX.png",
 	"/BUTTON_A.png",
 	"/BUTTON_B.png",
 	"/BUTTON_X.png",

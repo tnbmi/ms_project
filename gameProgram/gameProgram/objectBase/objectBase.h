@@ -33,7 +33,7 @@ public:
 		TYPE_3D
 	};
 
-	ObjectBase(LPDIRECT3DDEVICE9 device, ObjectList* objectList, int priority = 0, OBJECT_TYPE type = TYPE_NONE);
+	ObjectBase(LPDIRECT3DDEVICE9 device, ObjectList* objectList, OBJECT_TYPE type = TYPE_NONE);
 	virtual ~ObjectBase(void);
 
 	virtual bool Initialize(void) {return true;}
@@ -72,8 +72,8 @@ public:
 	virtual void		color_b(float b) {m_color.b = b;}
 	virtual void		color_a(float a) {m_color.a = a;}
 
-	int	 priority(void) {return m_priority;}
-	void priority(int priority) {m_priority = priority;}
+	int	 priority(int shaderPatternId) {return m_priority[shaderPatternId];}
+	void priority(int shaderPatternId, int priority) {m_priority[shaderPatternId] = priority;}
 
 	OBJECT_TYPE type(void) {return m_type;}
 	void		type(OBJECT_TYPE type) {m_type = type;}
@@ -81,23 +81,26 @@ public:
 	bool deleteFlg(void) {return m_deleteFlg;}
 	void deleteFlg(bool deleteFlg) {m_deleteFlg = deleteFlg;}
 
+	ObjectList*	objectList(void) {return m_objectList;}
 	void		objectList(ObjectList* list) {m_objectList = list;}
 	ObjectBase*	objectPrev(void) {return m_objectPrev;}
 	void		objectPrev(ObjectBase* prev) {m_objectPrev = prev;}
 	ObjectBase*	objectNext(void) {return m_objectNext;}
 	void		objectNext(ObjectBase* next) {m_objectNext = next;}
 
+	UpdateList*	updateList(void) {return m_updateList;}
 	void		updateList(UpdateList* list) {m_updateList = list;}
 	ObjectBase*	updatePrev(void) {return m_updatePrev;}
 	void		updatePrev(ObjectBase* prev) {m_updatePrev = prev;}
 	ObjectBase*	updateNext(void) {return m_updateNext;}
 	void		updateNext(ObjectBase* next) {m_updateNext = next;}
 
+	DrawList*	drawList(int shaderPatternId) {return m_drawList[shaderPatternId];}
 	void		drawList(DrawList* list, int shaderPatternId) {m_drawList[shaderPatternId] = list;}
 	ObjectBase*	drawPrev(int shaderPatternId) {return m_drawPrev[shaderPatternId];}
-	void		drawPrev(ObjectBase* prev, int shaderPatternId) {m_drawPrev[shaderPatternId] = prev;}
+	void		drawPrev(int shaderPatternId, ObjectBase* prev) {m_drawPrev[shaderPatternId] = prev;}
 	ObjectBase*	drawNext(int shaderPatternId) {return m_drawNext[shaderPatternId];}
-	void		drawNext(ObjectBase* next, int shaderPatternId) {m_drawNext[shaderPatternId] = next;}
+	void		drawNext(int shaderPatternId, ObjectBase* next) {m_drawNext[shaderPatternId] = next;}
 
 protected:
 	LPDIRECT3DDEVICE9 m_device;
@@ -111,7 +114,6 @@ protected:
 	LPDIRECT3DTEXTURE9 m_texture;
 
 private:
-	int			m_priority;
 	OBJECT_TYPE	m_type;
 	bool		m_deleteFlg;
 
@@ -123,6 +125,7 @@ private:
 	ObjectBase*	m_updatePrev;
 	ObjectBase*	m_updateNext;
 
+	int			m_priority[Shader::PATTERN_MAX];
 	DrawList*	m_drawList[Shader::PATTERN_MAX];
 	ObjectBase*	m_drawPrev[Shader::PATTERN_MAX];
 	ObjectBase*	m_drawNext[Shader::PATTERN_MAX];

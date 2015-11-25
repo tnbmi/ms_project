@@ -29,6 +29,7 @@ public:
 		TEST_0,
 		TEST_1,
 
+		COMMAND_TEX,
 		BUTTON_A,
 		BUTTON_B,
 		BUTTON_X,

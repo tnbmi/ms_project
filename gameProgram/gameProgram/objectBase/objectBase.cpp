@@ -17,7 +17,7 @@
 //=============================================================================
 // コンストラクタ
 //=============================================================================
-ObjectBase::ObjectBase(LPDIRECT3DDEVICE9 device, ObjectList* objectList, int priority, OBJECT_TYPE type)
+ObjectBase::ObjectBase(LPDIRECT3DDEVICE9 device, ObjectList* objectList, OBJECT_TYPE type)
 {
 	//----------------------------
 	// メンバー初期化
@@ -34,7 +34,6 @@ ObjectBase::ObjectBase(LPDIRECT3DDEVICE9 device, ObjectList* objectList, int pri
 	m_texture = nullptr;
 
 	//private
-	m_priority	 = priority;
 	m_type		 = type;
 	m_deleteFlg	 = false;
 

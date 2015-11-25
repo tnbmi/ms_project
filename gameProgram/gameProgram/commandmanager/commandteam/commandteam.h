@@ -23,6 +23,7 @@ class ObjectList;
 class UpdateList;
 class DrawListManager;
 class GameImport;
+class Polygon2D;
 
 class Commandteam
 {
@@ -35,12 +36,14 @@ public:
 					   UpdateList* updList,
 					   DrawListManager* drwList,
 					   LPDIRECT3DDEVICE9 device,
-					   GameImport* import);
+					   GameImport* import,
+					   D3DXVECTOR3 pos);
 	bool Initialize(ObjectList* objList,
 					UpdateList* updList,
 					DrawListManager* drwList,
 					LPDIRECT3DDEVICE9 device,
-					GameImport* import);
+					GameImport* import,
+					D3DXVECTOR3 pos);
 	void Finalize(void);
 	bool Update(void);
 	void Draw(void);
@@ -58,6 +61,7 @@ private:
 	int					m_command_long;
 	int					m_time_penalty;
 	bool				m_flag_lose;
+	Polygon2D*			m_command_poly[6];
 
 	Debugproc*			m_debugproc;
 
@@ -68,7 +72,12 @@ private:
 	UpdateList*			m_updateList;
 	DrawListManager*	m_drawListManager;
 
-	bool InitObject(void);
+	D3DXVECTOR3			m_polygon_pos;
+
+	bool	InitObject(void);
+	void	SetSuccess(void);
+	void	SetPenalty(void);
+	void	StateReset(void);
 };
 
 //=============================================================================

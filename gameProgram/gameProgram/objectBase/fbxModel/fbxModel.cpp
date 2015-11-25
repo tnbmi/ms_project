@@ -15,7 +15,7 @@
 //=============================================================================
 // コンストラクタ
 //=============================================================================
-FbxModel::FbxModel(LPDIRECT3DDEVICE9 device, ObjectList* objectList, int priority, OBJECT_TYPE type) : ObjectBase(device, objectList, priority, type)
+FbxModel::FbxModel(LPDIRECT3DDEVICE9 device, ObjectList* objectList, int priority, OBJECT_TYPE type) : ObjectBase(device, objectList, type)
 {
 	//----------------------------
 	// メンバー初期化

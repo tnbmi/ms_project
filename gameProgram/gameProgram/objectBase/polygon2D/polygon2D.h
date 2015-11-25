@@ -28,10 +28,10 @@ public:
 		D3DXVECTOR2	uv;
 	};
 
-	Polygon2D(LPDIRECT3DDEVICE9 device, ObjectList* objectList, int priority, OBJECT_TYPE type);
+	Polygon2D(LPDIRECT3DDEVICE9 device, ObjectList* objectList, OBJECT_TYPE type);
 	virtual ~Polygon2D(void);
 
-	static bool Create(Polygon2D** outPointer, LPDIRECT3DDEVICE9 device, ObjectList* objectList, LPDIRECT3DTEXTURE9 texture, int priority = 0, OBJECT_TYPE type = ObjectBase::TYPE_2D);
+	static bool Create(Polygon2D** outPointer, LPDIRECT3DDEVICE9 device, ObjectList* objectList, LPDIRECT3DTEXTURE9 texture, OBJECT_TYPE type = ObjectBase::TYPE_2D);
 	virtual bool Initialize(LPDIRECT3DTEXTURE9 texture);
 	virtual void Finalize(void);
 	virtual void Update(void);

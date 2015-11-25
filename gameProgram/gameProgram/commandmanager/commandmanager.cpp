@@ -31,6 +31,7 @@ const int _progress_team0_lead = 3;
 const int _progress_team1_lead = 7;
 const int _list_command_max = 6;
 const int _list_pattern_max = 40;
+const D3DXVECTOR3 _team_position[2] = {D3DXVECTOR3(84.0f, 444.0f, 0.0f),D3DXVECTOR3(1124.0f, 444.0f, 0.0f)};
 
 //=============================================================================
 // コンストラクタ
@@ -114,7 +115,7 @@ bool Commandmanager::Initialize(PadXManager* padXManager,
 
 	for(int i = 0; i < _team_max; i++)
 	{
-		Commandteam::Create(&m_team[i], m_objectList, m_updateList, m_drawListManager, device, import);
+		Commandteam::Create(&m_team[i], m_objectList, m_updateList, m_drawListManager, device, import, _team_position[i]);
 		m_team[i]->debugproc(debugproc);
 #ifdef _DEBUG
 		m_team[i]->SetPlayer( padXManager->pad(i), padXManager->pad(i) );
@@ -158,23 +159,23 @@ void Commandmanager::Update(void)
 				m_progress--;
 			else
 				m_progress++;
-
-			if(m_progress <= _progress_team1_lead)
-			{
-				m_team[0]->SetFragLose(true);
-				m_team[1]->SetFragLose(false);
-			}
-			else if(m_progress >= _progress_team0_lead)
-			{
-				m_team[0]->SetFragLose(false);
-				m_team[1]->SetFragLose(true);
-			}
-			else
-			{
-				m_team[0]->SetFragLose(false);
-				m_team[1]->SetFragLose(false);
-			}
 		}
+	}
+
+	if(m_progress > _progress_team0_lead && m_progress < _progress_team1_lead)
+	{
+		m_team[0]->SetFragLose(false);
+		m_team[1]->SetFragLose(false);
+	}
+	else if(m_progress >= _progress_team1_lead)
+	{
+		m_team[0]->SetFragLose(true);
+		m_team[1]->SetFragLose(false);
+	}
+	else if(m_progress <= _progress_team0_lead)
+	{
+		m_team[0]->SetFragLose(false);
+		m_team[1]->SetFragLose(true);
 	}
 }
 
