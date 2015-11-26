@@ -31,7 +31,31 @@ const int	_command_min = 4;
 const int	_upper_limit = 2;
 const char*	_comtex[6] = {"UP\n","Y\n","RIGHT\n","DOWN\n","A\n","X\n"};
 const float	_polygon_size_x = 68.0f;
-//const D3DXVECTOR2	_comtexUV_list[8] = {D3DXVECTOR2(,,,,,,,};
+typedef struct{
+	float list[4];
+}UV_LIST;
+const UV_LIST	_comtexU_list[8] = 
+{
+	{0.0f, 0.125f, 0.0f, 0.125f},
+	{0.125f, 0.25f, 0.125f, 0.25f},
+	{0.25f, 0.375f, 0.25f, 0.375f},
+	{0.375f, 0.5f, 0.375f, 0.5f},
+	{0.5f, 0.625f, 0.5f, 0.625f},
+	{0.625f, 0.75f, 0.625f, 0.75f},
+	{0.75f, 0.875f, 0.75f, 0.875f},
+	{0.875f, 1.0f, 0.875f, 1.0f},
+};
+const int	_command_data[8] =
+{
+	XINPUT_GAMEPAD_A,
+	XINPUT_GAMEPAD_B,
+	XINPUT_GAMEPAD_X,
+	XINPUT_GAMEPAD_Y,
+	XINPUT_GAMEPAD_DPAD_UP,
+	XINPUT_GAMEPAD_DPAD_DOWN,
+	XINPUT_GAMEPAD_DPAD_LEFT,
+	XINPUT_GAMEPAD_DPAD_RIGHT,
+};
 
 //=============================================================================
 // コンストラクタ
@@ -145,7 +169,7 @@ bool Commandteam::Update(void)
 
 		if( m_pad[current_user]->buttonTrigger( 0xf00f ) )
 		{
-			if( m_pad[current_user]->buttonTrigger( *(m_command + m_command_count) ) )
+			if( m_pad[current_user]->buttonTrigger( _command_data[*(m_command + m_command_count)]) )
 				SetSuccess();
 			else
 				SetPenalty();
@@ -181,8 +205,8 @@ void Commandteam::SetFragLose(bool flag)
 		if(m_command_count <= _upper_limit)
 		{
 			m_command_long = _command_min;
-			m_drawListManager->UnLink(m_command_poly[4], Shader::PAT_2D);
-			m_drawListManager->UnLink(m_command_poly[5], Shader::PAT_2D);
+			m_drawListManager->UnLink(m_command_poly[_command_max - 2], Shader::PAT_2D);
+			m_drawListManager->UnLink(m_command_poly[_command_max - 1], Shader::PAT_2D);
 		}
 	}
 	else
@@ -197,14 +221,18 @@ bool Commandteam::InitObject(void)
 	//----------------------------
 	// 2Dポリゴン
 	//----------------------------
-	for(int i = 0; i < 6; i++)
+	for(int i = 0; i < _command_max; i++)
 	{
-		if(!Polygon2D::Create(&m_command_poly[i], m_device, m_objectList, m_import->texture((GameImport::TEX_TABLE)(GameImport::BUTTON_A+i))))
+		if(!Polygon2D::Create(&m_command_poly[i], m_device, m_objectList, m_import->texture(GameImport::COMMAND_TEX)))
 			return false;
 		m_updateList->Link(m_command_poly[i]);
 		m_drawListManager->Link(m_command_poly[i], 4, Shader::PAT_2D);
 		m_command_poly[i]->pos(m_polygon_pos.x + _polygon_size_x*(i % 2), m_polygon_pos.y - _polygon_size_x * i, 0.0f);
 		m_command_poly[i]->scl(_polygon_size_x, _polygon_size_x, 0.0f);
+		for(int j = 0; j < 4; j++)
+		{
+			m_command_poly[i]->texcoord_u(j, _comtexU_list[0].list[j]);
+		}
 	}
 
 	return true;
@@ -217,7 +245,7 @@ void Commandteam::SetSuccess(void)
 {
 	m_drawListManager->UnLink(m_command_poly[m_command_count], Shader::PAT_2D);
 
-	for(int i = 1; i < (6 - m_command_count); i++)
+	for(int i = 1; i < (_command_max - m_command_count); i++)
 	{
 		m_command_poly[m_command_count + i]->pos_y(m_command_poly[m_command_count + i]->pos().y + _polygon_size_x);
 	}
@@ -240,7 +268,7 @@ void Commandteam::StateReset(void)
 {
 	m_command_count = 0;
 
-	for(int i = 0; i < 6; i++)
+	for(int i = 0; i < _command_max; i++)
 	{
 		m_drawListManager->Link(m_command_poly[i], 4, Shader::PAT_2D);
 		m_command_poly[i]->pos(m_polygon_pos.x + _polygon_size_x*(i % 2), m_polygon_pos.y - _polygon_size_x * i, 0.0f);
@@ -251,6 +279,18 @@ void Commandteam::StateReset(void)
 		m_command_long = _command_min;
 	else
 		m_command_long = _command_max;
+}
+
+void Commandteam::SetCommand(int* command)
+{
+	m_command = command;
+	for(int i = 0; i < _command_max; i++)
+	{
+		for(int j = 0; j < 4; j++)
+		{
+			m_command_poly[i]->texcoord_u(j, _comtexU_list[*(m_command + i)].list[j]);
+		}
+	}
 }
 
 // EOF
