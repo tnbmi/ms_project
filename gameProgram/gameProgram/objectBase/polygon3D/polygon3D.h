@@ -25,6 +25,7 @@ public:
 	{
 		D3DXVECTOR3	position;
 		D3DXVECTOR3	normal;
+		D3DCOLOR	color;
 		D3DXVECTOR2	uv;
 	};
 
@@ -54,8 +55,8 @@ public:
 	virtual void		rot_z(float z) {m_rot.z = z;}
 
 	virtual D3DXVECTOR3	scl(void) {return m_scl;}
-	virtual void		scl(D3DXVECTOR3 scl) {m_scl = scl; SetVertex();}
-	virtual void		scl(float x, float y, float z) {m_scl = D3DXVECTOR3(x,y,z);}
+	virtual void		scl(D3DXVECTOR3 scl) {m_scl = scl;}
+	virtual void		scl(float x, float y, float z) {m_scl = D3DXVECTOR3(x,y,z); SetVertex();}
 	virtual void		scl_x(float x) {m_scl.x = x;}
 	virtual void		scl_y(float y) {m_scl.y = y;}
 	virtual void		scl_z(float z) {m_scl.z = z;}

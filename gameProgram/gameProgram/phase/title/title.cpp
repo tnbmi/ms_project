@@ -94,7 +94,7 @@ bool Title::Initialize(void)
 		return false;
 
 	// ライト
-	if(!Light::Create(&m_light, m_device, m_shader->vsc(0)))
+	if(!Light::Create(&m_light, m_device))
 		return false;
 
 	//----------------------------
@@ -233,18 +233,9 @@ void Title::Draw(void)
 					D3DCOLOR_RGBA(128, 64, 64, 255), 1.0f, 0);
 
 	//----------------------------
-	// ビューセット
-	//----------------------------
-	// カメラ
-	m_camera->SetCamera();
-
-	// ライト
-	m_light->SetLight();
-
-	//----------------------------
 	// オブジェクト描画
 	//----------------------------
-	m_drawListManager->AllDraw(m_camera->viewProjection());
+	m_drawListManager->AllDraw(m_camera, m_light);
 }
 
 //=============================================================================
