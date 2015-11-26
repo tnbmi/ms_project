@@ -38,8 +38,6 @@ public:
 
 private:
 
-	inline float Cube( float T ){ return T * T * ( 3.0f - 2.0f * T ); }
-
 	int m_noBone;//int’l‚Æ‚µ‚ÄŽg‚¢‚½‚¢‚ñ‚Å
 	
 	LPDIRECT3DVERTEXDECLARATION9 m_decl;

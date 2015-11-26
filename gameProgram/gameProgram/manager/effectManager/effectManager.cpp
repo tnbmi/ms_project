@@ -10,14 +10,16 @@
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 #include "effectManager.h"
 #include "..\..\objectBase\instancingBillboard\instancingBillboard.h"
-
+#include "..\..\common\complement\complement.h"
 
 
 //補完用
+/*
 float Cube( float T ){ return T * T * ( 3.0f - 2.0f * T ); }
 float Linear( float T ){ return T ; }
 float EaseIn( float T ){return T*T;}
 float EaseOut( float T ){ return T*(2-T);}
+*/
 
 //=============================================================================
 // コンストラクタ
@@ -121,26 +123,26 @@ void EffectManager::Update(void)
 			switch( m_particleArray[i].mode )
 			{
 				case EffectManager::COMP_MODE_LINE:
-					pos = Lerp( m_particleArray[i].key[0].pos,m_particleArray[i].key[1].pos,0.0f,(float)m_particleArray[i].compFrame,(float)m_particleArray[i].compErase,Linear );
-					scl = Lerp( m_particleArray[i].key[0].scl,m_particleArray[i].key[1].scl,0.0f,(float)m_particleArray[i].compFrame,(float)m_particleArray[i].compErase,Linear );
-					col = Lerp( m_particleArray[i].key[0].col,m_particleArray[i].key[1].col,0.0f,(float)m_particleArray[i].compFrame,(float)m_particleArray[i].compErase,Linear );
+					pos = LerpVec3( m_particleArray[i].key[0].pos,m_particleArray[i].key[1].pos,0.0f,(float)m_particleArray[i].compFrame,(float)m_particleArray[i].compErase,Linear );
+					scl = LerpVec3( m_particleArray[i].key[0].scl,m_particleArray[i].key[1].scl,0.0f,(float)m_particleArray[i].compFrame,(float)m_particleArray[i].compErase,Linear );
+					col = LerpVec4( m_particleArray[i].key[0].col,m_particleArray[i].key[1].col,0.0f,(float)m_particleArray[i].compFrame,(float)m_particleArray[i].compErase,Linear );
 					break;																														  
 				case EffectManager::COMP_MODE_EASEIN:																							  
-					pos = Lerp( m_particleArray[i].key[0].pos,m_particleArray[i].key[1].pos,0.0f,(float)m_particleArray[i].compFrame,(float)m_particleArray[i].compErase,EaseIn );
-					scl = Lerp( m_particleArray[i].key[0].scl,m_particleArray[i].key[1].scl,0.0f,(float)m_particleArray[i].compFrame,(float)m_particleArray[i].compErase,EaseIn );
-					col = Lerp( m_particleArray[i].key[0].col,m_particleArray[i].key[1].col,0.0f,(float)m_particleArray[i].compFrame,(float)m_particleArray[i].compErase,EaseIn );
+					pos = LerpVec3( m_particleArray[i].key[0].pos,m_particleArray[i].key[1].pos,0.0f,(float)m_particleArray[i].compFrame,(float)m_particleArray[i].compErase,EaseIn );
+					scl = LerpVec3( m_particleArray[i].key[0].scl,m_particleArray[i].key[1].scl,0.0f,(float)m_particleArray[i].compFrame,(float)m_particleArray[i].compErase,EaseIn );
+					col = LerpVec4( m_particleArray[i].key[0].col,m_particleArray[i].key[1].col,0.0f,(float)m_particleArray[i].compFrame,(float)m_particleArray[i].compErase,EaseIn );
 																																				  
 					break;																														  
 				case EffectManager::COMP_MODE_EASEOUT:																							  
-					pos = Lerp( m_particleArray[i].key[0].pos,m_particleArray[i].key[1].pos,0.0f,(float)m_particleArray[i].compFrame,(float)m_particleArray[i].compErase,EaseOut );
-					scl = Lerp( m_particleArray[i].key[0].scl,m_particleArray[i].key[1].scl,0.0f,(float)m_particleArray[i].compFrame,(float)m_particleArray[i].compErase,EaseOut );
-					col = Lerp( m_particleArray[i].key[0].col,m_particleArray[i].key[1].col,0.0f,(float)m_particleArray[i].compFrame,(float)m_particleArray[i].compErase,EaseOut );
+					pos = LerpVec3( m_particleArray[i].key[0].pos,m_particleArray[i].key[1].pos,0.0f,(float)m_particleArray[i].compFrame,(float)m_particleArray[i].compErase,EaseOut );
+					scl = LerpVec3( m_particleArray[i].key[0].scl,m_particleArray[i].key[1].scl,0.0f,(float)m_particleArray[i].compFrame,(float)m_particleArray[i].compErase,EaseOut );
+					col = LerpVec4( m_particleArray[i].key[0].col,m_particleArray[i].key[1].col,0.0f,(float)m_particleArray[i].compFrame,(float)m_particleArray[i].compErase,EaseOut );
 																																				  
 					break;																														  
 				case EffectManager::COMP_MODE_CUBE:																								  
-					pos = Lerp( m_particleArray[i].key[0].pos,m_particleArray[i].key[1].pos,0.0f,(float)m_particleArray[i].compFrame,(float)m_particleArray[i].compErase,Cube );
-					scl = Lerp( m_particleArray[i].key[0].scl,m_particleArray[i].key[1].scl,0.0f,(float)m_particleArray[i].compFrame,(float)m_particleArray[i].compErase,Cube );
-					col = Lerp( m_particleArray[i].key[0].col,m_particleArray[i].key[1].col,0.0f,(float)m_particleArray[i].compFrame,(float)m_particleArray[i].compErase,Cube );
+					pos = LerpVec3( m_particleArray[i].key[0].pos,m_particleArray[i].key[1].pos,0.0f,(float)m_particleArray[i].compFrame,(float)m_particleArray[i].compErase,Cube );
+					scl = LerpVec3( m_particleArray[i].key[0].scl,m_particleArray[i].key[1].scl,0.0f,(float)m_particleArray[i].compFrame,(float)m_particleArray[i].compErase,Cube );
+					col = LerpVec4( m_particleArray[i].key[0].col,m_particleArray[i].key[1].col,0.0f,(float)m_particleArray[i].compFrame,(float)m_particleArray[i].compErase,Cube );
 					break;
 			}
 
@@ -177,51 +179,6 @@ void EffectManager::Update(void)
 		}
 
 	}
-}
-
-
-//---------------------------------------------------------------------------------
-//補完
-//---------------------------------------------------------------------------------
-
-D3DXVECTOR3 EffectManager::Lerp( const D3DXVECTOR3 &st,const D3DXVECTOR3 &ed,float min,float max,float elapsed,float (*func)(float) )
-{
-	float t = ( elapsed - min ) / ( max - min );// 時間を媒介変数に
-
-	if( t < 0.0 )
-	{
-		t = 0;
-	}
-
-	if( t > 1.0 )
-	{
-		t = 1;
-	}
-
-	//各補完関数でレートを決定
-	float rate = (*func)(t);
-
-	return st * ( 1.0f - rate ) + ed * rate;
-}
-
-D3DXVECTOR4 EffectManager::Lerp( const D3DXVECTOR4 &st,const D3DXVECTOR4 &ed,float min,float max,float elapsed,float (*func)(float)  )
-{
-	float t = ( elapsed - min ) / ( max - min );// 時間を媒介変数に
-
-	if( t < 0.0 )
-	{
-		t = 0;
-	}
-
-	if( t > 1.0 )
-	{
-		t = 1;
-	}
-
-	//各補完関数でレートを決定
-	float rate = (*func)(t);
-
-	return st * ( 1.0f - rate ) + ed * rate;
 }
 
 //-------------------------------------------------------------------------------------------------------

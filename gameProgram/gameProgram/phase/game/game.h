@@ -29,6 +29,8 @@ class UpdateList;
 class DrawListManager;
 
 class Commandmanager;
+class EffectManager;
+class Player;
 
 class Game : public Phase
 {
@@ -55,6 +57,10 @@ private:
 	DrawListManager* m_drawListManager;
 
 	Commandmanager*	m_command_manager;
+
+	EffectManager *m_effectManager;
+	Player *m_redTeam;
+	Player *m_blueTeam;
 };
 
 //=============================================================================

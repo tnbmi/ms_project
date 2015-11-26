@@ -125,6 +125,12 @@
     <Filter Include="manager\effectManager">
       <UniqueIdentifier>{ec80397c-ac3d-4e4e-9751-8e9d6bbec489}</UniqueIdentifier>
     </Filter>
+    <Filter Include="common\complement">
+      <UniqueIdentifier>{d1869292-41c5-4d24-8edd-64072ce09913}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="object\player">
+      <UniqueIdentifier>{af306e68-396e-4c20-bf34-c9e69a53436a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main\main.h">
@@ -232,8 +238,11 @@
     <ClInclude Include="view\light\light.h">
       <Filter>view\light</Filter>
     </ClInclude>
-    <ClInclude Include="object\player.h">
-      <Filter>object</Filter>
+    <ClInclude Include="common\complement\complement.h">
+      <Filter>common\complement</Filter>
+    </ClInclude>
+    <ClInclude Include="object\player\player.h">
+      <Filter>object\player</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -339,8 +348,8 @@
     <ClCompile Include="view\light\light.cpp">
       <Filter>view\light</Filter>
     </ClCompile>
-    <ClCompile Include="object\player.cpp">
-      <Filter>object</Filter>
+    <ClCompile Include="object\player\player.cpp">
+      <Filter>object\player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
