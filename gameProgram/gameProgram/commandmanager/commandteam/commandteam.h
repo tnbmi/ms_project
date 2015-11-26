@@ -50,7 +50,7 @@ public:
 
 	void SetPlayer(PadX* p1, PadX* p2){m_pad[0] = p1; m_pad[1] = p2;}
 	void SetFragLose(bool flag);
-	void SetCommand(int* command){m_command = command;}
+	void SetCommand(int* command);
 
 	void debugproc(Debugproc* debugproc) {m_debugproc = debugproc;}
 

@@ -25,14 +25,6 @@ const char* _game_texture_name[] =
 	"/test_1.png",
 
 	"/COMMAND_TEX.png",
-	"/BUTTON_A.png",
-	"/BUTTON_B.png",
-	"/BUTTON_X.png",
-	"/BUTTON_Y.png",
-	"/BUTTON_UP.png",
-	"/BUTTON_DOWN.png",
-	"/BUTTON_RIGHT.png",
-	"/BUTTON_LEFT.png",
 };
 
 //=============================================================================

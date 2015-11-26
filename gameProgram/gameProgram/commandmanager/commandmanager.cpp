@@ -106,12 +106,16 @@ bool Commandmanager::Initialize(PadXManager* padXManager,
 	//---------------------------------------------------------------------------------------------
 	// 後でデータロードに置き換えるー
 	//---------------------------------------------------------------------------------------------
-	m_command_list[0] = XINPUT_GAMEPAD_DPAD_UP;
-	m_command_list[1] = XINPUT_GAMEPAD_Y;
-	m_command_list[2] = XINPUT_GAMEPAD_DPAD_RIGHT;
-	m_command_list[3] = XINPUT_GAMEPAD_DPAD_DOWN;
-	m_command_list[4] = XINPUT_GAMEPAD_A;
-	m_command_list[5] = XINPUT_GAMEPAD_X;
+	/*m_command_list[0] = 2;
+	m_command_list[1] = 4;
+	m_command_list[2] = 6;
+	m_command_list[3] = 3;
+	m_command_list[4] = 5;
+	m_command_list[5] = 7;*/
+	for(int i = 0; i < _list_pattern_max * _list_command_max; i++)
+	{
+		m_command_list[i] = rand()%8;
+	}
 
 	for(int i = 0; i < _team_max; i++)
 	{
@@ -122,7 +126,7 @@ bool Commandmanager::Initialize(PadXManager* padXManager,
 #else
 		m_team[i]->SetPlayer( padXManager->pad(i * 2), padXManager->pad(i * 2 + 1) );
 #endif
-		m_team[i]->SetCommand(&m_command_list[0 * _list_command_max]);
+		m_team[i]->SetCommand(&m_command_list[rand()%40 * _list_command_max]);
 	}
 
 	return true;
@@ -154,11 +158,16 @@ void Commandmanager::Update(void)
 	{
 		if(m_team[i]->Update())
 		{
-			m_team[i]->SetCommand(&m_command_list[0 * _list_command_max]);
+			m_team[i]->SetCommand(&m_command_list[rand()%40 * _list_command_max]);
 			if(i == 0)
 				m_progress--;
 			else
 				m_progress++;
+
+			if(m_progress < 0 || m_progress > 10)
+			{
+				// 勝敗処理を書こう
+			}
 
 			if(m_progress > _progress_team0_lead && m_progress < _progress_team1_lead)
 			{
