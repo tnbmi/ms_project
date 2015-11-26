@@ -21,6 +21,8 @@
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 class DrawList;
 class ObjectBase;
+class Camera;
+class Light;
 
 class DrawListManager
 {
@@ -35,7 +37,7 @@ public:
 	void Link(ObjectBase* object, int priority, Shader::PATTERN shaderPatternId);
 	void UnLink(ObjectBase* object, Shader::PATTERN shaderPatternId);
 
-	void AllDraw(D3DXMATRIX vp);
+	void AllDraw(Camera* camera, Light* light);
 
 private:
 	LPDIRECT3DDEVICE9 m_device;

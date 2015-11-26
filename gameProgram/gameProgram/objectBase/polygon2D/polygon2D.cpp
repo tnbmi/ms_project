@@ -152,7 +152,7 @@ void Polygon2D::SetVertex(void)
 	m_vtx[2].position = D3DXVECTOR3(-half.x,  half.y, half.z);
 	m_vtx[3].position = D3DXVECTOR3( half.x,  half.y, half.z);
 
-	// îΩéÀåı
+	// í∏ì_ÉJÉâÅ[
 	m_vtx[0].color = m_color;
 	m_vtx[1].color = m_color;
 	m_vtx[2].color = m_color;

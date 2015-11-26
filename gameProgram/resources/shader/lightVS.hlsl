@@ -42,5 +42,4 @@ void VS(in float3 inPos			: POSITION0,
 	// o—ÍƒJƒ‰[
 	outDiffuse = light * gMatDiffuse * gDirLightDiffuse + gMatAmbient * gDirLightAmbient;
 	outDiffuse.a = 1.0f;
-	//outDiffuse = float4(1.0f, 1.0f, 1.0f, 1.0f);
 }

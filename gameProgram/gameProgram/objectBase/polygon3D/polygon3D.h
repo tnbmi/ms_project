@@ -25,6 +25,7 @@ public:
 	{
 		D3DXVECTOR3	position;
 		D3DXVECTOR3	normal;
+		D3DCOLOR	color;
 		D3DXVECTOR2	uv;
 	};
 

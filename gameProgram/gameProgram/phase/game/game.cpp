@@ -36,8 +36,8 @@
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // マクロ定義
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-const D3DXVECTOR3 _at	= D3DXVECTOR3(0.0f, 50.0f, 0.0f);
-const D3DXVECTOR3 _eye	= D3DXVECTOR3(0.0f, 100.0f, -250.0f);
+const D3DXVECTOR3 _at	= D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+const D3DXVECTOR3 _eye	= D3DXVECTOR3(0.0f, 50.0f, -50.0f);
 
 //=============================================================================
 // コンストラクタ
@@ -92,8 +92,9 @@ bool Game::Initialize(void)
 		return false;
 
 	// ライト
-	if(!Light::Create(&m_light, m_device, m_shader->vsc(1)))
+	if(!Light::Create(&m_light, m_device))
 		return false;
+	m_light->dirLightVector(-1.0f, -3.0f, 2.0f);
 
 	//----------------------------
 	// 管理リスト
@@ -227,18 +228,9 @@ void Game::Draw(void)
 					D3DCOLOR_RGBA(64, 64, 128, 256), 1.0f, 0);
 
 	//----------------------------
-	// ビューセット
-	//----------------------------
-	// カメラ
-	m_camera->SetCamera();
-
-	// ライト
-	m_light->SetLight();
-
-	//----------------------------
 	// オブジェクト描画
 	//----------------------------
-	m_drawListManager->AllDraw(m_camera->viewProjection());
+	m_drawListManager->AllDraw(m_camera, m_light);
 
 	//----------------------------
 	// コマンドマネージャ描画
@@ -264,8 +256,8 @@ bool Game::InitObject(void)
 		return false;
 	m_updateList->Link(poly3d);
 	m_drawListManager->Link(poly3d, 4, Shader::PAT_LIGHT);
-	poly3d->pos(30.0f, 50.0f, -10.0f);
 	poly3d->scl(32.0f, 32.0f, 0.0f);
+	poly3d->rot_x(PAI * 0.5f);
 
 	return true;
 }

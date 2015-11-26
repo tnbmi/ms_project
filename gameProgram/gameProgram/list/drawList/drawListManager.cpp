@@ -13,6 +13,9 @@
 
 #include "drawList.h"
 
+#include "..\..\view\camera\camera.h"
+#include "..\..\view\light\light.h"
+
 //=============================================================================
 // コンストラクタ
 //=============================================================================
@@ -47,8 +50,8 @@ DrawListManager::DrawListManager(LPDIRECT3DDEVICE9 device, Shader* shader)
 	{
 		{0,  0, D3DDECLTYPE_FLOAT3,		D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_POSITION,	0},		// 座標
 		{0, 12, D3DDECLTYPE_FLOAT3,		D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_NORMAL,		0},		// 法線
-		//{0, 24, D3DDECLTYPE_D3DCOLOR,	D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_COLOR,		0},		// 色
-		{0, 24/*28*/, D3DDECLTYPE_FLOAT2,		D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_TEXCOORD,	0},		// テクスチャ
+		{0, 24, D3DDECLTYPE_D3DCOLOR,	D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_COLOR,		0},		// 色
+		{0, 28, D3DDECLTYPE_FLOAT2,		D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_TEXCOORD,	0},		// テクスチャ
 		D3DDECL_END(),
 	};
 
@@ -128,15 +131,25 @@ void DrawListManager::UnLink(ObjectBase* object, Shader::PATTERN shaderPatternId
 //=============================================================================
 // 全オブジェクトの描画
 //=============================================================================
-void DrawListManager::AllDraw(D3DXMATRIX vp)
+void DrawListManager::AllDraw(Camera* camera, Light* light)
 {
 	HRESULT				hr = S_OK;
 	ObjectBase*			cur = nullptr;
 	LPD3DXCONSTANTTABLE	vsc;
 	LPD3DXCONSTANTTABLE	psc;
 
+	//----------------------------
+	// カメラ
+	//----------------------------
+	D3DXMATRIX vp;
+	camera->SetCamera();
+	vp = camera->viewProjection();
+
 	for(int cnt = 0; cnt < Shader::PATTERN_MAX; ++cnt)
 	{
+		//----------------------------
+		// シェーダー設定
+		//----------------------------
 		if(cnt != Shader::PAT_2D)
 			// 3D頂点設定
 			hr = m_device->SetVertexDeclaration(m_decl3D);
@@ -148,24 +161,17 @@ void DrawListManager::AllDraw(D3DXMATRIX vp)
 		if(FAILED(hr))
 			MessageBox(NULL, "頂点設定失敗", "SetVertexDeclaration", MB_OK);
 
-		// シェーダー設定
+		// シェーダーをセット
 		m_shader->SetShader(&vsc, &psc, (Shader::PATTERN)cnt);
 
-		/*if(cnt == Shader::PAT_2D)
-		{
-			// 2D用プロジェクション
-			//D3DXMATRIX	proj2D(2/SCREEN_WIDTH,	0.0f,			 0.0f, 0.0f,
-			//					0.0f,			2/SCREEN_HEIGHT, 0.0f, 0.0f,
-			//					0.0f,			0.0f,			 1.0f, 0.0f,
-			//					0.0f,			0.0f,			 0.0f, 1.0f);
-			D3DXMATRIX	proj2D(1.0f,	0.0f, 0.0f, 0.0f,
-								0.0f,	1.0f, 0.0f, 0.0f,
-								0.0f,	0.0f, 1.0f, 0.0f,
-								0.0f,	0.0f, 0.0f, 1.0f);
-			vsc->SetMatrix(m_device, "gProj", &proj2D);
-		}*/
+		//----------------------------
+		// ライト設定
+		//----------------------------
+		light->SetLight(vsc);
 
-		// 描画
+		//----------------------------
+		// 同シェーダーを全て描画
+		//----------------------------
 		m_drawList[cnt]->AllDraw(vsc, psc, vp);
 	}
 }

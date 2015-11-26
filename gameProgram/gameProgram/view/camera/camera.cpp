@@ -24,7 +24,7 @@ const float _shadowHeight	= 255;
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 inline float _radian(float angle)
 {
-	return (3.14159265359f / 180.0f * angle);
+	return (PAI / 180.0f * angle);
 }
 
 inline float _distance(D3DXVECTOR3 start, D3DXVECTOR3 end)
@@ -191,8 +191,22 @@ void Camera::SetShadowCamera(D3DXVECTOR3 targetPos)
 							100.0f,	// height
 							-50.0f,	// near値
 							50.0f);	// far値
+
 	// プロジェクションマトリックスの設定
 	//m_device->SetTransform(D3DTS_PROJECTION, &projection);
+		/*if(cnt == Shader::PAT_2D)
+		{
+			// 2D用プロジェクション
+			//D3DXMATRIX	proj2D(2/SCREEN_WIDTH,	0.0f,			 0.0f, 0.0f,
+			//					0.0f,			2/SCREEN_HEIGHT, 0.0f, 0.0f,
+			//					0.0f,			0.0f,			 1.0f, 0.0f,
+			//					0.0f,			0.0f,			 0.0f, 1.0f);
+			D3DXMATRIX	proj2D(1.0f,	0.0f, 0.0f, 0.0f,
+								0.0f,	1.0f, 0.0f, 0.0f,
+								0.0f,	0.0f, 1.0f, 0.0f,
+								0.0f,	0.0f, 0.0f, 1.0f);
+			vsc->SetMatrix(m_device, "gProj", &proj2D);
+		}*/
 
 	//----------------------------
 	// ビューポート
