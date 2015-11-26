@@ -118,10 +118,6 @@ private:
 	int m_particleMax;
 	int m_cursol;
 
-	//補完
-	D3DXVECTOR3 Lerp( const D3DXVECTOR3 &st,const D3DXVECTOR3 &ed,float min,float max,float elapsed,float (*func)(float) );
-	D3DXVECTOR4 Lerp( const D3DXVECTOR4 &st,const D3DXVECTOR4 &ed,float min,float max,float elapsed,float (*func)(float) );
-
 	//エフェクトデータベース
 	const static int kEffectDataBaseMax = 10;
 	int m_databaseCursol;//データ入れる先のカーソル

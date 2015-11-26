@@ -29,7 +29,7 @@
 
 #include "..\..\manager\effectManager\effectManager.h"
 #include "..\..\objectBase\instancingBillboard\instancingBillboard.h"
-#include "..\..\object\player.h"
+#include "..\..\object\player\player.h"
 #include "..\..\objectBase\fbxModel\fbxModel.h"
 #include "..\..\input\keyboard\keyboard.h"
 
