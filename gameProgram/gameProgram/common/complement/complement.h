@@ -20,6 +20,7 @@ inline float Linear ( const float t ){ return t;  }
 inline float EaseIn ( const float t ){ return t*t;}
 inline float EaseOut( const float t ){ return t*(2-t); }
 
+//開始位置　終了位置　開始時間　終了時間　現在時間（加算等は外でやること） 使用関数
 inline D3DXVECTOR3 LerpVec3(  const D3DXVECTOR3 &st,const D3DXVECTOR3 &ed,float min,float max,float elapsed,float (*func)(float) )
 {
 	float t = ( elapsed - min ) / ( max - min );// 時間を媒介変数に

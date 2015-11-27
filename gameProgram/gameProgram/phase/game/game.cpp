@@ -43,7 +43,7 @@
 // マクロ定義
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 const D3DXVECTOR3 _at	= D3DXVECTOR3(0.0f, 100.0f, 0.0f);
-const D3DXVECTOR3 _eye	= D3DXVECTOR3(0.0f, 150.0f, -500.0f);
+const D3DXVECTOR3 _eye	= D3DXVECTOR3(0.0f, 150.0f, -1000.0f);
 
 //=============================================================================
 // コンストラクタ
@@ -258,6 +258,22 @@ void Game::Update(void)
 		m_effectManager->AddEffectFromDataBase(4,D3DXVECTOR3(0,0,0) );
 	}
 
+	if( m_keyboard->trigger(DIK_6 ) )
+	{
+		m_effectManager->AddEffectFromDataBase(5,D3DXVECTOR3(0,60,0) );
+	}
+
+	if( m_keyboard->trigger(DIK_7 ) )
+	{
+		m_effectManager->AddEffectFromDataBase(6,D3DXVECTOR3(0,60,0) );
+	}
+
+	if( m_keyboard->trigger( DIK_0 ) )
+	{
+		m_redTeam->Move( D3DXVECTOR3( -500,0,0 ),D3DXVECTOR3(-30,0,0),500 );
+		m_blueTeam->Move( D3DXVECTOR3( 500,0,0 ),D3DXVECTOR3(30,0,0),500 );
+	}
+
 	//----------------------------
 	// 画面遷移
 	//----------------------------
@@ -335,45 +351,89 @@ bool Game::InitObject(void)
 	m_effectManager->LoadEffectData("../resources/effect/Rize.OEF" );
 	m_effectManager->LoadEffectData("../resources/effect/Chiya.OEF" );
 	m_effectManager->LoadEffectData("../resources/effect/Syaro.OEF" );
+	m_effectManager->LoadEffectData("../resources/effect/Chiya2.OEF" );
+	m_effectManager->LoadEffectData("../resources/effect/Chiya3.OEF" );
+	
 
 	//----------------------------
 	//プレイヤー生成
 	//----------------------------
-	FbxModel *part1,*part2;
-
-	FbxModel::Create( &part1,m_device,m_objectList,0,ObjectBase::TYPE_3D,"../resources/fbxModel/ggy.bin" );
-	FbxModel::Create( &part2,m_device,m_objectList,0,ObjectBase::TYPE_3D,"../resources/fbxModel/ggy.bin" );
-	//list
-	m_drawListManager->Link( part1,0,Shader::PAT_FBX );
-	m_updateList->Link(part1);
-	m_drawListManager->Link( part2,0,Shader::PAT_FBX );
-	m_updateList->Link(part2);
-
-	part1->StartAnimation( 1,60,true );
-	part2->StartAnimation( 61,91,true );
-
-	Player::Create( &m_redTeam,part1,part2 );
-
-	FbxModel::Create( &part1,m_device,m_objectList,0,ObjectBase::TYPE_3D,"../resources/fbxModel/ggy.bin" );
-	FbxModel::Create( &part2,m_device,m_objectList,0,ObjectBase::TYPE_3D,"../resources/fbxModel/ggy.bin" );
-
-	//list
-	m_drawListManager->Link( part1,0,Shader::PAT_FBX );
-	m_updateList->Link(part1);
-	m_drawListManager->Link( part2,0,Shader::PAT_FBX );
-	m_updateList->Link(part2);
-
-	part1->StartAnimation( 1,60,true );
-	part2->StartAnimation( 61,91,true );
-
-	Player::Create( &m_blueTeam,part1,part2 );
-
-	m_redTeam->pos( D3DXVECTOR3( -100,0,0 ));
+	Player::Create( &m_blueTeam,m_device,m_objectList,m_updateList,m_drawListManager,0,ObjectBase::TYPE_3D,"../resources/fbxModel/ggy.bin","../resources/fbxModel/ggy.bin");
+	Player::Create( &m_redTeam,m_device,m_objectList,m_updateList,m_drawListManager,0,ObjectBase::TYPE_3D,"../resources/fbxModel/ggy.bin","../resources/fbxModel/ggy.bin");
 	m_redTeam->rot( D3DXVECTOR3(0,D3DX_PI/2,0 ) );
-	m_blueTeam->pos( D3DXVECTOR3(100,0,0 ) );
+	m_blueTeam->rot( D3DXVECTOR3(0,-D3DX_PI/2,0 ) );
 	m_redTeam->offsetPos( D3DXVECTOR3(0,150,0 ) );
 	m_blueTeam->offsetPos( D3DXVECTOR3(0,150,0 ) );
 
+	m_redTeam->Move( D3DXVECTOR3(-500,0,0),D3DXVECTOR3(-40,0,0),300 );
+	m_blueTeam->Move( D3DXVECTOR3(500,0,0),D3DXVECTOR3(40,0,0),300 );
+
+	//---------------------------
+	//
+	//---------------------------
+
+	for( int i = 0 ; i < 5 ; i++ )
+	{
+		FbxModel *fbx;
+		FbxModel::Create( &fbx,m_device,m_objectList,0,ObjectBase::TYPE_3D,"../resources/fbxModel/ggy.bin" );
+		m_updateList->Link( fbx );
+		m_drawListManager->Link( fbx,0,Shader::PAT_FBX );
+
+		fbx->pos( D3DXVECTOR3( -600,0,100+100 * i ) );
+	}
+
+	for( int i = 0 ; i < 5 ; i++ )
+	{
+		FbxModel *fbx;
+		FbxModel::Create( &fbx,m_device,m_objectList,0,ObjectBase::TYPE_3D,"../resources/fbxModel/ggy.bin" );
+		m_updateList->Link( fbx );
+		m_drawListManager->Link( fbx,0,Shader::PAT_FBX );
+
+		fbx->pos( D3DXVECTOR3( 600,0,100+100 * i ) );
+	}
+
+	for( int i = 0 ; i < 10 ; i++ )
+	{
+		FbxModel *fbx;
+		FbxModel::Create( &fbx,m_device,m_objectList,0,ObjectBase::TYPE_3D,"../resources/fbxModel/ggy.bin" );
+		m_updateList->Link( fbx );
+		m_drawListManager->Link( fbx,0,Shader::PAT_FBX );
+
+		fbx->pos( D3DXVECTOR3( -550 + 100 * i,0,500 ) );
+	}
+	
+	for( int i = 0 ; i < 7 ; i++ )
+	{
+		FbxModel *fbx;
+		FbxModel::Create( &fbx,m_device,m_objectList,0,ObjectBase::TYPE_3D,"../resources/fbxModel/ggy.bin" );
+		m_updateList->Link( fbx );
+		m_drawListManager->Link( fbx,0,Shader::PAT_FBX );
+
+		fbx->pos( D3DXVECTOR3( -550 + 100 * i,0,400 ) );
+	}
+	
+	/*
+	for( int i = 0 ; i < 10 ; i++ )
+	{
+		FbxModel *fbx;
+		FbxModel::Create( &fbx,m_device,m_objectList,0,ObjectBase::TYPE_3D,"../resources/fbxModel/ggy.bin" );
+		m_updateList->Link( fbx );
+		m_drawListManager->Link( fbx,0,Shader::PAT_FBX );
+
+		fbx->pos( D3DXVECTOR3( -550 + 100 * i,0,600 ) );
+	}
+	
+	
+	for( int i = 0 ; i < 10 ; i++ )
+	{
+		FbxModel *fbx;
+		FbxModel::Create( &fbx,m_device,m_objectList,0,ObjectBase::TYPE_3D,"../resources/fbxModel/ggy.bin" );
+		m_updateList->Link( fbx );
+		m_drawListManager->Link( fbx,0,Shader::PAT_FBX );
+
+		fbx->pos( D3DXVECTOR3( -550 + 100 * i,0,700 ) );
+	}
+	*/
 	return true;
 }
 

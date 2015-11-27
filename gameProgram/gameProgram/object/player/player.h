@@ -13,6 +13,7 @@
 // インクルードファイル
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 #include "..\..\main\main.h"
+#include "..\..\objectBase\objectBase.h"
 
 class FbxModel;
 
@@ -21,6 +22,8 @@ class FbxModel;
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 class PlayerState;
+class DrawListManager;
+class UpdateList;
 
 class Player
 {
@@ -30,6 +33,8 @@ public:
 	virtual ~Player(void);
 
 	static bool Create( Player** outPointer, FbxModel *parent,FbxModel *child );
+	static bool Create( Player** outPointer, LPDIRECT3DDEVICE9 device, ObjectList* objectList,UpdateList *updateList,DrawListManager *drawList, int priority  , ObjectBase::OBJECT_TYPE type,
+						const char *parentModelPath,const char *childModelPath );
 	bool Initialize(void);
 	void Finalize(void);
 	void Update(void);
@@ -49,6 +54,9 @@ public:
 	D3DXVECTOR3 offsetRot(){ return m_offsetRot; }
 	void        offsetRot( const D3DXVECTOR3 &offsetRot ){ m_offsetRot = offsetRot; }
 
+	//移動関数　セッターとしてもお使いください 
+	//開始位置　終了位置　何フレームで補完するんだＹＯ
+	void Move( const D3DXVECTOR3 &stPos,const D3DXVECTOR3 &edPos,const float compTime );
 
 	
 
@@ -61,6 +69,11 @@ private:
 	D3DXVECTOR3 m_rot;
 	D3DXVECTOR3 m_offsetPos;
 	D3DXVECTOR3 m_offsetRot;
+
+	D3DXVECTOR3 m_stPos;
+	D3DXVECTOR3 m_edPos;
+	float m_elepsed;
+	float m_compTime;
 
 	//ステート情報
 	PlayerState *m_state;
