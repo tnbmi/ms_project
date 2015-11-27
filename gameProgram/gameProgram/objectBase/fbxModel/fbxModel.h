@@ -28,7 +28,7 @@ public:
 	FbxModel(LPDIRECT3DDEVICE9 device, ObjectList* objectList, int priority, OBJECT_TYPE type );
 	virtual ~FbxModel(void);
 
-	static bool Create(FbxModel** outPointer, LPDIRECT3DDEVICE9 device, ObjectList* objectList, int priority  , OBJECT_TYPE type,char *LoadModelPath);
+	static bool Create(FbxModel** outPointer, LPDIRECT3DDEVICE9 device, ObjectList* objectList, int priority  , OBJECT_TYPE type,const char *LoadModelPath);
 	bool Initialize(void);
 	void Finalize(void);
 	void Update(void);

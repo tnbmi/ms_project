@@ -18,6 +18,7 @@
 #include "..\input\padX\padXManager.h"
 
 #include "..\phase\title\title.h"
+#include "..\phase\game\game.h"
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // 静的変数
@@ -99,7 +100,7 @@ bool Manager::Initialize(HINSTANCE hInstance, HWND hWnd, bool windowFlg)
 	// フェーズ
 	//----------------------------
 	// 生成
-	m_phase = (Phase*)new Title(device);
+	m_phase = (Phase*)new Game(device);
 
 	// 入力設定
 	m_phase->padXManager(m_padXManager);

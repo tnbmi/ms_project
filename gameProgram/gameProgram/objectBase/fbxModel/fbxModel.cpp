@@ -12,7 +12,6 @@
 #include "fbxModel.h"
 #include "..\..\common\complement\complement.h"
 
-
 //=============================================================================
 // コンストラクタ
 //=============================================================================
@@ -42,11 +41,6 @@ FbxModel::FbxModel(LPDIRECT3DDEVICE9 device, ObjectList* objectList, int priorit
 	m_blendEndKeyFrame   = 0;
 	m_blendCurKeyFrame   = 0;
 
-	
-
-
-
-
 }
 
 //=============================================================================
@@ -60,7 +54,7 @@ FbxModel::~FbxModel(void)
 //=============================================================================
 // 生成
 //=============================================================================
-bool FbxModel::Create(FbxModel** outPointer, LPDIRECT3DDEVICE9 device, ObjectList* objectList, int priority , OBJECT_TYPE type,char *LoadModelPath)
+bool FbxModel::Create(FbxModel** outPointer, LPDIRECT3DDEVICE9 device, ObjectList* objectList, int priority , OBJECT_TYPE type,const char *LoadModelPath)
 {
 	FbxModel* pointer = new FbxModel( device,objectList,priority,type );
 	if(!pointer->Initialize())
@@ -112,7 +106,10 @@ void FbxModel::Finalize(void)
 					m_part[i].dataArray[j].idxBuff->Release();
 					m_part[i].dataArray[j].vtxBuff->Release();
 
-					m_part[i].dataArray[j].tex->Release();
+					if( m_part[i].dataArray[j].tex != nullptr )
+					{
+						m_part[i].dataArray[j].tex->Release();
+					}
 
 					delete []m_part[i].dataArray[j].texName;
 
@@ -487,8 +484,10 @@ bool FbxModel::LoadFbxModel( const char *loadModelPath )
 					delete []c;
 
 					//テクスチャロード
-					//D3DXCreateTextureFromFile(device,whiteTexPath,&m_part[i].dataArray[j].tex);
-					D3DXCreateTextureFromFile(device,m_part[i].dataArray[j].texName,&m_part[i].dataArray[j].tex);
+					if( FAILED( D3DXCreateTextureFromFile(device,m_part[i].dataArray[j].texName,&m_part[i].dataArray[j].tex) ) )
+					{
+						m_part[i].dataArray[j].tex = nullptr;
+					}
 				}
 
 
