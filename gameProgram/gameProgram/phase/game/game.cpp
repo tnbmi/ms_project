@@ -262,9 +262,10 @@ void Game::Update(void)
 	//----------------------------
 	// ‰æ–Ê‘JˆÚ
 	//----------------------------
-	if(pad->buttonTrigger(XINPUT_GAMEPAD_A))
+	if(m_command_manager->GetState() == Commandmanager::TEAM0_WIN || 
+	   m_command_manager->GetState() == Commandmanager::TEAM1_WIN )
 	{
-		//Manager::nextPhase((Phase*)new Result(m_device));
+		Manager::nextPhase((Phase*)new Result(m_device));
 	}
 }
 

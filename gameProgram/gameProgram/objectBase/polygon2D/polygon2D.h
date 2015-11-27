@@ -63,14 +63,16 @@ public:
 	virtual D3DXCOLOR	color(void) {return m_color;}
 	virtual void		color(D3DXCOLOR color) {m_color = color;}
 	virtual void		color(float r, float g, float b, float a) {m_color = D3DXCOLOR(r,g,b,a);}
-	virtual void		color_r(float r) {m_color.r = r;}
-	virtual void		color_g(float g) {m_color.g = g;}
-	virtual void		color_b(float b) {m_color.b = b;}
-	virtual void		color_a(float a) {m_color.a = a;}
+	virtual void		color_r(float r) {m_color.r = r;SetVertex();}
+	virtual void		color_g(float g) {m_color.g = g;SetVertex();}
+	virtual void		color_b(float b) {m_color.b = b;SetVertex();}
+	virtual void		color_a(float a) {m_color.a = a;SetVertex();}
 
 	virtual void	texcoord(int num, D3DXVECTOR2 uv) {m_vtx[num].uv = uv;}
 	virtual void	texcoord(int num, float u, float v) {m_vtx[num].uv.x = u; m_vtx[num].uv.y = v;}
 	virtual void	texcoord_u(int num, float u) {m_vtx[num].uv.x = u;}
+
+	virtual void	texture(LPDIRECT3DTEXTURE9 texture){m_texture = texture;}
 
 protected:
 	void SetVertex(void);
