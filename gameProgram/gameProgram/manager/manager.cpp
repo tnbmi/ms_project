@@ -17,7 +17,7 @@
 #include "..\input\keyboard\keyboard.h"
 #include "..\input\padX\padXManager.h"
 
-#include "..\phase\game\game.h"
+#include "..\phase\title\title.h"
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // 静的変数
@@ -99,7 +99,7 @@ bool Manager::Initialize(HINSTANCE hInstance, HWND hWnd, bool windowFlg)
 	// フェーズ
 	//----------------------------
 	// 生成
-	m_phase = (Phase*)new Game(device);
+	m_phase = (Phase*)new Title(device);
 
 	// 入力設定
 	m_phase->padXManager(m_padXManager);
@@ -181,20 +181,20 @@ bool Manager::Update(void)
 		// 現在フェーズを破棄
 		SafeFinalizeDelete(m_phase);
 
-		// 次のフェーズを生成・初期化・設定
+		// 入力設定
+		m_nextPhase->padXManager(m_padXManager);
+		m_nextPhase->keyboard(m_keyboard);
+
+#ifdef _DEBUG
+		// デバッグ設定
+		m_nextPhase->debugproc(m_debugproc);
+#endif
+
+		// 次のフェーズを初期化・設定
 		if(!m_nextPhase->Initialize())
 			return false;
 		m_phase = m_nextPhase;
 		m_renderer->phase(m_phase);
-
-#ifdef _DEBUG
-		// デバッグ表示
-		m_phase->debugproc(m_debugproc);
-#endif
-
-		// 入力設定
-		m_phase->keyboard(m_keyboard);
-		m_phase->padXManager(m_padXManager);
 	}
 
 	return true;

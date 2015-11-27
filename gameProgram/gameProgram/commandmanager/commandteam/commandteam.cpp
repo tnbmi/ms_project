@@ -255,10 +255,9 @@ bool Commandteam::InitObject(void)
 		}
 	}
 
-	if(!Polygon2D::Create(&m_back_poly[0], m_device, m_objectList, m_import->texture(GameImport::RED_TEX)))
+	GameImport::TEX_TABLE texture = (GameImport::TEX_TABLE)(GameImport::BLUE_TEX + m_team_color);
+	if(!Polygon2D::Create(&m_back_poly[0], m_device, m_objectList, m_import->texture(texture)))
 		return false;
-	if(m_team_color == Commandteam::COLOR_BLUE)
-		m_back_poly[0]->texture(m_import->texture(GameImport::BLUE_TEX));
 	m_updateList->Link(m_back_poly[0]);
 	m_drawListManager->Link(m_back_poly[0], 2, Shader::PAT_2D);
 	m_back_poly[0]->pos(m_polygon_pos.x + _polygon_move, m_polygon_pos.y - _polygon_move * 3, 0.0f);

@@ -34,7 +34,7 @@ const int _progress_team1_lead = 7;
 const int _list_command_max = 6;
 const int _list_pattern_max = 40;
 const D3DXVECTOR3 _team_position[2] = {D3DXVECTOR3(48.0f, 480.0f, 0.0f),D3DXVECTOR3(1088.0f, 480.0f, 0.0f)};
-const int _team_color[2]= {Commandteam::COLOR_RED,Commandteam::COLOR_BLUE};
+const int _team_color[2]= {Commandteam::COLOR_BLUE,Commandteam::COLOR_RED};
 
 //=============================================================================
 // コンストラクタ
@@ -123,7 +123,13 @@ bool Commandmanager::Initialize(PadXManager* padXManager,
 #ifdef _DEBUG
 		m_team[i]->SetPlayer( padXManager->pad(i), padXManager->pad(i) );
 #else
-		m_team[i]->SetPlayer( padXManager->pad(i * 2), padXManager->pad(i * 2 + 1) );
+		//m_team[i]->SetPlayer( padXManager->pad(i * 2), padXManager->pad(i * 2 + 1) );
+
+		// 2vs1
+		if(i == 0)
+			m_team[i]->SetPlayer( padXManager->pad(i * 2), padXManager->pad(i * 2 + 1) );
+		else
+			m_team[i]->SetPlayer( padXManager->pad(2), padXManager->pad(2) );
 #endif
 		m_team[i]->SetCommand(&m_command_list[rand()%40 * _list_command_max]);
 	}
@@ -133,12 +139,12 @@ bool Commandmanager::Initialize(PadXManager* padXManager,
 	{
 		if(i < 5)
 		{
-			if(!Polygon2D::Create(&m_test_gage[i], device, m_objectList, m_import->texture(GameImport::RED_TEX)))
+			if(!Polygon2D::Create(&m_test_gage[i], device, m_objectList, m_import->texture(GameImport::BLUE_TEX)))
 				return false;
 		}
 		else
 		{
-			if(!Polygon2D::Create(&m_test_gage[i], device, m_objectList, m_import->texture(GameImport::BLUE_TEX)))
+			if(!Polygon2D::Create(&m_test_gage[i], device, m_objectList, m_import->texture(GameImport::RED_TEX)))
 				return false;
 		}
 		m_updateList->Link(m_test_gage[i]);
@@ -228,9 +234,9 @@ void Commandmanager::GageUpd(void)
 	for(int i = 0; i < 10; i++)
 	{
 		if(i < m_progress)
-			m_test_gage[i]->texture(m_import->texture(GameImport::RED_TEX));
-		else
 			m_test_gage[i]->texture(m_import->texture(GameImport::BLUE_TEX));
+		else
+			m_test_gage[i]->texture(m_import->texture(GameImport::RED_TEX));
 	}
 }
 
