@@ -25,6 +25,11 @@ const char* _game_texture_name[] =
 	"/test_1.png",
 
 	"/COMMAND_TEX.png",
+	"/red.png",
+	"/blue.png",
+	"/commandfram00.png",
+	"/commandfram01.png",
+	"/commandfram02.png",
 };
 
 //=============================================================================

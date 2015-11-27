@@ -22,6 +22,8 @@
 
 #include "..\commandmanager\commandteam\commandteam.h"
 
+#include "..\objectBase\polygon2D\polygon2D.h"
+
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // マクロ定義
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -31,7 +33,8 @@ const int _progress_team0_lead = 3;
 const int _progress_team1_lead = 7;
 const int _list_command_max = 6;
 const int _list_pattern_max = 40;
-const D3DXVECTOR3 _team_position[2] = {D3DXVECTOR3(84.0f, 444.0f, 0.0f),D3DXVECTOR3(1124.0f, 444.0f, 0.0f)};
+const D3DXVECTOR3 _team_position[2] = {D3DXVECTOR3(48.0f, 480.0f, 0.0f),D3DXVECTOR3(1088.0f, 480.0f, 0.0f)};
+const int _team_color[2]= {Commandteam::COLOR_RED,Commandteam::COLOR_BLUE};
 
 //=============================================================================
 // コンストラクタ
@@ -100,18 +103,14 @@ bool Commandmanager::Initialize(PadXManager* padXManager,
 	m_drawListManager = drwList;
 
 	m_debugproc = debugproc;
+	m_game_state = DRAW;
+	m_import = import;
 
 	m_command_list = new int [_list_pattern_max * _list_command_max];
 
 	//---------------------------------------------------------------------------------------------
 	// 後でデータロードに置き換えるー
 	//---------------------------------------------------------------------------------------------
-	/*m_command_list[0] = 2;
-	m_command_list[1] = 4;
-	m_command_list[2] = 6;
-	m_command_list[3] = 3;
-	m_command_list[4] = 5;
-	m_command_list[5] = 7;*/
 	for(int i = 0; i < _list_pattern_max * _list_command_max; i++)
 	{
 		m_command_list[i] = rand()%8;
@@ -119,7 +118,7 @@ bool Commandmanager::Initialize(PadXManager* padXManager,
 
 	for(int i = 0; i < _team_max; i++)
 	{
-		Commandteam::Create(&m_team[i], m_objectList, m_updateList, m_drawListManager, device, import, _team_position[i]);
+		Commandteam::Create(&m_team[i], m_objectList, m_updateList, m_drawListManager, device, import, _team_position[i], (Commandteam::TEAM_COLOR)_team_color[i]);
 		m_team[i]->debugproc(debugproc);
 #ifdef _DEBUG
 		m_team[i]->SetPlayer( padXManager->pad(i), padXManager->pad(i) );
@@ -127,6 +126,25 @@ bool Commandmanager::Initialize(PadXManager* padXManager,
 		m_team[i]->SetPlayer( padXManager->pad(i * 2), padXManager->pad(i * 2 + 1) );
 #endif
 		m_team[i]->SetCommand(&m_command_list[rand()%40 * _list_command_max]);
+	}
+
+	// テスト用ゲージ(後々削除
+	for(int i = 0; i < 10; i++)
+	{
+		if(i < 5)
+		{
+			if(!Polygon2D::Create(&m_test_gage[i], device, m_objectList, m_import->texture(GameImport::RED_TEX)))
+				return false;
+		}
+		else
+		{
+			if(!Polygon2D::Create(&m_test_gage[i], device, m_objectList, m_import->texture(GameImport::BLUE_TEX)))
+				return false;
+		}
+		m_updateList->Link(m_test_gage[i]);
+		m_drawListManager->Link(m_test_gage[i], 3, Shader::PAT_2D);
+		m_test_gage[i]->pos(540.0f + 20.0f*i, 650.0f, 0.0f);
+		m_test_gage[i]->scl(20.0f, 40.0f, 0.0f);
 	}
 
 	return true;
@@ -160,14 +178,17 @@ void Commandmanager::Update(void)
 		{
 			m_team[i]->SetCommand(&m_command_list[rand()%40 * _list_command_max]);
 			if(i == 0)
-				m_progress--;
-			else
 				m_progress++;
+			else
+				m_progress--;
 
-			if(m_progress < 0 || m_progress > 10)
-			{
-				// 勝敗処理を書こう
-			}
+			if(m_progress < 0)	// 勝敗処理
+				m_game_state = TEAM0_WIN;
+			else if(m_progress > 10)
+				m_game_state = TEAM1_WIN;
+
+			// テスト用ゲージ（後々削除
+			GageUpd();
 
 			if(m_progress > _progress_team0_lead && m_progress < _progress_team1_lead)
 			{
@@ -176,13 +197,13 @@ void Commandmanager::Update(void)
 			}
 			else if(m_progress >= _progress_team1_lead)
 			{
-				m_team[0]->SetFragLose(true);
-				m_team[1]->SetFragLose(false);
+				m_team[0]->SetFragLose(false);
+				m_team[1]->SetFragLose(true);
 			}
 			else if(m_progress <= _progress_team0_lead)
 			{
-				m_team[0]->SetFragLose(false);
-				m_team[1]->SetFragLose(true);
+				m_team[0]->SetFragLose(true);
+				m_team[1]->SetFragLose(false);
 			}
 		}
 	}
@@ -196,6 +217,20 @@ void Commandmanager::Draw(void)
 	for(int i = 0; i < _team_max; i++)
 	{
 		m_team[i]->Draw();
+	}
+}
+
+//=============================================================================
+// テスト用ゲージ(後々削除)
+//=============================================================================
+void Commandmanager::GageUpd(void)
+{
+	for(int i = 0; i < 10; i++)
+	{
+		if(i < m_progress)
+			m_test_gage[i]->texture(m_import->texture(GameImport::RED_TEX));
+		else
+			m_test_gage[i]->texture(m_import->texture(GameImport::BLUE_TEX));
 	}
 }
 
