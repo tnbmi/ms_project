@@ -41,6 +41,19 @@ FbxModel::FbxModel(LPDIRECT3DDEVICE9 device, ObjectList* objectList, int priorit
 	m_blendEndKeyFrame   = 0;
 	m_blendCurKeyFrame   = 0;
 
+	UpdateAnimation();
+
+	m_startKeyFrame = 0;
+	m_endKeyFrame = 0;
+	m_curKeyFrame = 0;
+	m_animTime = 0;
+	m_blendTime = 0;
+
+	m_blendWeight = _blendFrame;
+	m_blendStartKeyFrame = 0;
+	m_blendEndKeyFrame   = 0;
+	m_blendCurKeyFrame   = 0;
+
 }
 
 //=============================================================================
@@ -150,6 +163,12 @@ void FbxModel::Finalize(void)
 			m_boneArray = nullptr;
 		}
 
+	}
+
+	if( m_decl != NULL )
+	{
+		m_decl->Release();
+		m_decl = NULL;
 	}
 }
 

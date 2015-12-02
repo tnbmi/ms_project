@@ -43,7 +43,7 @@
 // マクロ定義
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 const D3DXVECTOR3 _at	= D3DXVECTOR3(0.0f, 100.0f, 0.0f);
-const D3DXVECTOR3 _eye	= D3DXVECTOR3(0.0f, 150.0f, -1000.0f);
+const D3DXVECTOR3 _eye	= D3DXVECTOR3(0.0f, 150.0f, -3000.0f);
 
 //=============================================================================
 // コンストラクタ
@@ -236,7 +236,9 @@ void Game::Update(void)
 
 	if( m_keyboard->trigger(DIK_1 ) )
 	{
-		m_effectManager->AddEffectFromDataBase(0,D3DXVECTOR3(0,0,0) );
+		m_effectManager->AddEffectFromDataBase(0,D3DXVECTOR3(0,800,100) );
+		m_effectManager->AddEffectFromDataBase(0,D3DXVECTOR3(-800,1000,100) );
+		m_effectManager->AddEffectFromDataBase(0,D3DXVECTOR3(800,1000,100) );
 	}
 
 	if( m_keyboard->trigger(DIK_2 ) )
@@ -278,11 +280,13 @@ void Game::Update(void)
 	//----------------------------
 	// 画面遷移
 	//----------------------------
+	
 	if(m_command_manager->GetState() == Commandmanager::TEAM0_WIN || 
 	   m_command_manager->GetState() == Commandmanager::TEAM1_WIN )
 	{
 		Manager::nextPhase((Phase*)new Result(m_device));
 	}
+	
 }
 
 //=============================================================================
@@ -321,6 +325,7 @@ bool Game::InitObject(void)
 	//----------------------------
 	// 3Dポリゴンテスト
 	//----------------------------
+	
 	Polygon3D* poly3d;
 	if(!Polygon3D::Create(&poly3d, m_device, m_objectList, m_import->texture(GameImport::TEST_0)))
 		return false;
@@ -328,10 +333,11 @@ bool Game::InitObject(void)
 	m_drawListManager->Link(poly3d, 4, Shader::PAT_LIGHT);
 	poly3d->scl(512.0f, 512.0f, 0.0f);
 	poly3d->rot_x(PAI * 0.5f);
-
+	
 	//----------------------------
 	//エフェクトマネージャ生成
 	//----------------------------
+	
 	InstancingBillboard *bill;
 	InstancingBillboard::Create(&bill,m_device,m_objectList,1,ObjectBase::TYPE_3D,10000,"../resources/texture/effect.jpg",D3DXVECTOR2(1,1),D3DXVECTOR2(1,1));
 	m_drawListManager->Link( bill,0,Shader::PAT_INS );
@@ -339,7 +345,7 @@ bool Game::InitObject(void)
 	EffectManager::Create( &m_effectManager,bill );
 	m_effectManager->SetOption( InstancingBillboard::OPTION(true,false,false ) );
 	//エフェクトロードするんごおおおおおおおおおおおお
-	m_effectManager->LoadEffectData("../resources/effect/Chino.OEF" );
+	m_effectManager->LoadEffectData("../resources/effect/FireWorks.OEF" );
 	m_effectManager->LoadEffectData("../resources/effect/Cocoa.OEF" );
 	m_effectManager->LoadEffectData("../resources/effect/Rize.OEF" );
 	m_effectManager->LoadEffectData("../resources/effect/Chiya.OEF" );
@@ -347,19 +353,19 @@ bool Game::InitObject(void)
 	m_effectManager->LoadEffectData("../resources/effect/Chiya2.OEF" );
 	m_effectManager->LoadEffectData("../resources/effect/Chiya3.OEF" );
 	
-
+	
 	//----------------------------
 	//プレイヤー生成
 	//----------------------------
-	Player::Create( &m_blueTeam,m_device,m_objectList,m_updateList,m_drawListManager,0,ObjectBase::TYPE_3D,"../resources/fbxModel/ggy.bin","../resources/fbxModel/ggy.bin");
-	Player::Create( &m_redTeam,m_device,m_objectList,m_updateList,m_drawListManager,0,ObjectBase::TYPE_3D,"../resources/fbxModel/ggy.bin","../resources/fbxModel/ggy.bin");
-	m_redTeam->rot( D3DXVECTOR3(0,D3DX_PI/2,0 ) );
+	Player::Create( &m_blueTeam,m_device,m_objectList,m_updateList,m_drawListManager,0,ObjectBase::TYPE_3D,"../resources/fbxModel/daisya.bin","../resources/fbxModel/jiorama.bin","../resources/fbxModel/robo2.bin");
+	Player::Create( &m_redTeam,m_device,m_objectList,m_updateList,m_drawListManager,0,ObjectBase::TYPE_3D,"../resources/fbxModel/daisya.bin","../resources/fbxModel/jiorama.bin","../resources/fbxModel/robo2.bin");
+	m_redTeam->rot( D3DXVECTOR3(0,0,0 ) );
 	m_blueTeam->rot( D3DXVECTOR3(0,-D3DX_PI/2,0 ) );
-	m_redTeam->offsetPos( D3DXVECTOR3(0,150,0 ) );
-	m_blueTeam->offsetPos( D3DXVECTOR3(0,150,0 ) );
+	m_redTeam->offsetPos( D3DXVECTOR3(0,232.059,0 ) );
+	m_blueTeam->offsetPos( D3DXVECTOR3(0,232.059,0 ) );
 
-	m_redTeam->Move( D3DXVECTOR3(-500,0,0),D3DXVECTOR3(-40,0,0),300 );
-	m_blueTeam->Move( D3DXVECTOR3(500,0,0),D3DXVECTOR3(40,0,0),300 );
+	m_redTeam->Move( D3DXVECTOR3(-1000,0,0),D3DXVECTOR3(-500,0,0),300 );
+	m_blueTeam->Move( D3DXVECTOR3(1000,0,0),D3DXVECTOR3(500,0,0),300 );
 
 	//---------------------------
 	//
@@ -374,7 +380,7 @@ bool Game::InitObject(void)
 
 		fbx->pos( D3DXVECTOR3( -600,0,100+100 * i ) );
 	}
-
+	/*
 	for( int i = 0 ; i < 5 ; i++ )
 	{
 		FbxModel *fbx;
