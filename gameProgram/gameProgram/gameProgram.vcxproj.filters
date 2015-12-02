@@ -131,6 +131,18 @@
     <Filter Include="object\player">
       <UniqueIdentifier>{af306e68-396e-4c20-bf34-c9e69a53436a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="シェーダーファイル\perpixel">
+      <UniqueIdentifier>{cfc7c444-b369-45d2-8562-7095cd343c3a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="シェーダーファイル\fbx">
+      <UniqueIdentifier>{14a66538-2abd-43e7-8929-09dba09045f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="シェーダーファイル\instancing">
+      <UniqueIdentifier>{d5632bcb-5bd4-4c02-97cb-4314bbb8eed9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="シェーダーファイル\lighting">
+      <UniqueIdentifier>{473ce095-3716-4a6e-9689-6db3d8b82b2d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main\main.h">
@@ -353,17 +365,35 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\resources\shader\lightVS.hlsl">
-      <Filter>シェーダーファイル</Filter>
-    </None>
-    <None Include="..\resources\shader\basicPS.hlsl">
-      <Filter>シェーダーファイル</Filter>
-    </None>
     <None Include="..\resources\shader\twoDimensionsPS.hlsl">
       <Filter>シェーダーファイル\twoDimensions</Filter>
     </None>
     <None Include="..\resources\shader\twoDimensionsVS.hlsl">
       <Filter>シェーダーファイル\twoDimensions</Filter>
+    </None>
+    <None Include="..\resources\shader\fbxVS.hlsl">
+      <Filter>シェーダーファイル\fbx</Filter>
+    </None>
+    <None Include="..\resources\shader\fbxPS.hlsl">
+      <Filter>シェーダーファイル\fbx</Filter>
+    </None>
+    <None Include="..\resources\shader\instancingPS.hlsl">
+      <Filter>シェーダーファイル\instancing</Filter>
+    </None>
+    <None Include="..\resources\shader\instancingVS.hlsl">
+      <Filter>シェーダーファイル\instancing</Filter>
+    </None>
+    <None Include="..\resources\shader\normalMapDirPS.hlsl">
+      <Filter>シェーダーファイル\perpixel</Filter>
+    </None>
+    <None Include="..\resources\shader\perPixelVS.hlsl">
+      <Filter>シェーダーファイル\perpixel</Filter>
+    </None>
+    <None Include="..\resources\shader\lightVS.hlsl">
+      <Filter>シェーダーファイル\lighting</Filter>
+    </None>
+    <None Include="..\resources\shader\basicPS.hlsl">
+      <Filter>シェーダーファイル\lighting</Filter>
     </None>
   </ItemGroup>
 </Project>

@@ -88,7 +88,13 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\resources\shader\basicPS.hlsl" />
+    <None Include="..\resources\shader\fbxPS.hlsl" />
+    <None Include="..\resources\shader\fbxVS.hlsl" />
+    <None Include="..\resources\shader\instancingPS.hlsl" />
+    <None Include="..\resources\shader\instancingVS.hlsl" />
     <None Include="..\resources\shader\lightVS.hlsl" />
+    <None Include="..\resources\shader\normalMapDirPS.hlsl" />
+    <None Include="..\resources\shader\perPixelVS.hlsl" />
     <None Include="..\resources\shader\twoDimensionsPS.hlsl" />
     <None Include="..\resources\shader\twoDimensionsVS.hlsl" />
   </ItemGroup>
