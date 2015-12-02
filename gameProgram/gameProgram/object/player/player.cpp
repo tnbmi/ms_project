@@ -17,13 +17,14 @@
 //=============================================================================
 // コンストラクタ
 //=============================================================================
-Player::Player( FbxModel *parent,FbxModel *child )
+Player::Player( FbxModel *parent,FbxModel *child,FbxModel *secondChild )
 {
 	//----------------------------
 	// メンバー初期化
 	//----------------------------
 	m_parent = parent;
 	m_child  = child;
+	m_secondChild = secondChild;
 }
 
 //=============================================================================
@@ -36,9 +37,9 @@ Player::~Player(void)
 //=============================================================================
 // 生成
 //=============================================================================
-bool Player::Create(Player** outPointer, FbxModel *parent,FbxModel *child )
+bool Player::Create(Player** outPointer, FbxModel *parent,FbxModel *child,FbxModel *secondChild)
 {
-	Player* pointer = new Player( parent,child );
+	Player* pointer = new Player( parent,child,secondChild );
 	if(!pointer->Initialize())
 		return false;
 
@@ -47,9 +48,9 @@ bool Player::Create(Player** outPointer, FbxModel *parent,FbxModel *child )
 }
 
 bool Player::Create( Player** outPointer, LPDIRECT3DDEVICE9 device, ObjectList* objectList,UpdateList *updateList,DrawListManager *drawList, int priority  , ObjectBase::OBJECT_TYPE type,
-						const char *parentModelPath,const char *childModelPath )
+						const char *parentModelPath,const char *childModelPath,const char *secondChildModelPath )
 {
-	FbxModel *parent,*child;
+	FbxModel *parent,*child,*secondChild;
 	if( !FbxModel::Create( &parent,device,objectList,priority,type,parentModelPath ) )
 		return false;
 
@@ -62,7 +63,13 @@ bool Player::Create( Player** outPointer, LPDIRECT3DDEVICE9 device, ObjectList* 
 	updateList->Link( child );
 	drawList->Link( child,0,Shader::PAT_FBX );
 
-	Player* pointer = new Player( parent,child );
+	if( !FbxModel::Create( &secondChild,device,objectList,priority,type,secondChildModelPath ) )
+		return false;
+
+	updateList->Link( secondChild );
+	drawList->Link( secondChild,0,Shader::PAT_FBX );
+
+	Player* pointer = new Player( parent,child,secondChild );
 	if(!pointer->Initialize())
 		return false;
 
@@ -83,6 +90,8 @@ bool Player::Initialize(void)
 	m_scl = D3DXVECTOR3(1,1,1);
 	m_offsetPos = D3DXVECTOR3(0,0,0);
 	m_offsetRot = D3DXVECTOR3(0,0,0);
+	m_secondOffsetPos = D3DXVECTOR3(0,0,0);
+	m_secondOffsetRot = D3DXVECTOR3(0,0,0);
 	m_compTime = 0;
 	m_elepsed = 0;
 	m_stPos = D3DXVECTOR3(0,0,0);
@@ -122,6 +131,11 @@ void Player::Update(void)
 	m_child->pos( m_pos + m_offsetPos );
 	m_child->rot( m_rot + m_offsetRot );
 	m_child->scl( m_scl );
+
+	//第二子の更新
+	m_secondChild->pos( m_pos + m_secondOffsetPos );
+	m_secondChild->rot( m_rot + m_secondOffsetRot );
+	m_secondChild->scl( m_scl );
 }
 
 //============================================================================

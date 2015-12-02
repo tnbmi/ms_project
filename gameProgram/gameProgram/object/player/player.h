@@ -29,12 +29,12 @@ class Player
 {
 public:
 
-	Player( FbxModel *parent,FbxModel *child );
+	Player( FbxModel *parent,FbxModel *child,FbxModel *secondChild );
 	virtual ~Player(void);
 
-	static bool Create( Player** outPointer, FbxModel *parent,FbxModel *child );
+	static bool Create( Player** outPointer, FbxModel *parent,FbxModel *child,FbxModel *secondChild );
 	static bool Create( Player** outPointer, LPDIRECT3DDEVICE9 device, ObjectList* objectList,UpdateList *updateList,DrawListManager *drawList, int priority  , ObjectBase::OBJECT_TYPE type,
-						const char *parentModelPath,const char *childModelPath );
+						const char *parentModelPath,const char *childModelPath,const char *secondChildModelPath );
 	bool Initialize(void);
 	void Finalize(void);
 	void Update(void);
@@ -54,6 +54,13 @@ public:
 	D3DXVECTOR3 offsetRot(){ return m_offsetRot; }
 	void        offsetRot( const D3DXVECTOR3 &offsetRot ){ m_offsetRot = offsetRot; }
 
+
+	D3DXVECTOR3 secondOffsetPos(){ return m_secondOffsetPos; }
+	void        secondOffsetPos( const D3DXVECTOR3 &offsetPos ){ m_secondOffsetPos = offsetPos; }
+
+	D3DXVECTOR3 secondOffsetRot(){ return m_secondOffsetRot; }
+	void        secondOffsetRot( const D3DXVECTOR3 &offsetRot ){ m_secondOffsetRot = offsetRot; }
+
 	//移動関数　セッターとしてもお使いください 
 	//開始位置　終了位置　何フレームで補完するんだＹＯ
 	void Move( const D3DXVECTOR3 &stPos,const D3DXVECTOR3 &edPos,const float compTime );
@@ -63,12 +70,15 @@ public:
 private:
 	FbxModel *m_parent;
 	FbxModel *m_child;
+	FbxModel *m_secondChild;
 
 	D3DXVECTOR3 m_pos;
 	D3DXVECTOR3 m_scl;
 	D3DXVECTOR3 m_rot;
 	D3DXVECTOR3 m_offsetPos;
 	D3DXVECTOR3 m_offsetRot;
+	D3DXVECTOR3 m_secondOffsetPos;
+	D3DXVECTOR3 m_secondOffsetRot;
 
 	D3DXVECTOR3 m_stPos;
 	D3DXVECTOR3 m_edPos;

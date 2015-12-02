@@ -44,7 +44,7 @@ DrawListManager::DrawListManager(LPDIRECT3DDEVICE9 device, Shader* shader)
 	hr = m_device->CreateVertexDeclaration(&velement2D[0], &m_decl2D);
 	if(FAILED(hr))
 		MessageBox(NULL, "2D’¸“_éŒ¾Ž¸”s", "CreateVertexDeclaration", MB_OK);;*/
-
+	
 	// 3D’¸“_éŒ¾
 	D3DVERTEXELEMENT9 velement3D[] =
 	{
@@ -58,6 +58,7 @@ DrawListManager::DrawListManager(LPDIRECT3DDEVICE9 device, Shader* shader)
 	hr = m_device->CreateVertexDeclaration(&velement3D[0], &m_decl3D);
 	if(FAILED(hr))
 		MessageBox(NULL, "3D’¸“_éŒ¾Ž¸”s", "CreateVertexDeclaration", MB_OK);
+	
 
 }
 
@@ -66,6 +67,7 @@ DrawListManager::DrawListManager(LPDIRECT3DDEVICE9 device, Shader* shader)
 //=============================================================================
 DrawListManager::~DrawListManager(void)
 {
+	SafeRelease( m_decl3D );
 }
 
 //=============================================================================
@@ -174,6 +176,7 @@ void DrawListManager::AllDraw(Camera* camera, Light* light)
 		//----------------------------
 		m_drawList[cnt]->AllDraw(vsc, psc, vp);
 	}
+
 }
 
 // EOF

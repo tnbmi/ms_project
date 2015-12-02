@@ -221,6 +221,7 @@ void Shader::Finalize(void)
 	}
 	SafeDeleteArray(m_pixelShader);
 	SafeDeleteArray(m_psc);
+	
 }
 
 //=============================================================================
