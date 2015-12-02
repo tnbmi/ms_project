@@ -14,6 +14,7 @@ float4x4 gWorld;
 float3 gDirLightVector;
 float4 gDirLightDiffuse;
 float4 gDirLightAmbient;
+
 float4 gMatDiffuse;
 float4 gMatAmbient;
 
@@ -30,8 +31,9 @@ void VS(in float3 inPos			: POSITION0,
 	// 出力座標変換
 	outPos = mul(float4(inPos, 1.0f), gWVP);
 
-	// 出力ワールド座標変換
+	// 出力ワールド法線変換
 	float3 worldNormal = mul(float4(inNormal, 0.0f), gWorld);
+	worldNormal = normalize(worldNormal);
 
 	// テクスチャUV
 	outUV = inUV;

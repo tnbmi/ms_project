@@ -86,9 +86,6 @@ void Polygon3D::Draw(LPD3DXCONSTANTTABLE vsc, LPD3DXCONSTANTTABLE psc, D3DXMATRI
 
 	// ワールドマトリックスの初期化
 	D3DXMatrixIdentity(&m_world);
-	// スケールの反映
-	//D3DXMatrixScaling(&scaling, m_scl.x, m_scl.y, m_scl.z);
-	//D3DXMatrixMultiply(&m_world, &m_world, &scaling);
 	// 回転の反映
 	D3DXMatrixRotationYawPitchRoll(&rotation, m_rot.y, m_rot.x, m_rot.z);
 	D3DXMatrixMultiply(&m_world, &m_world, &rotation);
