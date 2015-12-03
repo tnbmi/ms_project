@@ -14,6 +14,7 @@
     <ClCompile Include="commandmanager\commandmanager.cpp" />
     <ClCompile Include="commandmanager\commandteam\commandteam.cpp" />
     <ClCompile Include="debugproc\debugproc.cpp" />
+    <ClCompile Include="fade\fade.cpp" />
     <ClCompile Include="import\demo\demoImport.cpp" />
     <ClCompile Include="import\game\gameImport.cpp" />
     <ClCompile Include="import\import.cpp" />
@@ -53,6 +54,7 @@
     <ClInclude Include="common\complement\complement.h" />
     <ClInclude Include="common\safe.h" />
     <ClInclude Include="debugproc\debugproc.h" />
+    <ClInclude Include="fade\fade.h" />
     <ClInclude Include="import\demo\demoImport.h" />
     <ClInclude Include="import\game\gameImport.h" />
     <ClInclude Include="import\import.h" />
