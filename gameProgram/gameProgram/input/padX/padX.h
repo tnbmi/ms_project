@@ -29,7 +29,7 @@ class PadX
 {
 public:
 	PadX(void);
-	virtual ~PadX(void);
+	~PadX(void);
 
 	static bool Create(PadX** outPointer, int no);
 	bool Initialize(int no);

@@ -26,7 +26,7 @@ class Keyboard
 {
 public:
 	Keyboard(void);
-	virtual ~Keyboard(void);
+	~Keyboard(void);
 
 	static bool Create(Keyboard** outPointer, HINSTANCE hInstance, HWND hWnd);
 	bool Initialize(HINSTANCE hInstance, HWND hWnd);

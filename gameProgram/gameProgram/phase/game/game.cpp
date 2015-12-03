@@ -13,6 +13,7 @@
 
 #include "..\..\debugproc\debugproc.h"
 #include "..\..\manager\manager.h"
+#include "..\..\sound\sound.h"
 #include "..\result\result.h"
 
 #include "..\..\input\padX\padXManager.h"
@@ -126,6 +127,7 @@ bool Game::Initialize(void)
 	//----------------------------
 	// サウンドの再生
 	//----------------------------
+	Sound::Play(Sound::BGM_A);
 
 	//----------------------------
 	// フェード
@@ -195,7 +197,7 @@ void Game::Finalize(void)
 	//----------------------------
 	// サウンドの停止
 	//----------------------------
-
+	Sound::StopAll();
 }
 
 //=============================================================================

@@ -29,7 +29,7 @@ class PadXManager
 {
 public:
 	PadXManager(void);
-	virtual ~PadXManager(void);
+	~PadXManager(void);
 
 	static bool Create(PadXManager** outPointer);
 	bool Initialize(void);

@@ -44,6 +44,7 @@
     <ClCompile Include="phase\title\title.cpp" />
     <ClCompile Include="renderer\renderer.cpp" />
     <ClCompile Include="shader\shader.cpp" />
+    <ClCompile Include="sound\sound.cpp" />
     <ClCompile Include="view\camera\camera.cpp" />
     <ClCompile Include="view\light\light.cpp" />
   </ItemGroup>
@@ -83,6 +84,7 @@
     <ClInclude Include="phase\title\title.h" />
     <ClInclude Include="renderer\renderer.h" />
     <ClInclude Include="shader\shader.h" />
+    <ClInclude Include="sound\sound.h" />
     <ClInclude Include="view\camera\camera.h" />
     <ClInclude Include="view\light\light.h" />
   </ItemGroup>

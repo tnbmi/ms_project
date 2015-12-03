@@ -34,7 +34,7 @@ class Title : public Phase
 {
 public:
 	Title(LPDIRECT3DDEVICE9 device);
-	virtual ~Title(void);
+	~Title(void);
 
 	bool Initialize(void);
 	void Finalize(void);

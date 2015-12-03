@@ -24,7 +24,7 @@ class Renderer
 {
 public:
 	Renderer(void);
-	virtual ~Renderer(void);
+	~Renderer(void);
 
 	static bool Create(Renderer** outPointer, HWND hWnd, bool windowFlg);
 	bool Initialize(HWND hWnd, bool windowFlg);

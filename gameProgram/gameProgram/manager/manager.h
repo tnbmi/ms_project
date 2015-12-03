@@ -19,6 +19,7 @@
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 class Phase;
 class Renderer;
+class Sound;
 class Debugproc;
 class Keyboard;
 class PadXManager;
@@ -27,7 +28,7 @@ class Manager
 {
 public:
 	Manager(void);
-	virtual ~Manager(void);
+	~Manager(void);
 
 	static bool Create(Manager** outPointer, HINSTANCE hInstance, HWND hWnd, bool windowFlg);
 	bool Initialize(HINSTANCE hInstance, HWND hWnd, bool windowFlg);
@@ -46,6 +47,7 @@ private:
 	static Phase* m_nextPhase;
 
 	Renderer*	m_renderer;
+	Sound*		m_sound;
 	Debugproc*	m_debugproc;
 
 	Keyboard*	 m_keyboard;

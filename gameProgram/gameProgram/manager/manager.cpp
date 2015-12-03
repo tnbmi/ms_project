@@ -12,6 +12,7 @@
 #include "..\common\safe.h"
 
 #include "..\renderer\renderer.h"
+#include "..\sound\sound.h"
 #include "..\debugproc\debugproc.h"
 
 #include "..\input\keyboard\keyboard.h"
@@ -40,6 +41,7 @@ Manager::Manager(void)
 	m_nextPhase	= nullptr;
 
 	m_renderer	= nullptr;
+	m_sound		= nullptr;
 	m_debugproc	= nullptr;
 
 	m_keyboard		= nullptr;
@@ -84,6 +86,12 @@ bool Manager::Initialize(HINSTANCE hInstance, HWND hWnd, bool windowFlg)
 	if(!Keyboard::Create(&m_keyboard, hInstance, hWnd))
 		return false;
 	if(!PadXManager::Create(&m_padXManager))
+		return false;
+
+	//----------------------------
+	// サウンド
+	//----------------------------
+	if(!Sound::Create(&m_sound, hWnd))
 		return false;
 
 #ifdef _DEBUG
@@ -138,6 +146,11 @@ void Manager::Finalize(void)
 #endif
 
 	//----------------------------
+	// サウンド
+	//----------------------------
+	SafeFinalizeDelete(m_sound);
+
+	//----------------------------
 	// 入力
 	//----------------------------
 	SafeFinalizeDelete(m_keyboard);
@@ -169,9 +182,8 @@ bool Manager::Update(void)
 	m_padXManager->Update();
 
 	//----------------------------
-	// レンダラー、サウンド
-	//----------------------------
 	// レンダラー
+	//----------------------------
 	m_renderer->Update();
 
 	//----------------------------

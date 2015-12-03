@@ -21,7 +21,7 @@ class Window
 {
 public:
 	Window(void);
-	virtual ~Window(void);
+	~Window(void);
 
 	bool Initialize(HINSTANCE hInstance, int cmdShow);
 	void Finalize(void);

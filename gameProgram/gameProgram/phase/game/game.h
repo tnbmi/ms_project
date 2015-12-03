@@ -36,7 +36,7 @@ class Game : public Phase
 {
 public:
 	Game(LPDIRECT3DDEVICE9 device);
-	virtual ~Game(void);
+	~Game(void);
 
 	bool Initialize(void);
 	void Finalize(void);

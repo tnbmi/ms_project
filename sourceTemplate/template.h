@@ -21,7 +21,7 @@ class Template
 {
 public:
 	Template(void);
-	virtual ~Template(void);
+	~Template(void);
 
 	static bool Create(Template** outPointer);
 	bool Initialize(void);

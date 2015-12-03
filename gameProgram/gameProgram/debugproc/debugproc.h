@@ -26,7 +26,7 @@ class Debugproc
 {
 public:
 	Debugproc(void);
-	virtual ~Debugproc(void);
+	~Debugproc(void);
 
 	static bool Create(Debugproc** outPointer, LPDIRECT3DDEVICE9 device);
 	bool Initialize(LPDIRECT3DDEVICE9 device);

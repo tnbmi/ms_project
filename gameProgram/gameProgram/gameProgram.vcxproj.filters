@@ -256,6 +256,9 @@
     <ClInclude Include="object\player\player.h">
       <Filter>object\player</Filter>
     </ClInclude>
+    <ClInclude Include="sound\sound.h">
+      <Filter>sound</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main\main.cpp">
@@ -362,6 +365,9 @@
     </ClCompile>
     <ClCompile Include="object\player\player.cpp">
       <Filter>object\player</Filter>
+    </ClCompile>
+    <ClCompile Include="sound\sound.cpp">
+      <Filter>sound</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

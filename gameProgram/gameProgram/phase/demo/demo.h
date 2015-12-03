@@ -25,7 +25,7 @@ class Demo : public Phase
 {
 public:
 	Demo(LPDIRECT3DDEVICE9 device);
-	virtual ~Demo(void);
+	~Demo(void);
 
 	bool Initialize(void);
 	void Finalize(void);
