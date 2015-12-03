@@ -8,7 +8,7 @@
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // インクルードファイル
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-#include "commandteam.h"
+#include "commandTeam.h"
 #include "..\..\common\safe.h"
 
 #include "..\..\debugproc\debugproc.h"
@@ -30,7 +30,7 @@ const int	_command_max = 6;
 const int	_command_min = 4;
 const int	_upper_limit = 2;
 const char*	_comtex[6] = {"UP\n","Y\n","RIGHT\n","DOWN\n","A\n","X\n"};
-const float	_polygon_size_x = 68.0f;
+const float	_polygon_size_x = 50.0f;
 const float	_polygon_move = 72.0f;
 typedef struct{
 	float list[4];
@@ -74,7 +74,7 @@ const POSITION_LIST	_compos_list[6] =
 //=============================================================================
 // コンストラクタ
 //=============================================================================
-Commandteam::Commandteam(void)
+CommandTeam::CommandTeam(void)
 {
 	//----------------------------
 	// メンバー初期化
@@ -100,14 +100,14 @@ Commandteam::Commandteam(void)
 //=============================================================================
 // デストラクタ
 //=============================================================================
-Commandteam::~Commandteam(void)
+CommandTeam::~CommandTeam(void)
 {
 }
 
 //=============================================================================
 // 生成
 //=============================================================================
-bool Commandteam::Create(Commandteam** outPointer,
+bool CommandTeam::Create(CommandTeam** outPointer,
 						 ObjectList* objList,
 						 UpdateList* updList,
 						 DrawListManager* drwList,
@@ -116,7 +116,7 @@ bool Commandteam::Create(Commandteam** outPointer,
 						 D3DXVECTOR3 pos,
 						 TEAM_COLOR team_color)
 {
-	Commandteam* pointer = new Commandteam();
+	CommandTeam* pointer = new CommandTeam();
 	if(!pointer->Initialize(objList, updList, drwList, device, import, pos, team_color))
 		return false;
 
@@ -127,7 +127,7 @@ bool Commandteam::Create(Commandteam** outPointer,
 //=============================================================================
 // 初期化
 //=============================================================================
-bool Commandteam::Initialize(ObjectList* objList,
+bool CommandTeam::Initialize(ObjectList* objList,
 							 UpdateList* updList,
 							 DrawListManager* drwList,
 							 LPDIRECT3DDEVICE9 device,
@@ -159,7 +159,7 @@ bool Commandteam::Initialize(ObjectList* objList,
 //=============================================================================
 // 終了
 //=============================================================================
-void Commandteam::Finalize(void)
+void CommandTeam::Finalize(void)
 {
 
 }
@@ -167,7 +167,7 @@ void Commandteam::Finalize(void)
 //=============================================================================
 // 更新
 //=============================================================================
-bool Commandteam::Update(void)
+bool CommandTeam::Update(void)
 {
 #ifdef _DEBUG
 	m_debugproc->PrintDebugProc( _comtex[m_command_count] );
@@ -209,14 +209,14 @@ bool Commandteam::Update(void)
 //=============================================================================
 // 描画
 //=============================================================================
-void Commandteam::Draw(void)
+void CommandTeam::Draw(void)
 {
 }
 
 //=============================================================================
 // フラグセット
 //=============================================================================
-void Commandteam::SetFragLose(bool flag)
+void CommandTeam::SetFragLose(bool flag)
 {
 	m_flag_lose = flag;
 
@@ -236,7 +236,7 @@ void Commandteam::SetFragLose(bool flag)
 //=============================================================================
 // オブジェクト初期化
 //=============================================================================
-bool Commandteam::InitObject(void)
+bool CommandTeam::InitObject(void)
 {
 	//----------------------------
 	// 2Dポリゴン
@@ -276,7 +276,7 @@ bool Commandteam::InitObject(void)
 //=============================================================================
 // コマンド成功処理
 //=============================================================================
-void Commandteam::SetSuccess(void)
+void CommandTeam::SetSuccess(void)
 {
 	m_drawListManager->UnLink(m_command_poly[m_command_count], Shader::PAT_2D);
 
@@ -291,7 +291,7 @@ void Commandteam::SetSuccess(void)
 //=============================================================================
 // コマンド失敗処理
 //=============================================================================
-void Commandteam::SetPenalty(void)
+void CommandTeam::SetPenalty(void)
 {
 	m_time_penalty = _time_penalty;
 	m_back_poly[1]->texture(m_import->texture(GameImport::COMMAND_FRAM_02));
@@ -300,7 +300,7 @@ void Commandteam::SetPenalty(void)
 //=============================================================================
 // コマンド状態リセット
 //=============================================================================
-void Commandteam::StateReset(void)
+void CommandTeam::StateReset(void)
 {
 	m_command_count = 0;
 
@@ -317,7 +317,7 @@ void Commandteam::StateReset(void)
 		m_command_long = _command_max;
 }
 
-void Commandteam::SetCommand(int* command)
+void CommandTeam::SetCommand(int* command)
 {
 	m_command = command;
 	for(int i = 0; i < _command_max; i++)

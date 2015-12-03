@@ -8,7 +8,7 @@
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // インクルードファイル
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-#include "commandmanager.h"
+#include "commandManager.h"
 #include "..\common\safe.h"
 
 #include "..\input\padX\padXManager.h"
@@ -34,12 +34,12 @@ const int _progress_team1_lead = 7;
 const int _list_command_max = 6;
 const int _list_pattern_max = 40;
 const D3DXVECTOR3 _team_position[2] = {D3DXVECTOR3(48.0f, 480.0f, 0.0f),D3DXVECTOR3(1088.0f, 480.0f, 0.0f)};
-const int _team_color[2]= {Commandteam::COLOR_BLUE,Commandteam::COLOR_RED};
+const int _team_color[2]= {CommandTeam::COLOR_BLUE,CommandTeam::COLOR_RED};
 
 //=============================================================================
 // コンストラクタ
 //=============================================================================
-Commandmanager::Commandmanager(void)
+CommandManager::CommandManager(void)
 {
 	//----------------------------
 	// メンバー初期化
@@ -58,14 +58,14 @@ Commandmanager::Commandmanager(void)
 //=============================================================================
 // デストラクタ
 //=============================================================================
-Commandmanager::~Commandmanager(void)
+CommandManager::~CommandManager(void)
 {
 }
 
 //=============================================================================
 // 生成
 //=============================================================================
-bool Commandmanager::Create(Commandmanager** outPointer,
+bool CommandManager::Create(CommandManager** outPointer,
 							PadXManager* padXManager,
 							Debugproc* debugproc,
 							ObjectList* objList,
@@ -74,7 +74,7 @@ bool Commandmanager::Create(Commandmanager** outPointer,
 							LPDIRECT3DDEVICE9 device,
 							GameImport* import)
 {
-	Commandmanager* pointer = new Commandmanager();
+	CommandManager* pointer = new CommandManager();
 	if(!pointer->Initialize(padXManager, debugproc, objList, updList, drwList, device, import))
 		return false;
 
@@ -85,7 +85,7 @@ bool Commandmanager::Create(Commandmanager** outPointer,
 //=============================================================================
 // 初期化
 //=============================================================================
-bool Commandmanager::Initialize(PadXManager* padXManager,
+bool CommandManager::Initialize(PadXManager* padXManager,
 								Debugproc* debugproc,
 								ObjectList* objList,
 								UpdateList* updList,
@@ -118,7 +118,7 @@ bool Commandmanager::Initialize(PadXManager* padXManager,
 
 	for(int i = 0; i < _team_max; i++)
 	{
-		Commandteam::Create(&m_team[i], m_objectList, m_updateList, m_drawListManager, device, import, _team_position[i], (Commandteam::TEAM_COLOR)_team_color[i]);
+		CommandTeam::Create(&m_team[i], m_objectList, m_updateList, m_drawListManager, device, import, _team_position[i], (CommandTeam::TEAM_COLOR)_team_color[i]);
 		m_team[i]->debugproc(debugproc);
 #ifdef _DEBUG
 		m_team[i]->SetPlayer( padXManager->pad(i), padXManager->pad(i) );
@@ -159,7 +159,7 @@ bool Commandmanager::Initialize(PadXManager* padXManager,
 //=============================================================================
 // 終了
 //=============================================================================
-void Commandmanager::Finalize(void)
+void CommandManager::Finalize(void)
 {
 	SafeDeleteArray(m_command_list);
 
@@ -172,7 +172,7 @@ void Commandmanager::Finalize(void)
 //=============================================================================
 // 更新
 //=============================================================================
-void Commandmanager::Update(void)
+void CommandManager::Update(void)
 {
 #ifdef _DEBUG
 	m_debugproc->PrintDebugProc( "%d\n",m_progress );
@@ -218,7 +218,7 @@ void Commandmanager::Update(void)
 //=============================================================================
 // 描画
 //=============================================================================
-void Commandmanager::Draw(void)
+void CommandManager::Draw(void)
 {
 	for(int i = 0; i < _team_max; i++)
 	{
@@ -229,7 +229,7 @@ void Commandmanager::Draw(void)
 //=============================================================================
 // テスト用ゲージ(後々削除)
 //=============================================================================
-void Commandmanager::GageUpd(void)
+void CommandManager::GageUpd(void)
 {
 	for(int i = 0; i < 10; i++)
 	{

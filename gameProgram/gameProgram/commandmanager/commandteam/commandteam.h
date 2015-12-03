@@ -25,18 +25,18 @@ class DrawListManager;
 class GameImport;
 class Polygon2D;
 
-class Commandteam
+class CommandTeam
 {
 public:
-	Commandteam(void);
-	virtual ~Commandteam(void);
+	CommandTeam(void);
+	~CommandTeam(void);
 
 	typedef enum{
 		COLOR_BLUE = 0,
 		COLOR_RED
 	}TEAM_COLOR;
 
-	static bool Create(Commandteam** outPointer,
+	static bool Create(CommandTeam** outPointer,
 					   ObjectList* objList,
 					   UpdateList* updList,
 					   DrawListManager* drwList,

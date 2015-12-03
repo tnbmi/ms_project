@@ -143,6 +143,12 @@
     <Filter Include="シェーダーファイル\lighting">
       <UniqueIdentifier>{473ce095-3716-4a6e-9689-6db3d8b82b2d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="timemanager">
+      <UniqueIdentifier>{f1521301-1325-43b0-a1c4-e92186a34bb3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="number">
+      <UniqueIdentifier>{91c45abf-2f39-46e1-8ad4-e5695a2c4d67}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main\main.h">
@@ -229,12 +235,6 @@
     <ClInclude Include="import\import.h">
       <Filter>import</Filter>
     </ClInclude>
-    <ClInclude Include="commandmanager\commandmanager.h">
-      <Filter>commandmanager</Filter>
-    </ClInclude>
-    <ClInclude Include="commandmanager\commandteam\commandteam.h">
-      <Filter>commandmanager\commandteam</Filter>
-    </ClInclude>
     <ClInclude Include="objectBase\polygon3D\polygon3D.h">
       <Filter>objectBase\polygon3D</Filter>
     </ClInclude>
@@ -258,6 +258,18 @@
     </ClInclude>
     <ClInclude Include="sound\sound.h">
       <Filter>sound</Filter>
+    </ClInclude>
+    <ClInclude Include="commandmanager\commandManager.h">
+      <Filter>commandmanager</Filter>
+    </ClInclude>
+    <ClInclude Include="commandmanager\commandteam\commandTeam.h">
+      <Filter>commandmanager\commandteam</Filter>
+    </ClInclude>
+    <ClInclude Include="timemanager\timeManager.h">
+      <Filter>timemanager</Filter>
+    </ClInclude>
+    <ClInclude Include="number\number.h">
+      <Filter>number</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -342,12 +354,6 @@
     <ClCompile Include="import\import.cpp">
       <Filter>import</Filter>
     </ClCompile>
-    <ClCompile Include="commandmanager\commandmanager.cpp">
-      <Filter>commandmanager</Filter>
-    </ClCompile>
-    <ClCompile Include="commandmanager\commandteam\commandteam.cpp">
-      <Filter>commandmanager\commandteam</Filter>
-    </ClCompile>
     <ClCompile Include="objectBase\polygon3D\polygon3D.cpp">
       <Filter>objectBase\polygon3D</Filter>
     </ClCompile>
@@ -368,6 +374,18 @@
     </ClCompile>
     <ClCompile Include="sound\sound.cpp">
       <Filter>sound</Filter>
+    </ClCompile>
+    <ClCompile Include="commandmanager\commandManager.cpp">
+      <Filter>commandmanager</Filter>
+    </ClCompile>
+    <ClCompile Include="commandmanager\commandteam\commandTeam.cpp">
+      <Filter>commandmanager\commandteam</Filter>
+    </ClCompile>
+    <ClCompile Include="timemanager\timeManager.cpp">
+      <Filter>timemanager</Filter>
+    </ClCompile>
+    <ClCompile Include="number\number.cpp">
+      <Filter>number</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

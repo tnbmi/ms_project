@@ -33,6 +33,7 @@
 #include "..\..\objectBase\polygon3D\polygon3D.h"
 
 #include "..\..\commandmanager\commandmanager.h"
+#include "..\..\timemanager\timeManager.h"
 
 #include "..\..\manager\effectManager\effectManager.h"
 #include "..\..\objectBase\instancingBillboard\instancingBillboard.h"
@@ -45,6 +46,7 @@
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 const D3DXVECTOR3 _at	= D3DXVECTOR3(0.0f, 100.0f, 0.0f);
 const D3DXVECTOR3 _eye	= D3DXVECTOR3(0.0f, 150.0f, -3000.0f);
+const int _time_max		= 600;
 
 //=============================================================================
 // コンストラクタ
@@ -65,6 +67,7 @@ Game::Game(LPDIRECT3DDEVICE9 device) : Phase(device)
 	m_drawListManager	= nullptr;
 
 	m_command_manager	= nullptr;
+	m_time_manager		= nullptr;
 }
 
 //=============================================================================
@@ -165,6 +168,9 @@ void Game::Finalize(void)
 	// コマンド
 	SafeFinalizeDelete(m_command_manager);
 
+	// タイム
+	SafeFinalizeDelete(m_time_manager);
+
 	//エフェクト
 	m_effectManager->Finalize();
 	SafeFinalizeDelete( m_effectManager );
@@ -226,6 +232,11 @@ void Game::Update(void)
 	m_command_manager->Update();
 
 	//----------------------------
+	// タイムマネージャ
+	//----------------------------
+	bool transition = m_time_manager->Update();
+
+	//----------------------------
 	//Player更新
 	//----------------------------
 	m_redTeam->Update();
@@ -283,8 +294,9 @@ void Game::Update(void)
 	// 画面遷移
 	//----------------------------
 	
-	if(m_command_manager->GetState() == Commandmanager::TEAM0_WIN || 
-	   m_command_manager->GetState() == Commandmanager::TEAM1_WIN )
+	if(m_command_manager->GetState() == CommandManager::TEAM0_WIN || 
+	   m_command_manager->GetState() == CommandManager::TEAM1_WIN || 
+	   transition)
 	{
 		Manager::nextPhase((Phase*)new Result(m_device));
 	}
@@ -322,7 +334,12 @@ bool Game::InitObject(void)
 	//----------------------------
 	// コマンドマネージャ生成
 	//----------------------------
-	Commandmanager::Create(&m_command_manager, m_padXManager, m_debugproc, m_objectList, m_updateList, m_drawListManager, m_device, m_import);
+	CommandManager::Create(&m_command_manager, m_padXManager, m_debugproc, m_objectList, m_updateList, m_drawListManager, m_device, m_import);
+
+	//----------------------------
+	// タイムマネージャ生成
+	//----------------------------
+	TimeManager::Create(&m_time_manager, m_objectList, m_updateList, m_drawListManager, m_device, m_import, _time_max);
 
 	//----------------------------
 	// 3Dポリゴンテスト

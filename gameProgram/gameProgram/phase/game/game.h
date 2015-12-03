@@ -28,7 +28,8 @@ class ObjectList;
 class UpdateList;
 class DrawListManager;
 
-class Commandmanager;
+class CommandManager;
+class TimeManager;
 class EffectManager;
 class Player;
 
@@ -56,7 +57,8 @@ private:
 	UpdateList*		 m_updateList;
 	DrawListManager* m_drawListManager;
 
-	Commandmanager*	m_command_manager;
+	CommandManager*	m_command_manager;
+	TimeManager*	m_time_manager;
 
 	EffectManager *m_effectManager;
 	Player *m_redTeam;
