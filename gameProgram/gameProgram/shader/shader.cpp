@@ -75,10 +75,10 @@ struct SHADER_SET
 const SHADER_SET _shader_set[Shader::PATTERN_MAX] =
 {
 	{VS_NONE,	PS_NONE},		// NONE
-	{VS_2D,		PS_2D},			// 2D
 	{VS_LIGHT,	PS_BASIC},		// LIGHT
 	{VS_FBX,	PS_FBX},		// FBX
-	{VS_INS,	PS_INS}
+	{VS_INS,	PS_INS},
+	{VS_2D,		PS_2D}			// 2D
 };
 
 //=============================================================================

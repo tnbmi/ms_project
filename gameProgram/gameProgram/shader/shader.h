@@ -23,10 +23,10 @@ public:
 	enum PATTERN
 	{
 		PAT_NONE = 0,
-		PAT_2D,
 		PAT_LIGHT,
 		PAT_FBX,
 		PAT_INS,
+		PAT_2D,
 
 		PATTERN_MAX
 	};

@@ -17,7 +17,7 @@
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // ƒNƒ‰ƒX’è‹`
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-class Commandteam;
+class CommandTeam;
 class PadXManager;
 class ObjectList;
 class UpdateList;
@@ -27,11 +27,11 @@ class GameImport;
 class Polygon2D;
 class GameImport;
 
-class Commandmanager
+class CommandManager
 {
 public:
-	Commandmanager(void);
-	virtual ~Commandmanager(void);
+	CommandManager(void);
+	~CommandManager(void);
 
 	typedef enum{
 		DRAW = 0,
@@ -39,7 +39,7 @@ public:
 		TEAM1_WIN
 	}GAME_STATE;
 
-	static bool Create(Commandmanager** outPointer,
+	static bool Create(CommandManager** outPointer,
 					   PadXManager* padXManager,
 					   Debugproc* debugproc,
 					   ObjectList* objList,
@@ -61,7 +61,7 @@ public:
 	GAME_STATE GetState(void){return m_game_state;}
 
 private:
-	Commandteam*	m_team[2];
+	CommandTeam*	m_team[2];
 	int*			m_command_list;
 	int				m_progress;
 	GAME_STATE		m_game_state;
