@@ -23,6 +23,7 @@ public:
 	enum SOUND_TABLE
 	{
 		BGM_A,
+		SE_FIREWORKS,
 		SOUND_MAX
 	};
 

@@ -30,7 +30,8 @@ const char* _sound_path = "../resources/sound";
 //----------------------------
 const SOUND_PARAM _sound_data[] =
 {
-	{"/bgm/kiseki.wav", true}	// BGM_A
+	{"/bgm/kiseki.wav", true},	// BGM_A
+	{"/se/fireworks.wav", false}	// SE_FIREWORKS
 };
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

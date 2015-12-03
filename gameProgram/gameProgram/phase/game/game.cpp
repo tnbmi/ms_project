@@ -252,36 +252,43 @@ void Game::Update(void)
 		m_effectManager->AddEffectFromDataBase(0,D3DXVECTOR3(0,800,100) );
 		m_effectManager->AddEffectFromDataBase(0,D3DXVECTOR3(-800,1000,100) );
 		m_effectManager->AddEffectFromDataBase(0,D3DXVECTOR3(800,1000,100) );
+		Sound::Play(Sound::SE_FIREWORKS);
 	}
 
 	if( m_keyboard->trigger(DIK_2 ) )
 	{
 		m_effectManager->AddEffectFromDataBase(1,D3DXVECTOR3(0,0,0) );
+		Sound::Play(Sound::SE_FIREWORKS);
 	}
 
 	if( m_keyboard->trigger(DIK_3 ) )
 	{
 		m_effectManager->AddEffectFromDataBase(2,D3DXVECTOR3(0,0,0) );
+		Sound::Play(Sound::SE_FIREWORKS);
 	}
 
 	if( m_keyboard->trigger(DIK_4 ) )
 	{
 		m_effectManager->AddEffectFromDataBase(3,D3DXVECTOR3(0,0,0) );
+		Sound::Play(Sound::SE_FIREWORKS);
 	}
 
 	if( m_keyboard->trigger(DIK_5 ) )
 	{
 		m_effectManager->AddEffectFromDataBase(4,D3DXVECTOR3(0,0,0) );
+		Sound::Play(Sound::SE_FIREWORKS);
 	}
 
 	if( m_keyboard->trigger(DIK_6 ) )
 	{
 		m_effectManager->AddEffectFromDataBase(5,D3DXVECTOR3(0,60,0) );
+		Sound::Play(Sound::SE_FIREWORKS);
 	}
 
 	if( m_keyboard->trigger(DIK_7 ) )
 	{
 		m_effectManager->AddEffectFromDataBase(6,D3DXVECTOR3(0,60,0) );
+		Sound::Play(Sound::SE_FIREWORKS);
 	}
 
 	if( m_keyboard->trigger( DIK_0 ) )
