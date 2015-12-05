@@ -17,6 +17,7 @@
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // ƒNƒ‰ƒX’è‹`
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+class CommandDataLoad;
 class CommandTeam;
 class PadXManager;
 class ObjectList;
@@ -25,7 +26,6 @@ class DrawListManager;
 class Debugproc;
 class GameImport;
 class Polygon2D;
-class GameImport;
 
 class CommandManager
 {
@@ -61,6 +61,8 @@ public:
 	GAME_STATE GetState(void){return m_game_state;}
 
 private:
+	CommandDataLoad* m_commandDataLoad;
+
 	CommandTeam*	m_team[2];
 	int*			m_command_list;
 	int				m_progress;

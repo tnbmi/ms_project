@@ -149,6 +149,9 @@
     <Filter Include="number">
       <UniqueIdentifier>{91c45abf-2f39-46e1-8ad4-e5695a2c4d67}</UniqueIdentifier>
     </Filter>
+    <Filter Include="commandmanager\commandData">
+      <UniqueIdentifier>{cbbee44a-9fe0-4545-acd8-050c202276ac}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main\main.h">
@@ -271,6 +274,9 @@
     <ClInclude Include="number\number.h">
       <Filter>number</Filter>
     </ClInclude>
+    <ClInclude Include="commandmanager\commandData\commandDataLoad.h">
+      <Filter>commandmanager\commandData</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main\main.cpp">
@@ -386,6 +392,9 @@
     </ClCompile>
     <ClCompile Include="number\number.cpp">
       <Filter>number</Filter>
+    </ClCompile>
+    <ClCompile Include="commandmanager\commandData\commandDataLoad.cpp">
+      <Filter>commandmanager\commandData</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

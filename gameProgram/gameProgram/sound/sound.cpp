@@ -9,6 +9,7 @@
 // インクルードファイル
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 #include "sound.h"
+#include "..\common\safe.h"
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // パラメータ構造体定義
@@ -113,12 +114,8 @@ bool Sound::Initialize(HWND hWnd)
 	{
 		MessageBox(hWnd, "マスターボイスの生成に失敗！", "警告！", MB_ICONWARNING);
 
-		if(m_xAudio2)
-		{
-			// XAudio2オブジェクトの開放
-			m_xAudio2->Release();
-			m_xAudio2 = nullptr;
-		}
+		// XAudio2オブジェクトの開放
+		SafeRelease(m_xAudio2);
 
 		// COMライブラリの終了処理
 		CoUninitialize();
@@ -283,12 +280,8 @@ void Sound::Finalize(void)
 	m_masteringVoice->DestroyVoice();
 	m_masteringVoice = nullptr;
 
-	if(m_xAudio2)
-	{
-		// XAudio2オブジェクトの解放
-		m_xAudio2->Release();
-		m_xAudio2 = nullptr;
-	}
+	// XAudio2オブジェクトの開放
+	SafeRelease(m_xAudio2);
 
 	//----------------------------
 	// COMライブラリの終了処理

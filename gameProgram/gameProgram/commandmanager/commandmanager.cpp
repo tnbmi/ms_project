@@ -20,7 +20,8 @@
 #include "..\list\drawList\drawListManager.h"
 #include "..\import\game\gameImport.h"
 
-#include "..\commandmanager\commandteam\commandteam.h"
+#include "commandteam\commandteam.h"
+#include "commandData\commandDataLoad.h"
 
 #include "..\objectBase\polygon2D\polygon2D.h"
 
@@ -44,6 +45,7 @@ CommandManager::CommandManager(void)
 	//----------------------------
 	// メンバー初期化
 	//----------------------------
+	m_commandDataLoad = nullptr;
 	for(int i = 0; i < _team_max; i++)
 	{
 		m_team[i] = nullptr;
@@ -111,6 +113,9 @@ bool CommandManager::Initialize(PadXManager* padXManager,
 	//---------------------------------------------------------------------------------------------
 	// 後でデータロードに置き換えるー
 	//---------------------------------------------------------------------------------------------
+	// コマンドの読み込み by田邊
+	CommandDataLoad::Create(&m_commandDataLoad, 10/*_list_pattern_max*/);
+
 	for(int i = 0; i < _list_pattern_max * _list_command_max; i++)
 	{
 		m_command_list[i] = rand()%8;
@@ -167,6 +172,8 @@ void CommandManager::Finalize(void)
 	{
 		SafeFinalizeDelete(m_team[i]);
 	}
+
+	SafeFinalizeDelete(m_commandDataLoad);
 }
 
 //=============================================================================

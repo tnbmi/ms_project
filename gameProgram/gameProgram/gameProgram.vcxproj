@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="commandmanager\commandData\commandDataLoad.cpp" />
     <ClCompile Include="commandmanager\commandmanager.cpp" />
     <ClCompile Include="commandmanager\commandteam\commandteam.cpp" />
     <ClCompile Include="debugproc\debugproc.cpp" />
@@ -51,6 +52,7 @@
     <ClCompile Include="view\light\light.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="commandmanager\commandData\commandDataLoad.h" />
     <ClInclude Include="commandmanager\commandmanager.h" />
     <ClInclude Include="commandmanager\commandteam\commandteam.h" />
     <ClInclude Include="common\complement\complement.h" />
