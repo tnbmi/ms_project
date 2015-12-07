@@ -11,9 +11,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="audienceManager\audienceManager.cpp" />
     <ClCompile Include="commandmanager\commandmanager.cpp" />
     <ClCompile Include="commandmanager\commandteam\commandteam.cpp" />
     <ClCompile Include="debugproc\debugproc.cpp" />
+    <ClCompile Include="effectManager\effectManager.cpp" />
     <ClCompile Include="import\demo\demoImport.cpp" />
     <ClCompile Include="import\game\gameImport.cpp" />
     <ClCompile Include="import\import.cpp" />
@@ -29,7 +31,6 @@
     <ClCompile Include="list\updateList\updateList.cpp" />
     <ClCompile Include="main\main.cpp" />
     <ClCompile Include="main\window\window.cpp" />
-    <ClCompile Include="manager\effectManager\effectManager.cpp" />
     <ClCompile Include="manager\manager.cpp" />
     <ClCompile Include="objectBase\fbxModel\fbxModel.cpp" />
     <ClCompile Include="objectBase\instancingBillboard\instancingBillboard.cpp" />
@@ -39,6 +40,7 @@
     <ClCompile Include="object\player\player.cpp" />
     <ClCompile Include="phase\demo\demo.cpp" />
     <ClCompile Include="phase\game\game.cpp" />
+    <ClCompile Include="phase\game\gameMaster\gameMaster.cpp" />
     <ClCompile Include="phase\phase.cpp" />
     <ClCompile Include="phase\result\result.cpp" />
     <ClCompile Include="phase\title\title.cpp" />
@@ -48,11 +50,13 @@
     <ClCompile Include="view\light\light.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="audienceManager\audienceManager.h" />
     <ClInclude Include="commandmanager\commandmanager.h" />
     <ClInclude Include="commandmanager\commandteam\commandteam.h" />
     <ClInclude Include="common\complement\complement.h" />
     <ClInclude Include="common\safe.h" />
     <ClInclude Include="debugproc\debugproc.h" />
+    <ClInclude Include="effectManager\effectManager.h" />
     <ClInclude Include="import\demo\demoImport.h" />
     <ClInclude Include="import\game\gameImport.h" />
     <ClInclude Include="import\import.h" />
@@ -68,7 +72,6 @@
     <ClInclude Include="list\updateList\updateList.h" />
     <ClInclude Include="main\main.h" />
     <ClInclude Include="main\window\window.h" />
-    <ClInclude Include="manager\effectManager\effectManager.h" />
     <ClInclude Include="manager\manager.h" />
     <ClInclude Include="objectBase\fbxModel\fbxModel.h" />
     <ClInclude Include="objectBase\instancingBillboard\instancingBillboard.h" />
@@ -78,6 +81,7 @@
     <ClInclude Include="object\player\player.h" />
     <ClInclude Include="phase\demo\demo.h" />
     <ClInclude Include="phase\game\game.h" />
+    <ClInclude Include="phase\game\gameMaster\gameMaster.h" />
     <ClInclude Include="phase\phase.h" />
     <ClInclude Include="phase\result\result.h" />
     <ClInclude Include="phase\title\title.h" />

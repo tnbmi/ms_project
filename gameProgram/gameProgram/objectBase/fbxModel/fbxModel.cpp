@@ -23,7 +23,7 @@ FbxModel::FbxModel(LPDIRECT3DDEVICE9 device, ObjectList* objectList, int priorit
 
 	m_pos = D3DXVECTOR3(0,0,0);
 	m_rot = D3DXVECTOR3(0,0,0);
-	m_scl = D3DXVECTOR3(-1,1,1);
+	m_scl = D3DXVECTOR3(1,1,1);
 
 	//アニメーションループ
 	m_isAnimRoop = false;
@@ -211,7 +211,6 @@ void FbxModel::Draw(LPD3DXCONSTANTTABLE vsc, LPD3DXCONSTANTTABLE psc, D3DXMATRIX
 	vsc->SetMatrix( m_device,"mtx_vp",&vp );
 	vsc->SetInt( m_device,"no_bone",m_noBone);
 	vsc->SetMatrix( m_device,"mtx_world",&mtxWorld );
-	vsc->SetFloatArray( m_device,"light_vec",D3DXVECTOR3(0.5,-0.5,0 ),3 );
 
 	for( int i = 0 ; i < m_partSum ; i++ )
 	{
@@ -239,6 +238,7 @@ void FbxModel::Draw(LPD3DXCONSTANTTABLE vsc, LPD3DXCONSTANTTABLE psc, D3DXMATRIX
 		}
 	}
 
+	//戻す
 	m_device->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 
 }
@@ -475,7 +475,7 @@ bool FbxModel::LoadFbxModel( const char *loadModelPath )
 				m_part[ i ].dataArray[j].texName = new char [ len ];
 				fread( m_part[i].dataArray[j].texName,sizeof(char),len,file );
 
-				char whiteTexPath[128] = "../resources/texture/test_0.png";
+				char whiteTexPath[128] = "../resources/texture/white.jpg";
 				char texPath[128] = "../resources/texture/";
 
 				if( strcmp( m_part[i].dataArray[j].texName,"NOTEX" ) == 0 )
@@ -502,11 +502,15 @@ bool FbxModel::LoadFbxModel( const char *loadModelPath )
 					//バッファ削除
 					delete []c;
 
+					
 					//テクスチャロード
 					if( FAILED( D3DXCreateTextureFromFile(device,m_part[i].dataArray[j].texName,&m_part[i].dataArray[j].tex) ) )
 					{
 						m_part[i].dataArray[j].tex = nullptr;
 					}
+					
+
+				//	D3DXCreateTextureFromFile(device,whiteTexPath,&m_part[i].dataArray[j].tex);
 				}
 
 

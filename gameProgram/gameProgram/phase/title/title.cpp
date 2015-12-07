@@ -31,7 +31,7 @@
 
 #include "..\..\objectBase\fbxModel\fbxModel.h"
 #include "..\..\objectBase\instancingBillboard\instancingBillboard.h"
-#include "..\..\manager\effectManager\effectManager.h"
+#include "..\..\effectManager\effectManager.h"
 
 #include "..\..\objectBase\fbxModel\fbxModel.h"
 

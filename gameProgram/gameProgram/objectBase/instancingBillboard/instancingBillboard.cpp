@@ -491,7 +491,7 @@ InstancingBillboard::POLYGONDATA *InstancingBillboard::LentInsPolygonData()
 
 		m_cursol++;
 
-		if( m_cursol >= m_polygonMax-1 )
+		if( m_cursol >= m_polygonMax )
 		{
 			m_cursol = 0;
 		}

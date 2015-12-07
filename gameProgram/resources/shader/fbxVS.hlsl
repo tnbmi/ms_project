@@ -4,6 +4,12 @@ float4 mat_diffuse;
 float4x4 mtx_bone[50];
 
 float3 light_vec;
+float3 gDirLightVector;
+float4 gDirLightDiffuse;
+float4 gDirLightAmbient;
+
+int no_bone;
+float4x4 mtx_world;
 
 sampler samp;
 void VS( in float3 Pos : POSITION,in float3 Nor : NORMAL,in float2 Uv : TEXCOORD0,in float4 Weight : TEXCOORD1,in float4 BoneIdx :TEXCOORD2,
@@ -17,7 +23,9 @@ void VS( in float3 Pos : POSITION,in float3 Nor : NORMAL,in float2 Uv : TEXCOORD
     
     float4x4 mtx_comb_world =0.0f;
 
-    for( int i = 0 ; i < 4 ; i++ )
+	mtx_comb_world = mtx_world * no_bone;
+
+    for( int i = 0 ; i < (4 - (4* no_bone)) ; i++ )
     {
         if( idx[i] == -1 )
         {
@@ -26,7 +34,6 @@ void VS( in float3 Pos : POSITION,in float3 Nor : NORMAL,in float2 Uv : TEXCOORD
 
         mtx_comb_world += mtx_bone[ idx[i] ] * Weight[i];
     }
-
 
     float4 outp;
     
@@ -37,5 +44,5 @@ void VS( in float3 Pos : POSITION,in float3 Nor : NORMAL,in float2 Uv : TEXCOORD
     OutUv = Uv;
     OutPos = outp;
     float3 n = mul( Nor,mtx_comb_world );
-    OutCol = mat_diffuse * (dot( n,-light_vec ) * 0.5 + 0.5);
+    OutCol = mat_diffuse * gDirLightDiffuse * (dot( n,-gDirLightVector ) * 0.5 + 0.5) + gDirLightAmbient;
 }
