@@ -87,7 +87,7 @@ bool Player::Initialize(void)
 	//----------------------------
 	m_pos = D3DXVECTOR3(0,0,0);
 	m_rot = D3DXVECTOR3(0,0,0);
-	m_scl = D3DXVECTOR3(1,1,1);
+	m_scl = D3DXVECTOR3(-1,1,1);
 	m_offsetPos = D3DXVECTOR3(0,0,0);
 	m_offsetRot = D3DXVECTOR3(0,0,0);
 	m_secondOffsetPos = D3DXVECTOR3(0,0,0);

@@ -30,8 +30,8 @@ class DrawListManager;
 
 class CommandManager;
 class TimeManager;
-class EffectManager;
 class Player;
+class GameMaster;
 
 class Game : public Phase
 {
@@ -60,7 +60,7 @@ private:
 	CommandManager*	m_command_manager;
 	TimeManager*	m_time_manager;
 
-	EffectManager *m_effectManager;
+	GameMaster *m_gameMaster;
 	Player *m_redTeam;
 	Player *m_blueTeam;
 };

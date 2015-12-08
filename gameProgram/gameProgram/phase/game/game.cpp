@@ -16,6 +16,7 @@
 #include "..\..\sound\sound.h"
 #include "..\result\result.h"
 
+#include "..\..\input\keyboard\keyboard.h"
 #include "..\..\input\padX\padXManager.h"
 #include "..\..\input\padX\padX.h"
 
@@ -35,17 +36,15 @@
 #include "..\..\commandmanager\commandmanager.h"
 #include "..\..\timemanager\timeManager.h"
 
-#include "..\..\manager\effectManager\effectManager.h"
-#include "..\..\objectBase\instancingBillboard\instancingBillboard.h"
+#include "..\..\phase\game\gameMaster\gameMaster.h"
 #include "..\..\object\player\player.h"
 #include "..\..\objectBase\fbxModel\fbxModel.h"
-#include "..\..\input\keyboard\keyboard.h"
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // マクロ定義
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-const D3DXVECTOR3 _at	= D3DXVECTOR3(0.0f, 100.0f, 0.0f);
-const D3DXVECTOR3 _eye	= D3DXVECTOR3(0.0f, 150.0f, -3000.0f);
+const D3DXVECTOR3 _at	= D3DXVECTOR3(0.0f, 0.0f, 2000.0f);
+const D3DXVECTOR3 _eye	= D3DXVECTOR3(0.0f, 1000.0f, -3000.0f);
 const int _time_max		= 3000;
 
 //=============================================================================
@@ -171,13 +170,10 @@ void Game::Finalize(void)
 	// タイム
 	SafeFinalizeDelete(m_time_manager);
 
-	//エフェクト
-	m_effectManager->Finalize();
-	SafeFinalizeDelete( m_effectManager );
+	//ゲームマスター
+	SafeFinalizeDelete( m_gameMaster );
 
 	//プレイヤー削除
-	m_redTeam->Finalize();
-	m_blueTeam->Finalize();
 	SafeFinalizeDelete( m_redTeam );
 	SafeFinalizeDelete( m_blueTeam );
 
@@ -206,6 +202,9 @@ void Game::Finalize(void)
 	Sound::StopAll();
 }
 
+static float a = 0;
+static int rs = 250;
+static int bs = 250;
 //=============================================================================
 // 更新
 //=============================================================================
@@ -243,64 +242,21 @@ void Game::Update(void)
 	m_blueTeam->Update();
 
 	//----------------------------
-	//EffectManager更新
+	//GameMaster更新
 	//----------------------------
-	m_effectManager->Update();
+	m_gameMaster->Update();
 
-	if( m_keyboard->trigger(DIK_1 ) )
-	{
-		m_effectManager->AddEffectFromDataBase(0,D3DXVECTOR3(0,800,100) );
-		m_effectManager->AddEffectFromDataBase(0,D3DXVECTOR3(-800,1000,100) );
-		m_effectManager->AddEffectFromDataBase(0,D3DXVECTOR3(800,1000,100) );
-		Sound::Play(Sound::SE_FIREWORKS);
-	}
+	bs = m_gameMaster->blueTeamScore();
+	rs = m_gameMaster->redTeamScore();
 
-	if( m_keyboard->trigger(DIK_2 ) )
-	{
-		m_effectManager->AddEffectFromDataBase(1,D3DXVECTOR3(0,0,0) );
-		Sound::Play(Sound::SE_FIREWORKS);
-	}
 
-	if( m_keyboard->trigger(DIK_3 ) )
-	{
-		m_effectManager->AddEffectFromDataBase(2,D3DXVECTOR3(0,0,0) );
-		Sound::Play(Sound::SE_FIREWORKS);
-	}
-
-	if( m_keyboard->trigger(DIK_4 ) )
-	{
-		m_effectManager->AddEffectFromDataBase(3,D3DXVECTOR3(0,0,0) );
-		Sound::Play(Sound::SE_FIREWORKS);
-	}
-
-	if( m_keyboard->trigger(DIK_5 ) )
-	{
-		m_effectManager->AddEffectFromDataBase(4,D3DXVECTOR3(0,0,0) );
-		Sound::Play(Sound::SE_FIREWORKS);
-	}
-
-	if( m_keyboard->trigger(DIK_6 ) )
-	{
-		m_effectManager->AddEffectFromDataBase(5,D3DXVECTOR3(0,60,0) );
-		Sound::Play(Sound::SE_FIREWORKS);
-	}
-
-	if( m_keyboard->trigger(DIK_7 ) )
-	{
-		m_effectManager->AddEffectFromDataBase(6,D3DXVECTOR3(0,60,0) );
-		Sound::Play(Sound::SE_FIREWORKS);
-	}
-
-	if( m_keyboard->trigger( DIK_0 ) )
-	{
-		m_redTeam->Move( D3DXVECTOR3( -500,0,0 ),D3DXVECTOR3(-30,0,0),500 );
-		m_blueTeam->Move( D3DXVECTOR3( 500,0,0 ),D3DXVECTOR3(30,0,0),500 );
-	}
+	m_debugproc->PrintDebugProc("BT %d RT %d\n",bs,rs);
+	m_gameMaster->blueTeamAddVal(0);
+	m_gameMaster->redTeamAddVal(0);
 
 	//----------------------------
 	// 画面遷移
 	//----------------------------
-	
 	if(m_command_manager->GetState() == CommandManager::TEAM0_WIN || 
 	   m_command_manager->GetState() == CommandManager::TEAM1_WIN || 
 	   transition)
@@ -366,51 +322,39 @@ bool Game::InitObject(void)
 	poly3d->rot_x(PAI * 0.5f);
 	
 	//----------------------------
-	//エフェクトマネージャ生成
+	//ゲームマスター生成
 	//----------------------------
-	
-	InstancingBillboard *bill;
-	InstancingBillboard::Create(&bill,m_device,m_objectList,1,ObjectBase::TYPE_3D,10000,"../resources/texture/effect.jpg",D3DXVECTOR2(1,1),D3DXVECTOR2(1,1));
-	m_drawListManager->Link( bill,0,Shader::PAT_INS );
-	m_updateList->Link( bill );
-	EffectManager::Create( &m_effectManager,bill );
-	m_effectManager->SetOption( InstancingBillboard::OPTION(true,false,false ) );
-	//エフェクトロードするんごおおおおおおおおおおおお
-	m_effectManager->LoadEffectData("../resources/effect/FireWorks.OEF" );
-	m_effectManager->LoadEffectData("../resources/effect/Cocoa.OEF" );
-	m_effectManager->LoadEffectData("../resources/effect/Rize.OEF" );
-	m_effectManager->LoadEffectData("../resources/effect/Chiya.OEF" );
-	m_effectManager->LoadEffectData("../resources/effect/Syaro.OEF" );
-	m_effectManager->LoadEffectData("../resources/effect/Chiya2.OEF" );
-	m_effectManager->LoadEffectData("../resources/effect/Chiya3.OEF" );
-	
-	
+	GameMaster::Create( &m_gameMaster,m_device,m_objectList,m_updateList,m_drawListManager,m_import,m_debugproc,m_padXManager);
+
 	//----------------------------
 	//プレイヤー生成
 	//----------------------------
-	Player::Create( &m_blueTeam,m_device,m_objectList,m_updateList,m_drawListManager,0,ObjectBase::TYPE_3D,"../resources/fbxModel/daisya.bin","../resources/fbxModel/jiorama.bin","../resources/fbxModel/robo2.bin");
-	Player::Create( &m_redTeam,m_device,m_objectList,m_updateList,m_drawListManager,0,ObjectBase::TYPE_3D,"../resources/fbxModel/daisya.bin","../resources/fbxModel/jiorama.bin","../resources/fbxModel/robo2.bin");
-	m_redTeam->rot( D3DXVECTOR3(0,0,0 ) );
-	m_blueTeam->rot( D3DXVECTOR3(0,-D3DX_PI/2,0 ) );
-	m_redTeam->offsetPos( D3DXVECTOR3(0,232.059,0 ) );
-	m_blueTeam->offsetPos( D3DXVECTOR3(0,232.059,0 ) );
+	
+	Player::Create( &m_blueTeam,m_device,m_objectList,m_updateList,m_drawListManager,0,ObjectBase::TYPE_3D,"../resources/fbxModel/daisya.bin","../resources/fbxModel/ground.bin","../resources/fbxModel/robo.bin");
+	Player::Create( &m_redTeam,m_device,m_objectList,m_updateList,m_drawListManager,0,ObjectBase::TYPE_3D,"../resources/fbxModel/daisya.bin","../resources/fbxModel/ground.bin","../resources/fbxModel/robo.bin");
+	m_redTeam->rot( D3DXVECTOR3(0,D3DX_PI,0 ) );
+	m_blueTeam->rot( D3DXVECTOR3(0,-D3DX_PI/1.5,0 ) );
+	m_redTeam->offsetPos( D3DXVECTOR3(0,0,0 ) );
+	m_redTeam->secondOffsetPos( D3DXVECTOR3(0,0,0));
+	m_blueTeam->offsetPos( D3DXVECTOR3(0,0,0 ) );
 
 	m_redTeam->Move( D3DXVECTOR3(-1000,0,0),D3DXVECTOR3(-500,0,0),300 );
 	m_blueTeam->Move( D3DXVECTOR3(1000,0,0),D3DXVECTOR3(500,0,0),300 );
-
+	
 	//---------------------------
 	//
 	//---------------------------
-
-	for( int i = 0 ; i < 5 ; i++ )
+	/*
+	for( int i = 0 ; i < 1 ; i++ )
 	{
 		FbxModel *fbx;
-		FbxModel::Create( &fbx,m_device,m_objectList,0,ObjectBase::TYPE_3D,"../resources/fbxModel/ggy.bin" );
+		FbxModel::Create( &fbx,m_device,m_objectList,0,ObjectBase::TYPE_3D,"../resources/fbxModel/ground.bin" );
 		m_updateList->Link( fbx );
 		m_drawListManager->Link( fbx,0,Shader::PAT_FBX );
 
 		fbx->pos( D3DXVECTOR3( -600,0,100+100 * i ) );
 	}
+	*/
 	/*
 	for( int i = 0 ; i < 5 ; i++ )
 	{

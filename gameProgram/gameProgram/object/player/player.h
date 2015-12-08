@@ -15,12 +15,12 @@
 #include "..\..\main\main.h"
 #include "..\..\objectBase\objectBase.h"
 
-class FbxModel;
+
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // ƒNƒ‰ƒX’è‹`
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
+class FbxModel;
 class PlayerState;
 class DrawListManager;
 class UpdateList;

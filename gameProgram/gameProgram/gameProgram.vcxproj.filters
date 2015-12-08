@@ -76,9 +76,6 @@
     <Filter Include="import\result">
       <UniqueIdentifier>{9c93fe32-6d8c-4c1b-ae51-6e0e72c03c49}</UniqueIdentifier>
     </Filter>
-    <Filter Include="import\title">
-      <UniqueIdentifier>{f5a355f7-7760-4ea2-9c34-77d99db06282}</UniqueIdentifier>
-    </Filter>
     <Filter Include="fade">
       <UniqueIdentifier>{96daaa9c-06fb-4b21-a132-d51f0fc9e6c3}</UniqueIdentifier>
     </Filter>
@@ -122,9 +119,6 @@
     <Filter Include="objectBase\fbxModel">
       <UniqueIdentifier>{e6267e24-6b7e-4e8f-aed4-2871a0b52e8e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="manager\effectManager">
-      <UniqueIdentifier>{ec80397c-ac3d-4e4e-9751-8e9d6bbec489}</UniqueIdentifier>
-    </Filter>
     <Filter Include="common\complement">
       <UniqueIdentifier>{d1869292-41c5-4d24-8edd-64072ce09913}</UniqueIdentifier>
     </Filter>
@@ -151,6 +145,18 @@
     </Filter>
     <Filter Include="commandmanager\commandData">
       <UniqueIdentifier>{cbbee44a-9fe0-4545-acd8-050c202276ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="audienceManager">
+      <UniqueIdentifier>{3fb2288a-165f-4378-a4aa-bea237b11330}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="import\game\title">
+      <UniqueIdentifier>{f5a355f7-7760-4ea2-9c34-77d99db06282}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="phase\game\gameMaster">
+      <UniqueIdentifier>{daeae347-6167-4272-95c1-c43801734f3c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="effectManager">
+      <UniqueIdentifier>{f17ce794-1f89-4af3-9f58-3c58d49101e0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -215,7 +221,7 @@
       <Filter>import\game</Filter>
     </ClInclude>
     <ClInclude Include="import\title\titleImport.h">
-      <Filter>import\title</Filter>
+      <Filter>import\game\title</Filter>
     </ClInclude>
     <ClInclude Include="import\result\resultImport.h">
       <Filter>import\result</Filter>
@@ -247,9 +253,6 @@
     <ClInclude Include="objectBase\instancingBillboard\instancingBillboard.h">
       <Filter>objectBase\instancingBillboard</Filter>
     </ClInclude>
-    <ClInclude Include="manager\effectManager\effectManager.h">
-      <Filter>manager\effectManager</Filter>
-    </ClInclude>
     <ClInclude Include="view\light\light.h">
       <Filter>view\light</Filter>
     </ClInclude>
@@ -276,6 +279,15 @@
     </ClInclude>
     <ClInclude Include="commandmanager\commandData\commandDataLoad.h">
       <Filter>commandmanager\commandData</Filter>
+    </ClInclude>
+    <ClInclude Include="audienceManager\audienceManager.h">
+      <Filter>audienceManager</Filter>
+    </ClInclude>
+    <ClInclude Include="phase\game\gameMaster\gameMaster.h">
+      <Filter>phase\game\gameMaster</Filter>
+    </ClInclude>
+    <ClInclude Include="effectManager\effectManager.h">
+      <Filter>effectManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -337,7 +349,7 @@
       <Filter>import\game</Filter>
     </ClCompile>
     <ClCompile Include="import\title\titleImport.cpp">
-      <Filter>import\title</Filter>
+      <Filter>import\game\title</Filter>
     </ClCompile>
     <ClCompile Include="import\result\resultImport.cpp">
       <Filter>import\result</Filter>
@@ -369,9 +381,6 @@
     <ClCompile Include="objectBase\instancingBillboard\instancingBillboard.cpp">
       <Filter>objectBase\instancingBillboard</Filter>
     </ClCompile>
-    <ClCompile Include="manager\effectManager\effectManager.cpp">
-      <Filter>manager\effectManager</Filter>
-    </ClCompile>
     <ClCompile Include="view\light\light.cpp">
       <Filter>view\light</Filter>
     </ClCompile>
@@ -395,6 +404,15 @@
     </ClCompile>
     <ClCompile Include="commandmanager\commandData\commandDataLoad.cpp">
       <Filter>commandmanager\commandData</Filter>
+    </ClCompile>
+    <ClCompile Include="audienceManager\audienceManager.cpp">
+      <Filter>audienceManager</Filter>
+    </ClCompile>
+    <ClCompile Include="phase\game\gameMaster\gameMaster.cpp">
+      <Filter>phase\game\gameMaster</Filter>
+    </ClCompile>
+    <ClCompile Include="effectManager\effectManager.cpp">
+      <Filter>effectManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

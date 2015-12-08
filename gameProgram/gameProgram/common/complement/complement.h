@@ -61,5 +61,31 @@ inline D3DXVECTOR4 LerpVec4( const D3DXVECTOR4 &st,const D3DXVECTOR4 &ed,float m
 	return st * ( 1.0f - rate ) + ed * rate;
 }
 
+inline float Lerp( const float st,const float ed,float min,float max,float elapsed,float (*func)(float)  )
+{
+	float t = ( elapsed - min ) / ( max - min );// ŠÔ‚ğ”}‰î•Ï”‚É
+
+	if( t < 0.0 )
+	{
+		t = 0;
+	}
+
+	if( t > 1.0 )
+	{
+		t = 1;
+	}
+
+	//Še•âŠ®ŠÖ”‚ÅƒŒ[ƒg‚ğŒˆ’è
+	float rate = (*func)(t);
+
+	return st * ( 1.0f - rate ) + ed * rate;
+}
+
+inline float RandRange( const float Max,const float Min )
+{
+	float ans =	Min + ( rand() * ( Max - Min + 1.0) / (1.0 + RAND_MAX) );
+	return ans;
+}
+	
 //=============================================================================
 #endif
