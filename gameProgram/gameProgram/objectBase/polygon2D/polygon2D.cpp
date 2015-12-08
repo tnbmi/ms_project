@@ -165,4 +165,16 @@ void Polygon2D::SetVertex(void)
 	m_vtx[3].uv = D3DXVECTOR2(1.0f, 1.0f);
 }
 
+//=============================================================================
+// 頂点色変換
+//=============================================================================
+void Polygon2D::SetVertexColor(void)
+{
+	// 頂点カラー
+	m_vtx[0].color = m_color;
+	m_vtx[1].color = m_color;
+	m_vtx[2].color = m_color;
+	m_vtx[3].color = m_color;
+}
+
 // EOF

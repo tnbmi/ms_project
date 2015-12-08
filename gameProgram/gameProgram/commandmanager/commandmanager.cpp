@@ -31,9 +31,8 @@ const int _team_max = 2;
 const int _progress_neutral = 5;
 const int _progress_team0_lead = 3;
 const int _progress_team1_lead = 7;
-const int _list_command_max = 6;
 const int _list_pattern_max = 40;
-const D3DXVECTOR3 _team_position[2] = {D3DXVECTOR3(48.0f, 480.0f, 0.0f),D3DXVECTOR3(1088.0f, 480.0f, 0.0f)};
+const D3DXVECTOR3 _team_position[2] = {D3DXVECTOR3(48.0f, 432.0f, 0.0f),D3DXVECTOR3(1088.0f, 432.0f, 0.0f)};
 const int _team_color[2]= {CommandTeam::COLOR_BLUE,CommandTeam::COLOR_RED};
 
 //=============================================================================
@@ -106,14 +105,14 @@ bool CommandManager::Initialize(PadXManager* padXManager,
 	m_game_state = DRAW;
 	m_import = import;
 
-	m_command_list = new int [_list_pattern_max * _list_command_max];
+	m_command_list = new unsigned int [_list_pattern_max * COMMAND_MAX];
 
 	//---------------------------------------------------------------------------------------------
 	// 後でデータロードに置き換えるー
 	//---------------------------------------------------------------------------------------------
-	for(int i = 0; i < _list_pattern_max * _list_command_max; i++)
+	for(int i = 0; i < _list_pattern_max * COMMAND_MAX; i++)
 	{
-		m_command_list[i] = rand()%8;
+		m_command_list[i] = rand()%4;
 	}
 
 	for(int i = 0; i < _team_max; i++)
@@ -131,7 +130,10 @@ bool CommandManager::Initialize(PadXManager* padXManager,
 		else
 			m_team[i]->SetPlayer( padXManager->pad(2), padXManager->pad(2) );
 #endif
-		m_team[i]->SetCommand(&m_command_list[rand()%40 * _list_command_max]);
+		//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+		// 後でいじる予感
+		m_team[i]->SetCommand(&m_command_list[rand()%40 * COMMAND_MAX], &m_command_list[rand()%40 * COMMAND_MAX], 0);
+		m_team[i]->SetCommand(&m_command_list[rand()%40 * COMMAND_MAX], &m_command_list[rand()%40 * COMMAND_MAX], 1);
 	}
 
 	// テスト用ゲージ(後々削除
@@ -182,7 +184,10 @@ void CommandManager::Update(void)
 	{
 		if(m_team[i]->Update())
 		{
-			m_team[i]->SetCommand(&m_command_list[rand()%40 * _list_command_max]);
+			//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+			// 後でいじる予感
+			m_team[i]->SetCommandNext(&m_command_list[rand()%40 * COMMAND_MAX], 0);
+			m_team[i]->SetCommandNext(&m_command_list[rand()%40 * COMMAND_MAX], 1);
 			if(i == 0)
 				m_progress++;
 			else
@@ -195,22 +200,6 @@ void CommandManager::Update(void)
 
 			// テスト用ゲージ（後々削除
 			GageUpd();
-
-			if(m_progress > _progress_team0_lead && m_progress < _progress_team1_lead)
-			{
-				m_team[0]->SetFragLose(false);
-				m_team[1]->SetFragLose(false);
-			}
-			else if(m_progress >= _progress_team1_lead)
-			{
-				m_team[0]->SetFragLose(false);
-				m_team[1]->SetFragLose(true);
-			}
-			else if(m_progress <= _progress_team0_lead)
-			{
-				m_team[0]->SetFragLose(true);
-				m_team[1]->SetFragLose(false);
-			}
 		}
 	}
 }
