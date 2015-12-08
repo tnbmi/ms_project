@@ -27,8 +27,8 @@ public:
 	bool Initialize(void);
 	void Finalize(void);
 
-	void commandDataLoadA(unsigned int* outData){outData = m_commandDataLoadA;}
-	void commandDataLoadB(unsigned int* outData){outData = m_commandDataLoadB;}
+	void commandDataLoadA(unsigned int** outData){outData = &m_commandDataLoadA;}
+	void commandDataLoadB(unsigned int** outData){outData = &m_commandDataLoadB;}
 
 private:
 	int m_patternMax;
