@@ -15,6 +15,11 @@
 #include "..\main\main.h"
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+// マクロ定義
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+#define COMMAND_MAX (10)
+
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // クラス定義
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 class CommandDataLoad;
@@ -64,7 +69,7 @@ private:
 	CommandDataLoad* m_commandDataLoad;
 
 	CommandTeam*	m_team[2];
-	int*			m_command_list;
+	unsigned int*	m_command_list;
 	int				m_progress;
 	GAME_STATE		m_game_state;
 

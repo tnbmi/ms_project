@@ -29,7 +29,6 @@ const char* _game_texture_name[] =
 	"/red.png",
 	"/commandfram00.png",
 	"/commandfram01.png",
-	"/commandfram02.png",
 	"/number.png",
 	"/num_yellow.png",
 	"/num_white.png",
