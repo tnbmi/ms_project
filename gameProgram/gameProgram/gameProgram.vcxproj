@@ -47,6 +47,7 @@
     <ClCompile Include="phase\result\result.cpp" />
     <ClCompile Include="phase\title\title.cpp" />
     <ClCompile Include="renderer\renderer.cpp" />
+    <ClCompile Include="score\score.cpp" />
     <ClCompile Include="shader\shader.cpp" />
     <ClCompile Include="sound\sound.cpp" />
     <ClCompile Include="timemanager\timeManager.cpp" />
@@ -92,6 +93,7 @@
     <ClInclude Include="phase\result\result.h" />
     <ClInclude Include="phase\title\title.h" />
     <ClInclude Include="renderer\renderer.h" />
+    <ClInclude Include="score\score.h" />
     <ClInclude Include="shader\shader.h" />
     <ClInclude Include="sound\sound.h" />
     <ClInclude Include="timemanager\timeManager.h" />

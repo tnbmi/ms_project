@@ -198,9 +198,6 @@ void Game::Finalize(void)
 	Sound::StopAll();
 }
 
-static float a = 0;
-static int rs = 250;
-static int bs = 250;
 //=============================================================================
 // 更新
 //=============================================================================
@@ -231,18 +228,12 @@ void Game::Update(void)
 	//----------------------------
 	bool transition = m_time_manager->Update();
 
+	//transition = 1;
+
 	//----------------------------
 	//GameMaster更新
 	//----------------------------
 	m_gameMaster->Update();
-
-	bs = m_gameMaster->blueTeamScore();
-	rs = m_gameMaster->redTeamScore();
-
-
-	m_debugproc->PrintDebugProc("BT %d RT %d\n",bs,rs);
-	m_gameMaster->blueTeamAddVal(0);
-	m_gameMaster->redTeamAddVal(0);
 
 	//----------------------------
 	// 画面遷移
@@ -308,7 +299,7 @@ bool Game::InitObject(void)
 		return false;
 	m_updateList->Link(poly3d);
 	m_drawListManager->Link(poly3d, 4, Shader::PAT_LIGHT);
-	poly3d->scl(512.0f, 512.0f, 0.0f);
+	poly3d->scl(512.0f*5, 512.0f*5, 0.0f);
 	poly3d->rot_x(PAI * 0.5f);
 	
 	//----------------------------

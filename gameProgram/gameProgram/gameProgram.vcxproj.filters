@@ -158,6 +158,9 @@
     <Filter Include="effectManager">
       <UniqueIdentifier>{f17ce794-1f89-4af3-9f58-3c58d49101e0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="score">
+      <UniqueIdentifier>{6eb6c4a2-da2e-416d-bf8b-820f588118f0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main\main.h">
@@ -289,6 +292,9 @@
     <ClInclude Include="effectManager\effectManager.h">
       <Filter>effectManager</Filter>
     </ClInclude>
+    <ClInclude Include="score\score.h">
+      <Filter>score</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main\main.cpp">
@@ -413,6 +419,9 @@
     </ClCompile>
     <ClCompile Include="effectManager\effectManager.cpp">
       <Filter>effectManager</Filter>
+    </ClCompile>
+    <ClCompile Include="score\score.cpp">
+      <Filter>score</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
