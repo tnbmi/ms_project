@@ -249,17 +249,16 @@ void Game::Update(void)
 	bs = m_gameMaster->blueTeamScore();
 	rs = m_gameMaster->redTeamScore();
 
-
+#ifdef _DEBUG
 	m_debugproc->PrintDebugProc("BT %d RT %d\n",bs,rs);
+#endif
 	m_gameMaster->blueTeamAddVal(0);
 	m_gameMaster->redTeamAddVal(0);
 
 	//----------------------------
 	// 画面遷移
-	//----------------------------
-	if(m_command_manager->GetState() == CommandManager::TEAM0_WIN || 
-	   m_command_manager->GetState() == CommandManager::TEAM1_WIN || 
-	   transition)
+	//----------------------------				//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+	if(transition)								// 現状タイムのみ、チームでの勝敗も(一応)追加予定
 	{
 		Manager::nextPhase((Phase*)new Result(m_device));
 	}
