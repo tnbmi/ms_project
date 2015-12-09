@@ -38,12 +38,6 @@ public:
 	CommandManager(void);
 	~CommandManager(void);
 
-	typedef enum{
-		DRAW = 0,
-		TEAM0_WIN,
-		TEAM1_WIN
-	}GAME_STATE;
-
 	static bool Create(CommandManager** outPointer,
 					   PadXManager* padXManager,
 					   Debugproc* debugproc,
@@ -63,23 +57,16 @@ public:
 	void Update(void);
 	void Draw(void);
 
-	GAME_STATE GetState(void){return m_game_state;}
-
 private:
 	CommandDataLoad* m_commandDataLoad;
 
 	CommandTeam*	m_team[2];
-	unsigned int*	m_command_list;
-	int				m_progress;
-	GAME_STATE		m_game_state;
+	unsigned int*	m_command_list[2];
 
 	ObjectList*		 m_objectList;
 	UpdateList*		 m_updateList;
 	DrawListManager* m_drawListManager;
 	GameImport*	m_import;
-
-	Polygon2D*	m_test_gage[10];
-	void GageUpd(void);
 
 	Debugproc*		m_debugproc;
 };
