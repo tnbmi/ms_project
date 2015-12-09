@@ -28,6 +28,7 @@ public:
 
 		TEST_0,
 		TEST_1,
+		NUM,
 
 		TEX_MAX
 	};

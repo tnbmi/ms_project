@@ -156,8 +156,8 @@ bool AudienceManager::Initialize(void)
 		m_audienceArray[i].state = m_stateStayBlue;
 		m_audienceArray[i].stPos = D3DXVECTOR3(0,0,0);
 		m_audienceArray[i].edPos = D3DXVECTOR3(0,0,0);
-		m_audienceArray[i].pos = D3DXVECTOR3( -150,100,0 );
-		m_audienceArray[i].scl = D3DXVECTOR3(100,200,0 );
+		m_audienceArray[i].pos = D3DXVECTOR3( 0,0,-1000 );
+		m_audienceArray[i].scl = D3DXVECTOR3(50,100,0 );
 		m_audienceArray[i].team = TEAM_BLUE;
 		m_audienceArray[i].col  = D3DXCOLOR(0,0,1,1);
 		m_audienceArray[i].poly->pos = m_audienceArray[i].pos;
@@ -173,8 +173,8 @@ bool AudienceManager::Initialize(void)
 		m_audienceArray[i].state = m_stateStayRed;
 		m_audienceArray[i].stPos = D3DXVECTOR3(0,0,0);
 		m_audienceArray[i].edPos = D3DXVECTOR3(0,0,0);
-		m_audienceArray[i].pos = D3DXVECTOR3( 150,0,0 );
-		m_audienceArray[i].scl = D3DXVECTOR3(100,200,0 );
+		m_audienceArray[i].pos = D3DXVECTOR3( 150,0,-1000 );
+		m_audienceArray[i].scl = D3DXVECTOR3(50,100,0 );
 		m_audienceArray[i].team = TEAM_RED;
 		m_audienceArray[i].col  = D3DXCOLOR(1,0,0,1);
 		m_audienceArray[i].poly->pos = m_audienceArray[i].pos;

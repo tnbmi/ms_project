@@ -155,6 +155,9 @@
     <Filter Include="import\title">
       <UniqueIdentifier>{f5a355f7-7760-4ea2-9c34-77d99db06282}</UniqueIdentifier>
     </Filter>
+    <Filter Include="score">
+      <UniqueIdentifier>{6eb6c4a2-da2e-416d-bf8b-820f588118f0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main\main.h">
@@ -289,6 +292,9 @@
     <ClInclude Include="objectBase\meshDome\meshDome.h">
       <Filter>objectBase\meshDome</Filter>
     </ClInclude>
+    <ClInclude Include="score\score.h">
+      <Filter>score</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main\main.cpp">
@@ -416,6 +422,9 @@
     </ClCompile>
     <ClCompile Include="objectBase\meshDome\meshDome.cpp">
       <Filter>objectBase\meshDome</Filter>
+    </ClCompile>
+    <ClCompile Include="score\score.cpp">
+      <Filter>score</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -20,6 +20,7 @@
 
 #include "..\phase\title\title.h"
 #include "..\phase\game\game.h"
+#include "..\phase\result\result.h"
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Ã“I•Ï”

@@ -65,6 +65,9 @@ public:
 	//開始位置　終了位置　何フレームで補完するんだＹＯ
 	void Move( const D3DXVECTOR3 &stPos,const D3DXVECTOR3 &edPos,const float compTime );
 
+	void StartAnimationParent( const int startKeyFrame,const int endKeyFrame,const bool isRoop );
+	void StartAnimationChild( const int startKeyFrame,const int endKeyFrame,const bool isRoop );
+	void StartAnimationSecondChild( const int startKeyFrame,const int endKeyFrame,const bool isRoop );
 	
 
 private:
