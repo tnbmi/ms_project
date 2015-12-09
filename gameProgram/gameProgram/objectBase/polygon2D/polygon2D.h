@@ -31,7 +31,8 @@ public:
 	Polygon2D(LPDIRECT3DDEVICE9 device, ObjectList* objectList, OBJECT_TYPE type);
 	virtual ~Polygon2D(void);
 
-	static bool Create(Polygon2D** outPointer, LPDIRECT3DDEVICE9 device, ObjectList* objectList, LPDIRECT3DTEXTURE9 texture, OBJECT_TYPE type = ObjectBase::TYPE_2D);
+	static bool Create(Polygon2D** outPointer, LPDIRECT3DDEVICE9 device, ObjectList* objectList,
+					LPDIRECT3DTEXTURE9 texture, OBJECT_TYPE type = ObjectBase::TYPE_2D);
 	virtual bool Initialize(LPDIRECT3DTEXTURE9 texture);
 	virtual void Finalize(void);
 	virtual void Update(void);
@@ -61,12 +62,12 @@ public:
 	virtual void		scl_z(float z) {m_scl.z = z;}
 
 	virtual D3DXCOLOR	color(void) {return m_color;}
-	virtual void		color(D3DXCOLOR color) {m_color = color;SetVertexColor();}
-	virtual void		color(float r, float g, float b, float a) {m_color = D3DXCOLOR(r,g,b,a);SetVertexColor();}
-	virtual void		color_r(float r) {m_color.r = r;SetVertexColor();}
-	virtual void		color_g(float g) {m_color.g = g;SetVertexColor();}
-	virtual void		color_b(float b) {m_color.b = b;SetVertexColor();}
-	virtual void		color_a(float a) {m_color.a = a;SetVertexColor();}
+	virtual void		color(D3DXCOLOR color) {m_color = color; SetVertexColor();}
+	virtual void		color(float r, float g, float b, float a) {m_color = D3DXCOLOR(r,g,b,a); SetVertexColor();}
+	virtual void		color_r(float r) {m_color.r = r; SetVertexColor();}
+	virtual void		color_g(float g) {m_color.g = g; SetVertexColor();}
+	virtual void		color_b(float b) {m_color.b = b; SetVertexColor();}
+	virtual void		color_a(float a) {m_color.a = a; SetVertexColor();}
 
 	virtual void	texcoord(int num, D3DXVECTOR2 uv) {m_vtx[num].uv = uv;}
 	virtual void	texcoord(int num, float u, float v) {m_vtx[num].uv.x = u; m_vtx[num].uv.y = v;}
@@ -76,7 +77,6 @@ public:
 
 protected:
 	void SetVertex(void);
-	void SetVertexPosition(void);
 	void SetVertexColor(void);
 
 	VERTEX m_vtx[4];

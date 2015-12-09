@@ -30,7 +30,8 @@ public:
 	{
 		TYPE_NONE = 0,
 		TYPE_2D,
-		TYPE_3D
+		TYPE_3D,
+		TYPE_MESH_DOME
 	};
 
 	ObjectBase(LPDIRECT3DDEVICE9 device, ObjectList* objectList, OBJECT_TYPE type = TYPE_NONE);

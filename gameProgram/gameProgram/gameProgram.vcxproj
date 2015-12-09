@@ -36,6 +36,7 @@
     <ClCompile Include="number\number.cpp" />
     <ClCompile Include="objectBase\fbxModel\fbxModel.cpp" />
     <ClCompile Include="objectBase\instancingBillboard\instancingBillboard.cpp" />
+    <ClCompile Include="objectBase\meshDome\meshDome.cpp" />
     <ClCompile Include="objectBase\objectBase.cpp" />
     <ClCompile Include="objectBase\polygon2D\polygon2D.cpp" />
     <ClCompile Include="objectBase\polygon3D\polygon3D.cpp" />
@@ -81,6 +82,7 @@
     <ClInclude Include="number\number.h" />
     <ClInclude Include="objectBase\fbxModel\fbxModel.h" />
     <ClInclude Include="objectBase\instancingBillboard\instancingBillboard.h" />
+    <ClInclude Include="objectBase\meshDome\meshDome.h" />
     <ClInclude Include="objectBase\objectBase.h" />
     <ClInclude Include="objectBase\polygon2D\polygon2D.h" />
     <ClInclude Include="objectBase\polygon3D\polygon3D.h" />

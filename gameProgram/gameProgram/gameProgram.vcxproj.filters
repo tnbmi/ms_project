@@ -76,17 +76,11 @@
     <Filter Include="import\result">
       <UniqueIdentifier>{9c93fe32-6d8c-4c1b-ae51-6e0e72c03c49}</UniqueIdentifier>
     </Filter>
-    <Filter Include="fade">
-      <UniqueIdentifier>{96daaa9c-06fb-4b21-a132-d51f0fc9e6c3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="objectBase\polygon2D">
       <UniqueIdentifier>{b5b1f17b-f7eb-45b0-a5f9-9e643c7ee25c}</UniqueIdentifier>
     </Filter>
     <Filter Include="objectBase\polygon3D">
       <UniqueIdentifier>{48bbecd8-a962-4983-a4ae-0d5b1dbabc68}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="objectBase\modelX">
-      <UniqueIdentifier>{7348fcd9-3628-4c4a-b5c5-1cedc3abf553}</UniqueIdentifier>
     </Filter>
     <Filter Include="list">
       <UniqueIdentifier>{8dc7aaea-ce93-4201-8309-b535385b67d1}</UniqueIdentifier>
@@ -149,14 +143,17 @@
     <Filter Include="audienceManager">
       <UniqueIdentifier>{3fb2288a-165f-4378-a4aa-bea237b11330}</UniqueIdentifier>
     </Filter>
-    <Filter Include="import\game\title">
-      <UniqueIdentifier>{f5a355f7-7760-4ea2-9c34-77d99db06282}</UniqueIdentifier>
-    </Filter>
     <Filter Include="phase\game\gameMaster">
       <UniqueIdentifier>{daeae347-6167-4272-95c1-c43801734f3c}</UniqueIdentifier>
     </Filter>
     <Filter Include="effectManager">
       <UniqueIdentifier>{f17ce794-1f89-4af3-9f58-3c58d49101e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="objectBase\meshDome">
+      <UniqueIdentifier>{c177dbee-056c-4d76-b291-cfd1458f0a98}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="import\title">
+      <UniqueIdentifier>{f5a355f7-7760-4ea2-9c34-77d99db06282}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -221,7 +218,7 @@
       <Filter>import\game</Filter>
     </ClInclude>
     <ClInclude Include="import\title\titleImport.h">
-      <Filter>import\game\title</Filter>
+      <Filter>import\title</Filter>
     </ClInclude>
     <ClInclude Include="import\result\resultImport.h">
       <Filter>import\result</Filter>
@@ -289,6 +286,9 @@
     <ClInclude Include="effectManager\effectManager.h">
       <Filter>effectManager</Filter>
     </ClInclude>
+    <ClInclude Include="objectBase\meshDome\meshDome.h">
+      <Filter>objectBase\meshDome</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main\main.cpp">
@@ -349,7 +349,7 @@
       <Filter>import\game</Filter>
     </ClCompile>
     <ClCompile Include="import\title\titleImport.cpp">
-      <Filter>import\game\title</Filter>
+      <Filter>import\title</Filter>
     </ClCompile>
     <ClCompile Include="import\result\resultImport.cpp">
       <Filter>import\result</Filter>
@@ -413,6 +413,9 @@
     </ClCompile>
     <ClCompile Include="effectManager\effectManager.cpp">
       <Filter>effectManager</Filter>
+    </ClCompile>
+    <ClCompile Include="objectBase\meshDome\meshDome.cpp">
+      <Filter>objectBase\meshDome</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

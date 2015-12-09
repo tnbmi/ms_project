@@ -32,6 +32,7 @@
 
 #include "..\..\objectBase\polygon2D\polygon2D.h"
 #include "..\..\objectBase\polygon3D\polygon3D.h"
+#include "..\..\objectBase\meshDome\meshDome.h"
 
 #include "..\..\commandmanager\commandmanager.h"
 #include "..\..\timemanager\timeManager.h"
@@ -44,7 +45,7 @@
 // マクロ定義
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 const D3DXVECTOR3 _at	= D3DXVECTOR3(0.0f, 0.0f, 2000.0f);
-const D3DXVECTOR3 _eye	= D3DXVECTOR3(0.0f, 1000.0f, -3000.0f);
+const D3DXVECTOR3 _eye	= D3DXVECTOR3(0.0f, 500.0f, -3000.0f);
 const int _time_max		= 3000;
 
 //=============================================================================
@@ -310,9 +311,18 @@ bool Game::InitObject(void)
 	TimeManager::Create(&m_time_manager, m_objectList, m_updateList, m_drawListManager, m_device, m_import, _time_max);
 
 	//----------------------------
+	// メッシュドームテスト
+	//----------------------------
+	MeshDome* dome;
+	if(!MeshDome::Create(&dome, m_device, m_objectList,
+		D3DXVECTOR2(10, 10), 3000.0f, 2000.0f, m_import->texture(GameImport::SKY)))
+		return false;
+	m_updateList->Link(dome);
+	m_drawListManager->Link(dome, 2, Shader::PAT_LIGHT);
+
+	//----------------------------
 	// 3Dポリゴンテスト
 	//----------------------------
-	
 	Polygon3D* poly3d;
 	if(!Polygon3D::Create(&poly3d, m_device, m_objectList, m_import->texture(GameImport::TEST_0)))
 		return false;
@@ -340,7 +350,7 @@ bool Game::InitObject(void)
 
 	m_redTeam->Move( D3DXVECTOR3(-1000,0,0),D3DXVECTOR3(-500,0,0),300 );
 	m_blueTeam->Move( D3DXVECTOR3(1000,0,0),D3DXVECTOR3(500,0,0),300 );
-	
+
 	//---------------------------
 	//
 	//---------------------------

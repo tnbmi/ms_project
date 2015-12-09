@@ -134,10 +134,7 @@ void Polygon2D::Draw(LPD3DXCONSTANTTABLE vsc, LPD3DXCONSTANTTABLE psc, D3DXMATRI
 	//----------------------------
 	// •`‰æ
 	//----------------------------
-	m_device->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP,
-								2,
-								m_vtx,
-								sizeof(VERTEX));
+	m_device->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, 2, m_vtx, sizeof(VERTEX));
 }
 
 //=============================================================================

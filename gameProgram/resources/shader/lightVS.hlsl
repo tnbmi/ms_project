@@ -15,14 +15,12 @@ float3 gDirLightVector;
 float4 gDirLightDiffuse;
 float4 gDirLightAmbient;
 
-float4 gMatDiffuse;
-float4 gMatAmbient;
-
 //=============================================================================
 // シェーダー関数
 //=============================================================================
 void VS(in float3 inPos			: POSITION0,
 		in float3 inNormal		: NORMAL0,
+		in float4 inDiffuse		: COLOR0,
 		in float2 inUV			: TEXCOORD0,
 		out float4 outPos		: POSITION,
 		out float4 outDiffuse	: COLOR0,
@@ -42,6 +40,6 @@ void VS(in float3 inPos			: POSITION0,
 	float light = (dot(worldNormal, -gDirLightVector) * 0.5f) + 0.5f;
 
 	// 出力カラー
-	outDiffuse = light * gMatDiffuse * gDirLightDiffuse + gMatAmbient * gDirLightAmbient;
+	outDiffuse = light * inDiffuse * gDirLightDiffuse + gDirLightAmbient;
 	outDiffuse.a = 1.0f;
 }

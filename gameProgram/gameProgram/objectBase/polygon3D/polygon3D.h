@@ -32,7 +32,8 @@ public:
 	Polygon3D(LPDIRECT3DDEVICE9 device, ObjectList* objectList, OBJECT_TYPE type);
 	virtual ~Polygon3D(void);
 
-	static bool Create(Polygon3D** outPointer, LPDIRECT3DDEVICE9 device, ObjectList* objectList, LPDIRECT3DTEXTURE9 texture, OBJECT_TYPE type = ObjectBase::TYPE_3D);
+	static bool Create(Polygon3D** outPointer, LPDIRECT3DDEVICE9 device, ObjectList* objectList,
+					LPDIRECT3DTEXTURE9 texture, OBJECT_TYPE type = ObjectBase::TYPE_3D);
 	virtual bool Initialize(LPDIRECT3DTEXTURE9 texture);
 	virtual void Finalize(void);
 	virtual void Update(void);
@@ -55,22 +56,24 @@ public:
 	virtual void		rot_z(float z) {m_rot.z = z;}
 
 	virtual D3DXVECTOR3	scl(void) {return m_scl;}
-	virtual void		scl(D3DXVECTOR3 scl) {m_scl = scl;}
-	virtual void		scl(float x, float y, float z) {m_scl = D3DXVECTOR3(x,y,z); SetVertex();}
-	virtual void		scl_x(float x) {m_scl.x = x;}
-	virtual void		scl_y(float y) {m_scl.y = y;}
-	virtual void		scl_z(float z) {m_scl.z = z;}
+	virtual void		scl(D3DXVECTOR3 scl) {m_scl = scl; SetVertexScl();}
+	virtual void		scl(float x, float y, float z) {m_scl = D3DXVECTOR3(x,y,z); SetVertexScl();}
+	virtual void		scl_x(float x) {m_scl.x = x; SetVertexScl();}
+	virtual void		scl_y(float y) {m_scl.y = y; SetVertexScl();}
+	virtual void		scl_z(float z) {m_scl.z = z; SetVertexScl();}
 
 	virtual D3DXCOLOR	color(void) {return m_color;}
-	virtual void		color(D3DXCOLOR color) {m_color = color;}
-	virtual void		color(float r, float g, float b, float a) {m_color = D3DXCOLOR(r,g,b,a);}
-	virtual void		color_r(float r) {m_color.r = r;}
-	virtual void		color_g(float g) {m_color.g = g;}
-	virtual void		color_b(float b) {m_color.b = b;}
-	virtual void		color_a(float a) {m_color.a = a;}
+	virtual void		color(D3DXCOLOR color) {m_color = color; SetVertexColor();}
+	virtual void		color(float r, float g, float b, float a) {m_color = D3DXCOLOR(r,g,b,a); SetVertexColor();}
+	virtual void		color_r(float r) {m_color.r = r; SetVertexColor();}
+	virtual void		color_g(float g) {m_color.g = g; SetVertexColor();}
+	virtual void		color_b(float b) {m_color.b = b; SetVertexColor();}
+	virtual void		color_a(float a) {m_color.a = a; SetVertexColor();}
 
 protected:
 	void SetVertex(void);
+	void SetVertexScl(void);
+	void SetVertexColor(void);
 
 	VERTEX m_vtx[4];
 };

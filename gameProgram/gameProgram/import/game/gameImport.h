@@ -27,7 +27,8 @@ public:
 		NONE = 0,
 
 		TEST_0,
-		TEST_1,
+
+		SKY,
 
 		COMMAND_TEX,
 		BLUE_TEX,

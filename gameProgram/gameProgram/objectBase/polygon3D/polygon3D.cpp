@@ -31,7 +31,8 @@ Polygon3D::~Polygon3D(void)
 //=============================================================================
 // 生成
 //=============================================================================
-bool Polygon3D::Create(Polygon3D** outPointer, LPDIRECT3DDEVICE9 device, ObjectList* objectList, LPDIRECT3DTEXTURE9 texture, OBJECT_TYPE type)
+bool Polygon3D::Create(Polygon3D** outPointer, LPDIRECT3DDEVICE9 device, ObjectList* objectList,
+					LPDIRECT3DTEXTURE9 texture, OBJECT_TYPE type)
 {
 	Polygon3D* pointer = new Polygon3D(device, objectList, type);
 	if(!pointer->Initialize(texture))
@@ -106,11 +107,6 @@ void Polygon3D::Draw(LPD3DXCONSTANTTABLE vsc, LPD3DXCONSTANTTABLE psc, D3DXMATRI
 
 		// ワールドビュープロジェクションマトリックスの設定
 		vsc->SetMatrix(m_device, "gWVP", &wvp);
-
-		// マテリアル設定
-		D3DXVECTOR3 ambient = D3DXCOLOR(0.0f, 0.0f, 0.0f, 1.0f);
-		vsc->SetVector(m_device, "gMatDiffuse", (D3DXVECTOR4*)&m_color);
-		vsc->SetVector(m_device, "gMatAmbient", (D3DXVECTOR4*)&ambient);
 	}
 
 	//----------------------------
@@ -141,10 +137,7 @@ void Polygon3D::Draw(LPD3DXCONSTANTTABLE vsc, LPD3DXCONSTANTTABLE psc, D3DXMATRI
 	//----------------------------
 	// 描画
 	//----------------------------
-	m_device->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP,
-								2,
-								m_vtx,
-								sizeof(VERTEX));
+	m_device->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, 2, m_vtx, sizeof(VERTEX));
 }
 
 //=============================================================================
@@ -177,6 +170,31 @@ void Polygon3D::SetVertex(void)
 		m_vtx[cnt].normal =  D3DXVECTOR3(0.0f, 0.0f, -1.0f);
 		D3DXVec3Normalize(&m_vtx[cnt].normal, &m_vtx[cnt].normal);
 	}
+}
+
+//=============================================================================
+// 頂点サイズ変換
+//=============================================================================
+void Polygon3D::SetVertexScl(void)
+{
+	// 座標
+	D3DXVECTOR3 half = D3DXVECTOR3(0.5f * m_scl.x, 0.5f * m_scl.y, 0.0f);
+	m_vtx[0].position = D3DXVECTOR3(-half.x,  half.y, half.z);
+	m_vtx[1].position = D3DXVECTOR3( half.x,  half.y, half.z);
+	m_vtx[2].position = D3DXVECTOR3(-half.x, -half.y, half.z);
+	m_vtx[3].position = D3DXVECTOR3( half.x, -half.y, half.z);
+}
+
+//=============================================================================
+// 頂点色変換
+//=============================================================================
+void Polygon3D::SetVertexColor(void)
+{
+	// 頂点カラー
+	m_vtx[0].color = m_color;
+	m_vtx[1].color = m_color;
+	m_vtx[2].color = m_color;
+	m_vtx[3].color = m_color;
 }
 
 // EOF
