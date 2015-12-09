@@ -43,8 +43,8 @@
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // マクロ定義
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-const D3DXVECTOR3 _at	= D3DXVECTOR3(0.0f, 0.0f, 2000.0f);
-const D3DXVECTOR3 _eye	= D3DXVECTOR3(0.0f, 1000.0f, -3000.0f);
+const D3DXVECTOR3 _at	= D3DXVECTOR3(0.0f, 500.0f, 10000.0f);
+const D3DXVECTOR3 _eye	= D3DXVECTOR3(0.0f, 300.0f, -2000.0f);
 const int _time_max		= 3000;
 
 //=============================================================================
@@ -173,10 +173,6 @@ void Game::Finalize(void)
 	//ゲームマスター
 	SafeFinalizeDelete( m_gameMaster );
 
-	//プレイヤー削除
-	SafeFinalizeDelete( m_redTeam );
-	SafeFinalizeDelete( m_blueTeam );
-
 	//----------------------------
 	// ビュー
 	//----------------------------
@@ -234,12 +230,6 @@ void Game::Update(void)
 	// タイムマネージャ
 	//----------------------------
 	bool transition = m_time_manager->Update();
-
-	//----------------------------
-	//Player更新
-	//----------------------------
-	m_redTeam->Update();
-	m_blueTeam->Update();
 
 	//----------------------------
 	//GameMaster更新
@@ -326,35 +316,9 @@ bool Game::InitObject(void)
 	//----------------------------
 	GameMaster::Create( &m_gameMaster,m_device,m_objectList,m_updateList,m_drawListManager,m_import,m_debugproc,m_padXManager);
 
-	//----------------------------
-	//プレイヤー生成
-	//----------------------------
-	
-	Player::Create( &m_blueTeam,m_device,m_objectList,m_updateList,m_drawListManager,0,ObjectBase::TYPE_3D,"../resources/fbxModel/daisya.bin","../resources/fbxModel/ground.bin","../resources/fbxModel/robo.bin");
-	Player::Create( &m_redTeam,m_device,m_objectList,m_updateList,m_drawListManager,0,ObjectBase::TYPE_3D,"../resources/fbxModel/daisya.bin","../resources/fbxModel/ground.bin","../resources/fbxModel/robo.bin");
-	m_redTeam->rot( D3DXVECTOR3(0,D3DX_PI,0 ) );
-	m_blueTeam->rot( D3DXVECTOR3(0,-D3DX_PI/1.5,0 ) );
-	m_redTeam->offsetPos( D3DXVECTOR3(0,0,0 ) );
-	m_redTeam->secondOffsetPos( D3DXVECTOR3(0,0,0));
-	m_blueTeam->offsetPos( D3DXVECTOR3(0,0,0 ) );
 
-	m_redTeam->Move( D3DXVECTOR3(-1000,0,0),D3DXVECTOR3(-500,0,0),300 );
-	m_blueTeam->Move( D3DXVECTOR3(1000,0,0),D3DXVECTOR3(500,0,0),300 );
 	
-	//---------------------------
-	//
-	//---------------------------
-	/*
-	for( int i = 0 ; i < 1 ; i++ )
-	{
-		FbxModel *fbx;
-		FbxModel::Create( &fbx,m_device,m_objectList,0,ObjectBase::TYPE_3D,"../resources/fbxModel/ground.bin" );
-		m_updateList->Link( fbx );
-		m_drawListManager->Link( fbx,0,Shader::PAT_FBX );
-
-		fbx->pos( D3DXVECTOR3( -600,0,100+100 * i ) );
-	}
-	*/
+	
 	/*
 	for( int i = 0 ; i < 5 ; i++ )
 	{

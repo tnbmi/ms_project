@@ -23,7 +23,7 @@ FbxModel::FbxModel(LPDIRECT3DDEVICE9 device, ObjectList* objectList, int priorit
 
 	m_pos = D3DXVECTOR3(0,0,0);
 	m_rot = D3DXVECTOR3(0,0,0);
-	m_scl = D3DXVECTOR3(1,1,1);
+	m_scl = D3DXVECTOR3(-1,1,1);
 
 	//アニメーションループ
 	m_isAnimRoop = false;
@@ -657,7 +657,13 @@ bool FbxModel::LoadFbxModel( const char *loadModelPath )
 	if( m_boneSum > 0 )
 	{
 		m_boneArray = new BONEDATA[ m_boneSum ];
+		m_noBone = 0;
 	}
+	else
+	{
+		m_noBone = 1;
+	}
+
 	for( int i = 0 ; i < m_boneSum ; i++ )
 	{
 		//ボーンidx取得まぁ配列番号と同じはずだけど

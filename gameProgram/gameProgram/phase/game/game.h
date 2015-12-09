@@ -61,8 +61,6 @@ private:
 	TimeManager*	m_time_manager;
 
 	GameMaster *m_gameMaster;
-	Player *m_redTeam;
-	Player *m_blueTeam;
 };
 
 //=============================================================================

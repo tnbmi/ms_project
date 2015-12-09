@@ -150,4 +150,23 @@ void Player::Move( const D3DXVECTOR3 &stPos,const D3DXVECTOR3 &edPos,const float
 	m_elepsed = 0;
 }
 
+//============================================================================
+// StartAnimation
+//============================================================================
+
+void Player::StartAnimationParent( const int startKeyFrame,const int endKeyFrame,const bool isRoop )
+{
+	m_parent->StartAnimation( startKeyFrame,endKeyFrame,isRoop );
+}
+
+void Player::StartAnimationChild( const int startKeyFrame,const int endKeyFrame,const bool isRoop )
+{
+	m_child->StartAnimation( startKeyFrame,endKeyFrame,isRoop );
+}
+
+void Player::StartAnimationSecondChild( const int startKeyFrame,const int endKeyFrame,const bool isRoop )
+{
+	m_secondChild->StartAnimation( startKeyFrame,endKeyFrame,isRoop );
+}
+
 // EOF

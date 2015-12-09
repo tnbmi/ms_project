@@ -260,12 +260,12 @@ bool Title::InitObject(void)
 
 	//fbx
 	FbxModel *fbx;
-	if( !FbxModel::Create( &fbx,m_device,m_objectList,0,ObjectBase::TYPE_NONE,"../resources/fbxmodel/ggy.bin" ) )
-		return false;
-
-	m_drawListManager->Link( fbx,0,Shader::PAT_FBX );
+	FbxModel::Create( &fbx,m_device,m_objectList,0,ObjectBase::TYPE_3D,"../resources/fbxModel/Title_Haikei_FBX01.bin" );
 	m_updateList->Link( fbx );
-	fbx->StartAnimation(61,91,true );
+	m_drawListManager->Link( fbx,0,Shader::PAT_FBX );
+
+	fbx->pos( D3DXVECTOR3( -0,0,0 ) );
+	fbx->rot( D3DXVECTOR3(0,PAI,0 ) );
 
 	return true;
 }

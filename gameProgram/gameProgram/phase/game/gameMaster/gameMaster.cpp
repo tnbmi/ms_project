@@ -18,16 +18,20 @@
 #include "..\..\..\audienceManager\audienceManager.h"
 #include "..\..\..\effectManager\effectManager.h"
 
+#include "..\..\..\object\player\player.h"
+
 //=============================================================================
 // コンストラクタ
 //=============================================================================
-GameMaster::GameMaster(AudienceManager *audienceManager,EffectManager *effectManager)
+GameMaster::GameMaster(AudienceManager *audienceManager,EffectManager *effectManager,Player *redTeam,Player *blueTeam)
 {
 	//----------------------------
 	// メンバー初期化
 	//----------------------------
 	m_audienceManager = audienceManager;
 	m_effectManager   = effectManager;
+	m_blueTeam = blueTeam;
+	m_redTeam  = redTeam;
 }
 
 //=============================================================================
@@ -49,7 +53,7 @@ bool GameMaster::Create(GameMaster** outPointer,LPDIRECT3DDEVICE9 device,
 	//観客制御生成
 	AudienceManager *audience;
 	if(!AudienceManager::Create( &audience,device,objectList,updateList,drawList,0,ObjectBase::TYPE_3D,
-							 "../resources/texture/boy.png",_ScoreMax,D3DXVECTOR3( 1000,0,-1000),D3DXVECTOR3(2000,40,0 ),D3DXVECTOR3(  -2000,0,-1000),D3DXVECTOR3( -1000,40,0 ) ))
+							 "../resources/texture/boy.png",_ScoreMax,D3DXVECTOR3( 100,0,-1000),D3DXVECTOR3(1000,40,-700 ),D3DXVECTOR3(  -1000,0,-1000),D3DXVECTOR3( -100,40,-700 ) ))
 		return false;
 
 	//エフェクトマネージャ
@@ -57,7 +61,14 @@ bool GameMaster::Create(GameMaster** outPointer,LPDIRECT3DDEVICE9 device,
 	if(!EffectManager::Create( &ef,device,objectList,updateList,drawList,5000,"../resources/texture/effect.jpg",D3DXVECTOR2(1,1),D3DXVECTOR2(1,1) ))
 		return false;
 
-	GameMaster* pointer = new GameMaster( audience,ef );
+	//プレイヤー生成
+	Player *redTeam;
+	Player *blueTeam;
+	Player::Create( &blueTeam,device,objectList,updateList,drawList,0,ObjectBase::TYPE_3D,"../resources/fbxModel/daisya.bin","../resources/fbxModel/ground.bin","../resources/fbxModel/robo.bin");
+	Player::Create( &redTeam,device,objectList,updateList,drawList,0,ObjectBase::TYPE_3D,"../resources/fbxModel/daisya.bin","../resources/fbxModel/ground.bin","../resources/fbxModel/robo.bin");
+
+	//ゲームマスター生成
+	GameMaster* pointer = new GameMaster( audience,ef,redTeam,blueTeam );
 	if(!pointer->Initialize())
 		return false;
 
@@ -78,6 +89,15 @@ bool GameMaster::Initialize(void)
 	m_totalScore = _ScoreMax;
 	m_redTeamScore = _ScoreMax/2;
 	m_blueTeamScore=_ScoreMax/2;
+	m_redTeam->rot( D3DXVECTOR3(0,3*D3DX_PI /4,0 ) );
+	m_blueTeam->rot( D3DXVECTOR3(0,-3*D3DX_PI/4,0 ) );
+	m_redTeam->offsetPos( D3DXVECTOR3(0,0,0 ) );
+	m_redTeam->secondOffsetPos( D3DXVECTOR3(0,0,0));
+	m_blueTeam->offsetPos( D3DXVECTOR3(0,0,0 ) );
+
+	m_redTeam->Move( D3DXVECTOR3(-700,0,0),D3DXVECTOR3(-700,0,0),300 );
+	m_blueTeam->Move( D3DXVECTOR3(700,0,0),D3DXVECTOR3(700,0,0),300 );
+
 	return true;
 }
 
@@ -86,6 +106,11 @@ bool GameMaster::Initialize(void)
 //=============================================================================
 void GameMaster::Finalize(void)
 {
+
+	//プレイヤー削除
+	SafeFinalizeDelete( m_redTeam );
+	SafeFinalizeDelete( m_blueTeam );
+
 	SafeFinalizeDelete( m_audienceManager );
 	SafeFinalizeDelete( m_effectManager );
 }
@@ -95,6 +120,10 @@ void GameMaster::Finalize(void)
 //=============================================================================
 void GameMaster::Update(void)
 {
+
+	//プレイヤー更新
+	m_redTeam->Update();
+	m_blueTeam->Update();
 
 	//スコア確定
 	DetermineTeamScore();
