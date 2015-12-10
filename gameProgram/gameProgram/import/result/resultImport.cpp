@@ -22,7 +22,8 @@ const char* _result_texture_name[] =
 	nullptr,
 
 	"/test_0.png",
-	"/test_1.png",
+	"/sky.jpg",
+
 	"/number.png"
 };
 

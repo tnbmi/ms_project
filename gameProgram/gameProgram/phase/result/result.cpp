@@ -29,6 +29,9 @@
 #include "..\..\list\updateList\updateList.h"
 #include "..\..\list\drawList\drawListManager.h"
 
+#include "..\..\objectBase\polygon3D\polygon3D.h"
+#include "..\..\objectBase\meshDome\meshDome.h"
+
 #include "..\..\score\score.h"
 #include "..\..\objectBase\fbxModel\fbxModel.h"
 #include "..\..\object\player\player.h"
@@ -85,6 +88,9 @@ bool Result::Initialize(void)
 	// ライト
 	if(!Light::Create(&m_light, m_device))
 		return false;
+	m_light->dirLightAmbient(0.1f, 0.1f, 0.1f, 1.0f);
+	m_light->dirLightDiffuse(0.3f, 0.3f, 0.3f, 1.0f);
+	m_light->dirLightVector(0.0f, -1.0f, -2.0f);
 
 	//----------------------------
 	// 管理リスト
@@ -231,6 +237,30 @@ void Result::Draw(void)
 //=============================================================================
 bool Result::InitObject(void)
 {
+	//----------------------------
+	// 地面3Dポリゴン
+	//----------------------------
+	Polygon3D* poly3d;
+	if(!Polygon3D::Create(&poly3d, m_device, m_objectList, m_import->texture(ResultImport::TEST_0)))
+		return false;
+	m_updateList->Link(poly3d);
+	m_drawListManager->Link(poly3d, 4, Shader::PAT_LIGHT);
+	poly3d->scl(512.0f*5, 512.0f*5, 0.0f);
+	poly3d->rot_x(PAI * 0.5f);
+
+	//----------------------------
+	// 空メッシュドーム
+	//----------------------------
+	MeshDome* dome;
+	if(!MeshDome::Create(&dome, m_device, m_objectList,
+		D3DXVECTOR2(8, 7), 2000.0f, 2500.0f, m_import->texture(ResultImport::SKY)))
+		return false;
+	m_updateList->Link(dome);
+	m_drawListManager->Link(dome, 2, Shader::PAT_NONE_LIGHT);
+	dome->pos_y(-150.0f);
+	dome->rot_y(PAI * 0.5f);
+
+
 	//スコア生成
 	Score::Create( &m_redTeamScore,m_device,m_objectList,m_updateList,m_drawListManager,0,ObjectBase::TYPE_2D,m_import );
 	Score::Create( &m_blueTeamScore,m_device,m_objectList,m_updateList,m_drawListManager,0,ObjectBase::TYPE_2D,m_import );

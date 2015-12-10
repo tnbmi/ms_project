@@ -27,7 +27,6 @@ public:
 		NONE = 0,
 
 		TEST_0,
-
 		SKY,
 
 		COMMAND_TEX,

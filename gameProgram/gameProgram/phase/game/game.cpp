@@ -30,7 +30,6 @@
 #include "..\..\list\updateList\updateList.h"
 #include "..\..\list\drawList\drawListManager.h"
 
-#include "..\..\objectBase\polygon2D\polygon2D.h"
 #include "..\..\objectBase\polygon3D\polygon3D.h"
 #include "..\..\objectBase\meshDome\meshDome.h"
 
@@ -280,17 +279,18 @@ void Game::Draw(void)
 bool Game::InitObject(void)
 {
 	//----------------------------
-	// コマンドマネージャ生成
+	// 地面3Dポリゴン
 	//----------------------------
-	CommandManager::Create(&m_command_manager, m_padXManager, m_debugproc, m_objectList, m_updateList, m_drawListManager, m_device, m_import);
+	Polygon3D* poly3d;
+	if(!Polygon3D::Create(&poly3d, m_device, m_objectList, m_import->texture(GameImport::TEST_0)))
+		return false;
+	m_updateList->Link(poly3d);
+	m_drawListManager->Link(poly3d, 4, Shader::PAT_LIGHT);
+	poly3d->scl(512.0f*5, 512.0f*5, 0.0f);
+	poly3d->rot_x(PAI * 0.5f);
 
 	//----------------------------
-	// タイムマネージャ生成
-	//----------------------------
-	TimeManager::Create(&m_time_manager, m_objectList, m_updateList, m_drawListManager, m_device, m_import, _time_max);
-
-	//----------------------------
-	// メッシュドームテスト
+	// 空メッシュドーム
 	//----------------------------
 	MeshDome* dome;
 	if(!MeshDome::Create(&dome, m_device, m_objectList,
@@ -302,16 +302,15 @@ bool Game::InitObject(void)
 	dome->rot_y(PAI * 0.5f);
 
 	//----------------------------
-	// 3Dポリゴンテスト
+	// コマンドマネージャ生成
 	//----------------------------
-	Polygon3D* poly3d;
-	if(!Polygon3D::Create(&poly3d, m_device, m_objectList, m_import->texture(GameImport::TEST_0)))
-		return false;
-	m_updateList->Link(poly3d);
-	m_drawListManager->Link(poly3d, 4, Shader::PAT_LIGHT);
-	poly3d->scl(512.0f*5, 512.0f*5, 0.0f);
-	poly3d->rot_x(PAI * 0.5f);
-	
+	CommandManager::Create(&m_command_manager, m_padXManager, m_debugproc, m_objectList, m_updateList, m_drawListManager, m_device, m_import);
+
+	//----------------------------
+	// タイムマネージャ生成
+	//----------------------------
+	TimeManager::Create(&m_time_manager, m_objectList, m_updateList, m_drawListManager, m_device, m_import, _time_max);
+
 	//----------------------------
 	//ゲームマスター生成
 	//----------------------------

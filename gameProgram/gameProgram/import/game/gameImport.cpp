@@ -22,7 +22,6 @@ const char* _game_texture_name[] =
 	nullptr,
 
 	"/test_0.png",
-
 	"/sky.jpg",
 
 	"/COMMAND_TEX.png",
