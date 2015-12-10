@@ -53,7 +53,7 @@ bool GameMaster::Create(GameMaster** outPointer,LPDIRECT3DDEVICE9 device,
 	//観客制御生成
 	AudienceManager *audience;
 	if(!AudienceManager::Create( &audience,device,objectList,updateList,drawList,0,ObjectBase::TYPE_3D,
-							 "../resources/texture/boy.png",_ScoreMax,D3DXVECTOR3( 100,50,-1000),D3DXVECTOR3(1000,80,-700 ),D3DXVECTOR3(  -1000,50,-1000),D3DXVECTOR3( -100,80,-700 ) ))
+							 "../resources/texture/boy.png",_ScoreMax,D3DXVECTOR3( 100,50,-1000),D3DXVECTOR3(1000,200,-700 ),D3DXVECTOR3(  -1000,50,-1000),D3DXVECTOR3( -100,200,-700 ) ))
 		return false;
 
 	//エフェクトマネージャ

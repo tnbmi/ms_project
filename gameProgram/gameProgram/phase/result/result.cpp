@@ -36,8 +36,8 @@
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // マクロ定義
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-const D3DXVECTOR3 _at	= D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-const D3DXVECTOR3 _eye	= D3DXVECTOR3(0.0f, 0.0f, -3000.0f);
+const D3DXVECTOR3 _at	= D3DXVECTOR3(0.0f, 1000.0f, 2000.0f);
+const D3DXVECTOR3 _eye	= D3DXVECTOR3(0.0f, 50.0f, -1600.0f);
 
 //=============================================================================
 // コンストラクタ
@@ -235,17 +235,17 @@ bool Result::InitObject(void)
 	Score::Create( &m_redTeamScore,m_device,m_objectList,m_updateList,m_drawListManager,0,ObjectBase::TYPE_2D,m_import );
 	Score::Create( &m_blueTeamScore,m_device,m_objectList,m_updateList,m_drawListManager,0,ObjectBase::TYPE_2D,m_import );
 	
-	m_redTeamScore->pos( D3DXVECTOR3( 300,100,0 ) );
-	m_blueTeamScore->pos( D3DXVECTOR3( 300,400,0 ) );
+	m_redTeamScore->pos( D3DXVECTOR3( 640 +320,280,0 ) );
+	m_blueTeamScore->pos( D3DXVECTOR3( 320,280,0 ) );
 	m_redTeamScore->StartRandView(200);
-	m_redTeamScore->score(340);
+	m_redTeamScore->score(1419);
 	m_redTeamScore->col(D3DXCOLOR(1,0,0,1));
 	
 	m_blueTeamScore->StartRandView(200);
-	m_blueTeamScore->score(540);
+	m_blueTeamScore->score(1145);
 	m_blueTeamScore->col(D3DXCOLOR(0,0,1,1));
 	
-//プレイヤー生成
+//プレイヤー生成(ねぶた）
 	
 	Player *redTeam;
 	Player *blueTeam;
@@ -257,8 +257,25 @@ bool Result::InitObject(void)
 
 	m_redTeam->rot( D3DXVECTOR3(0,PAI,0 ) );
 	m_blueTeam->rot( D3DXVECTOR3(0,PAI,0 ) );
-	m_redTeam->Move( D3DXVECTOR3(-700,0,0),D3DXVECTOR3(-700,0,0),300 );
-	m_blueTeam->Move( D3DXVECTOR3(700,0,0),D3DXVECTOR3(700,0,0),300 );
+	m_redTeam->Move( D3DXVECTOR3(-500,0,0),D3DXVECTOR3(-500,0,0),300 );
+	m_blueTeam->Move( D3DXVECTOR3(500,0,0),D3DXVECTOR3(500,0,0),300 );
+
+	//おじいちゃん生成
+	FbxModel::Create( &m_redGgy,m_device,m_objectList,0,ObjectBase::TYPE_3D,"../resources/fbxModel/ggy.bin" );
+	FbxModel::Create( &m_blueGgy,m_device,m_objectList,0,ObjectBase::TYPE_3D,"../resources/fbxModel/ggy.bin" );
+
+	//リンク
+	m_updateList->Link( m_redGgy );
+	m_drawListManager->Link( m_redGgy,0,Shader::PAT_FBX );
+	m_updateList->Link( m_blueGgy );
+	m_drawListManager->Link( m_blueGgy,0,Shader::PAT_FBX  );
+
+	m_redGgy->pos( D3DXVECTOR3(100,0,-1300) );
+	m_blueGgy->pos( D3DXVECTOR3(-100,0,-1300) );
+	m_redGgy->rot( D3DXVECTOR3(0,PAI,0));
+	m_blueGgy->rot( D3DXVECTOR3(0,PAI,0));
+
+
 	
 
 
