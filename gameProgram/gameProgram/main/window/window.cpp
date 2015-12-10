@@ -17,7 +17,7 @@
 // ウィンドウ設定
 //----------------------------
 const LPCSTR _windowClass	= "WindowClass";	// ウインドウのクラス名
-const LPCSTR _windowCaption	= "WindowCaption";	// ウインドウのキャプション名
+const LPCSTR _windowCaption	= "親玄舞闘会";		// ウインドウのキャプション名
 
 //=============================================================================
 // コンストラクタ

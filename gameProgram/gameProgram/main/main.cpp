@@ -38,10 +38,21 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, LPSTR cmdLine,
 		return -1;
 
 	//----------------------------
+	// フルスクリーン設定
+	//----------------------------
+	bool windowFlg = true;
+	if(MessageBox(NULL,"フルスクリーンで起動しますか","フルスクリーン設定",MB_YESNO)==IDYES)
+		//フルスクリーンで初期化処理(ウィンドウを作成してから行う)
+		windowFlg = FALSE;
+	else
+		//通常の 初期化処理(ウィンドウを作成してから行う)
+		windowFlg = TRUE;
+
+	//----------------------------
 	// マネージャー生成
 	//----------------------------
 	Manager* manager = nullptr;
-	if(!Manager::Create(&manager, hInstance, window->hWnd(), true))
+	if(!Manager::Create(&manager, hInstance, window->hWnd(), windowFlg))
 		return -1;
 
 	//----------------------------
