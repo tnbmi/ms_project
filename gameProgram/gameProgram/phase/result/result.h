@@ -58,6 +58,8 @@ private:
 	Score*			m_blueTeamScore;
 	Player*			m_redTeam;
 	Player*			m_blueTeam;
+	FbxModel*		m_redGgy;
+	FbxModel*		m_blueGgy;
 };
 
 //=============================================================================

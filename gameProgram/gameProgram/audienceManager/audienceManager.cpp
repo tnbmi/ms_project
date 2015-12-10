@@ -454,7 +454,7 @@ void AudienceStateStayRedTeam::Update( AudienceManager::AUDIENCEDATA *audienceDa
 	if( audienceData->eraseTime >= audienceData->compTime && audienceData->eraseTimeY == 0 )
 	{
 		D3DXVECTOR3 end;
-
+		
 		end.x = RandRange( m_rightLimit.x,m_leftLimit.x );
 		end.y = RandRange( m_rightLimit.y,m_leftLimit.y );
 		end.z = audienceData->edPos.z;
@@ -462,6 +462,7 @@ void AudienceStateStayRedTeam::Update( AudienceManager::AUDIENCEDATA *audienceDa
 		audienceData->edPos = end;
 		audienceData->stPos = audienceData->pos;
 		audienceData->eraseTime = 0;
+		
 	}
 	else if(audienceData->eraseTime >= audienceData->compTime)
 	{
@@ -497,11 +498,11 @@ void AudienceStateStayBlueTeam::Update( AudienceManager::AUDIENCEDATA *audienceD
 	if( audienceData->eraseTime >= audienceData->compTime && audienceData->eraseTimeY == 0 )
 	{
 		D3DXVECTOR3 end;
-
+		
 		end.x = RandRange( m_rightLimit.x,m_leftLimit.x );
 		end.y = RandRange( m_rightLimit.y,m_leftLimit.y );
 		end.z = audienceData->edPos.z;
-
+		
 		audienceData->edPos = end;
 		audienceData->stPos = audienceData->pos;
 		audienceData->eraseTime = 0;

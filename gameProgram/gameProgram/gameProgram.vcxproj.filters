@@ -88,9 +88,6 @@
     <Filter Include="list\objectList">
       <UniqueIdentifier>{f7136821-6635-443a-8492-6d3cbe3beff0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="list\updateList">
-      <UniqueIdentifier>{bc29ed71-2b1e-4dba-b7f3-836c6d7bf98f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="list\drawList">
       <UniqueIdentifier>{b2785f7e-ae41-4add-94c3-9c7fc6ec9a56}</UniqueIdentifier>
     </Filter>
@@ -157,6 +154,9 @@
     </Filter>
     <Filter Include="score">
       <UniqueIdentifier>{6eb6c4a2-da2e-416d-bf8b-820f588118f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="list\objectList\updateList">
+      <UniqueIdentifier>{bc29ed71-2b1e-4dba-b7f3-836c6d7bf98f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -233,7 +233,7 @@
       <Filter>list\objectList</Filter>
     </ClInclude>
     <ClInclude Include="list\updateList\updateList.h">
-      <Filter>list\updateList</Filter>
+      <Filter>list\objectList\updateList</Filter>
     </ClInclude>
     <ClInclude Include="list\drawList\drawList.h">
       <Filter>list\drawList</Filter>
@@ -367,7 +367,7 @@
       <Filter>list\objectList</Filter>
     </ClCompile>
     <ClCompile Include="list\updateList\updateList.cpp">
-      <Filter>list\updateList</Filter>
+      <Filter>list\objectList\updateList</Filter>
     </ClCompile>
     <ClCompile Include="list\drawList\drawList.cpp">
       <Filter>list\drawList</Filter>
