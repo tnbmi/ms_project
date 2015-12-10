@@ -24,6 +24,7 @@ public:
 	{
 		PAT_NONE = 0,
 		PAT_LIGHT,
+		PAT_NONE_LIGHT,
 		PAT_FBX,
 		PAT_INS,
 		PAT_2D,

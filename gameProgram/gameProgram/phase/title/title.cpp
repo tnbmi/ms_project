@@ -38,8 +38,8 @@
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // マクロ定義
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-const D3DXVECTOR3 _at	= D3DXVECTOR3(0.0f, 50.0f, 0.0f);
-const D3DXVECTOR3 _eye	= D3DXVECTOR3(0.0f, 100.0f, -250.0f);
+const D3DXVECTOR3 _at	= D3DXVECTOR3(0.0f, 100.0f, 800.0f);
+const D3DXVECTOR3 _eye	= D3DXVECTOR3(0.0f, 150.0f, -700.0f);
 
 //=============================================================================
 // コンストラクタ
@@ -214,7 +214,7 @@ void Title::Update(void)
 		m_effectManager->AddEffectFromDataBase( 1,D3DXVECTOR3(0,0,0) );
 	}
 
-	if(pad->buttonTrigger(XINPUT_GAMEPAD_A))
+	if(pad->buttonTrigger(XINPUT_GAMEPAD_START) || m_keyboard->trigger(DIK_RETURN))
 	{
 		Manager::nextPhase((Phase*)new Game(m_device));
 	}

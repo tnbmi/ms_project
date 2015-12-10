@@ -458,5 +458,8 @@
     <None Include="..\resources\shader\basicPS.hlsl">
       <Filter>シェーダーファイル\lighting</Filter>
     </None>
+    <None Include="..\resources\shader\noneLightVS.hlsl">
+      <Filter>シェーダーファイル\lighting</Filter>
+    </None>
   </ItemGroup>
 </Project>

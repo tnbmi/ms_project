@@ -238,8 +238,8 @@ void Game::Update(void)
 
 	//----------------------------
 	// 画面遷移
-	//----------------------------				//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-	if(transition)								// 現状タイムのみ、チームでの勝敗も(一応)追加予定
+	//----------------------------							//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+	if(transition || m_keyboard->trigger(DIK_RETURN))		// 現状タイムのみ、チームでの勝敗も(一応)追加予定
 	{
 		Manager::nextPhase((Phase*)new Result(m_device));
 	}
@@ -256,7 +256,7 @@ void Game::Draw(void)
 	//----------------------------
 	m_device->Clear(0, NULL,
 					(D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER | D3DCLEAR_STENCIL),
-					D3DCOLOR_RGBA(64, 64, 128, 256), 1.0f, 0);
+					D3DCOLOR_RGBA(16, 16, 16, 256), 1.0f, 0);
 
 	//----------------------------
 	// オブジェクト描画
@@ -294,10 +294,12 @@ bool Game::InitObject(void)
 	//----------------------------
 	MeshDome* dome;
 	if(!MeshDome::Create(&dome, m_device, m_objectList,
-		D3DXVECTOR2(10, 10), 3000.0f, 2000.0f, m_import->texture(GameImport::SKY)))
+		D3DXVECTOR2(8, 3), 2500.0f, 2000.0f, m_import->texture(GameImport::SKY)))
 		return false;
 	m_updateList->Link(dome);
-	m_drawListManager->Link(dome, 2, Shader::PAT_LIGHT);
+	m_drawListManager->Link(dome, 2, Shader::PAT_NONE_LIGHT);
+	dome->pos_y(-150.0f);
+	dome->rot_y(PAI * 0.5f);
 
 	//----------------------------
 	// 3Dポリゴンテスト

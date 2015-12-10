@@ -15,6 +15,7 @@
 #include "..\..\manager\manager.h"
 #include "..\game\game.h"
 
+#include "..\..\input\keyboard\keyboard.h"
 #include "..\..\input\padX\padXManager.h"
 #include "..\..\input\padX\padX.h"
 
@@ -135,7 +136,7 @@ void Demo::Update(void)
 	//----------------------------
 	// ‰æ–Ê‘JˆÚ
 	//----------------------------
-	if(pad->buttonTrigger(XINPUT_GAMEPAD_A))
+	if(pad->buttonTrigger(XINPUT_GAMEPAD_START) || m_keyboard->trigger(DIK_RETURN))
 	{
 		Manager::nextPhase((Phase*)new Game(m_device));
 	}

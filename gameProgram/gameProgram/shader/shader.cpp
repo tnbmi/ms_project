@@ -26,6 +26,7 @@ enum VS_TABLE
 	VS_NONE	 = -1,
 	VS_2D	 = 0,
 	VS_LIGHT,
+	VS_NONE_LIGHT,
 	VS_FBX,
 	VS_INS,
 };
@@ -35,6 +36,7 @@ const char* _vsName[] =
 {
 	{"/twoDimensionsVS.hlsl"},
 	{"/lightVS.hlsl"},
+	{"/noneLightVS.hlsl"},
 	{"/fbxVS.hlsl"},
 	{"/instancingVS.hlsl"}
 };
@@ -74,11 +76,12 @@ struct SHADER_SET
 // パターンセット内容
 const SHADER_SET _shader_set[Shader::PATTERN_MAX] =
 {
-	{VS_NONE,	PS_NONE},		// NONE
-	{VS_LIGHT,	PS_BASIC},		// LIGHT
-	{VS_FBX,	PS_FBX},		// FBX
-	{VS_INS,	PS_INS},
-	{VS_2D,		PS_2D}			// 2D
+	{VS_NONE,		PS_NONE},	// NONE
+	{VS_LIGHT,		PS_BASIC},	// LIGHT
+	{VS_NONE_LIGHT,	PS_BASIC},	// NONE_LIGHT
+	{VS_FBX,		PS_FBX},	// FBX
+	{VS_INS,		PS_INS},	// INS
+	{VS_2D,			PS_2D}		// 2D
 };
 
 //=============================================================================
