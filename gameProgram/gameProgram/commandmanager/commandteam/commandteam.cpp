@@ -32,6 +32,8 @@ const float	_polygon_pos_offset = 72.0f;
 const float _polygon_speed_def = 2.0f;
 const float _first_line = 169.0f;
 const float _end_line = 72.0f;
+const float _speed_max = 1.5;
+const float _speed_add = 0.02;
 const int	_polygon_num = 6;
 typedef struct{
 	float list[4];
@@ -59,8 +61,6 @@ CommandTeam::CommandTeam(void)
 	//----------------------------
 	// メンバー初期化
 	//----------------------------
-	m_command_pointer[0] = nullptr;
-	m_command_pointer[1] = nullptr;
 	m_command_pointer_Next[0] = nullptr;
 	m_command_pointer_Next[1] = nullptr;
 
@@ -88,7 +88,8 @@ CommandTeam::CommandTeam(void)
 
 	m_command_count = 0;
 	m_delete_count = 0;
-	m_speed = 0;
+	m_speed = 0.0f;
+	m_offset = 0.0f;
 
 	m_objectList		= nullptr;
 	m_updateList		= nullptr;
@@ -191,9 +192,9 @@ bool CommandTeam::Update(void)
 			{
 				if(m_pad[i]->buttonTrigger(_command_data[m_command_data[i][command_count].num_data]))
 				{// 成功
-					m_speed += 0.1f;
-					if(m_speed > 0.15f)
-						m_speed = 1.0f;
+					m_speed += _speed_add;
+					if(m_speed > _speed_max)
+						m_speed = _speed_max;
 				}
 				else
 				{// 失敗
@@ -225,7 +226,7 @@ bool CommandTeam::Update(void)
 		{
 			// データを次コマンドから読み込み
 			m_command_data[i][delete_count].num_data = *(m_command_pointer_Next[i] + delete_count);
-			m_command_data[i][delete_count].pos_y = m_polygon_pos.y - _polygon_pos_offset * COMMAND_MAX;
+			m_command_data[i][delete_count].pos_y = m_polygon_pos.y - m_offset * COMMAND_MAX;
 			if(m_command_data[i][delete_count].polygon_pointer != nullptr)
 			{
 				m_command_data[i][delete_count].polygon_pointer->color(1.0f, 1.0f, 1.0f, 0.0f);
@@ -321,20 +322,30 @@ bool CommandTeam::InitObject(void)
 //=============================================================================
 // コマンドセット
 //=============================================================================
-void CommandTeam::SetCommand(unsigned int* command, unsigned int* nextCommand, int player)
+void CommandTeam::SetCommand(unsigned int* command, unsigned int* nextCommand, int player, float offset)
 {
-	m_command_pointer[player] = command;
 	m_command_pointer_Next[player] = nextCommand;
+	m_offset = offset;
 
 	for(int i = 0; i < COMMAND_MAX; i++)
 	{
 		m_command_data[player][i].num_data = *(command + i);
-		m_command_data[player][i].pos_y = 0.0f - _polygon_pos_offset * i;
+		m_command_data[player][i].pos_y = 0.0f - m_offset * i;
 		if(m_command_data[player][i].num_data == 4)
 			m_command_data[player][i].hit = true;
 	}
 
 	SetPolygon(player);
+}
+
+//=============================================================================
+// 次コマンドセット
+//=============================================================================
+void CommandTeam::SetCommandNext(unsigned int* command, int player, float offset)
+{
+	m_command_pointer_Next[player] = command;
+	if(offset != 0.0f)
+		m_offset = offset;
 }
 
 //=============================================================================

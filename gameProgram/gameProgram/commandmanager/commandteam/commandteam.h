@@ -63,13 +63,12 @@ public:
 	void Draw(void);
 
 	void SetPlayer(PadX* p1, PadX* p2){m_pad[0] = p1; m_pad[1] = p2;}
-	void SetCommand(unsigned int* command, unsigned int* nextCommand, int player);
-	void SetCommandNext(unsigned int* command, int player){m_command_pointer_Next[player] = command;}
+	void SetCommand(unsigned int* command, unsigned int* nextCommand, int player, float offset);
+	void SetCommandNext(unsigned int* command, int player, float offset = 0.0f);
 
 	void debugproc(Debugproc* debugproc) {m_debugproc = debugproc;}
 
 private:
-	unsigned int*	m_command_pointer[2];
 	unsigned int*	m_command_pointer_Next[2];
 	COMMAND_DATA	m_command_data[2][10];
 	PadX*			m_pad[2];
@@ -79,8 +78,8 @@ private:
 	Polygon2D*		m_command_poly[2][5];
 	Polygon2D*		m_back_poly[2];
 	Debugproc*		m_debugproc;
-
-	float		m_speed;
+	float			m_speed;
+	float			m_offset;
 
 	GameImport*	m_import;
 	LPDIRECT3DDEVICE9	m_device;
