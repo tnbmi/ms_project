@@ -119,8 +119,8 @@ bool CommandManager::Initialize(PadXManager* padXManager,
 #else
 		m_team[i]->SetPlayer( padXManager->pad(i * 2), padXManager->pad(i * 2 + 1) );
 #endif
-		m_team[i]->SetCommand(m_command_list[0], m_command_list[0], 0);
-		m_team[i]->SetCommand(m_command_list[1], m_command_list[1], 1);
+		m_team[i]->SetCommand(m_command_list[0], m_command_list[0], 0, 144.0f);
+		m_team[i]->SetCommand(m_command_list[1], m_command_list[1], 1, 144.0f);
 	}
 
 	return true;
