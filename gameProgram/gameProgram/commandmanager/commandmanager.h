@@ -61,6 +61,7 @@ private:
 	CommandDataLoad* m_commandDataLoad;
 
 	CommandTeam*	m_team[2];
+	int				m_command_prev;
 	unsigned int*	m_command_list[2];
 
 	Polygon2D*		m_ui_polygon;

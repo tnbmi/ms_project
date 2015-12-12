@@ -30,7 +30,7 @@
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 const int _team_max = 2;
 const int _list_pattern_max = 10;
-const D3DXVECTOR3 _team_position[2] = {D3DXVECTOR3(24.0f, 432.0f, 0.0f),D3DXVECTOR3(1112.0f, 432.0f, 0.0f)};
+const D3DXVECTOR3 _team_position[2] = {D3DXVECTOR3(24.0f, 482.0f, 0.0f),D3DXVECTOR3(1112.0f, 482.0f, 0.0f)};
 const int _team_color[2]= {CommandTeam::COLOR_BLUE,CommandTeam::COLOR_RED};
 
 //=============================================================================
@@ -48,6 +48,7 @@ CommandManager::CommandManager(void)
 	}
 	m_command_list[0] = nullptr;
 	m_command_list[1] = nullptr;
+	m_command_prev = 0;
 	m_ui_polygon = nullptr;
 	m_objectList = nullptr;
 	m_updateList = nullptr;
@@ -127,7 +128,7 @@ bool CommandManager::Initialize(PadXManager* padXManager,
 	if(!Polygon2D::Create(&m_ui_polygon, device, m_objectList, m_import->texture(GameImport::GAME_UI)))
 		return false;
 	m_updateList->Link(m_ui_polygon);
-	m_drawListManager->Link(m_ui_polygon, 2, Shader::PAT_2D);
+	m_drawListManager->Link(m_ui_polygon, 3, Shader::PAT_2D);
 	m_ui_polygon->pos(SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 0.0f);
 	m_ui_polygon->scl(SCREEN_WIDTH, SCREEN_HEIGHT, 0.0f);
 
@@ -156,8 +157,9 @@ void CommandManager::Update(void)
 	{
 		if(m_team[i]->Update())
 		{
-			m_team[i]->SetCommandNext(m_command_list[0], 0);
-			m_team[i]->SetCommandNext(m_command_list[1], 1);
+			m_command_prev++;
+			m_team[i]->SetCommandNext(m_command_list[0] + m_command_prev * 10, 0);
+			m_team[i]->SetCommandNext(m_command_list[1] + m_command_prev * 10, 1);
 		}
 	}
 }
