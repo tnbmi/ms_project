@@ -1,0 +1,9 @@
+diff a/gameProgram/gameProgram/manager/manager.cpp b/gameProgram/gameProgram/manager/manager.cpp	(rejected hunks)
+@@ -109,7 +109,6 @@
+ 	// フェーズ
+ 	//----------------------------
+ 	// 生成
+-	m_phase = (Phase*)new Result(device);
+ 	m_phase = (Phase*)new Game(device);
+ 
+ 	// 入力設定

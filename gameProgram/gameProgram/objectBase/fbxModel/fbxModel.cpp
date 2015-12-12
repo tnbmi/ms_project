@@ -29,20 +29,6 @@ FbxModel::FbxModel(LPDIRECT3DDEVICE9 device, ObjectList* objectList, int priorit
 	m_isAnimRoop = false;
 	m_isBlendRoop = false;
 
-
-	m_startKeyFrame = 0;
-	m_endKeyFrame = 0;
-	m_curKeyFrame = 0;
-	m_animTime = 0;
-	m_blendTime = 0;
-
-	m_blendWeight = _blendFrame;
-	m_blendStartKeyFrame = 0;
-	m_blendEndKeyFrame   = 0;
-	m_blendCurKeyFrame   = 0;
-
-	UpdateAnimation();
-
 	m_startKeyFrame = 0;
 	m_endKeyFrame = 0;
 	m_curKeyFrame = 0;
@@ -346,6 +332,7 @@ void FbxModel::UpdateAnimation()
 
 			
 		}
+
 	}
 
 		//ブレンド比重
@@ -466,185 +453,185 @@ bool FbxModel::LoadFbxModel( const char *loadModelPath )
 
 		for( int j = 0 ; j < data ; j++ )
 		{
-				int len;
+			int len;
 
-				//文字数読み込み
-				fread( &len,sizeof( int ),1,file );
-				//ファイルパス書き込み
-				//無い場合はNOTEXとなる
-				m_part[ i ].dataArray[j].texName = new char [ len ];
-				fread( m_part[i].dataArray[j].texName,sizeof(char),len,file );
+			//文字数読み込み
+			fread( &len,sizeof( int ),1,file );
+			//ファイルパス書き込み
+			//無い場合はNOTEXとなる
+			m_part[ i ].dataArray[j].texName = new char [ len ];
+			fread( m_part[i].dataArray[j].texName,sizeof(char),len,file );
 
-				char whiteTexPath[128] = "../resources/texture/white.jpg";
-				char texPath[128] = "../resources/texture/";
+			char whiteTexPath[128] = "../resources/texture/white.jpg";
+			char texPath[128] = "../resources/texture/";
 
-				if( strcmp( m_part[i].dataArray[j].texName,"NOTEX" ) == 0 )
+			if( strcmp( m_part[i].dataArray[j].texName,"NOTEX" ) == 0 )
+			{
+				D3DXCreateTextureFromFile(device,whiteTexPath,&m_part[i].dataArray[j].tex);
+			}
+			else
+			{
+				//連結後の文字数
+				int tlen = strlen( texPath ) + len;
+
+				//バッファ生成
+				char *c = new char[len];
+				strcpy_s( c,len,m_part[ i ].dataArray[j].texName);
+
+				//一旦削除
+				delete []m_part[ i ].dataArray[j].texName;
+
+				//生成
+				m_part[ i ].dataArray[j].texName = new char[ tlen ];
+				//パス連結
+				sprintf_s( m_part[ i ].dataArray[j].texName,tlen,"%s%s",texPath,c );
+
+				//バッファ削除
+				delete []c;
+
+					
+				//テクスチャロード
+				if( FAILED( D3DXCreateTextureFromFile(device,m_part[i].dataArray[j].texName,&m_part[i].dataArray[j].tex) ) )
 				{
-					D3DXCreateTextureFromFile(device,whiteTexPath,&m_part[i].dataArray[j].tex);
+					m_part[i].dataArray[j].tex = nullptr;
+				}
+					
+
+			//	D3DXCreateTextureFromFile(device,whiteTexPath,&m_part[i].dataArray[j].tex);
+			}
+
+
+			//マテリアル読み込み
+			fread( &m_part[i].dataArray[j].mat.ambent.x,sizeof( float ),1,file );
+			fread( &m_part[i].dataArray[j].mat.ambent.y,sizeof( float ),1,file );
+			fread( &m_part[i].dataArray[j].mat.ambent.z,sizeof( float ),1,file );
+			fread( &m_part[i].dataArray[j].mat.ambent.w,sizeof( float ),1,file );
+
+			fread( &m_part[i].dataArray[j].mat.diffuse.x,sizeof( float ),1,file );
+			fread( &m_part[i].dataArray[j].mat.diffuse.y,sizeof( float ),1,file );
+			fread( &m_part[i].dataArray[j].mat.diffuse.z,sizeof( float ),1,file );
+			fread( &m_part[i].dataArray[j].mat.diffuse.w,sizeof( float ),1,file );
+
+			fread( &m_part[i].dataArray[j].mat.emission.x,sizeof( float ),1,file );
+			fread( &m_part[i].dataArray[j].mat.emission.y,sizeof( float ),1,file );
+			fread( &m_part[i].dataArray[j].mat.emission.z,sizeof( float ),1,file );
+			fread( &m_part[i].dataArray[j].mat.emission.w,sizeof( float ),1,file );
+
+			fread( &m_part[i].dataArray[j].mat.specular.x,sizeof( float ),1,file );
+			fread( &m_part[i].dataArray[j].mat.specular.y,sizeof( float ),1,file );
+			fread( &m_part[i].dataArray[j].mat.specular.z,sizeof( float ),1,file );
+			fread( &m_part[i].dataArray[j].mat.specular.w,sizeof( float ),1,file );
+
+			fread( &m_part[i].dataArray[j].mat.shiniess,sizeof( float ),1,file );
+
+			//頂点書き込み
+			fread( &m_part[i].dataArray[j].vtxSum,sizeof( int ),1,file );
+
+			//ボーン数の書き込み
+			int bone_sum = 0;
+			fread( &bone_sum,sizeof(int),1,file );
+
+			if( bone_sum == 0 )
+			{
+				m_noBone = 1;
+			}
+			else
+			{
+				m_noBone = 0;
+			}
+
+			//頂点作成
+			HRESULT hr = device->CreateVertexBuffer(sizeof(FBXVTX)*m_part[i].dataArray[j].vtxSum,D3DUSAGE_WRITEONLY,0,D3DPOOL_MANAGED,&m_part[i].dataArray[j].vtxBuff,NULL);
+			FBXVTX *vtx;
+			m_part[i].dataArray[j].vtxBuff->Lock(0,0,(void**)&vtx,0);//ロックしてから値変更
+			for( int v = 0 ; v < m_part[i].dataArray[j].vtxSum ; v++ )
+			{
+				double pos[3],nor[3],uv[2];
+				fread( &pos[0],sizeof(double),1,file );
+				fread( &pos[1],sizeof(double),1,file );
+				fread( &pos[2],sizeof(double),1,file );
+
+				fread( &nor[0],sizeof(double),1,file );
+				fread( &nor[1],sizeof(double),1,file );
+				fread( &nor[2],sizeof(double),1,file );
+
+				fread( &uv[0],sizeof(double),1,file );
+				fread( &uv[1],sizeof(double),1,file );
+
+				double weight[4],boneidx[4];
+
+				//ボーン数あればな！
+				if( bone_sum != 0 )
+				{
+
+					for( int inf = 0 ; inf < 4 ; inf++ )
+					{
+						fread( &weight[inf],sizeof( double ) ,1,file );
+						fread( &boneidx[inf],sizeof( double ),1,file );
+					}
 				}
 				else
 				{
-					//連結後の文字数
-					int tlen = strlen( texPath ) + len;
+					weight[0] = 0;
+					weight[1] = 0;
+					weight[2] = 0;
+					weight[3] = 0;
 
-					//バッファ生成
-					char *c = new char[len];
-					strcpy_s( c,len,m_part[ i ].dataArray[j].texName);
-
-					//一旦削除
-					delete []m_part[ i ].dataArray[j].texName;
-
-					//生成
-					m_part[ i ].dataArray[j].texName = new char[ tlen ];
-					//パス連結
-					sprintf_s( m_part[ i ].dataArray[j].texName,tlen,"%s%s",texPath,c );
-
-					//バッファ削除
-					delete []c;
-
-					
-					//テクスチャロード
-					if( FAILED( D3DXCreateTextureFromFile(device,m_part[i].dataArray[j].texName,&m_part[i].dataArray[j].tex) ) )
-					{
-						m_part[i].dataArray[j].tex = nullptr;
-					}
-					
-
-				//	D3DXCreateTextureFromFile(device,whiteTexPath,&m_part[i].dataArray[j].tex);
+					boneidx[0] = -1;
+					boneidx[1] = -1;
+					boneidx[2] = -1;
+					boneidx[3] = -1;
 				}
-
-
-				//マテリアル読み込み
-				fread( &m_part[i].dataArray[j].mat.ambent.x,sizeof( float ),1,file );
-				fread( &m_part[i].dataArray[j].mat.ambent.y,sizeof( float ),1,file );
-				fread( &m_part[i].dataArray[j].mat.ambent.z,sizeof( float ),1,file );
-				fread( &m_part[i].dataArray[j].mat.ambent.w,sizeof( float ),1,file );
-
-				fread( &m_part[i].dataArray[j].mat.diffuse.x,sizeof( float ),1,file );
-				fread( &m_part[i].dataArray[j].mat.diffuse.y,sizeof( float ),1,file );
-				fread( &m_part[i].dataArray[j].mat.diffuse.z,sizeof( float ),1,file );
-				fread( &m_part[i].dataArray[j].mat.diffuse.w,sizeof( float ),1,file );
-
-				fread( &m_part[i].dataArray[j].mat.emission.x,sizeof( float ),1,file );
-				fread( &m_part[i].dataArray[j].mat.emission.y,sizeof( float ),1,file );
-				fread( &m_part[i].dataArray[j].mat.emission.z,sizeof( float ),1,file );
-				fread( &m_part[i].dataArray[j].mat.emission.w,sizeof( float ),1,file );
-
-				fread( &m_part[i].dataArray[j].mat.specular.x,sizeof( float ),1,file );
-				fread( &m_part[i].dataArray[j].mat.specular.y,sizeof( float ),1,file );
-				fread( &m_part[i].dataArray[j].mat.specular.z,sizeof( float ),1,file );
-				fread( &m_part[i].dataArray[j].mat.specular.w,sizeof( float ),1,file );
-
-				fread( &m_part[i].dataArray[j].mat.shiniess,sizeof( float ),1,file );
-
-				//頂点書き込み
-				fread( &m_part[i].dataArray[j].vtxSum,sizeof( int ),1,file );
-
-				//ボーン数の書き込み
-				int bone_sum = 0;
-				fread( &bone_sum,sizeof(int),1,file );
-
-				if( bone_sum == 0 )
-				{
-					m_noBone = 1;
-				}
-				else
-				{
-					m_noBone = 0;
-				}
-
-				//頂点作成
-				HRESULT hr = device->CreateVertexBuffer(sizeof(FBXVTX)*m_part[i].dataArray[j].vtxSum,D3DUSAGE_WRITEONLY,0,D3DPOOL_MANAGED,&m_part[i].dataArray[j].vtxBuff,NULL);
-				FBXVTX *vtx;
-				m_part[i].dataArray[j].vtxBuff->Lock(0,0,(void**)&vtx,0);//ロックしてから値変更
-				for( int v = 0 ; v < m_part[i].dataArray[j].vtxSum ; v++ )
-				{
-					double pos[3],nor[3],uv[2];
-					fread( &pos[0],sizeof(double),1,file );
-					fread( &pos[1],sizeof(double),1,file );
-					fread( &pos[2],sizeof(double),1,file );
-
-					fread( &nor[0],sizeof(double),1,file );
-					fread( &nor[1],sizeof(double),1,file );
-					fread( &nor[2],sizeof(double),1,file );
-
-					fread( &uv[0],sizeof(double),1,file );
-					fread( &uv[1],sizeof(double),1,file );
-
-					double weight[4],boneidx[4];
-
-					//ボーン数あればな！
-					if( bone_sum != 0 )
-					{
-
-						for( int inf = 0 ; inf < 4 ; inf++ )
-						{
-							fread( &weight[inf],sizeof( double ) ,1,file );
-							fread( &boneidx[inf],sizeof( double ),1,file );
-						}
-					}
-					else
-					{
-						weight[0] = 0;
-						weight[1] = 0;
-						weight[2] = 0;
-						weight[3] = 0;
-
-						boneidx[0] = -1;
-						boneidx[1] = -1;
-						boneidx[2] = -1;
-						boneidx[3] = -1;
-					}
 
 				
 
-					//バッファに書き込み
-					//test
-					vtx[v].vtx = D3DXVECTOR3( (float)pos[0],(float)pos[1],(float)pos[2] );
-					vtx[v].nor = D3DXVECTOR3( (float)nor[0],(float)nor[1],(float)nor[2] );
-					vtx[v].uv  = D3DXVECTOR2( (float)uv[0],(float)uv[1] );
-					vtx[v].weight = D3DXVECTOR4( (float)weight[0],(float)weight[1],(float)weight[2],(float)weight[3] );
-					vtx[v].boneIdx= D3DXVECTOR4( (float)boneidx[0],(float)boneidx[1],(float)boneidx[2],(float)boneidx[3]);
+				//バッファに書き込み
+				//test
+				vtx[v].vtx = D3DXVECTOR3( (float)pos[0],(float)pos[1],(float)pos[2] );
+				vtx[v].nor = D3DXVECTOR3( (float)nor[0],(float)nor[1],(float)nor[2] );
+				vtx[v].uv  = D3DXVECTOR2( (float)uv[0],(float)uv[1] );
+				vtx[v].weight = D3DXVECTOR4( (float)weight[0],(float)weight[1],(float)weight[2],(float)weight[3] );
+				vtx[v].boneIdx= D3DXVECTOR4( (float)boneidx[0],(float)boneidx[1],(float)boneidx[2],(float)boneidx[3]);
 				
-				}
+			}
 
-				m_part[i].dataArray[j].vtxBuff->Unlock();
+			m_part[i].dataArray[j].vtxBuff->Unlock();
 				
-				//使うボーンを書き込む
-				fread( &m_part[i].dataArray[j].usingBoneSum,sizeof( int),1,file);
+			//使うボーンを書き込む
+			fread( &m_part[i].dataArray[j].usingBoneSum,sizeof( int),1,file);
 
-				m_part[i].dataArray[j].usingBoneArray = new int[ m_part[i].dataArray[j].usingBoneSum ];
+			m_part[i].dataArray[j].usingBoneArray = new int[ m_part[i].dataArray[j].usingBoneSum ];
 
-				for( int cnt = 0 ; cnt < m_part[i].dataArray[j].usingBoneSum ; cnt++ )
-				{
-					fread( &m_part[i].dataArray[j].usingBoneArray[cnt],sizeof( int),1,file );
-				}
+			for( int cnt = 0 ; cnt < m_part[i].dataArray[j].usingBoneSum ; cnt++ )
+			{
+				fread( &m_part[i].dataArray[j].usingBoneArray[cnt],sizeof( int),1,file );
+			}
 
 
-				//index数読み込み
-				fread( &m_part[i].dataArray[j].idxSum,sizeof(int),1,file );
+			//index数読み込み
+			fread( &m_part[i].dataArray[j].idxSum,sizeof(int),1,file );
 
-				//インデックス情報生成
-				device->CreateIndexBuffer(sizeof(WORD)*m_part[i].dataArray[j].idxSum,
-													 D3DUSAGE_WRITEONLY,
-													 D3DFMT_INDEX16,
-													 D3DPOOL_MANAGED,
-													 &m_part[i].dataArray[j].idxBuff,
-													 NULL);
+			//インデックス情報生成
+			device->CreateIndexBuffer(sizeof(WORD)*m_part[i].dataArray[j].idxSum,
+													D3DUSAGE_WRITEONLY,
+													D3DFMT_INDEX16,
+													D3DPOOL_MANAGED,
+													&m_part[i].dataArray[j].idxBuff,
+													NULL);
 
-				WORD *index;
-				m_part[i].dataArray[j].idxBuff->Lock(0,0,(void**)&index,0);
+			WORD *index;
+			m_part[i].dataArray[j].idxBuff->Lock(0,0,(void**)&index,0);
 
-				for( int idx = 0 ; idx < m_part[i].dataArray[j].idxSum ; idx++ )
-				{
-					int id;
-					fread( &id,sizeof(int),1,file );
+			for( int idx = 0 ; idx < m_part[i].dataArray[j].idxSum ; idx++ )
+			{
+				int id;
+				fread( &id,sizeof(int),1,file );
 
-					//書き込み
-					index[idx] = id;
-				}
+				//書き込み
+				index[idx] = id;
+			}
 
-				m_part[i].dataArray[j].idxBuff->Unlock();
+			m_part[i].dataArray[j].idxBuff->Unlock();
 
 		}
 	

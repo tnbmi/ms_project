@@ -38,7 +38,7 @@ public:
 
 	void SetLight(LPD3DXCONSTANTTABLE vsc);
 
-	void dirLightVector(D3DXVECTOR3 vector) {m_dirLight.vector = vector;}
+	void dirLightVector(D3DXVECTOR3 vector) {m_dirLight.vector = vector; D3DXVec3Normalize(&m_dirLight.vector, &m_dirLight.vector);}
 	void dirLightVector(float x, float y, float z) {m_dirLight.vector = D3DXVECTOR3(x,y,z);}
 	void dirLightVector_x(float x) {m_dirLight.vector.x = x;}
 	void dirLightVector_y(float y) {m_dirLight.vector.y = y;}

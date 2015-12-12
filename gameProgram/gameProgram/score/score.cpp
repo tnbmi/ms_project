@@ -175,6 +175,7 @@ void Score::Update(void)
 	m_number[1]->pos( m_pos - D3DXVECTOR3((m_scl.x/2)*1,0,0 ));
 	m_number[2]->pos( m_pos + D3DXVECTOR3((m_scl.x/2)*1,0,0 ));
 	m_number[3]->pos( m_pos + D3DXVECTOR3((m_scl.x/2)*3,0,0 ));
+
 	m_number[0]->scl( m_scl );
 	m_number[1]->scl( m_scl );
 	m_number[2]->scl( m_scl );
@@ -207,6 +208,17 @@ void Score::StartRandView( const int randViewFrame )
 {
 	m_time = 0;
 	m_randViewFrame = randViewFrame;
+}
+
+
+bool Score::isRandView()
+{
+	if( m_time >= m_randViewFrame )
+	{
+		return false;
+	}
+
+	return true;
 }
 
 // EOF

@@ -158,6 +158,9 @@
     <Filter Include="list\objectList\updateList">
       <UniqueIdentifier>{bc29ed71-2b1e-4dba-b7f3-836c6d7bf98f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="phase\result\resultMaster">
+      <UniqueIdentifier>{d46c8348-0abd-4f09-8bc1-872b931d6a27}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main\main.h">
@@ -295,6 +298,9 @@
     <ClInclude Include="score\score.h">
       <Filter>score</Filter>
     </ClInclude>
+    <ClInclude Include="phase\result\resultMaster\resultMaster.h">
+      <Filter>phase\result\resultMaster</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main\main.cpp">
@@ -425,6 +431,9 @@
     </ClCompile>
     <ClCompile Include="score\score.cpp">
       <Filter>score</Filter>
+    </ClCompile>
+    <ClCompile Include="phase\result\resultMaster\resultMaster.cpp">
+      <Filter>phase\result\resultMaster</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
