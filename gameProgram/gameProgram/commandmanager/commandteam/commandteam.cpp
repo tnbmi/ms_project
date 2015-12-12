@@ -241,7 +241,7 @@ bool CommandTeam::Update(void)
 				}
 				m_command_data[i][delete_count].polygon_pointer->pos_x(m_polygon_pos.x + _polygon_pos_offset / 2 + i * _polygon_pos_offset );
 				m_command_data[i][delete_count].polygon_pointer->pos_y(m_command_data[i][delete_count].pos_y);
-				m_command_data[i][delete_count].polygon_pointer->color_a(1.0f);
+				m_command_data[i][delete_count].polygon_pointer->color(1.0f, 1.0f, 1.0f, 1.0f);
 			}
 		}
 		m_delete_count++;

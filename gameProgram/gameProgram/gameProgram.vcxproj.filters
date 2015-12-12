@@ -232,9 +232,6 @@
     <ClInclude Include="objectBase\polygon2D\polygon2D.h">
       <Filter>objectBase\polygon2D</Filter>
     </ClInclude>
-    <ClInclude Include="shader\shader.h">
-      <Filter>shader</Filter>
-    </ClInclude>
     <ClInclude Include="import\demo\demoImport.h">
       <Filter>import\demo</Filter>
     </ClInclude>
@@ -318,7 +315,7 @@
     </ClInclude>
     <ClInclude Include="phase\result\resultMaster\resultMaster.h">
       <Filter>phase\result\resultMaster</Filter>
-	</ClInclude>
+    </ClInclude>
     <ClInclude Include="thread\thread.h">
       <Filter>thread</Filter>
     </ClInclude>
@@ -333,6 +330,9 @@
     </ClInclude>
     <ClInclude Include="road\road.h">
       <Filter>road</Filter>
+    </ClInclude>
+    <ClInclude Include="shader\shader.h">
+      <Filter>shader</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -383,9 +383,6 @@
     </ClCompile>
     <ClCompile Include="objectBase\polygon2D\polygon2D.cpp">
       <Filter>objectBase\polygon2D</Filter>
-    </ClCompile>
-    <ClCompile Include="shader\shader.cpp">
-      <Filter>shader</Filter>
     </ClCompile>
     <ClCompile Include="import\demo\demoImport.cpp">
       <Filter>import\demo</Filter>
@@ -482,6 +479,9 @@
     </ClCompile>
     <ClCompile Include="road\road.cpp">
       <Filter>road</Filter>
+    </ClCompile>
+    <ClCompile Include="shader\shader.cpp">
+      <Filter>shader</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

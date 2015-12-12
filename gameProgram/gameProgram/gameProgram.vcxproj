@@ -57,7 +57,6 @@
     <ClCompile Include="road\road.cpp" />
     <ClCompile Include="road\roadmanager\roadmanager.cpp" />
     <ClCompile Include="road\roadpolygon\roadpolygon.cpp" />
-    <ClCompile Include="shader\shader.cpp" />
     <ClCompile Include="thread\thread.cpp" />
     <ClCompile Include="view\camera\camera.cpp" />
     <ClCompile Include="view\light\light.cpp" />
@@ -111,7 +110,6 @@
     <ClInclude Include="road\road.h" />
     <ClInclude Include="road\roadmanager\roadmanager.h" />
     <ClInclude Include="road\roadpolygon\roadpolygon.h" />
-    <ClInclude Include="shader\shader.h" />
     <ClInclude Include="thread\thread.h" />
     <ClInclude Include="view\camera\camera.h" />
     <ClInclude Include="view\light\light.h" />
