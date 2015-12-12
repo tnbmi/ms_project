@@ -32,6 +32,7 @@ const char* _game_texture_name[] =
 	"/number.png",
 	"/num_yellow.png",
 	"/num_white.png",
+	"/GameUI.png",
 };
 
 //=============================================================================

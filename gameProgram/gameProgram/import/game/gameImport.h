@@ -37,6 +37,7 @@ public:
 		NUMBER_TEX,
 		NUMBER_YELLOW,
 		NUMBER_WHITE,
+		GAME_UI,
 
 		TEX_MAX
 	};
