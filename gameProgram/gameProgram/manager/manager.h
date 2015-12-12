@@ -23,6 +23,7 @@ class Sound;
 class Debugproc;
 class Keyboard;
 class PadXManager;
+class Road;
 
 class Manager
 {
@@ -52,6 +53,7 @@ private:
 
 	Keyboard*	 m_keyboard;
 	PadXManager* m_padXManager;
+	Road*		 m_road;
 };
 
 //=============================================================================

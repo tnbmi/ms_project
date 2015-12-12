@@ -134,8 +134,8 @@ bool Game::Initialize(void)
 	//----------------------------
 	// フェード
 	//----------------------------
-	//m_fade = CFade::Create(device);
-	//m_fade->Start(CFade::FADESTATE_IN, 1, 1.0f, 1.0f, 1.0f, 1.0f);
+	//Fade::Create( &m_fade , m_updateList , m_drawListManager , m_device , m_objectList , m_import );
+	//m_fade->Start(Fade::FADESTATE_IN, 10, 1.0f, 1.0f, 1.0f, 0.0f);
 
 	//----------------------------
 	// ステータス初期化
@@ -242,7 +242,6 @@ void Game::Update(void)
 	{
 		Manager::nextPhase((Phase*)new Result(m_device));
 	}
-	
 }
 
 //=============================================================================

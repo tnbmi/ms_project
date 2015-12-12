@@ -22,6 +22,8 @@
 #include "..\phase\game\game.h"
 #include "..\phase\result\result.h"
 
+#include "..\road\road.h"
+
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // 静的変数
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -47,6 +49,7 @@ Manager::Manager(void)
 
 	m_keyboard		= nullptr;
 	m_padXManager	= nullptr;
+	m_road			= nullptr;
 }
 
 //=============================================================================
@@ -104,6 +107,10 @@ bool Manager::Initialize(HINSTANCE hInstance, HWND hWnd, bool windowFlg)
 	m_renderer->debugproc(m_debugproc);
 	m_padXManager->debugproc(m_debugproc);
 #endif
+	//----------------------------
+	// ローディング画面
+	//----------------------------
+	Road::Create( &m_road , device );
 
 	//----------------------------
 	// フェーズ
@@ -121,11 +128,11 @@ bool Manager::Initialize(HINSTANCE hInstance, HWND hWnd, bool windowFlg)
 #endif
 
 	// 初期化
-	if(!m_phase->Initialize())
-		return false;
+	//if(!m_phase->Initialize())
+	//	return false;
+	m_road->Roading( m_phase);
 	m_nextPhase = m_phase;
 	m_renderer->phase(m_phase);
-
 	return true;
 }
 
@@ -161,6 +168,11 @@ void Manager::Finalize(void)
 	// レンダラー
 	//----------------------------
 	SafeFinalizeDelete(m_renderer);
+
+	//----------------------------
+	// ローディング画面
+	//----------------------------
+	m_road->Finalize();
 }
 
 //=============================================================================
@@ -190,6 +202,7 @@ bool Manager::Update(void)
 	//----------------------------
 	// フェーズ切替
 	//----------------------------
+	//m_road->StateClose();
 	if(m_nextPhase != m_phase)
 	{
 		// 現在フェーズを破棄
@@ -210,7 +223,7 @@ bool Manager::Update(void)
 		m_phase = m_nextPhase;
 		m_renderer->phase(m_phase);
 	}
-
+	m_road->StateOpen();
 	return true;
 }
 

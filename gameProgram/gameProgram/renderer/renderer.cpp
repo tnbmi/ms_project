@@ -108,7 +108,7 @@ bool Renderer::Initialize(HWND hWnd, bool windowFlg)
 	hResult = object->CreateDevice(D3DADAPTER_DEFAULT,
 									D3DDEVTYPE_HAL,
 									hWnd,
-									D3DCREATE_HARDWARE_VERTEXPROCESSING,
+									D3DCREATE_HARDWARE_VERTEXPROCESSING | D3DCREATE_MULTITHREADED,
 									&presenParam,
 									&m_device);
 	if(FAILED(hResult))
@@ -116,7 +116,7 @@ bool Renderer::Initialize(HWND hWnd, bool windowFlg)
 		hResult = object->CreateDevice(D3DADAPTER_DEFAULT,
 										D3DDEVTYPE_HAL,
 										hWnd,
-										D3DCREATE_SOFTWARE_VERTEXPROCESSING,
+										D3DCREATE_SOFTWARE_VERTEXPROCESSING | D3DCREATE_MULTITHREADED,
 										&presenParam,
 										&m_device);
 		if(FAILED(hResult))
@@ -124,7 +124,7 @@ bool Renderer::Initialize(HWND hWnd, bool windowFlg)
 			hResult = object->CreateDevice(D3DADAPTER_DEFAULT,
 											D3DDEVTYPE_REF,
 											hWnd,
-											D3DCREATE_SOFTWARE_VERTEXPROCESSING,
+											D3DCREATE_SOFTWARE_VERTEXPROCESSING | D3DCREATE_MULTITHREADED,
 											&presenParam,
 											&m_device);
 			if(FAILED(hResult))

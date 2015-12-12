@@ -76,6 +76,9 @@
     <Filter Include="import\result">
       <UniqueIdentifier>{9c93fe32-6d8c-4c1b-ae51-6e0e72c03c49}</UniqueIdentifier>
     </Filter>
+    <Filter Include="import\title">
+      <UniqueIdentifier>{f5a355f7-7760-4ea2-9c34-77d99db06282}</UniqueIdentifier>
+    </Filter>
     <Filter Include="objectBase\polygon2D">
       <UniqueIdentifier>{b5b1f17b-f7eb-45b0-a5f9-9e643c7ee25c}</UniqueIdentifier>
     </Filter>
@@ -160,6 +163,21 @@
     </Filter>
     <Filter Include="phase\result\resultMaster">
       <UniqueIdentifier>{d46c8348-0abd-4f09-8bc1-872b931d6a27}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="thread">
+      <UniqueIdentifier>{96daaa9c-06fb-4b21-a132-d51f0fc9e6c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="import\road">
+      <UniqueIdentifier>{834f389d-fa44-42e7-86de-dec39983185b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="road">
+      <UniqueIdentifier>{6094bceb-f14b-4713-adf6-b8124c7ffd0e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="road\roadmanager">
+      <UniqueIdentifier>{85906048-150d-44e8-8656-853f22f105de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="road\roadpolygon">
+      <UniqueIdentifier>{3a3c33f2-28a3-4765-b9d1-976f4afb13f4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -300,6 +318,21 @@
     </ClInclude>
     <ClInclude Include="phase\result\resultMaster\resultMaster.h">
       <Filter>phase\result\resultMaster</Filter>
+	</ClInclude>
+    <ClInclude Include="thread\thread.h">
+      <Filter>thread</Filter>
+    </ClInclude>
+    <ClInclude Include="import\road\roadImport.h">
+      <Filter>import\road</Filter>
+    </ClInclude>
+    <ClInclude Include="road\roadpolygon\roadpolygon.h">
+      <Filter>road\roadpolygon</Filter>
+    </ClInclude>
+    <ClInclude Include="road\roadmanager\roadmanager.h">
+      <Filter>road\roadmanager</Filter>
+    </ClInclude>
+    <ClInclude Include="road\road.h">
+      <Filter>road</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -434,6 +467,21 @@
     </ClCompile>
     <ClCompile Include="phase\result\resultMaster\resultMaster.cpp">
       <Filter>phase\result\resultMaster</Filter>
+    </ClCompile>
+    <ClCompile Include="thread\thread.cpp">
+      <Filter>thread</Filter>
+    </ClCompile>
+    <ClCompile Include="import\road\roadImport.cpp">
+      <Filter>import\road</Filter>
+    </ClCompile>
+    <ClCompile Include="road\roadpolygon\roadpolygon.cpp">
+      <Filter>road\roadpolygon</Filter>
+    </ClCompile>
+    <ClCompile Include="road\roadmanager\roadmanager.cpp">
+      <Filter>road\roadmanager</Filter>
+    </ClCompile>
+    <ClCompile Include="road\road.cpp">
+      <Filter>road</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
