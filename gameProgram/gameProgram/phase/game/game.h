@@ -31,7 +31,7 @@ class DrawListManager;
 class Commandmanager;
 class EffectManager;
 class Player;
-
+class Fade;
 class Game : public Phase
 {
 public:
@@ -61,6 +61,7 @@ private:
 	EffectManager *m_effectManager;
 	Player *m_redTeam;
 	Player *m_blueTeam;
+	Fade   *m_fade;
 };
 
 //=============================================================================

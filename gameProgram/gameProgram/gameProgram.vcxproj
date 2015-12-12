@@ -14,11 +14,11 @@
     <ClCompile Include="commandmanager\commandmanager.cpp" />
     <ClCompile Include="commandmanager\commandteam\commandteam.cpp" />
     <ClCompile Include="debugproc\debugproc.cpp" />
-    <ClCompile Include="fade\fade.cpp" />
     <ClCompile Include="import\demo\demoImport.cpp" />
     <ClCompile Include="import\game\gameImport.cpp" />
     <ClCompile Include="import\import.cpp" />
     <ClCompile Include="import\result\resultImport.cpp" />
+    <ClCompile Include="import\road\roadImport.cpp" />
     <ClCompile Include="import\title\titleImport.cpp" />
     <ClCompile Include="input\keyboard\keyboard.cpp" />
     <ClCompile Include="input\padX\padX.cpp" />
@@ -44,7 +44,11 @@
     <ClCompile Include="phase\result\result.cpp" />
     <ClCompile Include="phase\title\title.cpp" />
     <ClCompile Include="renderer\renderer.cpp" />
+    <ClCompile Include="road\road.cpp" />
+    <ClCompile Include="road\roadmanager\roadmanager.cpp" />
+    <ClCompile Include="road\roadpolygon\roadpolygon.cpp" />
     <ClCompile Include="shader\shader.cpp" />
+    <ClCompile Include="thread\thread.cpp" />
     <ClCompile Include="view\camera\camera.cpp" />
     <ClCompile Include="view\light\light.cpp" />
   </ItemGroup>
@@ -54,11 +58,11 @@
     <ClInclude Include="common\complement\complement.h" />
     <ClInclude Include="common\safe.h" />
     <ClInclude Include="debugproc\debugproc.h" />
-    <ClInclude Include="fade\fade.h" />
     <ClInclude Include="import\demo\demoImport.h" />
     <ClInclude Include="import\game\gameImport.h" />
     <ClInclude Include="import\import.h" />
     <ClInclude Include="import\result\resultImport.h" />
+    <ClInclude Include="import\road\roadImport.h" />
     <ClInclude Include="import\title\titleImport.h" />
     <ClInclude Include="input\keyboard\keyboard.h" />
     <ClInclude Include="input\padX\padX.h" />
@@ -84,7 +88,11 @@
     <ClInclude Include="phase\result\result.h" />
     <ClInclude Include="phase\title\title.h" />
     <ClInclude Include="renderer\renderer.h" />
+    <ClInclude Include="road\road.h" />
+    <ClInclude Include="road\roadmanager\roadmanager.h" />
+    <ClInclude Include="road\roadpolygon\roadpolygon.h" />
     <ClInclude Include="shader\shader.h" />
+    <ClInclude Include="thread\thread.h" />
     <ClInclude Include="view\camera\camera.h" />
     <ClInclude Include="view\light\light.h" />
   </ItemGroup>
