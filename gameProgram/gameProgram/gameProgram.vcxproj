@@ -46,6 +46,7 @@
     <ClCompile Include="phase\game\gameMaster\gameMaster.cpp" />
     <ClCompile Include="phase\phase.cpp" />
     <ClCompile Include="phase\result\result.cpp" />
+    <ClCompile Include="phase\result\resultMaster\resultMaster.cpp" />
     <ClCompile Include="phase\title\title.cpp" />
     <ClCompile Include="renderer\renderer.cpp" />
     <ClCompile Include="score\score.cpp" />
@@ -93,6 +94,7 @@
     <ClInclude Include="phase\game\gameMaster\gameMaster.h" />
     <ClInclude Include="phase\phase.h" />
     <ClInclude Include="phase\result\result.h" />
+    <ClInclude Include="phase\result\resultMaster\resultMaster.h" />
     <ClInclude Include="phase\title\title.h" />
     <ClInclude Include="renderer\renderer.h" />
     <ClInclude Include="score\score.h" />

@@ -27,9 +27,7 @@ class ObjectList;
 class UpdateList;
 class DrawListManager;
 
-class Score;
-class Player;
-class FbxModel;
+class ResultMaster;
 
 class Result : public Phase
 {
@@ -54,12 +52,9 @@ private:
 
 	ResultImport*	m_import;
 	Camera*			m_camera;
-	Score*			m_redTeamScore;
-	Score*			m_blueTeamScore;
-	Player*			m_redTeam;
-	Player*			m_blueTeam;
-	FbxModel*		m_redGgy;
-	FbxModel*		m_blueGgy;
+	ResultMaster*	m_resultMaster;
+
+
 };
 
 //=============================================================================

@@ -32,9 +32,7 @@
 #include "..\..\objectBase\polygon3D\polygon3D.h"
 #include "..\..\objectBase\meshDome\meshDome.h"
 
-#include "..\..\score\score.h"
-#include "..\..\objectBase\fbxModel\fbxModel.h"
-#include "..\..\object\player\player.h"
+#include "resultMaster\resultMaster.h"
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // マクロ定義
@@ -66,7 +64,7 @@ Result::~Result(void)
 //=============================================================================
 bool Result::Initialize(void)
 {
-//----------------------------
+	//----------------------------
 	// インポート
 	//----------------------------
 	if(!ResultImport::Create(&m_import, m_device))
@@ -88,7 +86,7 @@ bool Result::Initialize(void)
 	// ライト
 	if(!Light::Create(&m_light, m_device))
 		return false;
-	m_light->dirLightAmbient(0.1f, 0.1f, 0.1f, 1.0f);
+	m_light->dirLightAmbient(1.0f, 1.0f, 1.0f, 1.0f);
 	m_light->dirLightDiffuse(0.3f, 0.3f, 0.3f, 1.0f);
 	m_light->dirLightVector(0.0f, -1.0f, -2.0f);
 
@@ -176,11 +174,11 @@ void Result::Finalize(void)
 	// サウンドの停止
 	//----------------------------
 
-	//
-	SafeFinalizeDelete( m_redTeamScore );
-	SafeFinalizeDelete( m_blueTeamScore );
-	SafeFinalizeDelete( m_redTeam );
-	SafeFinalizeDelete( m_blueTeam );
+	//----------------------------
+	//リザルトマスター
+	//----------------------------
+	m_resultMaster->Finalize();
+	SafeFinalizeDelete( m_resultMaster );
 
 }
 
@@ -200,10 +198,10 @@ void Result::Update(void)
 
 	m_updateList->AllUpdate();
 
-	m_redTeamScore->Update();
-	m_blueTeamScore->Update();
-	m_redTeam->Update();
-	m_blueTeam->Update();
+	//----------------------------
+	//リザルトマスター更新
+	//----------------------------
+	m_resultMaster->Update();
 
 	//----------------------------
 	// 画面遷移
@@ -264,54 +262,10 @@ bool Result::InitObject(void)
 	dome->pos_y(-150.0f);
 	dome->rot_y(PAI * 0.5f);
 
-
-	//スコア生成
-	Score::Create( &m_redTeamScore,m_device,m_objectList,m_updateList,m_drawListManager,0,ObjectBase::TYPE_2D,m_import );
-	Score::Create( &m_blueTeamScore,m_device,m_objectList,m_updateList,m_drawListManager,0,ObjectBase::TYPE_2D,m_import );
-	
-	m_redTeamScore->pos( D3DXVECTOR3( 640 +320,280,0 ) );
-	m_blueTeamScore->pos( D3DXVECTOR3( 320,280,0 ) );
-	m_redTeamScore->StartRandView(200);
-	m_redTeamScore->score(1419);
-	m_redTeamScore->col(D3DXCOLOR(1,0,0,1));
-	
-	m_blueTeamScore->StartRandView(200);
-	m_blueTeamScore->score(1145);
-	m_blueTeamScore->col(D3DXCOLOR(0,0,1,1));
-	
-//プレイヤー生成(ねぶた）
-	
-	Player *redTeam;
-	Player *blueTeam;
-	Player::Create( &blueTeam,m_device,m_objectList,m_updateList,m_drawListManager,0,ObjectBase::TYPE_3D,"./resources/fbxModel/daisya.bin","./resources/fbxModel/ground.bin","./resources/fbxModel/robo.bin");
-	Player::Create( &redTeam,m_device,m_objectList,m_updateList,m_drawListManager,0,ObjectBase::TYPE_3D,"./resources/fbxModel/daisya.bin","./resources/fbxModel/ground.bin","./resources/fbxModel/robo.bin");
-
-	m_redTeam = redTeam;
-	m_blueTeam = blueTeam;
-
-	m_redTeam->rot( D3DXVECTOR3(0,PAI,0 ) );
-	m_blueTeam->rot( D3DXVECTOR3(0,PAI,0 ) );
-	m_redTeam->Move( D3DXVECTOR3(-500,0,0),D3DXVECTOR3(-500,0,0),300 );
-	m_blueTeam->Move( D3DXVECTOR3(500,0,0),D3DXVECTOR3(500,0,0),300 );
-
-	//おじいちゃん生成
-	FbxModel::Create( &m_redGgy,m_device,m_objectList,0,ObjectBase::TYPE_3D,"./resources/fbxModel/ggy.bin" );
-	FbxModel::Create( &m_blueGgy,m_device,m_objectList,0,ObjectBase::TYPE_3D,"./resources/fbxModel/ggy.bin" );
-
-	//リンク
-	m_updateList->Link( m_redGgy );
-	m_drawListManager->Link( m_redGgy,0,Shader::PAT_FBX );
-	m_updateList->Link( m_blueGgy );
-	m_drawListManager->Link( m_blueGgy,0,Shader::PAT_FBX  );
-
-	m_redGgy->pos( D3DXVECTOR3(100,0,-1300) );
-	m_blueGgy->pos( D3DXVECTOR3(-100,0,-1300) );
-	m_redGgy->rot( D3DXVECTOR3(0,PAI,0));
-	m_blueGgy->rot( D3DXVECTOR3(0,PAI,0));
-
-
-	
-
+	//---------------------------
+	//リザルトマスター
+	//---------------------------
+	ResultMaster::Create( &m_resultMaster,m_device,m_objectList,m_updateList,m_drawListManager,m_import,m_debugproc,m_padXManager );
 
 	return true;
 }

@@ -33,6 +33,8 @@ public:
 	void Update(void);
 	void Draw(void);
 
+	bool isRandView();
+
 	void pos( D3DXVECTOR3 pos ){ m_pos = pos; }
 	D3DXVECTOR3 pos(){ return m_pos; }
 
