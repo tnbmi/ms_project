@@ -29,18 +29,20 @@ class EffectManager;
 class ResultImport;
 class Debugproc;
 class PadXManager;
+class Light;
+class Polygon2D;
 
 class ResultMaster
 {
 public:
 
-	ResultMaster( LPDIRECT3DDEVICE9 device,ObjectList *objectList,UpdateList *updateList,DrawListManager *drawList,ResultImport *import,Debugproc *proc,PadXManager* padXMaster ); 
+	ResultMaster( LPDIRECT3DDEVICE9 device,ObjectList *objectList,UpdateList *updateList,DrawListManager *drawList,ResultImport *import,Debugproc *proc,PadXManager* padXMaster,Light *light ); 
 
 	~ResultMaster(void);
 
 	static bool Create(ResultMaster** outPointer,LPDIRECT3DDEVICE9 device,
 						ObjectList* objectList,UpdateList *updateList,DrawListManager *drawList,
-						ResultImport* import,Debugproc* debugproc,PadXManager* padXManager);
+						ResultImport* import,Debugproc* debugproc,PadXManager* padXManager,Light *light);
 	bool Initialize(void);
 	void Finalize(void);
 	void Update(void);
@@ -63,6 +65,7 @@ private:
 	ResultImport*	 m_import;
 	Debugproc*		 m_debugProc;
 	PadXManager*	 m_padXManager;
+	Light*	m_light;
 
 	PHASE			m_phase;
 	Score*			m_redTeamScore;
@@ -72,6 +75,12 @@ private:
 	FbxModel*		m_redGgy;
 	FbxModel*		m_blueGgy;
 	EffectManager*	m_effectManager;
+
+	//É|ÉäÉSÉì
+	Polygon2D*	m_resultPoly;//åãâ î≠ï\ÇÃÉ|ÉäÉSÉì
+	Polygon2D*	m_winPoly;//èüÇøï\é¶É|ÉäÉSÉì
+
+
 	int m_fireTime;
 	static const int _shotFrame = 200;
 };

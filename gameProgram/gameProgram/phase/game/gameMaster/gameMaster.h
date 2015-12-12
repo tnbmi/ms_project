@@ -33,7 +33,7 @@ class Player;
 class GameMaster
 {
 public:
-	GameMaster(AudienceManager *audienceManager,EffectManager *effectManager,Player *redTeam,Player *blueTeam);
+	GameMaster( LPDIRECT3DDEVICE9 device,ObjectList *objectList,UpdateList *updateList,DrawListManager *drawList,GameImport *import,Debugproc *proc,PadXManager* padXMaster );
 	virtual ~GameMaster(void);
 
 	static bool Create(GameMaster** outPointer,LPDIRECT3DDEVICE9 device,
@@ -59,9 +59,16 @@ public:
 private:
 	static const int _ScoreMax = 500;//総スコア
 
+	LPDIRECT3DDEVICE9 m_device;
+	ObjectList*		 m_objectList;
+	UpdateList*		 m_updateList;
+	DrawListManager* m_drawListManager;
+	GameImport*	 m_import;
+	Debugproc*		 m_debugProc;
+	PadXManager*	 m_padXManager;
+
 	//観客制御
 	AudienceManager *m_audienceManager;
-
 	//エフェクト制御
 	EffectManager  *m_effectManager;
 
