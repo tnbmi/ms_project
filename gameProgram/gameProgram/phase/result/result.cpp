@@ -86,7 +86,7 @@ bool Result::Initialize(void)
 	// ライト
 	if(!Light::Create(&m_light, m_device))
 		return false;
-	m_light->dirLightAmbient(1.0f, 1.0f, 1.0f, 1.0f);
+	m_light->dirLightAmbient(0.1f, 0.1f, 0.1f, 1.0f);
 	m_light->dirLightDiffuse(0.3f, 0.3f, 0.3f, 1.0f);
 	m_light->dirLightVector(0.0f, -1.0f, -2.0f);
 
@@ -265,7 +265,7 @@ bool Result::InitObject(void)
 	//---------------------------
 	//リザルトマスター
 	//---------------------------
-	ResultMaster::Create( &m_resultMaster,m_device,m_objectList,m_updateList,m_drawListManager,m_import,m_debugproc,m_padXManager );
+	ResultMaster::Create( &m_resultMaster,m_device,m_objectList,m_updateList,m_drawListManager,m_import,m_debugproc,m_padXManager,m_light );
 
 	return true;
 }

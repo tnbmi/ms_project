@@ -20,11 +20,15 @@
 #include "..\..\..\objectBase\fbxModel\fbxModel.h"
 #include "..\..\..\common\complement\complement.h"
 
+#include "..\..\..\view\light\light.h"
+#include "..\..\..\objectBase\polygon2D\polygon2D.h"
+#include "..\..\..\import\result\resultImport.h"
+
 
 //=============================================================================
 // コンストラクタ
 //=============================================================================
-ResultMaster::ResultMaster( LPDIRECT3DDEVICE9 device,ObjectList *objectList,UpdateList *updateList,DrawListManager *drawList,ResultImport *import,Debugproc *proc,PadXManager* padXMaster )
+ResultMaster::ResultMaster( LPDIRECT3DDEVICE9 device,ObjectList *objectList,UpdateList *updateList,DrawListManager *drawList,ResultImport *import,Debugproc *proc,PadXManager* padXMaster,Light *light )
 {
 	m_device = device;
 	m_objectList = objectList;
@@ -33,6 +37,7 @@ ResultMaster::ResultMaster( LPDIRECT3DDEVICE9 device,ObjectList *objectList,Upda
 	m_import = import;
 	m_debugProc = proc;
 	m_padXManager = padXMaster;
+	m_light = light;
 }
 
 //=============================================================================
@@ -47,10 +52,10 @@ ResultMaster::~ResultMaster(void)
 //=============================================================================
 bool ResultMaster::Create(ResultMaster** outPointer,LPDIRECT3DDEVICE9 device,
 						ObjectList* objectList,UpdateList *updateList,DrawListManager *drawList,
-						ResultImport* import,Debugproc* debugproc,PadXManager* padXManager)
+						ResultImport* import,Debugproc* debugproc,PadXManager* padXManager,Light *light)
 {
 
-	ResultMaster* pointer = new ResultMaster( device,objectList,updateList,drawList,import,debugproc,padXManager );
+	ResultMaster* pointer = new ResultMaster( device,objectList,updateList,drawList,import,debugproc,padXManager,light );
 	if(!pointer->Initialize())
 		return false;
 
@@ -75,8 +80,8 @@ bool ResultMaster::Initialize(void)
 	//ねぶた生成
 	Player *redTeam;
 	Player *blueTeam;
-	Player::Create( &blueTeam,m_device,m_objectList,m_updateList,m_drawListManager,0,ObjectBase::TYPE_3D,"./resources/fbxModel/daisya.bin","./resources/fbxModel/ground.bin","./resources/fbxModel/robo.bin");
-	Player::Create( &redTeam,m_device,m_objectList,m_updateList,m_drawListManager,0,ObjectBase::TYPE_3D,"./resources/fbxModel/daisya.bin","./resources/fbxModel/ground.bin","./resources/fbxModel/robo.bin");
+	Player::Create( &blueTeam,m_device,m_objectList,m_updateList,m_drawListManager,0,ObjectBase::TYPE_3D,"./resources/fbxModel/daisya.bin","./resources/fbxModel/ground.bin","./resources/fbxModel/nebred.bin");
+	Player::Create( &redTeam,m_device,m_objectList,m_updateList,m_drawListManager,0,ObjectBase::TYPE_3D,"./resources/fbxModel/daisya.bin","./resources/fbxModel/ground.bin","./resources/fbxModel/nebblue.bin");
 
 	m_redTeam = redTeam;
 	m_blueTeam= blueTeam;
@@ -101,13 +106,33 @@ bool ResultMaster::Initialize(void)
 
 	m_effectManager = effectManager;
 
+	//polygon2D
+	Polygon2D *pol;
+	Polygon2D::Create( &pol,m_device,m_objectList,m_import->texture(ResultImport::STONES),ObjectBase::TYPE_2D );
+	m_updateList->Link( pol );
+	m_drawListManager->Link( pol,0,Shader::PAT_2D );
+
+	m_resultPoly = pol;
+	m_resultPoly->pos(640,600,0);
+	m_resultPoly->scl(300,200,0);
+	m_resultPoly->color(1,1,1,1);
+
+	Polygon2D::Create( &pol,m_device,m_objectList,m_import->texture(ResultImport::STONES),ObjectBase::TYPE_2D );
+	m_updateList->Link( pol );
+	m_drawListManager->Link( pol,0,Shader::PAT_2D );
+
+	m_winPoly = pol;
+	m_winPoly->scl(0,0,0);
+	m_winPoly->color(1,0,0,1);
+	
+
 	//----------------------------
 	//初期位置
 	//----------------------------
 	m_redTeamScore->pos( D3DXVECTOR3( 640 +320,280,0 ) );
 	m_blueTeamScore->pos( D3DXVECTOR3( 320,280,0 ) );
 	m_redTeamScore->StartRandView(200);
-	m_redTeamScore->score(1419);
+	m_redTeamScore->score(419);
 	m_redTeamScore->col(D3DXCOLOR(1,0,0,1));
 	
 	m_blueTeamScore->StartRandView(200);
@@ -119,8 +144,8 @@ bool ResultMaster::Initialize(void)
 	m_redTeam->Move( D3DXVECTOR3(-500,0,0),D3DXVECTOR3(-500,0,0),300 );
 	m_blueTeam->Move( D3DXVECTOR3(500,0,0),D3DXVECTOR3(500,0,0),300 );
 
-	m_redGgy->pos( D3DXVECTOR3(100,0,-1300) );
-	m_blueGgy->pos( D3DXVECTOR3(-100,0,-1300) );
+	m_redGgy->pos( D3DXVECTOR3(100,0,-1200) );
+	m_blueGgy->pos( D3DXVECTOR3(-100,0,-1200) );
 	m_redGgy->rot( D3DXVECTOR3(0,PAI,0));
 	m_blueGgy->rot( D3DXVECTOR3(0,PAI,0));
 	
@@ -157,6 +182,8 @@ void ResultMaster::Update(void)
 
 		m_redTeamScore->StartRandView( 60 * 3 );
 		m_blueTeamScore->StartRandView( 60 * 3 );
+		m_redGgy->StartAnimation(1,30,true );
+		m_blueGgy->StartAnimation(1,30,true );
 		m_phase = PHASE_ANNOUNCEMENT;
 		break;
 
@@ -164,11 +191,24 @@ void ResultMaster::Update(void)
 
 		if( !m_redTeamScore->isRandView() )
 		{
-
+			m_light->dirLightAmbient(0.5,0.5,0.5,1);
 			m_phase = PHASE_ANNOUNCEFINISH;
 
-			m_redGgy->StartAnimation(31,90,false );
-			m_blueGgy->StartAnimation(91,150,false );
+			if( m_redTeamScore->score() > m_blueTeamScore->score() )
+			{
+				m_winPoly->scl( 100,200,1);
+				m_winPoly->pos( 1100,500,0);
+				m_redGgy->StartAnimation(31,90,false );
+				m_blueGgy->StartAnimation(91,150,false );
+			}
+			else
+			{
+
+				m_winPoly->scl( 100,200,1);
+				m_winPoly->pos(200,500,0);
+				m_redGgy->StartAnimation(91,150,false );
+				m_blueGgy->StartAnimation(31,90,false );
+			}
 
 		}
 
@@ -196,7 +236,6 @@ void ResultMaster::Update(void)
 
 			m_effectManager->AddEffectFromDataBase( 2,pos );
 
-			m_effectManager->AddEffectFromDataBase( 3,D3DXVECTOR3(0,1300,800) );
 			m_fireTime = 0;
 		}
 

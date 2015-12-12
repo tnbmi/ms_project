@@ -20,18 +20,23 @@
 
 #include "..\..\..\object\player\player.h"
 
+
 //=============================================================================
 // コンストラクタ
 //=============================================================================
-GameMaster::GameMaster(AudienceManager *audienceManager,EffectManager *effectManager,Player *redTeam,Player *blueTeam)
+GameMaster::GameMaster( LPDIRECT3DDEVICE9 device,ObjectList *objectList,UpdateList *updateList,DrawListManager *drawList,GameImport *import,Debugproc *proc,PadXManager* padXMaster )
 {
+	//
+	m_device = device;
+	m_objectList = objectList;
+	m_updateList = updateList;
+	m_drawListManager = drawList;
+	m_import = import;
+	m_debugProc = proc;
+	m_padXManager = padXMaster;
 	//----------------------------
 	// メンバー初期化
 	//----------------------------
-	m_audienceManager = audienceManager;
-	m_effectManager   = effectManager;
-	m_blueTeam = blueTeam;
-	m_redTeam  = redTeam;
 }
 
 //=============================================================================
@@ -48,27 +53,8 @@ bool GameMaster::Create(GameMaster** outPointer,LPDIRECT3DDEVICE9 device,
 						ObjectList* objectList,UpdateList *updateList,DrawListManager *drawList,
 						GameImport* import,Debugproc* debugproc,PadXManager* padXManager)
 {
-	//コマンドマネージャ
-
-	//観客制御生成
-	AudienceManager *audience;
-	if(!AudienceManager::Create( &audience,device,objectList,updateList,drawList,0,ObjectBase::TYPE_3D,
-							 "./resources/texture/boy.png",_ScoreMax,D3DXVECTOR3( 100,50,-1000),D3DXVECTOR3(1000,200,-700 ),D3DXVECTOR3(  -1000,50,-1000),D3DXVECTOR3( -100,200,-700 ) ))
-		return false;
-
-	//エフェクトマネージャ
-	EffectManager *ef;
-	if(!EffectManager::Create( &ef,device,objectList,updateList,drawList,5000,"./resources/texture/effect.jpg",D3DXVECTOR2(1,1),D3DXVECTOR2(1,1) ))
-		return false;
-
-	//プレイヤー生成
-	Player *redTeam;
-	Player *blueTeam;
-	Player::Create( &blueTeam,device,objectList,updateList,drawList,0,ObjectBase::TYPE_3D,"./resources/fbxModel/daisya.bin","./resources/fbxModel/ground.bin","./resources/fbxModel/robo.bin");
-	Player::Create( &redTeam,device,objectList,updateList,drawList,0,ObjectBase::TYPE_3D,"./resources/fbxModel/daisya.bin","./resources/fbxModel/ground.bin","./resources/fbxModel/robo.bin");
-
 	//ゲームマスター生成
-	GameMaster* pointer = new GameMaster( audience,ef,redTeam,blueTeam );
+	GameMaster* pointer = new GameMaster( device,objectList,updateList,drawList,import,debugproc,padXManager );
 	if(!pointer->Initialize())
 		return false;
 
@@ -81,22 +67,50 @@ bool GameMaster::Create(GameMaster** outPointer,LPDIRECT3DDEVICE9 device,
 //=============================================================================
 bool GameMaster::Initialize(void)
 {
+
+	//コマンドマネージャ
+
+	//観客制御生成
+	AudienceManager *audience;
+	if(!AudienceManager::Create( &audience,m_device,m_objectList,m_updateList,m_drawListManager,0,ObjectBase::TYPE_3D,
+							 "./resources/texture/boy.png",_ScoreMax,D3DXVECTOR3( 100,50,-1000),D3DXVECTOR3(1000,200,-700 ),D3DXVECTOR3(  -1000,50,-1000),D3DXVECTOR3( -100,200,-700 ) ))
+		return false;
+
+	//エフェクトマネージャ
+	EffectManager *ef;
+	if(!EffectManager::Create( &ef,m_device,m_objectList,m_updateList,m_drawListManager,5000,"./resources/texture/effect.jpg",D3DXVECTOR2(1,1),D3DXVECTOR2(1,1) ))
+		return false;
+
+	//プレイヤー生成
+	Player *redTeam;
+	Player *blueTeam;
+	Player::Create( &blueTeam,m_device,m_objectList,m_updateList,m_drawListManager,0,ObjectBase::TYPE_3D,"./resources/fbxModel/daisya.bin","./resources/fbxModel/ground.bin","./resources/fbxModel/nebblue.bin");
+	Player::Create( &redTeam,m_device,m_objectList,m_updateList,m_drawListManager,0,ObjectBase::TYPE_3D,"./resources/fbxModel/daisya.bin","./resources/fbxModel/ground.bin","./resources/fbxModel/nebred.bin");
+
+	redTeam->StartAnimationSecondChild( 1,390,true );
+	blueTeam->StartAnimationSecondChild( 1,390,true );
+
+	m_audienceManager = audience;
+	m_effectManager   = ef;
+	m_blueTeam = blueTeam;
+	m_redTeam  = redTeam;
+
 	//----------------------------
-	// コメント
+	// 配置
 	//----------------------------
 	m_redTeamAddVal = 0;
 	m_blueTeamAddVal=0;
 	m_totalScore = _ScoreMax;
 	m_redTeamScore = _ScoreMax/2;
 	m_blueTeamScore=_ScoreMax/2;
-	m_redTeam->rot( D3DXVECTOR3(0,3*D3DX_PI /4,0 ) );
-	m_blueTeam->rot( D3DXVECTOR3(0,-3*D3DX_PI/4,0 ) );
+	m_redTeam->rot( D3DXVECTOR3(0,-3*D3DX_PI /4,0 ) );
+	m_blueTeam->rot( D3DXVECTOR3(0,3*D3DX_PI/4,0 ) );
 	m_redTeam->offsetPos( D3DXVECTOR3(0,0,0 ) );
 	m_redTeam->secondOffsetPos( D3DXVECTOR3(0,0,0));
 	m_blueTeam->offsetPos( D3DXVECTOR3(0,0,0 ) );
 
-	m_redTeam->Move( D3DXVECTOR3(-700,0,0),D3DXVECTOR3(-700,0,0),300 );
-	m_blueTeam->Move( D3DXVECTOR3(700,0,0),D3DXVECTOR3(700,0,0),300 );
+	m_redTeam->Move( D3DXVECTOR3(700,0,0),D3DXVECTOR3(700,0,0),300 );
+	m_blueTeam->Move( D3DXVECTOR3(-700,0,0),D3DXVECTOR3(-700,0,0),300 );
 
 	return true;
 }
