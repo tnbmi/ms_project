@@ -226,7 +226,7 @@ bool CommandTeam::Update(void)
 		{
 			// データを次コマンドから読み込み
 			m_command_data[i][delete_count].num_data = *(m_command_pointer_Next[i] + delete_count);
-			m_command_data[i][delete_count].pos_y = m_polygon_pos.y - m_offset * COMMAND_MAX;
+			m_command_data[i][delete_count].pos_y = m_polygon_pos.y - m_offset * (COMMAND_MAX - 1);
 			if(m_command_data[i][delete_count].polygon_pointer != nullptr)
 			{
 				m_command_data[i][delete_count].polygon_pointer->color(1.0f, 1.0f, 1.0f, 0.0f);
@@ -237,21 +237,20 @@ bool CommandTeam::Update(void)
 				m_command_data[i][delete_count].hit = true;
 
 			// 表示領域の更新
-			int num = (delete_count + _polygon_num) % 10;
-			if(m_command_data[i][num].num_data != 4)
+			if(m_command_data[i][delete_count].num_data != 4)
 			{
 				for(int j = 0; j < 5; j++)
 				{
 					if(m_command_poly[i][j]->color().a == 0.0f)
 					{
-						m_command_data[i][num].polygon_pointer = m_command_poly[i][j];
+						m_command_data[i][delete_count].polygon_pointer = m_command_poly[i][j];
 						for(int n = 0; n < 4; n++)
 						{
-							m_command_data[i][num].polygon_pointer->texcoord_u(n, _comtexU_list[m_command_data[i][num].num_data].list[n]);
+							m_command_data[i][delete_count].polygon_pointer->texcoord_u(n, _comtexU_list[m_command_data[i][delete_count].num_data].list[n]);
 						}
-						m_command_data[i][num].polygon_pointer->pos_x(m_polygon_pos.x + _polygon_pos_offset / 2 + i * _polygon_pos_offset );
-						m_command_data[i][num].polygon_pointer->pos_y(m_command_data[i][num].pos_y);
-						m_command_data[i][num].polygon_pointer->color_a(1.0f);
+						m_command_data[i][delete_count].polygon_pointer->pos_x(m_polygon_pos.x + _polygon_pos_offset / 2 + i * _polygon_pos_offset );
+						m_command_data[i][delete_count].polygon_pointer->pos_y(m_command_data[i][delete_count].pos_y);
+						m_command_data[i][delete_count].polygon_pointer->color_a(1.0f);
 						break;
 					}
 				}
@@ -353,7 +352,7 @@ void CommandTeam::SetCommandNext(unsigned int* command, int player, float offset
 //=============================================================================
 void CommandTeam::SetPolygon(int player)
 {
-	for(int i = 0; i < _polygon_num; i++)
+	for(int i = 0; i < COMMAND_MAX; i++)
 	{
 		for(int j = 0; j < 5; j++)
 		{

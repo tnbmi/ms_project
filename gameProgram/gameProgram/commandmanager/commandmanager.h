@@ -63,6 +63,8 @@ private:
 	CommandTeam*	m_team[2];
 	unsigned int*	m_command_list[2];
 
+	Polygon2D*		m_ui_polygon;
+
 	ObjectList*		 m_objectList;
 	UpdateList*		 m_updateList;
 	DrawListManager* m_drawListManager;
