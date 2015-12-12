@@ -47,8 +47,8 @@ public:
 	void SetRot( D3DXVECTOR3 rot ){ m_rot = rot; }
 	void SetRot( float x, float y , float z ){ m_rot.x = x , m_rot.y = y , m_rot.z = z; }
 	D3DXCOLOR GetColor( void ){ return m_diffuse; }
-	void SetColor( D3DCOLOR diff){m_diffuse = diff;}
-	void SetColor( float r , float g , float b , float a ){m_diffuse = D3DXCOLOR( r,g,b,a );}
+	void SetColor( D3DCOLOR diff){m_diffuse = diff;SetVertexColor();}
+	void SetColor( float r , float g , float b , float a ){m_diffuse = D3DXCOLOR( r,g,b,a );SetVertexColor();}
 
 private:
 	struct VERTEX
@@ -68,7 +68,8 @@ private:
 	LPDIRECT3DVERTEXBUFFER9 m_vtxBuff;	//頂点バッファへのポインタ
 	POLYGON_CRITERIA m_crit;
 
-	void SetVertexPolygon( POLYGON_CRITERIA crit );
+	void SetVertex( POLYGON_CRITERIA crit );
+	void SetVertexColor(void);
 };
 
 //=============================================================================

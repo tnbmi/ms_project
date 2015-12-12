@@ -110,7 +110,7 @@ bool Manager::Initialize(HINSTANCE hInstance, HWND hWnd, bool windowFlg)
 	//----------------------------
 	// ローディング画面
 	//----------------------------
-	Road::Create( &m_road , device );
+	Road::Create( &m_road , device , this );
 
 	//----------------------------
 	// フェーズ

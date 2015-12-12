@@ -318,7 +318,7 @@
     </ClInclude>
     <ClInclude Include="phase\result\resultMaster\resultMaster.h">
       <Filter>phase\result\resultMaster</Filter>
-	</ClInclude>
+    </ClInclude>
     <ClInclude Include="thread\thread.h">
       <Filter>thread</Filter>
     </ClInclude>
@@ -328,11 +328,12 @@
     <ClInclude Include="road\roadpolygon\roadpolygon.h">
       <Filter>road\roadpolygon</Filter>
     </ClInclude>
-    <ClInclude Include="road\roadmanager\roadmanager.h">
-      <Filter>road\roadmanager</Filter>
-    </ClInclude>
     <ClInclude Include="road\road.h">
       <Filter>road</Filter>
+    </ClInclude>
+    <ClInclude Include="shader\shader.h" />
+    <ClInclude Include="road\roadmanager\roadmanager.h">
+      <Filter>road\roadmanager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -483,6 +484,7 @@
     <ClCompile Include="road\road.cpp">
       <Filter>road</Filter>
     </ClCompile>
+    <ClCompile Include="shader\shader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="resources\shader\fbxPS.hlsl">
