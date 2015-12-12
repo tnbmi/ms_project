@@ -260,7 +260,7 @@ bool Title::InitObject(void)
 
 	//fbx
 	FbxModel *fbx;
-	FbxModel::Create( &fbx,m_device,m_objectList,0,ObjectBase::TYPE_3D,"./resources/fbxModel/Title_Haikei_FBX01.bin" );
+	FbxModel::Create( &fbx,m_device,m_objectList,0,ObjectBase::TYPE_3D,"./resources/fbxModel/Title_Haikei_FBX02.bin" );
 	m_updateList->Link( fbx );
 	m_drawListManager->Link( fbx,0,Shader::PAT_FBX );
 
