@@ -175,7 +175,7 @@ bool CommandTeam::Update(void)
 	{
 		for(int j = 0; j < 10; j++)
 		{
-			m_command_data[i][j].pos_y += _polygon_speed_def + m_speed;
+			m_command_data[i][j].pos_y += (_polygon_speed_def + m_speed);
 			if(m_command_data[i][j].polygon_pointer != nullptr)
 				m_command_data[i][j].polygon_pointer->pos_y(m_command_data[i][j].pos_y);
 		}
@@ -226,34 +226,22 @@ bool CommandTeam::Update(void)
 		{
 			// データを次コマンドから読み込み
 			m_command_data[i][delete_count].num_data = *(m_command_pointer_Next[i] + delete_count);
-			m_command_data[i][delete_count].pos_y = m_polygon_pos.y - m_offset * (COMMAND_MAX - 1);
-			if(m_command_data[i][delete_count].polygon_pointer != nullptr)
-			{
-				m_command_data[i][delete_count].polygon_pointer->color(1.0f, 1.0f, 1.0f, 0.0f);
-				m_command_data[i][delete_count].polygon_pointer = nullptr;
-			}
+			m_command_data[i][delete_count].pos_y = m_command_data[i][delete_count].pos_y - m_offset * COMMAND_MAX;
 			m_command_data[i][delete_count].hit = false;
 			if(m_command_data[i][delete_count].num_data == 4)
-				m_command_data[i][delete_count].hit = true;
-
-			// 表示領域の更新
-			if(m_command_data[i][delete_count].num_data != 4)
 			{
-				for(int j = 0; j < 5; j++)
+				m_command_data[i][delete_count].hit = true;
+				m_command_data[i][delete_count].polygon_pointer->color_a(0.0f);
+			}
+			else
+			{
+				for(int n = 0; n < 4; n++)
 				{
-					if(m_command_poly[i][j]->color().a == 0.0f)
-					{
-						m_command_data[i][delete_count].polygon_pointer = m_command_poly[i][j];
-						for(int n = 0; n < 4; n++)
-						{
-							m_command_data[i][delete_count].polygon_pointer->texcoord_u(n, _comtexU_list[m_command_data[i][delete_count].num_data].list[n]);
-						}
-						m_command_data[i][delete_count].polygon_pointer->pos_x(m_polygon_pos.x + _polygon_pos_offset / 2 + i * _polygon_pos_offset );
-						m_command_data[i][delete_count].polygon_pointer->pos_y(m_command_data[i][delete_count].pos_y);
-						m_command_data[i][delete_count].polygon_pointer->color_a(1.0f);
-						break;
-					}
+					m_command_data[i][delete_count].polygon_pointer->texcoord_u(n, _comtexU_list[m_command_data[i][delete_count].num_data].list[n]);
 				}
+				m_command_data[i][delete_count].polygon_pointer->pos_x(m_polygon_pos.x + _polygon_pos_offset / 2 + i * _polygon_pos_offset );
+				m_command_data[i][delete_count].polygon_pointer->pos_y(m_command_data[i][delete_count].pos_y);
+				m_command_data[i][delete_count].polygon_pointer->color_a(1.0f);
 			}
 		}
 		m_delete_count++;
@@ -261,6 +249,7 @@ bool CommandTeam::Update(void)
 
 	if(m_command_count != 0 && m_command_count % COMMAND_MAX == 0)
 	{
+		m_command_count = 0;
 		return true;
 	}
 
@@ -284,12 +273,12 @@ bool CommandTeam::InitObject(void)
 	//----------------------------
 	for(int i = 0; i < 2; i++)
 	{
-		for(int j = 0; j < 5; j++)
+		for(int j = 0; j < 10; j++)
 		{
 			if(!Polygon2D::Create(&m_command_poly[i][j], m_device, m_objectList, m_import->texture(GameImport::COMMAND_TEX)))
 				return false;
 			m_updateList->Link(m_command_poly[i][j]);
-			m_drawListManager->Link(m_command_poly[i][j], 3, Shader::PAT_2D);
+			m_drawListManager->Link(m_command_poly[i][j], 2, Shader::PAT_2D);
 			m_command_poly[i][j]->pos(0.0f, 0.0f, 0.0f);
 			m_command_poly[i][j]->scl(_polygon_size_x, _polygon_size_x, 0.0f);
 			for(int n = 0; n < 4; n++)
@@ -304,7 +293,7 @@ bool CommandTeam::InitObject(void)
 	if(!Polygon2D::Create(&m_back_poly[0], m_device, m_objectList, m_import->texture(texture)))
 		return false;
 	m_updateList->Link(m_back_poly[0]);
-	m_drawListManager->Link(m_back_poly[0], 2, Shader::PAT_2D);
+	m_drawListManager->Link(m_back_poly[0], 1, Shader::PAT_2D);
 	m_back_poly[0]->pos(m_polygon_pos.x + _polygon_pos_offset, m_polygon_pos.y - _polygon_pos_offset * 3, 0.0f);
 	m_back_poly[0]->scl(_polygon_pos_offset * 2, _polygon_pos_offset * 6, 0.0f);
 
@@ -330,6 +319,7 @@ void CommandTeam::SetCommand(unsigned int* command, unsigned int* nextCommand, i
 	{
 		m_command_data[player][i].num_data = *(command + i);
 		m_command_data[player][i].pos_y = 0.0f - m_offset * i;
+		m_command_data[player][i].polygon_pointer = m_command_poly[player][i];
 		if(m_command_data[player][i].num_data == 4)
 			m_command_data[player][i].hit = true;
 	}
@@ -354,23 +344,15 @@ void CommandTeam::SetPolygon(int player)
 {
 	for(int i = 0; i < COMMAND_MAX; i++)
 	{
-		for(int j = 0; j < 5; j++)
+		if(m_command_data[player][i].num_data != 4)
 		{
-			if(m_command_data[player][i].num_data != 4)
+			for(int n = 0; n < 4; n++)
 			{
-				if(m_command_poly[player][j]->color().a == 0.0f)
-				{
-					m_command_data[player][i].polygon_pointer = m_command_poly[player][j];
-					for(int n = 0; n < 4; n++)
-					{
-						m_command_data[player][i].polygon_pointer->texcoord_u(n, _comtexU_list[m_command_data[player][i].num_data].list[n]);
-					}
-					m_command_data[player][i].polygon_pointer->pos_x(m_polygon_pos.x + _polygon_pos_offset / 2 + player * _polygon_pos_offset );
-					m_command_data[player][i].polygon_pointer->pos_y(m_command_data[player][i].pos_y);
-					m_command_data[player][i].polygon_pointer->color_a(1.0f);
-					break;
-				}
+				m_command_data[player][i].polygon_pointer->texcoord_u(n, _comtexU_list[m_command_data[player][i].num_data].list[n]);
 			}
+			m_command_data[player][i].polygon_pointer->pos_x(m_polygon_pos.x + _polygon_pos_offset / 2 + player * _polygon_pos_offset );
+			m_command_data[player][i].polygon_pointer->pos_y(m_command_data[player][i].pos_y);
+			m_command_data[player][i].polygon_pointer->color_a(1.0f);
 		}
 	}
 }

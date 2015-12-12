@@ -142,7 +142,7 @@ bool TimeManager::InitObject(void)
 	if(!Number::Create(&m_poly_list[0], m_device, m_objectList, m_import->texture(GameImport::NUMBER_YELLOW)))
 		return false;
 	m_updateList->Link(m_poly_list[0]);
-	m_drawListManager->Link(m_poly_list[0], 2, Shader::PAT_2D);
+	m_drawListManager->Link(m_poly_list[0], 4, Shader::PAT_2D);
 	m_poly_list[0]->pos(_time_pos.x, _time_pos.y, 0.0f);
 	m_poly_list[0]->scl(_time_poly_size.x, _time_poly_size.y, 0.0f);
 
