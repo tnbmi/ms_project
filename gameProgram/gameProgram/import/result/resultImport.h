@@ -26,7 +26,8 @@ public:
 		// ‚È‚µ
 		NONE = 0,
 
-		TEST_0,
+		STONES,
+		STONES_NOR,
 		SKY,
 
 		NUM,

@@ -70,12 +70,21 @@ public:
 	virtual void		color_b(float b) {m_color.b = b; SetVertexColor();}
 	virtual void		color_a(float a) {m_color.a = a; SetVertexColor();}
 
+	virtual void texcoord(int num, D3DXVECTOR2 uv) {m_vtx[num].uv = uv;}
+	virtual void texcoord(int num, float u, float v) {m_vtx[num].uv.x = u; m_vtx[num].uv.y = v;}
+	virtual void texcoord_u(int num, float u) {m_vtx[num].uv.x = u;}
+
+	virtual void texture(LPDIRECT3DTEXTURE9 texture){m_texture = texture;}
+	virtual void norTexture(LPDIRECT3DTEXTURE9 norTexture){m_norTexture = norTexture;}
+
 protected:
 	void SetVertex(void);
 	void SetVertexScl(void);
 	void SetVertexColor(void);
 
 	VERTEX m_vtx[4];
+
+	LPDIRECT3DTEXTURE9 m_norTexture;
 };
 
 //=============================================================================

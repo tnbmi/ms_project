@@ -167,6 +167,15 @@ void DrawListManager::AllDraw(Camera* camera, Light* light)
 		m_shader->SetShader(&vsc, &psc, (Shader::PATTERN)cnt);
 
 		//----------------------------
+		// ƒJƒƒ‰Ý’è
+		//----------------------------
+		if(psc != nullptr)
+		{
+			D3DXVECTOR3 eye = camera->eye();
+			psc->SetFloatArray(m_device, "gEyePos", (float*)&eye, 3);
+		}
+
+		//----------------------------
 		// ƒ‰ƒCƒgÝ’è
 		//----------------------------
 		light->SetLight(vsc);

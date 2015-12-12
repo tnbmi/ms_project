@@ -24,14 +24,14 @@ struct SOUND_PARAM
 // マクロ定義
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // サウンドファイルパス
-const char* _sound_path = "../resources/sound";
+const char* _sound_path = "./resources/sound";
 
 //----------------------------
 // サウンドデータ
 //----------------------------
 const SOUND_PARAM _sound_data[] =
 {
-	{"/bgm/kiseki.wav", true},	// BGM_A
+	{"/bgm/kiseki.wav", true},		// BGM_A
 	{"/se/fireworks.wav", false}	// SE_FIREWORKS
 };
 

@@ -73,6 +73,8 @@ public:
 	virtual void		color_b(float b) {m_color.b = b;}
 	virtual void		color_a(float a) {m_color.a = a;}
 
+	virtual void	texture(LPDIRECT3DTEXTURE9 texture){m_texture = texture;}
+
 	int	 priority(int shaderPatternId) {return m_priority[shaderPatternId];}
 	void priority(int shaderPatternId, int priority) {m_priority[shaderPatternId] = priority;}
 

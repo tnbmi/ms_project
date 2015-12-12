@@ -282,12 +282,16 @@ bool Game::InitObject(void)
 	// 地面3Dポリゴン
 	//----------------------------
 	Polygon3D* poly3d;
-	if(!Polygon3D::Create(&poly3d, m_device, m_objectList, m_import->texture(GameImport::TEST_0)))
+	if(!Polygon3D::Create(&poly3d, m_device, m_objectList, m_import->texture(GameImport::STONES)))
 		return false;
 	m_updateList->Link(poly3d);
-	m_drawListManager->Link(poly3d, 4, Shader::PAT_LIGHT);
+	m_drawListManager->Link(poly3d, 4, Shader::PAT_NOR_DIR);
+	poly3d->norTexture(m_import->texture(GameImport::STONES_NOR));
 	poly3d->scl(512.0f*5, 512.0f*5, 0.0f);
 	poly3d->rot_x(PAI * 0.5f);
+	poly3d->texcoord(1, 5.0f,  0.0f);
+	poly3d->texcoord(2,  0.0f, 5.0f);
+	poly3d->texcoord(3, 5.0f, 5.0f);
 
 	//----------------------------
 	// 空メッシュドーム
@@ -320,7 +324,7 @@ bool Game::InitObject(void)
 	for( int i = 0 ; i < 5 ; i++ )
 	{
 		FbxModel *fbx;
-		FbxModel::Create( &fbx,m_device,m_objectList,0,ObjectBase::TYPE_3D,"../resources/fbxModel/ggy.bin" );
+		FbxModel::Create( &fbx,m_device,m_objectList,0,ObjectBase::TYPE_3D,"./resources/fbxModel/ggy.bin" );
 		m_updateList->Link( fbx );
 		m_drawListManager->Link( fbx,0,Shader::PAT_FBX );
 
@@ -330,7 +334,7 @@ bool Game::InitObject(void)
 	for( int i = 0 ; i < 10 ; i++ )
 	{
 		FbxModel *fbx;
-		FbxModel::Create( &fbx,m_device,m_objectList,0,ObjectBase::TYPE_3D,"../resources/fbxModel/ggy.bin" );
+		FbxModel::Create( &fbx,m_device,m_objectList,0,ObjectBase::TYPE_3D,"./resources/fbxModel/ggy.bin" );
 		m_updateList->Link( fbx );
 		m_drawListManager->Link( fbx,0,Shader::PAT_FBX );
 
@@ -340,7 +344,7 @@ bool Game::InitObject(void)
 	for( int i = 0 ; i < 7 ; i++ )
 	{
 		FbxModel *fbx;
-		FbxModel::Create( &fbx,m_device,m_objectList,0,ObjectBase::TYPE_3D,"../resources/fbxModel/ggy.bin" );
+		FbxModel::Create( &fbx,m_device,m_objectList,0,ObjectBase::TYPE_3D,"./resources/fbxModel/ggy.bin" );
 		m_updateList->Link( fbx );
 		m_drawListManager->Link( fbx,0,Shader::PAT_FBX );
 
@@ -351,7 +355,7 @@ bool Game::InitObject(void)
 	for( int i = 0 ; i < 10 ; i++ )
 	{
 		FbxModel *fbx;
-		FbxModel::Create( &fbx,m_device,m_objectList,0,ObjectBase::TYPE_3D,"../resources/fbxModel/ggy.bin" );
+		FbxModel::Create( &fbx,m_device,m_objectList,0,ObjectBase::TYPE_3D,"./resources/fbxModel/ggy.bin" );
 		m_updateList->Link( fbx );
 		m_drawListManager->Link( fbx,0,Shader::PAT_FBX );
 
@@ -362,7 +366,7 @@ bool Game::InitObject(void)
 	for( int i = 0 ; i < 10 ; i++ )
 	{
 		FbxModel *fbx;
-		FbxModel::Create( &fbx,m_device,m_objectList,0,ObjectBase::TYPE_3D,"../resources/fbxModel/ggy.bin" );
+		FbxModel::Create( &fbx,m_device,m_objectList,0,ObjectBase::TYPE_3D,"./resources/fbxModel/ggy.bin" );
 		m_updateList->Link( fbx );
 		m_drawListManager->Link( fbx,0,Shader::PAT_FBX );
 

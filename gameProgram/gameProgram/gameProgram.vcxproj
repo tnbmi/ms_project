@@ -103,17 +103,17 @@
     <ClInclude Include="view\light\light.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\resources\shader\basicPS.hlsl" />
-    <None Include="..\resources\shader\fbxPS.hlsl" />
-    <None Include="..\resources\shader\fbxVS.hlsl" />
-    <None Include="..\resources\shader\instancingPS.hlsl" />
-    <None Include="..\resources\shader\instancingVS.hlsl" />
-    <None Include="..\resources\shader\lightVS.hlsl" />
-    <None Include="..\resources\shader\noneLightVS.hlsl" />
-    <None Include="..\resources\shader\normalMapDirPS.hlsl" />
-    <None Include="..\resources\shader\perPixelVS.hlsl" />
-    <None Include="..\resources\shader\twoDimensionsPS.hlsl" />
-    <None Include="..\resources\shader\twoDimensionsVS.hlsl" />
+    <None Include="resources\shader\basicPS.hlsl" />
+    <None Include="resources\shader\fbxPS.hlsl" />
+    <None Include="resources\shader\fbxVS.hlsl" />
+    <None Include="resources\shader\instancingPS.hlsl" />
+    <None Include="resources\shader\instancingVS.hlsl" />
+    <None Include="resources\shader\lightVS.hlsl" />
+    <None Include="resources\shader\noneLightVS.hlsl" />
+    <None Include="resources\shader\normalMapDirPS.hlsl" />
+    <None Include="resources\shader\perPixelVS.hlsl" />
+    <None Include="resources\shader\twoDimensionsPS.hlsl" />
+    <None Include="resources\shader\twoDimensionsVS.hlsl" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{7F4B6A1D-5C52-4CC7-96EF-6126108B8DA0}</ProjectGuid>
@@ -147,7 +147,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(SolutionDir)</OutDir>
+    <OutDir>$(SolutionDir)$(ProjectName)</OutDir>
     <TargetName>H411_Game</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">

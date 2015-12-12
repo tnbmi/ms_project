@@ -21,7 +21,8 @@ const char* _result_texture_name[] =
 {
 	nullptr,
 
-	"/test_0.png",
+	"/stones.bmp",
+	"/stones_normal.bmp",
 	"/sky.jpg",
 
 	"/number.png"

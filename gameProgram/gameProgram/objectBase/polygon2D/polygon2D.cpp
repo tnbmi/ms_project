@@ -125,8 +125,8 @@ void Polygon2D::Draw(LPD3DXCONSTANTTABLE vsc, LPD3DXCONSTANTTABLE psc, D3DXMATRI
 	//----------------------------
 	// テクスチャ設定
 	//----------------------------
+	//テクスチャの設定
 	if(texSumpler >= 0)
-		//テクスチャの設定
 		m_device->SetTexture(texSumpler, m_texture);
 	else
 		m_device->SetTexture(0, m_texture);

@@ -41,7 +41,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, LPSTR cmdLine,
 	// フルスクリーン設定
 	//----------------------------
 	bool windowFlg = true;
-	if(MessageBox(NULL,"フルスクリーンで起動しますか","フルスクリーン設定",MB_YESNO)==IDYES)
+	if(MessageBox(nullptr, "フルスクリーンで起動しますか","フルスクリーン設定",MB_YESNO)==IDYES)
 		//フルスクリーンで初期化処理(ウィンドウを作成してから行う)
 		windowFlg = FALSE;
 	else

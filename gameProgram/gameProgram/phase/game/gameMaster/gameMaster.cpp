@@ -53,19 +53,19 @@ bool GameMaster::Create(GameMaster** outPointer,LPDIRECT3DDEVICE9 device,
 	//観客制御生成
 	AudienceManager *audience;
 	if(!AudienceManager::Create( &audience,device,objectList,updateList,drawList,0,ObjectBase::TYPE_3D,
-							 "../resources/texture/boy.png",_ScoreMax,D3DXVECTOR3( 100,50,-1000),D3DXVECTOR3(1000,200,-700 ),D3DXVECTOR3(  -1000,50,-1000),D3DXVECTOR3( -100,200,-700 ) ))
+							 "./resources/texture/boy.png",_ScoreMax,D3DXVECTOR3( 100,50,-1000),D3DXVECTOR3(1000,200,-700 ),D3DXVECTOR3(  -1000,50,-1000),D3DXVECTOR3( -100,200,-700 ) ))
 		return false;
 
 	//エフェクトマネージャ
 	EffectManager *ef;
-	if(!EffectManager::Create( &ef,device,objectList,updateList,drawList,5000,"../resources/texture/effect.jpg",D3DXVECTOR2(1,1),D3DXVECTOR2(1,1) ))
+	if(!EffectManager::Create( &ef,device,objectList,updateList,drawList,5000,"./resources/texture/effect.jpg",D3DXVECTOR2(1,1),D3DXVECTOR2(1,1) ))
 		return false;
 
 	//プレイヤー生成
 	Player *redTeam;
 	Player *blueTeam;
-	Player::Create( &blueTeam,device,objectList,updateList,drawList,0,ObjectBase::TYPE_3D,"../resources/fbxModel/daisya.bin","../resources/fbxModel/ground.bin","../resources/fbxModel/robo.bin");
-	Player::Create( &redTeam,device,objectList,updateList,drawList,0,ObjectBase::TYPE_3D,"../resources/fbxModel/daisya.bin","../resources/fbxModel/ground.bin","../resources/fbxModel/robo.bin");
+	Player::Create( &blueTeam,device,objectList,updateList,drawList,0,ObjectBase::TYPE_3D,"./resources/fbxModel/daisya.bin","./resources/fbxModel/ground.bin","./resources/fbxModel/robo.bin");
+	Player::Create( &redTeam,device,objectList,updateList,drawList,0,ObjectBase::TYPE_3D,"./resources/fbxModel/daisya.bin","./resources/fbxModel/ground.bin","./resources/fbxModel/robo.bin");
 
 	//ゲームマスター生成
 	GameMaster* pointer = new GameMaster( audience,ef,redTeam,blueTeam );

@@ -428,38 +428,38 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\resources\shader\twoDimensionsPS.hlsl">
-      <Filter>シェーダーファイル\twoDimensions</Filter>
-    </None>
-    <None Include="..\resources\shader\twoDimensionsVS.hlsl">
-      <Filter>シェーダーファイル\twoDimensions</Filter>
-    </None>
-    <None Include="..\resources\shader\fbxVS.hlsl">
+    <None Include="resources\shader\fbxPS.hlsl">
       <Filter>シェーダーファイル\fbx</Filter>
     </None>
-    <None Include="..\resources\shader\fbxPS.hlsl">
+    <None Include="resources\shader\fbxVS.hlsl">
       <Filter>シェーダーファイル\fbx</Filter>
     </None>
-    <None Include="..\resources\shader\instancingPS.hlsl">
+    <None Include="resources\shader\instancingPS.hlsl">
       <Filter>シェーダーファイル\instancing</Filter>
     </None>
-    <None Include="..\resources\shader\instancingVS.hlsl">
+    <None Include="resources\shader\instancingVS.hlsl">
       <Filter>シェーダーファイル\instancing</Filter>
     </None>
-    <None Include="..\resources\shader\normalMapDirPS.hlsl">
+    <None Include="resources\shader\basicPS.hlsl">
+      <Filter>シェーダーファイル\lighting</Filter>
+    </None>
+    <None Include="resources\shader\lightVS.hlsl">
+      <Filter>シェーダーファイル\lighting</Filter>
+    </None>
+    <None Include="resources\shader\noneLightVS.hlsl">
+      <Filter>シェーダーファイル\lighting</Filter>
+    </None>
+    <None Include="resources\shader\normalMapDirPS.hlsl">
       <Filter>シェーダーファイル\perpixel</Filter>
     </None>
-    <None Include="..\resources\shader\perPixelVS.hlsl">
+    <None Include="resources\shader\perPixelVS.hlsl">
       <Filter>シェーダーファイル\perpixel</Filter>
     </None>
-    <None Include="..\resources\shader\lightVS.hlsl">
-      <Filter>シェーダーファイル\lighting</Filter>
+    <None Include="resources\shader\twoDimensionsPS.hlsl">
+      <Filter>シェーダーファイル\twoDimensions</Filter>
     </None>
-    <None Include="..\resources\shader\basicPS.hlsl">
-      <Filter>シェーダーファイル\lighting</Filter>
-    </None>
-    <None Include="..\resources\shader\noneLightVS.hlsl">
-      <Filter>シェーダーファイル\lighting</Filter>
+    <None Include="resources\shader\twoDimensionsVS.hlsl">
+      <Filter>シェーダーファイル\twoDimensions</Filter>
     </None>
   </ItemGroup>
 </Project>

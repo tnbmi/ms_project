@@ -41,8 +41,6 @@ FbxModel::FbxModel(LPDIRECT3DDEVICE9 device, ObjectList* objectList, int priorit
 	m_blendEndKeyFrame   = 0;
 	m_blendCurKeyFrame   = 0;
 
-	UpdateAnimation();
-
 	m_startKeyFrame = 0;
 	m_endKeyFrame = 0;
 	m_curKeyFrame = 0;
@@ -475,8 +473,8 @@ bool FbxModel::LoadFbxModel( const char *loadModelPath )
 				m_part[ i ].dataArray[j].texName = new char [ len ];
 				fread( m_part[i].dataArray[j].texName,sizeof(char),len,file );
 
-				char whiteTexPath[128] = "../resources/texture/white.jpg";
-				char texPath[128] = "../resources/texture/";
+				char whiteTexPath[128] = "./resources/texture/white.jpg";
+				char texPath[128] = "./resources/texture/";
 
 				if( strcmp( m_part[i].dataArray[j].texName,"NOTEX" ) == 0 )
 				{

@@ -15,7 +15,7 @@
 // マクロ定義
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // シェーダーファイルパス
-const char* _shader_path = "../resources/shader";
+const char* _shader_path = "./resources/shader";
 
 //----------------------------
 // バーテックスシェーダ
@@ -27,6 +27,7 @@ enum VS_TABLE
 	VS_2D	 = 0,
 	VS_LIGHT,
 	VS_NONE_LIGHT,
+	VS_PERPIXEL,
 	VS_FBX,
 	VS_INS,
 };
@@ -37,6 +38,7 @@ const char* _vsName[] =
 	{"/twoDimensionsVS.hlsl"},
 	{"/lightVS.hlsl"},
 	{"/noneLightVS.hlsl"},
+	{"/perPixelVS.hlsl"},
 	{"/fbxVS.hlsl"},
 	{"/instancingVS.hlsl"}
 };
@@ -50,6 +52,7 @@ enum PS_TABLE
 	PS_NONE = -1,
 	PS_2D = 0,
 	PS_BASIC,
+	PS_NOR_DIR,
 	PS_FBX,
 	PS_INS
 };
@@ -59,6 +62,7 @@ const char* _psName[] =
 {
 	{"/twoDimensionsPS.hlsl"},
 	{"/basicPS.hlsl"},
+	{"/normalMapDirPS.hlsl"},
 	{"/fbxPS.hlsl"},
 	{"/instancingPS.hlsl"}
 };
@@ -76,12 +80,13 @@ struct SHADER_SET
 // パターンセット内容
 const SHADER_SET _shader_set[Shader::PATTERN_MAX] =
 {
-	{VS_NONE,		PS_NONE},	// NONE
-	{VS_LIGHT,		PS_BASIC},	// LIGHT
-	{VS_NONE_LIGHT,	PS_BASIC},	// NONE_LIGHT
-	{VS_FBX,		PS_FBX},	// FBX
-	{VS_INS,		PS_INS},	// INS
-	{VS_2D,			PS_2D}		// 2D
+	{VS_NONE,		PS_NONE},		// NONE
+	{VS_LIGHT,		PS_BASIC},		// LIGHT
+	{VS_NONE_LIGHT,	PS_BASIC},		// NONE_LIGHT
+	{VS_PERPIXEL,	PS_NOR_DIR},	// NOR_DIR
+	{VS_FBX,		PS_FBX},		// FBX
+	{VS_INS,		PS_INS},		// INS
+	{VS_2D,			PS_2D}			// 2D
 };
 
 //=============================================================================
