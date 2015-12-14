@@ -13,7 +13,7 @@
 
 #include "..\..\debugproc\debugproc.h"
 #include "..\..\manager\manager.h"
-#include "..\game\game.h"
+#include "..\standby\standby.h"
 
 #include "..\..\input\keyboard\keyboard.h"
 #include "..\..\input\padX\padXManager.h"
@@ -216,7 +216,7 @@ void Title::Update(void)
 
 	if(pad->buttonTrigger(XINPUT_GAMEPAD_START) || m_keyboard->trigger(DIK_RETURN))
 	{
-		Manager::nextPhase((Phase*)new Game(m_device));
+		Manager::nextPhase((Phase*)new Standby(m_device));
 	}
 }
 
