@@ -30,15 +30,16 @@
 #include "..\..\list\updateList\updateList.h"
 #include "..\..\list\drawList\drawListManager.h"
 
-#include "..\..\objectBase\polygon3D\polygon3D.h"
-#include "..\..\objectBase\meshDome\meshDome.h"
-
 #include "..\..\commandmanager\commandmanager.h"
 #include "..\..\timemanager\timeManager.h"
 
-#include "..\..\phase\game\gameMaster\gameMaster.h"
-#include "..\..\object\player\player.h"
+#include "..\..\objectBase\polygon3D\polygon3D.h"
+#include "..\..\objectBase\meshDome\meshDome.h"
 #include "..\..\objectBase\fbxModel\fbxModel.h"
+
+#include "..\..\object\player\player.h"
+
+#include "..\..\phase\game\gameMaster\gameMaster.h"
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // É}ÉNÉçíËã`

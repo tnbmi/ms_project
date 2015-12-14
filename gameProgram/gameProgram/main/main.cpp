@@ -33,8 +33,8 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, LPSTR cmdLine,
 	//----------------------------
 	// ウィンドウ生成
 	//----------------------------
-	Window* window = new Window;
-	if(!window->Initialize(hInstance, cmdShow))
+	Window window;
+	if(!window.Initialize(hInstance, cmdShow))
 		return -1;
 
 	//----------------------------
@@ -52,7 +52,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, LPSTR cmdLine,
 	// マネージャー生成
 	//----------------------------
 	Manager* manager = nullptr;
-	if(!Manager::Create(&manager, hInstance, window->hWnd(), windowFlg))
+	if(!Manager::Create(&manager, hInstance, window.hWnd(), windowFlg))
 		return -1;
 
 	//----------------------------
@@ -117,9 +117,6 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, LPSTR cmdLine,
 
 	// マネージャー
 	SafeFinalizeDelete(manager);
-
-	// ウィンドウ
-	SafeFinalizeDelete(window);
 
 	return (int)msg.wParam;
 }
