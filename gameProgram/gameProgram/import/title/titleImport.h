@@ -27,6 +27,7 @@ public:
 		NONE = 0,
 
 		TITLE_LOGO,
+		SKY,
 
 		TEX_MAX
 	};

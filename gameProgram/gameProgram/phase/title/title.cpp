@@ -29,14 +29,15 @@
 #include "..\..\list\updateList\updateList.h"
 #include "..\..\list\drawList\drawListManager.h"
 
-#include "..\..\objectBase\fbxModel\fbxModel.h"
+#include "..\..\objectBase\meshDome\meshDome.h"
 #include "..\..\objectBase\polygon2D\polygon2D.h"
+#include "..\..\objectBase\fbxModel\fbxModel.h"
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // マクロ定義
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-const D3DXVECTOR3 _at	= D3DXVECTOR3(0.0f, 100.0f, 800.0f);
-const D3DXVECTOR3 _eye	= D3DXVECTOR3(0.0f, 150.0f, -700.0f);
+const D3DXVECTOR3 _at	= D3DXVECTOR3(0.0f, 200.0f, 800.0f);
+const D3DXVECTOR3 _eye	= D3DXVECTOR3(0.0f, 100.0f, -800.0f);
 
 //=============================================================================
 // コンストラクタ
@@ -198,9 +199,7 @@ void Title::Update(void)
 	// 画面遷移
 	//----------------------------
 	if(pad->buttonTrigger(XINPUT_GAMEPAD_START) || m_keyboard->trigger(DIK_RETURN))
-	{
 		Manager::nextPhase((Phase*)new Standby(m_device));
-	}
 }
 
 //=============================================================================
@@ -226,6 +225,18 @@ void Title::Draw(void)
 //=============================================================================
 bool Title::InitObject(void)
 {
+	//----------------------------
+	// 空メッシュドーム
+	//----------------------------
+	MeshDome* dome;
+	if(!MeshDome::Create(&dome, m_device, m_objectList,
+		D3DXVECTOR2(8, 3), 2500.0f, 2000.0f, m_import->texture(TitleImport::SKY)))
+		return false;
+	m_updateList->Link(dome);
+	m_drawListManager->Link(dome, 2, Shader::PAT_NONE_LIGHT);
+	dome->pos(0.0f, -150.0f, 1000.0f);
+	dome->rot_y(PAI * 0.5f);
+
 	//------------------------------
 	//fbx
 	//------------------------------
@@ -246,7 +257,7 @@ bool Title::InitObject(void)
 	m_updateList->Link(poly2d);
 	m_drawListManager->Link(poly2d, 4, Shader::PAT_2D);
 	poly2d->scl(701.5f, 248.0f, 0.0f);
-	poly2d->pos(SCREEN_WIDTH * 0.5f, 280.0f, 0.0f);
+	poly2d->pos(SCREEN_WIDTH * 0.5f, 200.0f, 0.0f);
 
 	return true;
 }

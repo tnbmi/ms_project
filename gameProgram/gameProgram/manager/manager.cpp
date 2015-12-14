@@ -223,7 +223,7 @@ bool Manager::Update(void)
 		m_phase = m_nextPhase;
 		m_renderer->phase(m_phase);
 	}
-	m_road->StateOpen();
+	//m_road->StateOpen();
 	return true;
 }
 
