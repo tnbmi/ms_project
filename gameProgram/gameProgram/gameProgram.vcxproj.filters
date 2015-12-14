@@ -179,6 +179,12 @@
     <Filter Include="road\roadpolygon">
       <UniqueIdentifier>{3a3c33f2-28a3-4765-b9d1-976f4afb13f4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="phase\standby">
+      <UniqueIdentifier>{209378e2-acd0-4a0c-adac-52609ef5a5a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="import\standby">
+      <UniqueIdentifier>{748e9328-370f-4df5-a79c-726405d73179}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main\main.h">
@@ -334,6 +340,12 @@
     <ClInclude Include="road\roadmanager\roadmanager.h">
       <Filter>road\roadmanager</Filter>
     </ClInclude>
+    <ClInclude Include="phase\standby\standby.h">
+      <Filter>phase\standby</Filter>
+    </ClInclude>
+    <ClInclude Include="import\standby\standbyImport.h">
+      <Filter>import\standby</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main\main.cpp">
@@ -482,6 +494,12 @@
     </ClCompile>
     <ClCompile Include="shader\shader.cpp">
       <Filter>shader</Filter>
+    </ClCompile>
+    <ClCompile Include="phase\standby\standby.cpp">
+      <Filter>phase\standby</Filter>
+    </ClCompile>
+    <ClCompile Include="import\standby\standbyImport.cpp">
+      <Filter>import\standby</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
