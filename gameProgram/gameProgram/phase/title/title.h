@@ -28,8 +28,6 @@ class ObjectList;
 class UpdateList;
 class DrawListManager;
 
-class EffectManager;
-
 class Title : public Phase
 {
 public:
@@ -53,8 +51,6 @@ private:
 	ObjectList*		 m_objectList;
 	UpdateList*		 m_updateList;
 	DrawListManager* m_drawListManager;
-
-	EffectManager * m_effectManager;
 };
 
 //=============================================================================

@@ -26,7 +26,7 @@ public:
 		// ‚È‚µ
 		NONE = 0,
 
-		TEST_0,
+		TITLE_LOGO,
 
 		TEX_MAX
 	};

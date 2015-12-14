@@ -319,59 +319,6 @@ bool Game::InitObject(void)
 	//----------------------------
 	GameMaster::Create( &m_gameMaster,m_device,m_objectList,m_updateList,m_drawListManager,m_import,m_debugproc,m_padXManager);
 
-	/*
-	for( int i = 0 ; i < 5 ; i++ )
-	{
-		FbxModel *fbx;
-		FbxModel::Create( &fbx,m_device,m_objectList,0,ObjectBase::TYPE_3D,"./resources/fbxModel/ggy.bin" );
-		m_updateList->Link( fbx );
-		m_drawListManager->Link( fbx,0,Shader::PAT_FBX );
-
-		fbx->pos( D3DXVECTOR3( 600,0,100+100 * i ) );
-	}
-
-	for( int i = 0 ; i < 10 ; i++ )
-	{
-		FbxModel *fbx;
-		FbxModel::Create( &fbx,m_device,m_objectList,0,ObjectBase::TYPE_3D,"./resources/fbxModel/ggy.bin" );
-		m_updateList->Link( fbx );
-		m_drawListManager->Link( fbx,0,Shader::PAT_FBX );
-
-		fbx->pos( D3DXVECTOR3( -550 + 100 * i,0,500 ) );
-	}
-	
-	for( int i = 0 ; i < 7 ; i++ )
-	{
-		FbxModel *fbx;
-		FbxModel::Create( &fbx,m_device,m_objectList,0,ObjectBase::TYPE_3D,"./resources/fbxModel/ggy.bin" );
-		m_updateList->Link( fbx );
-		m_drawListManager->Link( fbx,0,Shader::PAT_FBX );
-
-		fbx->pos( D3DXVECTOR3( -550 + 100 * i,0,400 ) );
-	}
-	
-	/*
-	for( int i = 0 ; i < 10 ; i++ )
-	{
-		FbxModel *fbx;
-		FbxModel::Create( &fbx,m_device,m_objectList,0,ObjectBase::TYPE_3D,"./resources/fbxModel/ggy.bin" );
-		m_updateList->Link( fbx );
-		m_drawListManager->Link( fbx,0,Shader::PAT_FBX );
-
-		fbx->pos( D3DXVECTOR3( -550 + 100 * i,0,600 ) );
-	}
-	
-	
-	for( int i = 0 ; i < 10 ; i++ )
-	{
-		FbxModel *fbx;
-		FbxModel::Create( &fbx,m_device,m_objectList,0,ObjectBase::TYPE_3D,"./resources/fbxModel/ggy.bin" );
-		m_updateList->Link( fbx );
-		m_drawListManager->Link( fbx,0,Shader::PAT_FBX );
-
-		fbx->pos( D3DXVECTOR3( -550 + 100 * i,0,700 ) );
-	}
-	*/
 	return true;
 }
 

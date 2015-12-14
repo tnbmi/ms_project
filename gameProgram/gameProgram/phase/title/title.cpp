@@ -30,10 +30,7 @@
 #include "..\..\list\drawList\drawListManager.h"
 
 #include "..\..\objectBase\fbxModel\fbxModel.h"
-#include "..\..\objectBase\instancingBillboard\instancingBillboard.h"
-#include "..\..\effectManager\effectManager.h"
-
-#include "..\..\objectBase\fbxModel\fbxModel.h"
+#include "..\..\objectBase\polygon2D\polygon2D.h"
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // マクロ定義
@@ -58,8 +55,6 @@ Title::Title(LPDIRECT3DDEVICE9 device) : Phase(device)
 	m_objectList		= nullptr;
 	m_updateList		= nullptr;
 	m_drawListManager	= nullptr;
-
-	m_effectManager		= nullptr;
 }
 
 //=============================================================================
@@ -155,9 +150,6 @@ void Title::Finalize(void)
 	// オブジェクトリスト
 	SafeDelete(m_objectList);
 
-	//エフェクトマネージャ
-	SafeFinalizeDelete(m_effectManager);
-
 	//----------------------------
 	// ビュー
 	//----------------------------
@@ -202,18 +194,9 @@ void Title::Update(void)
 	//----------------------------
 	m_updateList->AllUpdate();
 
-	m_effectManager->Update();
-
 	//----------------------------
 	// 画面遷移
 	//----------------------------
-
-	if( m_keyboard->trigger( DIK_1 ) )
-	{
-		//m_effectManager->AddEffectFromDataBase( 0,D3DXVECTOR3(0,0,0) );
-		m_effectManager->AddEffectFromDataBase( 1,D3DXVECTOR3(0,0,0) );
-	}
-
 	if(pad->buttonTrigger(XINPUT_GAMEPAD_START) || m_keyboard->trigger(DIK_RETURN))
 	{
 		Manager::nextPhase((Phase*)new Standby(m_device));
@@ -244,21 +227,8 @@ void Title::Draw(void)
 bool Title::InitObject(void)
 {
 	//------------------------------
-	//エフェクト　ｆｂｘテスト
-	//------------------------------
-	InstancingBillboard *bill;
-	if( !InstancingBillboard::Create( &bill,m_device,m_objectList,1,ObjectBase::TYPE_NONE,5000,
-		"./resources/texture/effect.jpg",D3DXVECTOR2(1,1),D3DXVECTOR2(1,1)))
-		return false;
-	m_drawListManager->Link( bill,1,Shader::PAT_INS );
-
-	if( !EffectManager::Create( &m_effectManager,bill ) )
-		return false;
-	m_effectManager->LoadEffectData( "./resources/effect/FireWorks3.OEF" );
-	m_effectManager->LoadEffectData( "./resources/effect/Chino.OEF" );
-	m_effectManager->SetOption( InstancingBillboard::OPTION(true,false,false));
-
 	//fbx
+	//------------------------------
 	FbxModel *fbx;
 	FbxModel::Create( &fbx,m_device,m_objectList,0,ObjectBase::TYPE_3D,"./resources/fbxModel/Title_Haikei_FBX02.bin" );
 	m_updateList->Link( fbx );
@@ -266,6 +236,17 @@ bool Title::InitObject(void)
 
 	fbx->pos( D3DXVECTOR3( -0,0,0 ) );
 	fbx->rot( D3DXVECTOR3(0,PAI,0 ) );
+
+	//----------------------------
+	// タイトルロゴ
+	//----------------------------
+	Polygon2D* poly2d;
+	if(!Polygon2D::Create(&poly2d, m_device, m_objectList, m_import->texture(TitleImport::TITLE_LOGO)))
+		return false;
+	m_updateList->Link(poly2d);
+	m_drawListManager->Link(poly2d, 4, Shader::PAT_2D);
+	poly2d->scl(701.5f, 248.0f, 0.0f);
+	poly2d->pos(SCREEN_WIDTH * 0.5f, 280.0f, 0.0f);
 
 	return true;
 }
