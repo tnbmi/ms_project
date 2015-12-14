@@ -182,6 +182,8 @@ void ResultMaster::Update(void)
 
 		m_redTeamScore->StartRandView( 60 * 3 );
 		m_blueTeamScore->StartRandView( 60 * 3 );
+		m_redTeam->StartAnimationSecondChild(1,30,true );
+		m_blueTeam->StartAnimationSecondChild(1,30,true );
 		m_redGgy->StartAnimation(1,30,true );
 		m_blueGgy->StartAnimation(1,30,true );
 		m_phase = PHASE_ANNOUNCEMENT;
