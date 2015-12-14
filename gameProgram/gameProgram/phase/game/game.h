@@ -28,8 +28,6 @@ class ObjectList;
 class UpdateList;
 class DrawListManager;
 
-class CommandManager;
-class TimeManager;
 class Player;
 class GameMaster;
 
@@ -56,9 +54,6 @@ private:
 	ObjectList*		 m_objectList;
 	UpdateList*		 m_updateList;
 	DrawListManager* m_drawListManager;
-
-	CommandManager*	m_command_manager;
-	TimeManager*	m_time_manager;
 
 	GameMaster *m_gameMaster;
 };

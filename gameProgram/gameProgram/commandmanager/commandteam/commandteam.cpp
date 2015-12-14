@@ -32,8 +32,10 @@ const float	_polygon_pos_offset = 72.0f;
 const float _polygon_speed_def = 2.0f;
 const float _first_line = 169.0f;
 const float _end_line = 72.0f;
-const float _speed_max = 1.5;
-const float _speed_add = 0.02;
+const float _speed_max = 1.5f;
+const float _speed_add = 0.02f;
+const int _return_score1 = 1;
+const int _return_score2 = 5;
 const int	_polygon_num = 6;
 typedef struct{
 	float list[4];
@@ -169,8 +171,10 @@ void CommandTeam::Finalize(void)
 //=============================================================================
 // 更新
 //=============================================================================
-bool CommandTeam::Update(void)
+CommandTeam::COM_TEAM_RTN CommandTeam::Update(void)
 {
+	COM_TEAM_RTN rtn = {0,false};
+
 	// ポリゴンスクロール
 	for(int i = 0; i < 2; i++)
 	{
@@ -203,17 +207,19 @@ bool CommandTeam::Update(void)
 						m_speed += _speed_add;
 						if(m_speed > _speed_max)
 							m_speed = _speed_max;
+						rtn.return_score = _return_score2;
 					}
 					else
 					{// 成功(単体)
 						m_speed += _speed_add;
 						if(m_speed > _speed_max)
 							m_speed = _speed_max;
+						rtn.return_score = _return_score1;
 					}
 				}
 				else if(m_same_count > 15)
 				{// 失敗(同時押し2人目)
-					m_same_count = 0.0f;
+					m_same_count = 0;
 					m_speed = 0.0f;
 				}
 				else
@@ -270,10 +276,10 @@ bool CommandTeam::Update(void)
 	if(m_command_count != 0 && m_command_count % COMMAND_MAX == 0)
 	{
 		m_command_count = 0;
-		return true;
+		rtn.flag = true;
 	}
 
-	return false;
+	return rtn;
 }
 
 //=============================================================================

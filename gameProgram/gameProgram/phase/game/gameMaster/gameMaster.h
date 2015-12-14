@@ -27,8 +27,8 @@ class GameImport;
 class Debugproc;
 class PadXManager;
 class Player;
-
-
+class CommandManager;
+class TimeManager;
 
 class GameMaster
 {
@@ -41,7 +41,7 @@ public:
 						GameImport* import,Debugproc* debugproc,PadXManager* padXManager);
 	bool Initialize(void);
 	void Finalize(void);
-	void Update(void);
+	bool Update(void);
 
 	//テスト用セッターゲッター群
 	//int totalScore(){ return m_totalScore; }
@@ -75,6 +75,11 @@ private:
 	//プレイヤー
 	Player *m_redTeam;
 	Player *m_blueTeam;
+
+	// コマンドマネージャ
+	CommandManager*	m_command_manager;
+	// タイマーマネージャ
+	TimeManager*	m_time_manager;
 
 	int m_totalScore;
 	int m_redTeamAddVal;

@@ -43,6 +43,11 @@ public:
 		bool hit;
 	}COMMAND_DATA;
 
+	typedef struct{
+		int return_score;
+		bool flag;
+	}COM_TEAM_RTN;
+
 	static bool Create(CommandTeam** outPointer,
 					   ObjectList* objList,
 					   UpdateList* updList,
@@ -59,7 +64,7 @@ public:
 					D3DXVECTOR3 pos,
 					TEAM_COLOR team_color);
 	void Finalize(void);
-	bool Update(void);
+	COM_TEAM_RTN Update(void);
 	void Draw(void);
 
 	void SetPlayer(PadX* p1, PadX* p2){m_pad[0] = p1; m_pad[1] = p2;}

@@ -18,8 +18,15 @@
 #include "..\..\..\audienceManager\audienceManager.h"
 #include "..\..\..\effectManager\effectManager.h"
 
+#include "..\..\..\commandmanager\commandmanager.h"
+#include "..\..\..\timemanager\timeManager.h"
+
 #include "..\..\..\object\player\player.h"
 
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+// マクロ定義
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+const int _time_max		= 3000;
 
 //=============================================================================
 // コンストラクタ
@@ -34,6 +41,8 @@ GameMaster::GameMaster( LPDIRECT3DDEVICE9 device,ObjectList *objectList,UpdateLi
 	m_import = import;
 	m_debugProc = proc;
 	m_padXManager = padXMaster;
+	m_command_manager	= nullptr;
+	m_time_manager		= nullptr;
 	//----------------------------
 	// メンバー初期化
 	//----------------------------
@@ -69,6 +78,9 @@ bool GameMaster::Initialize(void)
 {
 
 	//コマンドマネージャ
+	CommandManager::Create(&m_command_manager, m_padXManager, m_debugProc, m_objectList, m_updateList, m_drawListManager, m_device, m_import);
+	// タイムマネージャ生成
+	TimeManager::Create(&m_time_manager, m_objectList, m_updateList, m_drawListManager, m_device, m_import, _time_max);
 
 	//観客制御生成
 	AudienceManager *audience;
@@ -120,6 +132,10 @@ bool GameMaster::Initialize(void)
 //=============================================================================
 void GameMaster::Finalize(void)
 {
+	// コマンド
+	SafeFinalizeDelete(m_command_manager);
+	// タイム
+	SafeFinalizeDelete(m_time_manager);
 
 	//プレイヤー削除
 	SafeFinalizeDelete( m_redTeam );
@@ -132,12 +148,17 @@ void GameMaster::Finalize(void)
 //=============================================================================
 // 更新
 //=============================================================================
-void GameMaster::Update(void)
+bool GameMaster::Update(void)
 {
 
 	//プレイヤー更新
 	m_redTeam->Update();
 	m_blueTeam->Update();
+
+	// コマンドマネージャ
+	CommandManager::COM_MANA_RTN get = {0,0};
+	get = m_command_manager->Update();
+	AddTeamScore(get.score[0], get.score[1]);
 
 	//スコア確定
 	DetermineTeamScore();
@@ -148,6 +169,15 @@ void GameMaster::Update(void)
 
 	//観客更新
 	m_audienceManager->Update();
+
+	// タイムマネージャ
+	if(m_time_manager->Update())
+		return true;
+
+	m_redTeamAddVal	 = 0;
+	m_blueTeamAddVal = 0;
+
+	return false;
 }
 
 //=============================================================================

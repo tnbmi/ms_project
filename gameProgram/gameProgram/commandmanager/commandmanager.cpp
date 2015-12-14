@@ -151,17 +151,22 @@ void CommandManager::Finalize(void)
 //=============================================================================
 // çXêV
 //=============================================================================
-void CommandManager::Update(void)
+CommandManager::COM_MANA_RTN CommandManager::Update(void)
 {
+	CommandTeam::COM_TEAM_RTN get = {0, false};
+	COM_MANA_RTN rtn = {0,0};
 	for(int i = 0; i < _team_max; i++)
 	{
-		if(m_team[i]->Update())
+		get = m_team[i]->Update();
+		rtn.score[i] = get.return_score;
+		if(get.flag)
 		{
 			m_command_prev++;
 			m_team[i]->SetCommandNext(m_command_list[0] + m_command_prev * 10, 0);
 			m_team[i]->SetCommandNext(m_command_list[1] + m_command_prev * 10, 1);
 		}
 	}
+	return rtn;
 }
 
 //=============================================================================

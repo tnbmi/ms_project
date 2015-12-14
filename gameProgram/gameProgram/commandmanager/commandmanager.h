@@ -38,6 +38,10 @@ public:
 	CommandManager(void);
 	~CommandManager(void);
 
+	typedef struct{
+		int	score[2];
+	}COM_MANA_RTN;
+
 	static bool Create(CommandManager** outPointer,
 					   PadXManager* padXManager,
 					   Debugproc* debugproc,
@@ -54,7 +58,7 @@ public:
 					LPDIRECT3DDEVICE9 device,
 					GameImport* import);
 	void Finalize(void);
-	void Update(void);
+	COM_MANA_RTN Update(void);
 	void Draw(void);
 
 private:

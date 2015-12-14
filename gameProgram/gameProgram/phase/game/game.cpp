@@ -33,9 +33,6 @@
 #include "..\..\objectBase\polygon3D\polygon3D.h"
 #include "..\..\objectBase\meshDome\meshDome.h"
 
-#include "..\..\commandmanager\commandmanager.h"
-#include "..\..\timemanager\timeManager.h"
-
 #include "..\..\phase\game\gameMaster\gameMaster.h"
 #include "..\..\object\player\player.h"
 #include "..\..\objectBase\fbxModel\fbxModel.h"
@@ -45,7 +42,6 @@
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 const D3DXVECTOR3 _at	= D3DXVECTOR3(0.0f, 500.0f, 10000.0f);
 const D3DXVECTOR3 _eye	= D3DXVECTOR3(0.0f, 300.0f, -2000.0f);
-const int _time_max		= 3000;
 
 //=============================================================================
 // コンストラクタ
@@ -64,9 +60,6 @@ Game::Game(LPDIRECT3DDEVICE9 device) : Phase(device)
 	m_objectList		= nullptr;
 	m_updateList		= nullptr;
 	m_drawListManager	= nullptr;
-
-	m_command_manager	= nullptr;
-	m_time_manager		= nullptr;
 }
 
 //=============================================================================
@@ -164,12 +157,6 @@ void Game::Finalize(void)
 	// オブジェクトリスト
 	SafeDelete(m_objectList);
 
-	// コマンド
-	SafeFinalizeDelete(m_command_manager);
-
-	// タイム
-	SafeFinalizeDelete(m_time_manager);
-
 	//ゲームマスター
 	SafeFinalizeDelete( m_gameMaster );
 
@@ -219,26 +206,9 @@ void Game::Update(void)
 	m_updateList->AllUpdate();
 
 	//----------------------------
-	// コマンドマネージャ
-	//----------------------------
-	m_command_manager->Update();
-
-	//----------------------------
-	// タイムマネージャ
-	//----------------------------
-	bool transition = m_time_manager->Update();
-
-	//transition = 1;
-
-	//----------------------------
 	//GameMaster更新
 	//----------------------------
-	m_gameMaster->Update();
-
-	//----------------------------
-	// 画面遷移
-	//----------------------------							//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-	if(transition || m_keyboard->trigger(DIK_RETURN))		// 現状タイムのみ、チームでの勝敗も(一応)追加予定
+	if(m_gameMaster->Update() || m_keyboard->trigger(DIK_RETURN))
 	{
 		Manager::nextPhase((Phase*)new Result(m_device));
 	}
@@ -260,16 +230,6 @@ void Game::Draw(void)
 	// オブジェクト描画
 	//----------------------------
 	m_drawListManager->AllDraw(m_camera, m_light);
-
-	//----------------------------
-	// コマンドマネージャ描画
-	//----------------------------
-	m_command_manager->Draw();
-
-	//----------------------------
-	// タイムマネージャ描画
-	//----------------------------
-	m_time_manager->Draw();
 }
 
 //=============================================================================
@@ -303,16 +263,6 @@ bool Game::InitObject(void)
 	m_drawListManager->Link(dome, 2, Shader::PAT_NONE_LIGHT);
 	dome->pos_y(-150.0f);
 	dome->rot_y(PAI * 0.5f);
-
-	//----------------------------
-	// コマンドマネージャ生成
-	//----------------------------
-	CommandManager::Create(&m_command_manager, m_padXManager, m_debugproc, m_objectList, m_updateList, m_drawListManager, m_device, m_import);
-
-	//----------------------------
-	// タイムマネージャ生成
-	//----------------------------
-	TimeManager::Create(&m_time_manager, m_objectList, m_updateList, m_drawListManager, m_device, m_import, _time_max);
 
 	//----------------------------
 	//ゲームマスター生成
