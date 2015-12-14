@@ -175,7 +175,7 @@ void FbxModel::Draw(LPD3DXCONSTANTTABLE vsc, LPD3DXCONSTANTTABLE psc, D3DXMATRIX
 
 	if( m_scl.x <= -1 )
 	{
-		m_device->SetRenderState(D3DRS_CULLMODE, D3DCULL_CW);
+		m_device->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	}
 
 	//ワールドマトリックス
