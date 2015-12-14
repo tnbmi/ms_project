@@ -75,6 +75,7 @@ private:
 	TEAM_COLOR		m_team_color;
 	int				m_command_count;
 	int				m_delete_count;
+	int				m_same_count;
 	Polygon2D*		m_command_poly[2][10];
 	Polygon2D*		m_back_poly[2];
 	Debugproc*		m_debugproc;

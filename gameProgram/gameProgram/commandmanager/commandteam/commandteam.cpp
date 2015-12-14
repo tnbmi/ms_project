@@ -88,6 +88,7 @@ CommandTeam::CommandTeam(void)
 
 	m_command_count = 0;
 	m_delete_count = 0;
+	m_same_count = 0;
 	m_speed = 0.0f;
 	m_offset = 0.0f;
 
@@ -181,6 +182,9 @@ bool CommandTeam::Update(void)
 		}
 	}
 
+	if(m_same_count > 0)
+		m_same_count++;
+
 	// コマンド判定
 	int command_count = m_command_count % 10;
 	for(int i = 0; i < 2; i++)
@@ -191,10 +195,26 @@ bool CommandTeam::Update(void)
 				m_command_data[i][command_count].pos_y > m_polygon_pos.y - _first_line)
 			{
 				if(m_pad[i]->buttonTrigger(_command_data[m_command_data[i][command_count].num_data]))
-				{// 成功
-					m_speed += _speed_add;
-					if(m_speed > _speed_max)
-						m_speed = _speed_max;
+				{	// 成功(同時押し1人目)
+					if(m_command_data[(1 - i%2)][command_count].num_data != 4 && !m_command_data[(1 - i%2)][command_count].hit)
+						m_same_count = 1;
+					else if(m_same_count > 0)
+					{// 成功(同時押し2人目)
+						m_speed += _speed_add;
+						if(m_speed > _speed_max)
+							m_speed = _speed_max;
+					}
+					else
+					{// 成功(単体)
+						m_speed += _speed_add;
+						if(m_speed > _speed_max)
+							m_speed = _speed_max;
+					}
+				}
+				else if(m_same_count > 15)
+				{// 失敗(同時押し2人目)
+					m_same_count = 0.0f;
+					m_speed = 0.0f;
 				}
 				else
 				{// 失敗
