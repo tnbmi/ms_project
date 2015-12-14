@@ -19,6 +19,7 @@
 class RoadManager;
 class Thread;
 class Phase;
+class Manager;
 class Road
 {
 public:
@@ -35,8 +36,8 @@ public:
 	Road(void);
 	virtual ~Road(void);
 
-	static bool Create(Road** outPointer , LPDIRECT3DDEVICE9 device );
-	bool Initialize(LPDIRECT3DDEVICE9 device);
+	static bool Create(Road** outPointer , LPDIRECT3DDEVICE9 device , Manager* manager );
+	bool Initialize(LPDIRECT3DDEVICE9 device , Manager* manager);
 	void Finalize(void);
 
 	void Roading( Phase* initialize );
@@ -52,9 +53,11 @@ private:
 	 Thread* m_thread;
 	 static RoadManager *m_roadManager;
 	 static bool m_roadingFlag;
+	 static bool m_primUpdate;
 	 static ROAD_STATE m_roadState;
 	 static Phase* m_initialize;
 	 static Phase* m_finalize;
+	 static Manager* m_manager;
 };
 
 //=============================================================================

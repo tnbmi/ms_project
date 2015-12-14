@@ -13,7 +13,7 @@
 #include "..\..\import\road\roadImport.h"
 #include "..\..\shader\shader.h"
 #include "..\..\view\camera\camera.h"
-
+#include "..\..\phase\phase.h"
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // 定数定義
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -26,7 +26,7 @@ const D3DXVECTOR3 _eye	= D3DXVECTOR3(0.0f, 150.0f, -3000.0f);
 
 // 襖定数
 	const D3DXVECTOR3 _husumaSize = D3DXVECTOR3( SCREEN_WIDTH * 0.5f , SCREEN_HEIGHT , 0.0f );
-	const float _husumaSpeed = 0.5f;
+	const float _husumaSpeed = 5.0f;
 	// 閉状態定数
 	const D3DXVECTOR3 _husumaCloseLeftInitPos = D3DXVECTOR3( SCREEN_WIDTH * 0.5f - _husumaSize.x * 0.5f , SCREEN_HEIGHT * 0.5f , 0.0f);
 		const D3DXVECTOR3 _husumaCloseRightInitPos = D3DXVECTOR3( SCREEN_WIDTH * 0.5f + _husumaSize.x * 0.5f , SCREEN_HEIGHT * 0.5f , 0.0f);
@@ -36,13 +36,12 @@ const D3DXVECTOR3 _eye	= D3DXVECTOR3(0.0f, 150.0f, -3000.0f);
 // アイコン定数
 const D3DXVECTOR3 _iconSize = D3DXVECTOR3( 144.0f , 144.0f , 0.0f );
 const D3DXVECTOR3 _iconInitPos = D3DXVECTOR3( SCREEN_WIDTH - _iconSize.x  , SCREEN_HEIGHT - _iconSize.y , 0.0f );
-const float _iconRotSpeed = 0.5f;
+const float _iconRotSpeed = 0.01f;
 // テキスト定数
 const D3DXVECTOR3 _textSize = D3DXVECTOR3( 432.0f , 144.0f , 0.0f );
 const D3DXVECTOR3 _textInitPos = D3DXVECTOR3( SCREEN_WIDTH - _iconSize.x - _textSize.x , SCREEN_HEIGHT - _textSize.y , 0.0f );
 const float _textMoveLimit = _textInitPos.y + 10.0f;
 const float _textSpeed = 0.1f;
-
 //=============================================================================
 // コンストラクタ
 //=============================================================================
@@ -85,6 +84,20 @@ bool RoadManager::Initialize(LPDIRECT3DDEVICE9 device)
 	//----------------------------
 	// コメント
 	//----------------------------
+		// 3D頂点宣言
+	D3DVERTEXELEMENT9 velement3D[] =
+	{
+		{0,  0, D3DDECLTYPE_FLOAT3,		D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_POSITION,	0},		// 座標
+		{0, 12, D3DDECLTYPE_FLOAT3,		D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_NORMAL,		0},		// 法線
+		{0, 24, D3DDECLTYPE_D3DCOLOR,	D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_COLOR,		0},		// 色
+		{0, 28, D3DDECLTYPE_FLOAT2,		D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_TEXCOORD,	0},		// テクスチャ
+		D3DDECL_END(),
+	};
+
+	device->CreateVertexDeclaration(&velement3D[0], &m_decl3D);
+
+
+
 	if(!Shader::Create( &m_shader , device ) )
 		return false;
 	if(!RoadImport::Create( &m_import , device ))
@@ -110,6 +123,13 @@ bool RoadManager::Initialize(LPDIRECT3DDEVICE9 device)
 //=============================================================================
 void RoadManager::Finalize(void)
 {
+
+	if( m_decl3D != NULL )
+	{
+		m_decl3D->Release();
+		m_decl3D = NULL;
+	}
+
 	m_fadeLeft->Finalize();
 	m_fadeRight->Finalize();
 	m_icon->Finalize();
@@ -162,6 +182,46 @@ void RoadManager::Draw(void)
 		//----------------------------
 		if(SUCCEEDED(m_device->BeginScene()))	//開始
 		{
+			
+			// 2D頂点設定
+			m_device->SetFVF(D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_TEX1);
+
+			m_fadeLeft->Draw(vsc,psc);
+			m_fadeRight->Draw(vsc,psc);
+			m_icon->Draw(vsc,psc);
+			m_text->Draw(vsc,psc);
+			m_device->EndScene();	// 終了
+		}
+		m_device->Present(nullptr, nullptr, nullptr, nullptr);
+
+	}
+}
+void RoadManager::Draw(Phase* phase)
+{
+
+	if( m_state != ROAD_STATE_NONE )
+	{
+
+		//----------------------------
+		// Direct3Dによる描画
+		//----------------------------
+		if(SUCCEEDED(m_device->BeginScene()))	//開始
+		{
+			m_device->Clear(0, NULL,
+							(D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER | D3DCLEAR_STENCIL),
+							D3DCOLOR_RGBA(64, 64, 128, 256), 1.0f, 0);
+
+			m_device->SetVertexDeclaration(m_decl3D);
+			phase->Draw();
+
+			LPD3DXCONSTANTTABLE vsc =m_shader->vsc(Shader::PAT_2D);
+			LPD3DXCONSTANTTABLE psc =m_shader->psc(Shader::PAT_2D);
+			// シェーダーをセット
+			m_shader->SetShader(&vsc, &psc, Shader::PAT_2D);
+
+			//----------------------------
+			// Direct3Dによる描画
+			//----------------------------
 			// 2D頂点設定
 			m_device->SetFVF(D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_TEX1);
 

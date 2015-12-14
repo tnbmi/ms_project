@@ -325,14 +325,14 @@
     <ClInclude Include="road\roadpolygon\roadpolygon.h">
       <Filter>road\roadpolygon</Filter>
     </ClInclude>
-    <ClInclude Include="road\roadmanager\roadmanager.h">
-      <Filter>road\roadmanager</Filter>
-    </ClInclude>
     <ClInclude Include="road\road.h">
       <Filter>road</Filter>
     </ClInclude>
     <ClInclude Include="shader\shader.h">
       <Filter>shader</Filter>
+    </ClInclude>
+    <ClInclude Include="road\roadmanager\roadmanager.h">
+      <Filter>road\roadmanager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

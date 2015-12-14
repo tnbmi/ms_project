@@ -58,7 +58,7 @@ bool RoadPolygon::Initialize( LPDIRECT3DDEVICE9 device , LPDIRECT3DTEXTURE9 text
 	m_tex = texture;
 	m_device = device;
 	m_scl = D3DXVECTOR3( polygonSize.x , polygonSize.y , 0.0f );
-	SetVertexPolygon( crit );
+	SetVertex( crit );
 	m_crit = crit;
 	return true;
 }
@@ -85,7 +85,7 @@ void RoadPolygon::Finalize(void)
 //=============================================================================
 void RoadPolygon::Update(void)
 {
-	SetVertexPolygon( m_crit );
+	//SetVertex( m_crit );
 }
 
 //=============================================================================
@@ -158,7 +158,7 @@ void RoadPolygon::Draw(LPD3DXCONSTANTTABLE vsc, LPD3DXCONSTANTTABLE psc)
 //=============================================================================
 // ポリゴン設定
 //=============================================================================
-void RoadPolygon::SetVertexPolygon( POLYGON_CRITERIA crit )
+void RoadPolygon::SetVertex( POLYGON_CRITERIA crit )
 {
 	// 座標
 	D3DXVECTOR3 half = D3DXVECTOR3(0.5f, 0.5f, 0.0f);
@@ -178,6 +178,18 @@ void RoadPolygon::SetVertexPolygon( POLYGON_CRITERIA crit )
 	m_vtx[1].uv = D3DXVECTOR2(1.0f, 0.0f);
 	m_vtx[2].uv = D3DXVECTOR2(0.0f, 1.0f);
 	m_vtx[3].uv = D3DXVECTOR2(1.0f, 1.0f);
+}
+
+//=============================================================================
+// 頂点色変換
+//=============================================================================
+void RoadPolygon::SetVertexColor(void)
+{
+	// 頂点カラー
+	m_vtx[0].color = m_diffuse;
+	m_vtx[1].color = m_diffuse;
+	m_vtx[2].color = m_diffuse;
+	m_vtx[3].color = m_diffuse;
 }
 
 // EOF

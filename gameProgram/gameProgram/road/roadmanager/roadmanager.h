@@ -21,6 +21,7 @@ class RoadImport;
 class Shader;
 class RoadPolygon;
 class Camera;
+class Phase;
 class RoadManager
 {
 public:
@@ -38,6 +39,7 @@ public:
 	void Finalize(void);
 	void Update(void);
 	void Draw(void);
+	void Draw( Phase* phase );
 
 	void InitializeOpenPos( void );
 	void InitializeClosePos( void );
@@ -52,6 +54,9 @@ private:
 
 	LPDIRECT3DDEVICE9 m_device;
 
+	LPDIRECT3DVERTEXDECLARATION9 m_decl3D;
+
+
 	Shader*	m_shader;
 
 	RoadImport*	m_import;
@@ -63,6 +68,8 @@ private:
 	float m_textSpeed;//è„â∫Ç…ìÆÇ©Ç∑ÇÊÇ§ÇÃ
 
 	ROAD_STATE m_state;
+
+
 };
 
 //=============================================================================

@@ -11,18 +11,18 @@
 #include "road.h"
 #include "..\thread\thread.h"
 #include"roadmanager\roadmanager.h"
-
 #include "..\phase\phase.h"
-
+#include "..\manager\manager.h"
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // 性的変数定義
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 RoadManager*			Road::m_roadManager;
 bool					Road::m_roadingFlag;
+bool					Road::m_primUpdate;
 Road::ROAD_STATE		Road::m_roadState;
 Phase*					Road::m_initialize;
 Phase*					Road::m_finalize;
-
+Manager*				Road::m_manager;
 //=============================================================================
 // コンストラクタ
 //=============================================================================
@@ -35,6 +35,7 @@ Road::Road(void)
 	m_roadState = ROAD_STATE_PRIM;
 	m_initialize = nullptr;
 	m_finalize = nullptr;
+	m_primUpdate = true;
 }
 
 //=============================================================================
@@ -47,10 +48,10 @@ Road::~Road(void)
 //=============================================================================
 // 生成
 //=============================================================================
-bool Road::Create(Road** outPointer , LPDIRECT3DDEVICE9 device )
+bool Road::Create(Road** outPointer , LPDIRECT3DDEVICE9 device , Manager *manager)
 {
 	Road* pointer = new Road();
-	if(!pointer->Initialize(device))
+	if(!pointer->Initialize(device , manager ))
 		return false;
 
 	*outPointer = pointer;
@@ -61,12 +62,13 @@ bool Road::Create(Road** outPointer , LPDIRECT3DDEVICE9 device )
 //=============================================================================
 // 初期化
 //=============================================================================
-bool Road::Initialize( LPDIRECT3DDEVICE9 device )
+bool Road::Initialize( LPDIRECT3DDEVICE9 device , Manager *manager)
 {
 	//----------------------------
 	// コメント
 	//----------------------------
 	m_thread = new Thread;
+	m_manager = manager;
 	RoadManager::Create( &m_roadManager , device );
 	return true;
 }
@@ -101,25 +103,40 @@ void Road::StateClose( void )
 //=============================================================================
 void Road::Roading( Phase* initialize )
 {
+
+
 	m_initialize = initialize;
 	m_finalize = nullptr;
 	m_thread->Create( &Change );
 	m_roadingFlag = true;
+	m_primUpdate = true;
 	StateClose();
 
 	while( m_roadingFlag )
 	{
 		m_roadManager->Update();
-		m_roadManager->Draw();
-		if( m_roadState == ROAD_STATE_INITIALIZE_END )
+		if( m_roadState == ROAD_STATE_INITIALIZE_END || m_roadState == ROAD_STATE_COMPLETE )
 		{
-			initialize->Draw();
+			if( m_primUpdate )
+			{
+				initialize->Update();
+				m_primUpdate = false;
+			}
+			m_roadManager->Draw( initialize );
+		}
+		else
+		{
+			m_roadManager->Draw();
 		}
 		if( m_roadManager->GetState() == RoadManager::ROAD_STATE_NONE )
 		{
 			m_roadingFlag = false;
 		}
+
+
 	}
+
+	m_thread->threadend();
 }
 void Road::Roading(Phase* finalize , Phase* initialize )
 {
@@ -134,17 +151,21 @@ void Road::Roading(Phase* finalize , Phase* initialize )
 		{
 			finalize->Draw();
 		}
-		if( m_roadState == ROAD_STATE_INITIALIZE_END )
+		if( m_roadState == ROAD_STATE_INITIALIZE_END || m_roadState == ROAD_STATE_COMPLETE )
 		{
-			initialize->Draw();
+			m_roadManager->Draw(initialize);
+		}
+		else
+		{
+			m_roadManager->Draw();
 		}
 		m_roadManager->Update();
-		m_roadManager->Draw();
 		if( m_roadManager->GetState() == RoadManager::ROAD_STATE_NONE )
 		{
 			m_roadingFlag = false;
 		}
 	}
+	m_thread->threadend();
 }
 //=============================================================================
 // ロード本体
