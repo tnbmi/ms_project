@@ -48,7 +48,8 @@ CommandManager::CommandManager(void)
 	}
 	m_command_list[0] = nullptr;
 	m_command_list[1] = nullptr;
-	m_command_prev = 0;
+	m_command_prev[0] = 0;
+	m_command_prev[1] = 0;
 	m_ui_polygon = nullptr;
 	m_objectList = nullptr;
 	m_updateList = nullptr;
@@ -93,9 +94,6 @@ bool CommandManager::Initialize(PadXManager* padXManager,
 								LPDIRECT3DDEVICE9 device,
 								GameImport* import)
 {
-	//----------------------------
-	// ƒRƒƒ“ƒg
-	//----------------------------
 	m_objectList = objList;
 	m_updateList = updList;
 	m_drawListManager = drwList;
@@ -121,8 +119,9 @@ bool CommandManager::Initialize(PadXManager* padXManager,
 #else
 		m_team[i]->SetPlayer( padXManager->pad(i * 2), padXManager->pad(i * 2 + 1) );
 #endif
-		m_team[i]->SetCommand(m_command_list[0], m_command_list[0], 0, 144.0f);
-		m_team[i]->SetCommand(m_command_list[1], m_command_list[1], 1, 144.0f);
+		m_command_prev[i] = rand()%10;
+		m_team[i]->SetCommand(m_command_list[0], m_command_list[0] + m_command_prev[i] * 10, 0, 144.0f);
+		m_team[i]->SetCommand(m_command_list[1], m_command_list[1] + m_command_prev[i] * 10, 1, 144.0f);
 	}
 
 	if(!Polygon2D::Create(&m_ui_polygon, device, m_objectList, m_import->texture(GameImport::GAME_UI)))
@@ -161,9 +160,9 @@ CommandManager::COM_MANA_RTN CommandManager::Update(void)
 		rtn.score[i] = get.return_score;
 		if(get.flag)
 		{
-			m_command_prev++;
-			m_team[i]->SetCommandNext(m_command_list[0] + m_command_prev * 10, 0);
-			m_team[i]->SetCommandNext(m_command_list[1] + m_command_prev * 10, 1);
+			m_command_prev[i] = (rand() % 5 * 2) + (1 - m_command_prev[i] % 2);
+			m_team[i]->SetCommandNext(m_command_list[0] + m_command_prev[i] * 10, 0);
+			m_team[i]->SetCommandNext(m_command_list[1] + m_command_prev[i] * 10, 1);
 		}
 	}
 	return rtn;

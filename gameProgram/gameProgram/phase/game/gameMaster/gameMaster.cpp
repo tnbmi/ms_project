@@ -26,7 +26,8 @@
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // マクロ定義
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-const int _time_max		= 3000;
+const int _time_max		= 5460;
+const D3DXVECTOR3 _effect_pos[2] = {D3DXVECTOR3(-900.0f, 400.0f, 0.0f),D3DXVECTOR3(900.0f, 400.0f, 0.0f)};
 
 //=============================================================================
 // コンストラクタ
@@ -124,6 +125,12 @@ bool GameMaster::Initialize(void)
 	m_redTeam->Move( D3DXVECTOR3(700,0,0),D3DXVECTOR3(700,0,0),300 );
 	m_blueTeam->Move( D3DXVECTOR3(-700,0,0),D3DXVECTOR3(-700,0,0),300 );
 
+	m_effectManager->LoadEffectData( "./resources/effect/FireWorks.OEF" );
+	m_effectManager->LoadEffectData( "./resources/effect/FireWorks2.OEF" );
+	m_effectManager->LoadEffectData( "./resources/effect/FireWorks3.OEF" );
+	m_effectManager->LoadEffectData( "./resources/effect/Ene.OEF" );
+	m_effectManager->SetOption( InstancingBillboard::OPTION( true,false,false ));
+
 	return true;
 }
 
@@ -150,6 +157,8 @@ void GameMaster::Finalize(void)
 //=============================================================================
 bool GameMaster::Update(void)
 {
+	// エフェクトマネージャ
+	m_effectManager->Update();
 
 	//プレイヤー更新
 	m_redTeam->Update();
@@ -159,6 +168,13 @@ bool GameMaster::Update(void)
 	CommandManager::COM_MANA_RTN get = {0,0};
 	get = m_command_manager->Update();
 	AddTeamScore(get.score[0], get.score[1]);
+	for(int i = 0; i < 2; i++)
+	{
+		if(get.score[i] != 0)
+		{
+			m_effectManager->AddEffectFromDataBase( i, _effect_pos[i] );
+		}
+	}
 
 	//スコア確定
 	DetermineTeamScore();
