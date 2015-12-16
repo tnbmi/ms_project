@@ -156,6 +156,7 @@ void Manager::Finalize(void)
 	//----------------------------
 	// ƒTƒEƒ“ƒh
 	//----------------------------
+	Sound::StopAll();
 	SafeFinalizeDelete(m_sound);
 
 	//----------------------------

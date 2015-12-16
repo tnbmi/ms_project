@@ -13,6 +13,7 @@
 
 #include "..\..\debugproc\debugproc.h"
 #include "..\..\manager\manager.h"
+#include "..\..\sound\sound.h"
 #include "..\standby\standby.h"
 
 #include "..\..\input\keyboard\keyboard.h"
@@ -115,8 +116,14 @@ bool Title::Initialize(void)
 		return false;
 
 	//----------------------------
+	// サウンドの停止
+	//----------------------------
+	Sound::StopAll();
+
+	//----------------------------
 	// サウンドの再生
 	//----------------------------
+	Sound::Play(Sound::BGM_TITLE03);
 
 	//----------------------------
 	// フェード
@@ -169,11 +176,6 @@ void Title::Finalize(void)
 	// インポート
 	//----------------------------
 	SafeFinalizeDelete(m_import);
-
-	//----------------------------
-	// サウンドの停止
-	//----------------------------
-
 }
 
 //=============================================================================
