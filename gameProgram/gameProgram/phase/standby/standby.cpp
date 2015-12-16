@@ -28,6 +28,7 @@
 #include "..\..\list\objectList\objectList.h"
 #include "..\..\list\updateList\updateList.h"
 #include "..\..\list\drawList\drawListManager.h"
+#include "..\..\phase\standby\standbyMaster\standbyMaster.h"
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // マクロ定義
@@ -170,6 +171,8 @@ void Standby::Finalize(void)
 	// サウンドの停止
 	//----------------------------
 
+	SafeFinalizeDelete( m_standbyMaster );
+
 }
 
 //=============================================================================
@@ -190,6 +193,8 @@ void Standby::Update(void)
 	// オブジェクト更新
 	//----------------------------
 	m_updateList->AllUpdate();
+
+	m_standbyMaster->Update();
 
 	//----------------------------
 	// 画面遷移
@@ -223,7 +228,8 @@ void Standby::Draw(void)
 //=============================================================================
 bool Standby::InitObject(void)
 {
-
+	//
+	StandbyMaster::Create( &m_standbyMaster,m_device,m_objectList,m_updateList,m_drawListManager,m_import,m_debugproc,m_padXManager,m_light );
 	return true;
 }
 

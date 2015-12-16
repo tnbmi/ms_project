@@ -185,6 +185,9 @@
     <Filter Include="import\standby">
       <UniqueIdentifier>{748e9328-370f-4df5-a79c-726405d73179}</UniqueIdentifier>
     </Filter>
+    <Filter Include="phase\standby\standbyMaster">
+      <UniqueIdentifier>{c2ba8c8e-68b0-4e1b-bf95-41f03dbb8912}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main\main.h">
@@ -346,6 +349,9 @@
     <ClInclude Include="import\standby\standbyImport.h">
       <Filter>import\standby</Filter>
     </ClInclude>
+    <ClInclude Include="phase\standby\standbyMaster\standbyMaster.h">
+      <Filter>phase\standby\standbyMaster</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main\main.cpp">
@@ -500,6 +506,9 @@
     </ClCompile>
     <ClCompile Include="import\standby\standbyImport.cpp">
       <Filter>import\standby</Filter>
+    </ClCompile>
+    <ClCompile Include="phase\standby\standbyMaster\standbyMaster.cpp">
+      <Filter>phase\standby\standbyMaster</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

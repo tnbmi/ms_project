@@ -148,6 +148,9 @@ void GameMaster::Update(void)
 
 	//ŠÏ‹qXV
 	m_audienceManager->Update();
+
+	m_blueTeamAddVal = 0;
+	m_redTeamAddVal  = 0;
 }
 
 //=============================================================================
