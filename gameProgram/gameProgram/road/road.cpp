@@ -111,58 +111,81 @@ void Road::Roading( Phase* initialize )
 	m_roadingFlag = true;
 	m_primUpdate = true;
 	StateClose();
-
+	int i = 0;
 	while( m_roadingFlag )
 	{
-		m_roadManager->Update();
-		if( m_roadState == ROAD_STATE_INITIALIZE_END || m_roadState == ROAD_STATE_COMPLETE )
+		if( i > 6000 )
 		{
-			if( m_primUpdate )
+			m_roadManager->Update();
+			if( m_roadState == ROAD_STATE_INITIALIZE_END || m_roadState == ROAD_STATE_COMPLETE )
 			{
-				initialize->Update();
-				m_primUpdate = false;
+				if( m_primUpdate )
+				{
+					initialize->Update();
+					m_primUpdate = false;
+				}
+				m_roadManager->Draw( initialize );
 			}
-			m_roadManager->Draw( initialize );
+			else
+			{
+				m_roadManager->Draw();
+			}
+			if( m_roadManager->GetState() == RoadManager::ROAD_STATE_NONE )
+			{
+				m_roadingFlag = false;
+			}
+			i= 0;
 		}
 		else
 		{
-			m_roadManager->Draw();
+			i++;
 		}
-		if( m_roadManager->GetState() == RoadManager::ROAD_STATE_NONE )
-		{
-			m_roadingFlag = false;
-		}
-
-
 	}
 
 	m_thread->threadend();
 }
 void Road::Roading(Phase* finalize , Phase* initialize )
 {
-	m_finalize = finalize;
+	//m_finalize = finalize;
 	m_initialize = initialize;
 	m_thread->Create( &Change );
 	m_roadingFlag = true;
-
+	m_roadManager->SetState( RoadManager::ROAD_STATE_CLOSE );
+	m_primUpdate = true;
+	m_roadState = ROAD_STATE_PRIM;
+	int i = 0;
 	while( m_roadingFlag )
 	{
-		if( m_roadState == ROAD_STATE_PRIM )
+		if( i > 6000 )
 		{
-			finalize->Draw();
-		}
-		if( m_roadState == ROAD_STATE_INITIALIZE_END || m_roadState == ROAD_STATE_COMPLETE )
-		{
-			m_roadManager->Draw(initialize);
+			if( m_roadState == ROAD_STATE_PRIM )
+			{
+				//finalize->Draw();
+			}
+			if(  m_roadState == ROAD_STATE_COMPLETE )
+			{
+				//if( m_primUpdate )
+				//{
+				//	initialize->Update();
+				//	m_primUpdate = false;
+				//}
+				m_roadManager->Draw(initialize);
+
+			}
+			else
+			{
+				m_roadManager->Draw();
+			}
+			m_roadManager->Update();
+			if( m_roadManager->GetState() == RoadManager::ROAD_STATE_NONE )
+			{
+				m_roadingFlag = false;
+			}
+			i=0;
 		}
 		else
 		{
-			m_roadManager->Draw();
-		}
-		m_roadManager->Update();
-		if( m_roadManager->GetState() == RoadManager::ROAD_STATE_NONE )
-		{
-			m_roadingFlag = false;
+			i++;
 		}
 	}
 	m_thread->threadend();
@@ -189,22 +212,23 @@ void Road::Change1( Phase* initialize )
 	initialize->Initialize();
 	m_roadState = ROAD_STATE_INITIALIZE_END;
 	StateOpen();
+	//m_initialize = nullptr;
+	//m_finalize = nullptr;
 	m_roadState = ROAD_STATE_COMPLETE;
-	initialize = nullptr;
 }
 void Road::Change2(Phase* finalize , Phase* initialize )
 {
 	m_roadState = ROAD_STATE_PRIM;
 	StateClose();
 	m_roadState = ROAD_STATE_FINALIZE_START;
-	finalize->Finalize();
+	//finalize->Finalize();
 	m_roadState = ROAD_STATE_FINALIZE_END;
 	m_roadState = ROAD_STATE_INITIALIZE_START;
 	initialize->Initialize();
 	m_roadState = ROAD_STATE_INITIALIZE_END;
 	StateOpen();
+	//m_initialize = nullptr;
+	//m_finalize = nullptr;
 	m_roadState = ROAD_STATE_COMPLETE;
-	initialize = nullptr;
-	finalize = nullptr;
 }
 // EOF

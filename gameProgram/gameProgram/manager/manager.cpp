@@ -116,7 +116,7 @@ bool Manager::Initialize(HINSTANCE hInstance, HWND hWnd, bool windowFlg)
 	// フェーズ
 	//----------------------------
 	// 生成
-	m_phase = (Phase*)new Result(device);
+	m_phase = (Phase*)new Title(device);
 
 	// 入力設定
 	m_phase->padXManager(m_padXManager);
@@ -203,7 +203,6 @@ bool Manager::Update(void)
 	//----------------------------
 	// フェーズ切替
 	//----------------------------
-	//m_road->StateClose();
 	if(m_nextPhase != m_phase)
 	{
 		// 現在フェーズを破棄
@@ -219,12 +218,12 @@ bool Manager::Update(void)
 #endif
 
 		// 次のフェーズを初期化・設定
-		if(!m_nextPhase->Initialize())
-			return false;
+		m_road->Roading( m_phase , m_nextPhase );
+		//if(!m_nextPhase->Initialize())
+		//	return false;
 		m_phase = m_nextPhase;
 		m_renderer->phase(m_phase);
 	}
-	//m_road->StateOpen();
 	return true;
 }
 

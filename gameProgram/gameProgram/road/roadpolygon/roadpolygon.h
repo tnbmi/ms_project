@@ -46,10 +46,13 @@ public:
 	D3DXVECTOR3 GetRot( void ){ return m_rot; }
 	void SetRot( D3DXVECTOR3 rot ){ m_rot = rot; }
 	void SetRot( float x, float y , float z ){ m_rot.x = x , m_rot.y = y , m_rot.z = z; }
+	void SetUvX( float dividVol , int useSheet );//(分割数(少数点以下),使用するテクスチャは分割した何枚目か)
+	void SetUvY( float dividVol , int useSheet );//(分割数(少数点以下),使用するテクスチャは分割した何枚目か)
 	D3DXCOLOR GetColor( void ){ return m_diffuse; }
 	void SetColor( D3DCOLOR diff){m_diffuse = diff;SetVertexColor();}
 	void SetColor( float r , float g , float b , float a ){m_diffuse = D3DXCOLOR( r,g,b,a );SetVertexColor();}
-
+	int GetSheetNum( void ){return m_sheetNum;}
+	void SetSheetNum( int Num ){ m_sheetNum = Num; }
 private:
 	struct VERTEX
 	{
@@ -58,7 +61,7 @@ private:
 		D3DXVECTOR2	uv;
 	};
 	VERTEX m_vtx[4];
-
+	int m_sheetNum;
 	LPDIRECT3DDEVICE9	m_device;		// Deviceオブジェクト(描画に必要)
 	LPDIRECT3DTEXTURE9	m_tex;			//テクスチャへのポインタ
 	D3DXVECTOR3 m_scl;

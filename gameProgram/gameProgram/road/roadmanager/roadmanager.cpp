@@ -42,6 +42,7 @@ const D3DXVECTOR3 _textSize = D3DXVECTOR3( 432.0f , 144.0f , 0.0f );
 const D3DXVECTOR3 _textInitPos = D3DXVECTOR3( SCREEN_WIDTH - _iconSize.x - _textSize.x , SCREEN_HEIGHT - _textSize.y , 0.0f );
 const float _textMoveLimit = _textInitPos.y + 10.0f;
 const float _textSpeed = 0.1f;
+const int _textSheetMax = 5;
 //=============================================================================
 // コンストラクタ
 //=============================================================================
@@ -244,7 +245,9 @@ void RoadManager::InitializeOpenPos( void )
 	m_fadeRight->SetPosition( _husumaOpenRightInitPos );
 	m_icon->SetPosition( _iconInitPos );
 	m_icon->SetRot(0.0f,0.0f,0.0f );
+	m_icon->SetColor( 1.0f , 1.0f , 1.0f , 1.0f );
 	m_text->SetPosition( _textInitPos );
+	m_text->SetColor( 1.0f , 1.0f , 1.0f , 1.0f );
 }
 //=============================================================================
 // ポリゴン位置初期化
@@ -255,7 +258,10 @@ void RoadManager::InitializeClosePos( void )
 	m_fadeRight->SetPosition( _husumaCloseRightInitPos );
 	m_icon->SetPosition( _iconInitPos );
 	m_icon->SetRot( D3DXVECTOR3( 0.0f , 0.0f , 0.0f ) );
+	m_icon->SetColor( 1.0f , 1.0f , 1.0f , 1.0f );
 	m_text->SetPosition( _textInitPos );
+	m_text->SetColor( 1.0f , 1.0f , 1.0f , 1.0f );
+	m_text->SetUvY( 0.2f , 1 );
 }
 //=============================================================================
 // ローディング画面襖開ける
@@ -309,12 +315,17 @@ void RoadManager::Open( void )
 	m_icon->Update();
 
 	//テキスト更新
-	pos = m_text->GetPosition();
-	if( pos.y > -( _textInitPos.y + _textMoveLimit ) || pos.y < 0.0f )
+	int sheetNum = m_text->GetSheetNum();
+	if( sheetNum > _textSheetMax )
 	{
-		m_textSpeed *= -1.0f;
+		sheetNum = 0;
 	}
-	pos.y += m_textSpeed;
+	else
+	{
+		sheetNum++;
+	}
+	m_text->SetUvY( 0.2f , sheetNum );
+	m_text->SetSheetNum( sheetNum );
 	m_text->SetPosition( pos );
 	diff = m_text->GetColor();
 	if( diff.a > 0.0f )
@@ -369,12 +380,25 @@ void RoadManager::Close( void )
 		diff.a += _changeColorSpeed;
 	}
 	m_icon->Update();
+	//テキスト更新
 	pos = m_text->GetPosition();
 	if( pos.y > -( _textInitPos.y + _textMoveLimit ) || pos.y < 0.0f )
 	{
 		m_textSpeed *= -1.0f;
 	}
 	pos.y += m_textSpeed;
+	int sheetNum = m_text->GetSheetNum();
+	if( sheetNum > _textSheetMax )
+	{
+		sheetNum = 0;
+	}
+	else
+	{
+		sheetNum++;
+	}
+	m_text->SetUvY( 0.2f , sheetNum );
+	m_text->SetSheetNum( sheetNum );
+
 	m_text->SetPosition( pos );
 	diff = m_text->GetColor();
 	if( diff.a < 1.0f )

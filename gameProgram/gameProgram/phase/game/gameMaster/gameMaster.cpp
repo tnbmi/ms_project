@@ -220,7 +220,7 @@ bool GameMaster::Update(void)
 	// コマンドマネージャ
 	CommandManager::COM_MANA_RTN get = {0,0};
 	get = m_command_manager->Update();
-	AddTeamScore(get.score[0], get.score[1]);
+	AddTeamScore(get.score[1], get.score[0]);
 	for(int i = 0; i < 2; i++)
 	{
 		if(get.score[i] != 0)

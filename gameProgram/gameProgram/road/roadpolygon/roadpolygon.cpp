@@ -25,6 +25,7 @@ RoadPolygon::RoadPolygon(void)
 	float m_fLength=0.0f;
 	float m_fAngle=0.0f;
 	m_diffuse = D3DXCOLOR( 1.0f , 1.0f , 1.0f , 1.0f );
+	m_sheetNum = 0;
 }
 
 //=============================================================================
@@ -191,5 +192,23 @@ void RoadPolygon::SetVertexColor(void)
 	m_vtx[2].color = m_diffuse;
 	m_vtx[3].color = m_diffuse;
 }
-
+//=============================================================================
+// 頂点UV
+//=============================================================================
+void RoadPolygon::SetUvX( float dividVol , int useSheet )
+{
+	// テクスチャ座標
+	m_vtx[0].uv = D3DXVECTOR2((1.0f*dividVol)*useSheet, 0.0f);
+	m_vtx[1].uv = D3DXVECTOR2((1.0f*dividVol)*useSheet+dividVol, 0.0f);
+	m_vtx[2].uv = D3DXVECTOR2((1.0f*dividVol)*useSheet, 1.0f);
+	m_vtx[3].uv = D3DXVECTOR2((1.0f*dividVol)*useSheet+dividVol, 1.0f);
+}
+void RoadPolygon::SetUvY( float dividVol , int useSheet )
+{
+	// テクスチャ座標
+	m_vtx[0].uv = D3DXVECTOR2(0.0f, (1.0f*dividVol)*useSheet);
+	m_vtx[1].uv = D3DXVECTOR2(1.0f, (1.0f*dividVol)*useSheet);
+	m_vtx[2].uv = D3DXVECTOR2(0.0f, (1.0f*dividVol)*useSheet+dividVol);
+	m_vtx[3].uv = D3DXVECTOR2(1.0f, (1.0f*dividVol)*useSheet+dividVol);
+}
 // EOF
