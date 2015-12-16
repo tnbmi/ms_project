@@ -15,6 +15,8 @@
     <ClCompile Include="audienceManager\audienceManager.cpp" />
     <ClCompile Include="commandmanager\commandmanager.cpp" />
     <ClCompile Include="commandmanager\commandteam\commandteam.cpp" />
+    <ClCompile Include="commandmanager\dummyData\dummyDataLoad.cpp" />
+    <ClCompile Include="commandmanager\dummyInput\dummyInput.cpp" />
     <ClCompile Include="debugproc\debugproc.cpp" />
     <ClCompile Include="effectManager\effectManager.cpp" />
     <ClCompile Include="import\demo\demoImport.cpp" />
@@ -69,6 +71,8 @@
     <ClInclude Include="audienceManager\audienceManager.h" />
     <ClInclude Include="commandmanager\commandmanager.h" />
     <ClInclude Include="commandmanager\commandteam\commandteam.h" />
+    <ClInclude Include="commandmanager\dummyData\dummyDataLoad.h" />
+    <ClInclude Include="commandmanager\dummyInput\dummyInput.h" />
     <ClInclude Include="common\complement\complement.h" />
     <ClInclude Include="common\safe.h" />
     <ClInclude Include="debugproc\debugproc.h" />

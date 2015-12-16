@@ -51,6 +51,7 @@ Result::Result(LPDIRECT3DDEVICE9 device) : Phase(device)
 	//----------------------------
 	m_import = nullptr;
 	m_camera = nullptr;
+	m_resultMaster = nullptr;
 }
 
 //=============================================================================
@@ -154,8 +155,6 @@ void Result::Finalize(void)
 	// オブジェクトリスト
 	SafeDelete(m_objectList);
 
-	// シーン
-
 	//----------------------------
 	// インポート
 	//----------------------------
@@ -178,9 +177,7 @@ void Result::Finalize(void)
 	//----------------------------
 	//リザルトマスター
 	//----------------------------
-	m_resultMaster->Finalize();
 	SafeFinalizeDelete( m_resultMaster );
-
 }
 
 //=============================================================================
@@ -245,7 +242,7 @@ bool Result::InitObject(void)
 	m_updateList->Link(poly3d);
 	m_drawListManager->Link(poly3d, 4, Shader::PAT_NOR_DIR);
 	poly3d->norTexture(m_import->texture(ResultImport::STONES_NOR));
-	poly3d->scl(512.0f*5, 512.0f*5, 0.0f);
+	poly3d->scl(512.0f*5.0f, 512.0f*5.0f, 0.0f);
 	poly3d->rot_x(PAI * 0.5f);
 	poly3d->texcoord(1, 20.0f,  0.0f);
 	poly3d->texcoord(2,  0.0f, 20.0f);

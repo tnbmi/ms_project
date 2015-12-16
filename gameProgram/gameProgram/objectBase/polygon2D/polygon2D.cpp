@@ -107,7 +107,7 @@ void Polygon2D::Draw(LPD3DXCONSTANTTABLE vsc, LPD3DXCONSTANTTABLE psc, D3DXMATRI
 	//----------------------------
 	// サンプラー準備
 	//----------------------------
-	unsigned int texSumpler = -1;
+	int texSumpler = -1;
 	if(psc != nullptr)
 	{
 		// サンプラーインデックス
@@ -135,6 +135,11 @@ void Polygon2D::Draw(LPD3DXCONSTANTTABLE vsc, LPD3DXCONSTANTTABLE psc, D3DXMATRI
 	// 描画
 	//----------------------------
 	m_device->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, 2, m_vtx, sizeof(VERTEX));
+
+	if(texSumpler >= 0)
+		m_device->SetTexture(texSumpler, nullptr);
+	else
+		m_device->SetTexture(0, nullptr);
 }
 
 //=============================================================================

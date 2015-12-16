@@ -40,21 +40,23 @@ float4 PS(float4	diffuse	 : COLOR0,
 	float3 texColor = tex2D(texSampler, UV).rgb;
 
 	// ライト計算
-	float light = max(dot(worldNormal, -gDirLightVector), 0);
+	float3	lightVec = float3(0.0f, -1.0f, -2.0f);
+	float3	dir = normalize(lightVec);
+	float	light = max(dot(worldNormal, dir), 0);
 
 	// ライティング計算
-	float3 lighting = (/*light */ diffuse * gDirLightDiffuse /*+ gDirLightAmbient*/).rgb;
+	float3 lighting = (light * diffuse.rgb /** gDirLightDiffuse.rgb + gDirLightAmbient.rgb*/);
 
 	// スペキュラ計算
-	float3	toEye	= normalize(gEyePos - worldPos.xyz);				// カメラから点のベクトル
-	float3	r		= reflect(gDirLightVector, normalize(worldNormal));	// 反射
-	float	s		= pow(max(dot(r, toEye), 0.0f), 3.0f);				// スペキュラパワー
+	float3	toEye	= normalize(gEyePos - worldPos.xyz);	// カメラから点のベクトル
+	float3	r		= reflect(-dir, normalize(worldNormal));	// 反射
+	float	s		= pow(max(dot(r, toEye), 0.0f), 3.0f);	// スペキュラパワー
 
 	// スペキュラ計算
 	float3 spec = s * gDirLightDiffuse.rgb * float3(1.0f, 1.0f, 1.0f);
-
+/**/
 	// カラー加算
-	float3 color = lighting * texColor + spec;
+	float3 color = lighting * texColor;// + spec;
 
-	return float4(texColor, 1.0f);
+	return float4(color, 1.0f);
 }

@@ -28,6 +28,7 @@
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // マクロ定義
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+const char* _command_data = "./resources/command/comData.txt";
 const int _team_max = 2;
 const int _list_pattern_max = 10;
 const D3DXVECTOR3 _team_position[2] = {D3DXVECTOR3(24.0f, 482.0f, 0.0f),D3DXVECTOR3(1112.0f, 482.0f, 0.0f)};
@@ -104,10 +105,10 @@ bool CommandManager::Initialize(PadXManager* padXManager,
 	//----------------------------
 	// コマンドの読み込み
 	//----------------------------
-	CommandDataLoad::Create(&m_commandDataLoad, _list_pattern_max);
+	CommandDataLoad::Create(&m_commandDataLoad, _command_data, _list_pattern_max);
 
-	m_command_list[0] = m_commandDataLoad->commandDataLoadA();
-	m_command_list[1] = m_commandDataLoad->commandDataLoadB();
+	m_command_list[0] = m_commandDataLoad->commandDataA();
+	m_command_list[1] = m_commandDataLoad->commandDataB();
 
 	for(int i = 0; i < _team_max; i++)
 	{

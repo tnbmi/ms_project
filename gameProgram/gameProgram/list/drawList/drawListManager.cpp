@@ -178,6 +178,10 @@ void DrawListManager::AllDraw(Camera* camera, Light* light)
 		//----------------------------
 		// ƒ‰ƒCƒgÝ’è
 		//----------------------------
+		bool f;
+		if(cnt == Shader::PAT_NOR_DIR)
+			f = true;
+
 		light->SetLight(vsc);
 
 		//----------------------------
