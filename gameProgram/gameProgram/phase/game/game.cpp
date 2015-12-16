@@ -252,9 +252,9 @@ bool Game::InitObject(void)
 	poly3d->norTexture(m_import->texture(GameImport::STONES_NOR));
 	poly3d->scl(512.0f*5, 512.0f*5, 0.0f);
 	poly3d->rot_x(PAI * 0.5f);
-	poly3d->texcoord(1, 5.0f,  0.0f);
-	poly3d->texcoord(2,  0.0f, 5.0f);
-	poly3d->texcoord(3, 5.0f, 5.0f);
+	poly3d->texcoord(1, 20.0f,  0.0f);
+	poly3d->texcoord(2,  0.0f, 20.0f);
+	poly3d->texcoord(3, 20.0f, 20.0f);
 
 	//----------------------------
 	// 空メッシュドーム

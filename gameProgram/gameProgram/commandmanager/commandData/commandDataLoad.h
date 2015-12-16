@@ -23,19 +23,19 @@ public:
 	CommandDataLoad(int patternMax);
 	~CommandDataLoad(void);
 
-	static bool Create(CommandDataLoad** outPointer, int patternMax);
-	bool Initialize(void);
+	static bool Create(CommandDataLoad** outPointer, const char* filePath, int patternMax);
+	bool Initialize(const char* filePath);
 	void Finalize(void);
 
-	unsigned int* commandDataLoadA(void){return m_commandDataLoadA;}
-	unsigned int* commandDataLoadB(void){return m_commandDataLoadB;}
+	unsigned int* commandDataA(void){return m_commandDataA;}
+	unsigned int* commandDataB(void){return m_commandDataB;}
 
 private:
 	int m_patternMax;
 	int m_size;
 
-	unsigned int* m_commandDataLoadA;
-	unsigned int* m_commandDataLoadB;
+	unsigned int* m_commandDataA;
+	unsigned int* m_commandDataB;
 };
 
 //=============================================================================

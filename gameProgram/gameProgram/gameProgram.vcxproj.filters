@@ -188,6 +188,12 @@
     <Filter Include="phase\standby\standbyMaster">
       <UniqueIdentifier>{c2ba8c8e-68b0-4e1b-bf95-41f03dbb8912}</UniqueIdentifier>
     </Filter>
+    <Filter Include="commandmanager\dummyInput">
+      <UniqueIdentifier>{b23b84e0-017b-4007-9deb-c8f6c6d6efdb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="commandmanager\dummyData">
+      <UniqueIdentifier>{d1415066-dbc0-4ed6-8510-63f9062bd4cd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main\main.h">
@@ -352,6 +358,12 @@
     <ClInclude Include="phase\standby\standbyMaster\standbyMaster.h">
       <Filter>phase\standby\standbyMaster</Filter>
     </ClInclude>
+    <ClInclude Include="commandmanager\dummyInput\dummyInput.h">
+      <Filter>commandmanager\dummyInput</Filter>
+    </ClInclude>
+    <ClInclude Include="commandmanager\dummyData\dummyDataLoad.h">
+      <Filter>commandmanager\dummyData</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main\main.cpp">
@@ -509,6 +521,12 @@
     </ClCompile>
     <ClCompile Include="phase\standby\standbyMaster\standbyMaster.cpp">
       <Filter>phase\standby\standbyMaster</Filter>
+    </ClCompile>
+    <ClCompile Include="commandmanager\dummyInput\dummyInput.cpp">
+      <Filter>commandmanager\dummyInput</Filter>
+    </ClCompile>
+    <ClCompile Include="commandmanager\dummyData\dummyDataLoad.cpp">
+      <Filter>commandmanager\dummyData</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
