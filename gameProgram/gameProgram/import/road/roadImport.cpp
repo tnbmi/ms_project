@@ -21,12 +21,12 @@ const char* _road_texture_name[] =
 {
 	nullptr,
 
-	"/sliding_door_left.png",
-	"/sliding_door_right.png",
+	"/Load_AoTobira.png",
+	"/Load_AkaTobira.png",
 
-	"/icon.png",
+	"/Loadguruguru.png",
 
-	"/text.png",
+	"/Yomikomityuu.png",
 };
 
 //=============================================================================
