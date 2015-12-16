@@ -13,6 +13,7 @@
 
 #include "..\..\debugproc\debugproc.h"
 #include "..\..\manager\manager.h"
+#include "..\..\sound\sound.h"
 #include "..\game\game.h"
 
 #include "..\..\input\keyboard\keyboard.h"
@@ -111,8 +112,14 @@ bool Standby::Initialize(void)
 		return false;
 
 	//----------------------------
+	// サウンドの停止
+	//----------------------------
+	Sound::StopAll();
+
+	//----------------------------
 	// サウンドの再生
 	//----------------------------
+	Sound::Play(Sound::BGM_STANDBY02);
 
 	//----------------------------
 	// フェード
@@ -165,11 +172,6 @@ void Standby::Finalize(void)
 	// インポート
 	//----------------------------
 	SafeFinalizeDelete(m_import);
-
-	//----------------------------
-	// サウンドの停止
-	//----------------------------
-
 }
 
 //=============================================================================
