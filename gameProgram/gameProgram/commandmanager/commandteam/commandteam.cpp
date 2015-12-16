@@ -181,16 +181,27 @@ CommandTeam::COM_TEAM_RTN CommandTeam::Update(void)
 		for(int j = 0; j < 10; j++)
 		{
 			m_command_data[i][j].pos_y += (_polygon_speed_def + m_speed);
-			if(m_command_data[i][j].polygon_pointer != nullptr)
-				m_command_data[i][j].polygon_pointer->pos_y(m_command_data[i][j].pos_y);
+			m_command_data[i][j].polygon_pointer->pos_y(m_command_data[i][j].pos_y);
 		}
 	}
 
-	if(m_same_count > 0)
-		m_same_count++;
-
 	// コマンド判定
 	int command_count = m_command_count % 10;
+
+	if(m_same_count > 0)
+	{
+		m_same_count++;
+		if(m_same_count >= 17)
+		{
+			m_same_count = 0;
+			for(int i = 0; i < 2; i++)
+			{
+				m_command_data[i][command_count].polygon_pointer->color(0.75f, 0.75f, 0.75f, 0.5f);
+				m_command_data[i][command_count].hit = true;
+			}
+		}
+	}
+
 	for(int i = 0; i < 2; i++)
 	{
 		if( m_pad[i]->buttonTrigger( 0x000f ) )
@@ -201,10 +212,13 @@ CommandTeam::COM_TEAM_RTN CommandTeam::Update(void)
 				if(m_pad[i]->buttonTrigger(_command_data[m_command_data[i][command_count].num_data]))
 				{	// 成功(同時押し1人目)
 					if(m_command_data[(1 - i%2)][command_count].num_data != 4 && !m_command_data[(1 - i%2)][command_count].hit)
+					{
 						m_same_count = 1;
+					}
 					else if(m_same_count > 0)
 					{// 成功(同時押し2人目)
 						m_speed += _speed_add;
+						m_same_count = 0;
 						if(m_speed > _speed_max)
 							m_speed = _speed_max;
 						rtn.return_score = _return_score2;
@@ -217,13 +231,9 @@ CommandTeam::COM_TEAM_RTN CommandTeam::Update(void)
 						rtn.return_score = _return_score1;
 					}
 				}
-				else if(m_same_count > 15)
-				{// 失敗(同時押し2人目)
-					m_same_count = 0;
-					m_speed = 0.0f;
-				}
 				else
 				{// 失敗
+					m_same_count = 0;
 					m_speed = 0.0f;
 				}
 				m_command_data[i][command_count].polygon_pointer->color(0.75f, 0.75f, 0.75f, 0.5f);
@@ -273,9 +283,8 @@ CommandTeam::COM_TEAM_RTN CommandTeam::Update(void)
 		m_delete_count++;
 	}
 
-	if(m_command_count != 0 && m_command_count % COMMAND_MAX == 0)
+	if(m_delete_count != 0 && m_delete_count % COMMAND_MAX == 0)
 	{
-		m_command_count = 0;
 		rtn.flag = true;
 	}
 
