@@ -34,6 +34,7 @@
 #include "..\..\objectBase\meshDome\meshDome.h"
 
 #include "resultMaster\resultMaster.h"
+#include "..\..\import\fbx\fbxTexImport.h"
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // マクロ定義
@@ -51,6 +52,7 @@ Result::Result(LPDIRECT3DDEVICE9 device) : Phase(device)
 	//----------------------------
 	m_import = nullptr;
 	m_camera = nullptr;
+	m_fbxTexImport = nullptr;
 }
 
 //=============================================================================
@@ -69,6 +71,9 @@ bool Result::Initialize(void)
 	// インポート
 	//----------------------------
 	if(!ResultImport::Create(&m_import, m_device))
+		return false;
+
+	if(!FbxTexImport::Create(&m_fbxTexImport,m_device ))
 		return false;
 
 	//----------------------------
@@ -160,6 +165,7 @@ void Result::Finalize(void)
 	// インポート
 	//----------------------------
 	SafeFinalizeDelete(m_import);
+	SafeFinalizeDelete(m_fbxTexImport);
 
 	//----------------------------
 	// ビュー
@@ -239,6 +245,7 @@ bool Result::InitObject(void)
 	//----------------------------
 	// 地面3Dポリゴン
 	//----------------------------
+	
 	Polygon3D* poly3d;
 	if(!Polygon3D::Create(&poly3d, m_device, m_objectList, m_import->texture(ResultImport::STONES)))
 		return false;
@@ -250,6 +257,7 @@ bool Result::InitObject(void)
 	poly3d->texcoord(1, 20.0f,  0.0f);
 	poly3d->texcoord(2,  0.0f, 20.0f);
 	poly3d->texcoord(3, 20.0f, 20.0f);
+	
 
 	//----------------------------
 	// 空メッシュドーム
@@ -266,7 +274,7 @@ bool Result::InitObject(void)
 	//---------------------------
 	//リザルトマスター
 	//---------------------------
-	ResultMaster::Create( &m_resultMaster,m_device,m_objectList,m_updateList,m_drawListManager,m_import,m_debugproc,m_padXManager,m_light );
+	ResultMaster::Create( &m_resultMaster,m_device,m_objectList,m_updateList,m_drawListManager,m_import,m_fbxTexImport,m_debugproc,m_padXManager,m_light );
 
 	return true;
 }

@@ -11,15 +11,17 @@
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 #include "fbxModel.h"
 #include "..\..\common\complement\complement.h"
+#include "..\..\import\fbx\fbxTexImport.h"
 
 //=============================================================================
 // コンストラクタ
 //=============================================================================
-FbxModel::FbxModel(LPDIRECT3DDEVICE9 device, ObjectList* objectList, int priority, OBJECT_TYPE type) : ObjectBase(device, objectList, type)
+FbxModel::FbxModel(LPDIRECT3DDEVICE9 device, ObjectList* objectList, int priority, OBJECT_TYPE type,FbxTexImport *fbxTexImport) : ObjectBase(device, objectList, type)
 {
 	//----------------------------
 	// メンバー初期化
 	//----------------------------
+	m_import = fbxTexImport;
 
 	m_pos = D3DXVECTOR3(0,0,0);
 	m_rot = D3DXVECTOR3(0,0,0);
@@ -53,9 +55,9 @@ FbxModel::~FbxModel(void)
 //=============================================================================
 // 生成
 //=============================================================================
-bool FbxModel::Create(FbxModel** outPointer, LPDIRECT3DDEVICE9 device, ObjectList* objectList, int priority , OBJECT_TYPE type,const char *LoadModelPath)
+bool FbxModel::Create(FbxModel** outPointer, LPDIRECT3DDEVICE9 device, ObjectList* objectList, int priority , OBJECT_TYPE type,const char *LoadModelPath,FbxTexImport *fbxTexImport)
 {
-	FbxModel* pointer = new FbxModel( device,objectList,priority,type );
+	FbxModel* pointer = new FbxModel( device,objectList,priority,type,fbxTexImport );
 	if(!pointer->Initialize())
 		return false;
 
@@ -105,10 +107,12 @@ void FbxModel::Finalize(void)
 					m_part[i].dataArray[j].idxBuff->Release();
 					m_part[i].dataArray[j].vtxBuff->Release();
 
+					//インポートによるテクスチャ読み込みに変えました
+					/*
 					if( m_part[i].dataArray[j].tex != nullptr )
 					{
 						m_part[i].dataArray[j].tex->Release();
-					}
+					}*/
 
 					delete []m_part[i].dataArray[j].texName;
 
@@ -194,9 +198,13 @@ void FbxModel::Draw(LPD3DXCONSTANTTABLE vsc, LPD3DXCONSTANTTABLE psc, D3DXMATRIX
 
 	m_device->SetVertexDeclaration( m_decl );
 
+	//m_noBone = 1;
+
 	vsc->SetMatrix( m_device,"mtx_vp",&vp );
 	vsc->SetInt( m_device,"no_bone",m_noBone);
 	vsc->SetMatrix( m_device,"mtx_world",&mtxWorld );
+
+	
 
 	for( int i = 0 ; i < m_partSum ; i++ )
 	{
@@ -226,6 +234,8 @@ void FbxModel::Draw(LPD3DXCONSTANTTABLE vsc, LPD3DXCONSTANTTABLE psc, D3DXMATRIX
 
 	//戻す
 	m_device->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+
+	m_device->SetTexture( 0,NULL );
 
 }
 
@@ -467,7 +477,8 @@ bool FbxModel::LoadFbxModel( const char *loadModelPath )
 
 			if( strcmp( m_part[i].dataArray[j].texName,"NOTEX" ) == 0 )
 			{
-				D3DXCreateTextureFromFile(device,whiteTexPath,&m_part[i].dataArray[j].tex);
+				//D3DXCreateTextureFromFile(device,whiteTexPath,&m_part[i].dataArray[j].tex);
+				m_part[i].dataArray[j].tex = m_import->LoadTexture( whiteTexPath );
 			}
 			else
 			{
@@ -489,13 +500,14 @@ bool FbxModel::LoadFbxModel( const char *loadModelPath )
 				//バッファ削除
 				delete []c;
 
-					
+				m_part[i].dataArray[j].tex = m_import->LoadTexture( m_part[i].dataArray[j].texName );
+				/*
 				//テクスチャロード
 				if( FAILED( D3DXCreateTextureFromFile(device,m_part[i].dataArray[j].texName,&m_part[i].dataArray[j].tex) ) )
 				{
 					m_part[i].dataArray[j].tex = nullptr;
 				}
-					
+					*/
 
 			//	D3DXCreateTextureFromFile(device,whiteTexPath,&m_part[i].dataArray[j].tex);
 			}
@@ -712,6 +724,9 @@ bool FbxModel::LoadFbxModel( const char *loadModelPath )
 	}
 
 	fclose( file );
+
+	//一旦ボーン全体に行列を設定
+	UpdateAnimation();
 
 	return true;
 

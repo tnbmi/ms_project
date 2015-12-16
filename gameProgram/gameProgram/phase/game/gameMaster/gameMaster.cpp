@@ -31,7 +31,7 @@ const int _time_max		= 3000;
 //=============================================================================
 // コンストラクタ
 //=============================================================================
-GameMaster::GameMaster( LPDIRECT3DDEVICE9 device,ObjectList *objectList,UpdateList *updateList,DrawListManager *drawList,GameImport *import,Debugproc *proc,PadXManager* padXMaster )
+GameMaster::GameMaster( LPDIRECT3DDEVICE9 device,ObjectList *objectList,UpdateList *updateList,DrawListManager *drawList,GameImport *import,FbxTexImport *fbxTexImport,Debugproc *proc,PadXManager* padXMaster )
 {
 	//
 	m_device = device;
@@ -41,6 +41,7 @@ GameMaster::GameMaster( LPDIRECT3DDEVICE9 device,ObjectList *objectList,UpdateLi
 	m_import = import;
 	m_debugProc = proc;
 	m_padXManager = padXMaster;
+	m_fbxTexImport = fbxTexImport;
 	m_command_manager	= nullptr;
 	m_time_manager		= nullptr;
 	//----------------------------
@@ -60,10 +61,10 @@ GameMaster::~GameMaster(void)
 //=============================================================================
 bool GameMaster::Create(GameMaster** outPointer,LPDIRECT3DDEVICE9 device,
 						ObjectList* objectList,UpdateList *updateList,DrawListManager *drawList,
-						GameImport* import,Debugproc* debugproc,PadXManager* padXManager)
+						GameImport* import,FbxTexImport *fbxTexImport,Debugproc* debugproc,PadXManager* padXManager)
 {
 	//ゲームマスター生成
-	GameMaster* pointer = new GameMaster( device,objectList,updateList,drawList,import,debugproc,padXManager );
+	GameMaster* pointer = new GameMaster( device,objectList,updateList,drawList,import,fbxTexImport,debugproc,padXManager );
 	if(!pointer->Initialize())
 		return false;
 
@@ -96,11 +97,17 @@ bool GameMaster::Initialize(void)
 	//プレイヤー生成
 	Player *redTeam;
 	Player *blueTeam;
-	Player::Create( &blueTeam,m_device,m_objectList,m_updateList,m_drawListManager,0,ObjectBase::TYPE_3D,"./resources/fbxModel/daisya.bin","./resources/fbxModel/ground.bin","./resources/fbxModel/nebblue.bin");
-	Player::Create( &redTeam,m_device,m_objectList,m_updateList,m_drawListManager,0,ObjectBase::TYPE_3D,"./resources/fbxModel/daisya.bin","./resources/fbxModel/ground.bin","./resources/fbxModel/nebred.bin");
+	Player::Create( &blueTeam,m_device,m_objectList,m_updateList,m_drawListManager,0,ObjectBase::TYPE_3D,"./resources/fbxModel/daisya.bin","./resources/fbxModel/ground.bin","./resources/fbxModel/nebta_blue.bin",m_fbxTexImport);
+	Player::Create( &redTeam,m_device,m_objectList,m_updateList,m_drawListManager,0,ObjectBase::TYPE_3D,"./resources/fbxModel/daisya.bin","./resources/fbxModel/ground.bin","./resources/fbxModel/nebta_red.bin",m_fbxTexImport);
 
-	redTeam->StartAnimationSecondChild( 1,390,true );
-	blueTeam->StartAnimationSecondChild( 1,390,true );
+	redTeam->StartAnimationSecondChild( 1,570,true );
+	blueTeam->StartAnimationSecondChild( 1,570,true );
+
+	redTeam->StartAnimationChild( 1,60,true );
+	blueTeam->StartAnimationChild( 1,60,true );
+
+	redTeam->StartAnimationParent( 1,60,true );
+	blueTeam->StartAnimationParent( 1,60,true );
 
 	m_audienceManager = audience;
 	m_effectManager   = ef;
@@ -124,6 +131,51 @@ bool GameMaster::Initialize(void)
 	m_redTeam->Move( D3DXVECTOR3(700.0f,0.0f,0.0f),D3DXVECTOR3(700.0f,0.0f,0.0f),300.0f );
 	m_blueTeam->Move( D3DXVECTOR3(-700.0f,0.0f,0.0f),D3DXVECTOR3(-700.0f,0.0f,0.0f),300.0f );
 
+	//アニメーションデータいれてやる
+	m_nebAnim[NANIM_WAIT].stFrame = 1;
+	m_nebAnim[NANIM_WAIT].edFrame = 30;
+
+	m_nebAnim[NANIM_ACOMUP].stFrame = 31;
+	m_nebAnim[NANIM_ACOMUP].edFrame = 60;
+
+	m_nebAnim[NANIM_BCOMUP].stFrame = 61;
+	m_nebAnim[NANIM_BCOMUP].edFrame = 90;
+
+	m_nebAnim[NANIM_ACOMR].stFrame = 91;
+	m_nebAnim[NANIM_ACOMR].edFrame = 120;
+
+	m_nebAnim[NANIM_BCOMR].stFrame = 121;
+	m_nebAnim[NANIM_BCOMR].edFrame = 150;
+
+	m_nebAnim[NANIM_ACOMDOWN].stFrame = 151;
+	m_nebAnim[NANIM_ACOMDOWN].edFrame = 180;
+
+	m_nebAnim[NANIM_BCOMDOWN].stFrame = 181;
+	m_nebAnim[NANIM_BCOMDOWN].edFrame = 210;
+
+	m_nebAnim[NANIM_ACOML].stFrame = 211;
+	m_nebAnim[NANIM_ACOML].edFrame = 240;
+
+	m_nebAnim[NANIM_BCOML].stFrame = 241;
+	m_nebAnim[NANIM_BCOML].edFrame = 270;
+
+	m_nebAnim[NANIM_SAME1].stFrame = 271;
+	m_nebAnim[NANIM_SAME1].edFrame = 330;
+
+	m_nebAnim[NANIM_SAME2].stFrame = 331;
+	m_nebAnim[NANIM_SAME2].edFrame = 390;
+
+	m_nebAnim[NANIM_SAME3].stFrame = 391;
+	m_nebAnim[NANIM_SAME3].edFrame = 450;
+
+	m_nebAnim[NANIM_WIN].stFrame = 451;
+	m_nebAnim[NANIM_WIN].edFrame = 510;
+
+	m_nebAnim[NANIM_LOSE].stFrame = 511;
+	m_nebAnim[NANIM_LOSE].edFrame = 570;
+
+	redTeam->StartAnimationSecondChild( m_nebAnim[NANIM_SAME1].stFrame,m_nebAnim[NANIM_SAME1].edFrame,true );
+	blueTeam->StartAnimationSecondChild( 1,570,true );
 	return true;
 }
 

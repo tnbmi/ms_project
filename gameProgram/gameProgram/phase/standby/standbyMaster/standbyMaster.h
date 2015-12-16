@@ -26,6 +26,7 @@ class Debugproc;
 class PadXManager;
 class Light;
 class Polygon2D;
+class Ggy2DAnimationManager;
 
 class StandbyMaster
 {
@@ -92,6 +93,7 @@ private:
 	PHASE m_phase;
 	ANIMPOLDATA m_redLogo;
 	ANIMPOLDATA m_blueLogo;
+	Ggy2DAnimationManager *m_ggyAnimManager;
 
 };
 

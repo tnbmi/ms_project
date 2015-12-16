@@ -114,33 +114,38 @@ void Polygon3D::Draw(LPD3DXCONSTANTTABLE vsc, LPD3DXCONSTANTTABLE psc, D3DXMATRI
 	//----------------------------
 	// サンプラー準備
 	//----------------------------
-	unsigned int texSumpler = -1;
-	unsigned int norSumpler = -1;
+
+	int texSumpler = -1;
+	int norSumpler = -1;
 	if(psc != nullptr)
 	{
 		// サンプラーインデックス
 		texSumpler = psc->GetSamplerIndex("texSampler");
-
+		
 		// サンプラーステートパラメータ
 		m_device->SetSamplerState(texSumpler, D3DSAMP_ADDRESSU, D3DTADDRESS_WRAP);		// テクスチャアドレッシング方法(U値)を設定
 		m_device->SetSamplerState(texSumpler, D3DSAMP_ADDRESSV, D3DTADDRESS_WRAP);		// テクスチャアドレッシング方法(V値)を設定
+		
 		m_device->SetSamplerState(texSumpler, D3DSAMP_MINFILTER, D3DTEXF_ANISOTROPIC);	// テクスチャ縮小フィルタモードを設定
 		m_device->SetSamplerState(texSumpler, D3DSAMP_MIPFILTER, D3DTEXF_LINEAR);
 		m_device->SetSamplerState(texSumpler, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);		// テクスチャ拡大フィルタモードを設定
 		m_device->SetSamplerState(texSumpler, D3DSAMP_MAXANISOTROPY, 16);
-
+		
 		// サンプラーインデックス
 		norSumpler = psc->GetSamplerIndex("norSampler");
-
+		
 		// サンプラーステートパラメータ
 		m_device->SetSamplerState(norSumpler, D3DSAMP_ADDRESSU, D3DTADDRESS_WRAP);		// テクスチャアドレッシング方法(U値)を設定
 		m_device->SetSamplerState(norSumpler, D3DSAMP_ADDRESSV, D3DTADDRESS_WRAP);		// テクスチャアドレッシング方法(V値)を設定
+		
 		m_device->SetSamplerState(norSumpler, D3DSAMP_MINFILTER, D3DTEXF_ANISOTROPIC);	// テクスチャ縮小フィルタモードを設定
 		m_device->SetSamplerState(norSumpler, D3DSAMP_MIPFILTER, D3DTEXF_LINEAR);
 		m_device->SetSamplerState(norSumpler, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);		// テクスチャ拡大フィルタモードを設定
 		m_device->SetSamplerState(norSumpler, D3DSAMP_MAXANISOTROPY, 16);
+		
+		
 	}
-
+	
 	//----------------------------
 	// テクスチャ設定
 	//----------------------------
@@ -152,12 +157,13 @@ void Polygon3D::Draw(LPD3DXCONSTANTTABLE vsc, LPD3DXCONSTANTTABLE psc, D3DXMATRI
 		else
 			m_device->SetTexture(0, m_texture);
 	}
-
+	
 	// 法線テクスチャの設定
 	if(m_norTexture != nullptr)
 		if(norSumpler >= 0)
 			m_device->SetTexture(norSumpler, m_norTexture);
-
+			
+			
 	//----------------------------
 	// 描画
 	//----------------------------

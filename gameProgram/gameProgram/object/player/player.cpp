@@ -48,22 +48,22 @@ bool Player::Create(Player** outPointer, FbxModel *parent,FbxModel *child,FbxMod
 }
 
 bool Player::Create( Player** outPointer, LPDIRECT3DDEVICE9 device, ObjectList* objectList,UpdateList *updateList,DrawListManager *drawList, int priority  , ObjectBase::OBJECT_TYPE type,
-						const char *parentModelPath,const char *childModelPath,const char *secondChildModelPath )
+						const char *parentModelPath,const char *childModelPath,const char *secondChildModelPath,FbxTexImport *import )
 {
 	FbxModel *parent,*child,*secondChild;
-	if( !FbxModel::Create( &parent,device,objectList,priority,type,parentModelPath ) )
+	if( !FbxModel::Create( &parent,device,objectList,priority,type,parentModelPath,import ) )
 		return false;
 
 	updateList->Link( parent );
 	drawList->Link( parent,0,Shader::PAT_FBX );
 
-	if( !FbxModel::Create( &child,device,objectList,priority,type,childModelPath ) )
+	if( !FbxModel::Create( &child,device,objectList,priority,type,childModelPath,import ) )
 		return false;
 
 	updateList->Link( child );
 	drawList->Link( child,0,Shader::PAT_FBX );
 
-	if( !FbxModel::Create( &secondChild,device,objectList,priority,type,secondChildModelPath ) )
+	if( !FbxModel::Create( &secondChild,device,objectList,priority,type,secondChildModelPath,import ) )
 		return false;
 
 	updateList->Link( secondChild );

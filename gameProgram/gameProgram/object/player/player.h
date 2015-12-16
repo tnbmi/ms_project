@@ -24,6 +24,7 @@ class FbxModel;
 class PlayerState;
 class DrawListManager;
 class UpdateList;
+class FbxTexImport;
 
 class Player
 {
@@ -34,7 +35,7 @@ public:
 
 	static bool Create( Player** outPointer, FbxModel *parent,FbxModel *child,FbxModel *secondChild );
 	static bool Create( Player** outPointer, LPDIRECT3DDEVICE9 device, ObjectList* objectList,UpdateList *updateList,DrawListManager *drawList, int priority  , ObjectBase::OBJECT_TYPE type,
-						const char *parentModelPath,const char *childModelPath,const char *secondChildModelPath );
+						const char *parentModelPath,const char *childModelPath,const char *secondChildModelPath,FbxTexImport *import );
 	bool Initialize(void);
 	void Finalize(void);
 	void Update(void);

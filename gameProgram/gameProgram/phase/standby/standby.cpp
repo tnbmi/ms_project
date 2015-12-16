@@ -154,6 +154,7 @@ void Standby::Finalize(void)
 
 	// オブジェクトリスト
 	SafeDelete(m_objectList);
+	SafeFinalizeDelete( m_standbyMaster );
 
 	//----------------------------
 	// ビュー

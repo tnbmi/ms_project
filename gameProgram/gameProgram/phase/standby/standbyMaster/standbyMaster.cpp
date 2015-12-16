@@ -27,6 +27,7 @@
 #include "..\..\..\common\complement\complement.h"
 #include "..\..\..\input\padX\padXManager.h"
 #include "..\..\..\input\padX\padX.h"
+#include "..\..\..\ggy2DAnimationManager\ggy2DAnimationManager.h"
 
 
 //=============================================================================
@@ -82,6 +83,19 @@ bool StandbyMaster::Initialize(void)
 	Polygon2D::Create( &m_battle,m_device,m_objectList,m_import->texture( StandbyImport::BATTLE ),ObjectBase::TYPE_2D );
 	Polygon2D::Create( &m_redLogo.pol,m_device,m_objectList,m_import->texture( StandbyImport::SELECT_BLUE ),ObjectBase::TYPE_2D );
 	Polygon2D::Create( &m_blueLogo.pol,m_device,m_objectList,m_import->texture( StandbyImport::SELECT_BLUE ),ObjectBase::TYPE_2D );
+
+
+
+	Ggy2DAnimationManager::Create( &m_ggyAnimManager,m_device,m_objectList,m_updateList,m_drawListManager );
+
+	m_ggyAnimManager->SetTexture( 0,m_import->texture(StandbyImport::GGYBLUE_WAIT) );
+	m_ggyAnimManager->SetTexture( 8,m_import->texture(StandbyImport::GGYBLUE_POSE) );
+	m_ggyAnimManager->pos(D3DXVECTOR3( 330,391,0 ));
+	m_ggyAnimManager->scl(D3DXVECTOR3( 640,512,0 ));
+
+	m_ggyAnimManager->StartAnimation(0,true);
+
+
 
 	//”wŒiƒŠƒ“ƒN
 	m_updateList->Link( m_back );
@@ -198,6 +212,8 @@ void StandbyMaster::Finalize(void)
 	m_redTeamStandby[0].time = 0;
 	m_redTeamStandby[1].isStandby = false;
 	m_redTeamStandby[1].time = 0;
+
+	SafeFinalizeDelete( m_ggyAnimManager );
 }
 
 //=============================================================================
@@ -287,7 +303,7 @@ bool StandbyMaster::Update(void)
 			if( m_blueTeamStandby[i].isStandby )
 			{
 				D3DXVECTOR3 scl;
-				scl = LerpVec3( D3DXVECTOR3(0.0f,0.0f,0.0f),D3DXVECTOR3( 91.0f*0.5f,269.0f*0.5f,1.0f ),0,_compFrame,m_blueTeamStandby[i].time,Cube );
+				scl = LerpVec3( D3DXVECTOR3(0.0f,0.0f,0.0f),D3DXVECTOR3( 91.0f*0.5f,269.0f*0.5f,1.0f ),0,(float)_compFrame,m_blueTeamStandby[i].time,Cube );
 				m_blueTeamStandby[i].pol->scl(scl);
 
 				m_blueTeamStandby[i].time++;
@@ -300,7 +316,7 @@ bool StandbyMaster::Update(void)
 			else
 			{
 				D3DXVECTOR3 scl;
-				scl = LerpVec3( D3DXVECTOR3( 91.0f*0.5f,269.0f*0.5f,1.0f ),D3DXVECTOR3( 0.0f,0.0f,0.0f ),0,_compFrame,m_blueTeamStandby[i].time,Cube );
+				scl = LerpVec3( D3DXVECTOR3( 91.0f*0.5f,269.0f*0.5f,1.0f ),D3DXVECTOR3( 0.0f,0.0f,0.0f ),0,(float)_compFrame,m_blueTeamStandby[i].time,Cube );
 				m_blueTeamStandby[i].pol->scl(scl);
 
 				m_blueTeamStandby[i].time++;
@@ -317,7 +333,7 @@ bool StandbyMaster::Update(void)
 			if( m_redTeamStandby[i].isStandby )
 			{
 				D3DXVECTOR3 scl;
-				scl = LerpVec3( D3DXVECTOR3(0.0f,0.0f,0.0f),D3DXVECTOR3( 91.0f*0.5f,269.0f*0.5f,1 ),0,_compFrame,m_redTeamStandby[i].time,Cube );
+				scl = LerpVec3( D3DXVECTOR3(0.0f,0.0f,0.0f),D3DXVECTOR3( 91.0f*0.5f,269.0f*0.5f,1 ),0,(float)_compFrame,m_redTeamStandby[i].time,Cube );
 				m_redTeamStandby[i].pol->scl(scl);
 
 				m_redTeamStandby[i].time++;
@@ -330,7 +346,7 @@ bool StandbyMaster::Update(void)
 			else
 			{
 				D3DXVECTOR3 scl;
-				scl = LerpVec3( D3DXVECTOR3( 91.0f*0.5f,269.0f*0.5f,1 ),D3DXVECTOR3( 0.0f,0.0f,0.0f ),0,_compFrame,m_redTeamStandby[i].time,Cube );
+				scl = LerpVec3( D3DXVECTOR3( 91.0f*0.5f,269.0f*0.5f,1 ),D3DXVECTOR3( 0.0f,0.0f,0.0f ),0,(float)_compFrame,m_redTeamStandby[i].time,Cube );
 				m_redTeamStandby[i].pol->scl(scl);
 
 				m_redTeamStandby[i].time++;
@@ -348,21 +364,22 @@ bool StandbyMaster::Update(void)
 			&& m_redTeamStandby[0].time >= _compFrame  && m_redTeamStandby[0].time >= _compFrame)
 		{
 			m_phase = PHASE_STANDBY;
+			m_ggyAnimManager->StartAnimation(8,true);
 		}
 
 		break;
 
 	case PHASE_STANDBY:
 
-		battleScl = LerpVec3( D3DXVECTOR3( 781.0f*4.0f,413.0f*4.0f,1.0f ),D3DXVECTOR3( 781.0f/2.0f,413.0f/2.0f,0.0f ),0,_compFrame,m_compTime,Cube );
+		battleScl = LerpVec3( D3DXVECTOR3( 781.0f*4.0f,413.0f*4.0f,1.0f ),D3DXVECTOR3( 781.0f/2.0f,413.0f/2.0f,0.0f ),0,_compFrame*2,m_compTime,Cube );
 
 		m_battle->scl(battleScl);
 
 		m_compTime++;
 
-		if( m_compTime > _compFrame )
+		if( m_compTime > _compFrame*2 )
 		{
-			m_compTime = _compFrame;
+			m_compTime = _compFrame*2;
 			m_phase = PHASE_NEXTSCENE;
 		}
 
@@ -375,6 +392,8 @@ bool StandbyMaster::Update(void)
 		break;
 
 	}
+
+	m_ggyAnimManager->Update();
 
 	return false;
 }

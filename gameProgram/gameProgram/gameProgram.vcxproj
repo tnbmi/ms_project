@@ -17,7 +17,9 @@
     <ClCompile Include="commandmanager\commandteam\commandteam.cpp" />
     <ClCompile Include="debugproc\debugproc.cpp" />
     <ClCompile Include="effectManager\effectManager.cpp" />
+    <ClCompile Include="ggy2DAnimationManager\ggy2DAnimationManager.cpp" />
     <ClCompile Include="import\demo\demoImport.cpp" />
+    <ClCompile Include="import\fbx\fbxTexImport.cpp" />
     <ClCompile Include="import\game\gameImport.cpp" />
     <ClCompile Include="import\import.cpp" />
     <ClCompile Include="import\result\resultImport.cpp" />
@@ -56,6 +58,7 @@
     <ClCompile Include="score\score.cpp" />
     <ClCompile Include="shader\shader.cpp" />
     <ClCompile Include="sound\sound.cpp" />
+    <ClCompile Include="tex2DAnimation\tex2DAnimation.cpp" />
     <ClCompile Include="timemanager\timeManager.cpp" />
     <ClCompile Include="road\road.cpp" />
     <ClCompile Include="road\roadmanager\roadmanager.cpp" />
@@ -73,7 +76,9 @@
     <ClInclude Include="common\safe.h" />
     <ClInclude Include="debugproc\debugproc.h" />
     <ClInclude Include="effectManager\effectManager.h" />
+    <ClInclude Include="ggy2DAnimationManager\ggy2DAnimationManager.h" />
     <ClInclude Include="import\demo\demoImport.h" />
+    <ClInclude Include="import\fbx\fbxTexImport.h" />
     <ClInclude Include="import\game\gameImport.h" />
     <ClInclude Include="import\import.h" />
     <ClInclude Include="import\result\resultImport.h" />
@@ -112,6 +117,7 @@
     <ClInclude Include="score\score.h" />
     <ClInclude Include="shader\shader.h" />
     <ClInclude Include="sound\sound.h" />
+    <ClInclude Include="tex2DAnimation\tex2DAnimation.h" />
     <ClInclude Include="timemanager\timeManager.h" />
     <ClInclude Include="road\road.h" />
     <ClInclude Include="road\roadmanager\roadmanager.h" />

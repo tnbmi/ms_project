@@ -34,6 +34,8 @@
 #include "..\..\objectBase\polygon2D\polygon2D.h"
 #include "..\..\objectBase\fbxModel\fbxModel.h"
 
+#include "..\..\import\fbx\fbxTexImport.h"
+
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // マクロ定義
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -57,6 +59,7 @@ Title::Title(LPDIRECT3DDEVICE9 device) : Phase(device)
 	m_objectList		= nullptr;
 	m_updateList		= nullptr;
 	m_drawListManager	= nullptr;
+	m_fbxTexImport		= nullptr;
 }
 
 //=============================================================================
@@ -75,6 +78,9 @@ bool Title::Initialize(void)
 	// インポート
 	//----------------------------
 	if(!TitleImport::Create(&m_import, m_device))
+		return false;
+
+	if(!FbxTexImport::Create(&m_fbxTexImport,m_device ))
 		return false;
 
 	//----------------------------
@@ -176,6 +182,7 @@ void Title::Finalize(void)
 	// インポート
 	//----------------------------
 	SafeFinalizeDelete(m_import);
+	SafeFinalizeDelete(m_fbxTexImport);
 }
 
 //=============================================================================
@@ -243,7 +250,8 @@ bool Title::InitObject(void)
 	//fbx
 	//------------------------------
 	FbxModel *fbx;
-	FbxModel::Create( &fbx,m_device,m_objectList,0,ObjectBase::TYPE_3D,"./resources/fbxModel/Title_Haikei_FBX02.bin" );
+	FbxModel::Create( &fbx,m_device,m_objectList,0,ObjectBase::TYPE_3D,"./resources/fbxModel/title.bin",m_fbxTexImport );
+	fbx->StartAnimation( 1,60,true );
 	m_updateList->Link( fbx );
 	m_drawListManager->Link( fbx,0,Shader::PAT_FBX );
 

@@ -34,9 +34,6 @@
     <Filter Include="phase">
       <UniqueIdentifier>{25dbc2c7-7346-41f9-8e76-280f97d07135}</UniqueIdentifier>
     </Filter>
-    <Filter Include="phase\title">
-      <UniqueIdentifier>{c198dec6-763f-48ba-86bf-bb48a3372eb0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="phase\game">
       <UniqueIdentifier>{987fe575-56a2-4d58-878b-74417a6f17d9}</UniqueIdentifier>
     </Filter>
@@ -187,6 +184,18 @@
     </Filter>
     <Filter Include="phase\standby\standbyMaster">
       <UniqueIdentifier>{c2ba8c8e-68b0-4e1b-bf95-41f03dbb8912}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="import\fbx">
+      <UniqueIdentifier>{cbe7d3d0-6d8a-4990-847a-f80baaf21201}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="phase\title">
+      <UniqueIdentifier>{c198dec6-763f-48ba-86bf-bb48a3372eb0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tex2DAnimation">
+      <UniqueIdentifier>{e1196e0d-ab63-4145-be9f-b1cceb9acfb7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ggy2DAnimationManager">
+      <UniqueIdentifier>{4d236605-b9e9-4b7f-b552-2213476d8590}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -352,6 +361,15 @@
     <ClInclude Include="phase\standby\standbyMaster\standbyMaster.h">
       <Filter>phase\standby\standbyMaster</Filter>
     </ClInclude>
+    <ClInclude Include="import\fbx\fbxTexImport.h">
+      <Filter>import\fbx</Filter>
+    </ClInclude>
+    <ClInclude Include="tex2DAnimation\tex2DAnimation.h">
+      <Filter>tex2DAnimation</Filter>
+    </ClInclude>
+    <ClInclude Include="ggy2DAnimationManager\ggy2DAnimationManager.h">
+      <Filter>ggy2DAnimationManager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main\main.cpp">
@@ -509,6 +527,15 @@
     </ClCompile>
     <ClCompile Include="phase\standby\standbyMaster\standbyMaster.cpp">
       <Filter>phase\standby\standbyMaster</Filter>
+    </ClCompile>
+    <ClCompile Include="import\fbx\fbxTexImport.cpp">
+      <Filter>import\fbx</Filter>
+    </ClCompile>
+    <ClCompile Include="tex2DAnimation\tex2DAnimation.cpp">
+      <Filter>tex2DAnimation</Filter>
+    </ClCompile>
+    <ClCompile Include="ggy2DAnimationManager\ggy2DAnimationManager.cpp">
+      <Filter>ggy2DAnimationManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

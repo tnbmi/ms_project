@@ -33,6 +33,8 @@ public:
 		PREPARE_RED,
 		BATTLE,
 		SELECT_BLUE,
+		GGYBLUE_WAIT,
+		GGYBLUE_POSE,
 
 		TEX_MAX
 	};
