@@ -26,7 +26,13 @@ public:
 		// ‚È‚µ
 		NONE = 0,
 
-		TEST_0,
+		BACK,
+		MID,
+		FRONT,
+		PREPARE_BLUE,
+		PREPARE_RED,
+		BATTLE,
+		SELECT_BLUE,
 
 		TEX_MAX
 	};

@@ -85,7 +85,7 @@ bool GameMaster::Initialize(void)
 	//観客制御生成
 	AudienceManager *audience;
 	if(!AudienceManager::Create( &audience,m_device,m_objectList,m_updateList,m_drawListManager,0,ObjectBase::TYPE_3D,
-							 "./resources/texture/boy.png",_ScoreMax,D3DXVECTOR3( 100,50,-1000),D3DXVECTOR3(1000,200,-700 ),D3DXVECTOR3(  -1000,50,-1000),D3DXVECTOR3( -100,200,-700 ) ))
+							 "./resources/texture/boy.png",_ScoreMax,D3DXVECTOR3( 100.0f,50.0f,-1000.0f),D3DXVECTOR3(1000.0f,200.0f,-700.0f ),D3DXVECTOR3(  -1000.0f,50.0f,-1000.0f),D3DXVECTOR3( -100.0f,200.0f,-700.0f ) ))
 		return false;
 
 	//エフェクトマネージャ
@@ -121,8 +121,8 @@ bool GameMaster::Initialize(void)
 	m_redTeam->secondOffsetPos( D3DXVECTOR3(0,0,0));
 	m_blueTeam->offsetPos( D3DXVECTOR3(0,0,0 ) );
 
-	m_redTeam->Move( D3DXVECTOR3(700,0,0),D3DXVECTOR3(700,0,0),300 );
-	m_blueTeam->Move( D3DXVECTOR3(-700,0,0),D3DXVECTOR3(-700,0,0),300 );
+	m_redTeam->Move( D3DXVECTOR3(700.0f,0.0f,0.0f),D3DXVECTOR3(700.0f,0.0f,0.0f),300.0f );
+	m_blueTeam->Move( D3DXVECTOR3(-700.0f,0.0f,0.0f),D3DXVECTOR3(-700.0f,0.0f,0.0f),300.0f );
 
 	return true;
 }
@@ -174,8 +174,8 @@ bool GameMaster::Update(void)
 	if(m_time_manager->Update())
 		return true;
 
-	m_redTeamAddVal	 = 0;
 	m_blueTeamAddVal = 0;
+	m_redTeamAddVal	 = 0;
 
 	return false;
 }

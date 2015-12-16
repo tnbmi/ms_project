@@ -29,6 +29,7 @@
 #include "..\..\list\objectList\objectList.h"
 #include "..\..\list\updateList\updateList.h"
 #include "..\..\list\drawList\drawListManager.h"
+#include "..\..\phase\standby\standbyMaster\standbyMaster.h"
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // ƒ}ƒNƒ’è‹`
@@ -193,6 +194,8 @@ void Standby::Update(void)
 	//----------------------------
 	m_updateList->AllUpdate();
 
+	bool isStandby = m_standbyMaster->Update();
+
 	//----------------------------
 	// ‰æ–Ê‘JˆÚ
 	//----------------------------
@@ -225,7 +228,8 @@ void Standby::Draw(void)
 //=============================================================================
 bool Standby::InitObject(void)
 {
-
+	//
+	StandbyMaster::Create( &m_standbyMaster,m_device,m_objectList,m_updateList,m_drawListManager,m_import,m_debugproc,m_padXManager,m_light );
 	return true;
 }
 

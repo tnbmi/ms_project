@@ -21,7 +21,13 @@ const char* _standby_texture_name[] =
 {
 	nullptr,
 
-	"/white.jpg"
+	"/Select_Back.png",
+	"/Select_Mid.png",
+	"/Select_Front.png",
+	"/Select_ZyunbiOK_Blue.png",
+	"/Select_ZyunbiOK_Red.png",
+	"/Select_Syoubu.png",
+	"/Select_Blue.png"
 };
 
 //=============================================================================

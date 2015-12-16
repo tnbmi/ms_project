@@ -13,6 +13,7 @@
 
 #include "..\..\debugproc\debugproc.h"
 #include "..\..\manager\manager.h"
+#include "..\..\sound\sound.h"
 #include "..\title\title.h"
 
 #include "..\..\input\keyboard\keyboard.h"
@@ -111,6 +112,10 @@ bool Result::Initialize(void)
 	if(!InitObject())
 		return false;
 
+	//----------------------------
+	// サウンドの停止
+	//----------------------------
+	Sound::StopAll();
 
 	//----------------------------
 	// サウンドの再生
@@ -169,10 +174,6 @@ void Result::Finalize(void)
 	// シェーダー
 	//----------------------------
 	SafeFinalizeDelete(m_shader);
-
-	//----------------------------
-	// サウンドの停止
-	//----------------------------
 
 	//----------------------------
 	//リザルトマスター
