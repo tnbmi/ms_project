@@ -52,9 +52,8 @@ private:
 
 	ResultImport*	m_import;
 	Camera*			m_camera;
+
 	ResultMaster*	m_resultMaster;
-
-
 };
 
 //=============================================================================

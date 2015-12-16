@@ -54,6 +54,8 @@ Standby::Standby(LPDIRECT3DDEVICE9 device) : Phase(device)
 	m_objectList		= nullptr;
 	m_updateList		= nullptr;
 	m_drawListManager	= nullptr;
+
+	m_standbyMaster = nullptr;
 }
 
 //=============================================================================
@@ -154,6 +156,7 @@ void Standby::Finalize(void)
 
 	// オブジェクトリスト
 	SafeDelete(m_objectList);
+	SafeFinalizeDelete( m_standbyMaster );
 
 	//----------------------------
 	// ビュー

@@ -140,7 +140,7 @@ void Polygon3D::Draw(LPD3DXCONSTANTTABLE vsc, LPD3DXCONSTANTTABLE psc, D3DXMATRI
 		m_device->SetSamplerState(norSampler, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);		// テクスチャ拡大フィルタモードを設定
 		m_device->SetSamplerState(norSampler, D3DSAMP_MAXANISOTROPY, 16);
 	}
-
+	
 	//----------------------------
 	// テクスチャ設定
 	//----------------------------
@@ -152,7 +152,7 @@ void Polygon3D::Draw(LPD3DXCONSTANTTABLE vsc, LPD3DXCONSTANTTABLE psc, D3DXMATRI
 		else
 			m_device->SetTexture(0, m_texture);
 	}
-
+	
 	// 法線テクスチャの設定
 	if(m_norTexture != nullptr)
 		if(norSampler >= 0)

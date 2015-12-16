@@ -52,6 +52,7 @@ private:
 	ObjectList*		 m_objectList;
 	UpdateList*		 m_updateList;
 	DrawListManager* m_drawListManager;
+
 	StandbyMaster*	 m_standbyMaster;
 };
 

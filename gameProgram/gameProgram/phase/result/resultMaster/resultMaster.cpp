@@ -28,7 +28,7 @@
 //=============================================================================
 // コンストラクタ
 //=============================================================================
-ResultMaster::ResultMaster( LPDIRECT3DDEVICE9 device,ObjectList *objectList,UpdateList *updateList,DrawListManager *drawList,ResultImport *import,Debugproc *proc,PadXManager* padXMaster,Light *light )
+ResultMaster::ResultMaster( LPDIRECT3DDEVICE9 device,ObjectList *objectList,UpdateList *updateList,DrawListManager *drawList,ResultImport *import,FbxTexImport *fbxTexImport,Debugproc *proc,PadXManager* padXMaster,Light *light )
 {
 	m_device = device;
 	m_objectList = objectList;
@@ -37,6 +37,7 @@ ResultMaster::ResultMaster( LPDIRECT3DDEVICE9 device,ObjectList *objectList,Upda
 	m_import = import;
 	m_debugProc = proc;
 	m_padXManager = padXMaster;
+	m_fbxTexImport = fbxTexImport;
 	m_light = light;
 }
 
@@ -52,10 +53,10 @@ ResultMaster::~ResultMaster(void)
 //=============================================================================
 bool ResultMaster::Create(ResultMaster** outPointer,LPDIRECT3DDEVICE9 device,
 						ObjectList* objectList,UpdateList *updateList,DrawListManager *drawList,
-						ResultImport* import,Debugproc* debugproc,PadXManager* padXManager,Light *light)
+						ResultImport* import,FbxTexImport *fbxTexImport,Debugproc* debugproc,PadXManager* padXManager,Light *light)
 {
 
-	ResultMaster* pointer = new ResultMaster( device,objectList,updateList,drawList,import,debugproc,padXManager,light );
+	ResultMaster* pointer = new ResultMaster( device,objectList,updateList,drawList,import,fbxTexImport,debugproc,padXManager,light );
 	if(!pointer->Initialize())
 		return false;
 
@@ -80,8 +81,8 @@ bool ResultMaster::Initialize(void)
 	//ねぶた生成
 	Player *redTeam;
 	Player *blueTeam;
-	Player::Create( &blueTeam,m_device,m_objectList,m_updateList,m_drawListManager,0,ObjectBase::TYPE_3D,"./resources/fbxModel/daisya.bin","./resources/fbxModel/ground.bin","./resources/fbxModel/nebred.bin");
-	Player::Create( &redTeam,m_device,m_objectList,m_updateList,m_drawListManager,0,ObjectBase::TYPE_3D,"./resources/fbxModel/daisya.bin","./resources/fbxModel/ground.bin","./resources/fbxModel/nebblue.bin");
+	Player::Create( &blueTeam,m_device,m_objectList,m_updateList,m_drawListManager,0,ObjectBase::TYPE_3D,"./resources/fbxModel/daisya.bin","./resources/fbxModel/ground.bin","./resources/fbxModel/nebta_red.bin",m_fbxTexImport);
+	Player::Create( &redTeam,m_device,m_objectList,m_updateList,m_drawListManager,0,ObjectBase::TYPE_3D,"./resources/fbxModel/daisya.bin","./resources/fbxModel/ground.bin","./resources/fbxModel/nebta_blue.bin",m_fbxTexImport);
 
 	m_redTeam = redTeam;
 	m_blueTeam= blueTeam;
@@ -89,8 +90,8 @@ bool ResultMaster::Initialize(void)
 	//おじいちゃん生成
 	FbxModel *redGgy;
 	FbxModel *blueGgy;
-	FbxModel::Create( &redGgy,m_device,m_objectList,0,ObjectBase::TYPE_3D,"./resources/fbxModel/gg_red.bin" );
-	FbxModel::Create( &blueGgy,m_device,m_objectList,0,ObjectBase::TYPE_3D,"./resources/fbxModel/gg_blue.bin" );
+	FbxModel::Create( &redGgy,m_device,m_objectList,0,ObjectBase::TYPE_3D,"./resources/fbxModel/gg_red.bin",m_fbxTexImport );
+	FbxModel::Create( &blueGgy,m_device,m_objectList,0,ObjectBase::TYPE_3D,"./resources/fbxModel/gg_blue.bin",m_fbxTexImport );
 
 	m_redGgy = redGgy;
 	m_blueGgy= blueGgy;

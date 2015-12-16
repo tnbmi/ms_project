@@ -29,16 +29,17 @@ class PadXManager;
 class Player;
 class CommandManager;
 class TimeManager;
+class FbxTexImport;
 
 class GameMaster
 {
 public:
-	GameMaster( LPDIRECT3DDEVICE9 device,ObjectList *objectList,UpdateList *updateList,DrawListManager *drawList,GameImport *import,Debugproc *proc,PadXManager* padXMaster );
+	GameMaster( LPDIRECT3DDEVICE9 device,ObjectList *objectList,UpdateList *updateList,DrawListManager *drawList,GameImport *import,FbxTexImport *fbxTexImport,Debugproc *proc,PadXManager* padXMaster );
 	virtual ~GameMaster(void);
 
 	static bool Create(GameMaster** outPointer,LPDIRECT3DDEVICE9 device,
 						ObjectList* objectList,UpdateList *updateList,DrawListManager *drawList,
-						GameImport* import,Debugproc* debugproc,PadXManager* padXManager);
+						GameImport* import,FbxTexImport *fbxTexImport,Debugproc* debugproc,PadXManager* padXManager);
 	bool Initialize(void);
 	void Finalize(void);
 	bool Update(void);
@@ -57,6 +58,34 @@ public:
 	void AddTeamScore( const int addRedTeamVal,const int addBlueTeamVal );
 	void DetermineTeamScore();
 private:
+
+	enum NEBUTAANIMATION
+	{
+		NANIM_WAIT,
+		NANIM_ACOMUP,
+		NANIM_BCOMUP,
+		NANIM_ACOMR,
+		NANIM_BCOMR,
+		NANIM_ACOMDOWN,
+		NANIM_BCOMDOWN,
+		NANIM_ACOML,
+		NANIM_BCOML,
+		NANIM_SAME1,
+		NANIM_SAME2,
+		NANIM_SAME3,
+		NANIM_WIN,
+		NANIM_LOSE,
+		Max
+	};
+
+	struct NEBTAANIMATIONFRAME
+	{
+		int stFrame;
+		int edFrame;
+	};
+
+	NEBTAANIMATIONFRAME m_nebAnim[Max];
+
 	static const int _ScoreMax = 500;//総スコア
 
 	LPDIRECT3DDEVICE9 m_device;
@@ -66,6 +95,7 @@ private:
 	GameImport*	 m_import;
 	Debugproc*		 m_debugProc;
 	PadXManager*	 m_padXManager;
+	FbxTexImport*	 m_fbxTexImport;
 
 	//観客制御
 	AudienceManager *m_audienceManager;
@@ -80,6 +110,8 @@ private:
 	CommandManager*	m_command_manager;
 	// タイマーマネージャ
 	TimeManager*	m_time_manager;
+
+	
 
 	int m_totalScore;
 	int m_redTeamAddVal;

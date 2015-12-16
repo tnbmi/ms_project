@@ -40,6 +40,7 @@
 #include "..\..\object\player\player.h"
 
 #include "..\..\phase\game\gameMaster\gameMaster.h"
+#include "..\..\import\fbx\fbxTexImport.h"
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // マクロ定義
@@ -64,6 +65,9 @@ Game::Game(LPDIRECT3DDEVICE9 device) : Phase(device)
 	m_objectList		= nullptr;
 	m_updateList		= nullptr;
 	m_drawListManager	= nullptr;
+	m_fbxTexImport = nullptr;
+
+	m_gameMaster = nullptr;
 }
 
 //=============================================================================
@@ -82,6 +86,9 @@ bool Game::Initialize(void)
 	// インポート
 	//----------------------------
 	if(!GameImport::Create(&m_import, m_device))
+		return false;
+
+	if(!FbxTexImport::Create(&m_fbxTexImport,m_device ))
 		return false;
 
 	//----------------------------
@@ -187,6 +194,7 @@ void Game::Finalize(void)
 	// インポート
 	//----------------------------
 	SafeFinalizeDelete(m_import);
+	SafeFinalizeDelete(m_fbxTexImport);
 }
 
 //=============================================================================
@@ -271,7 +279,7 @@ bool Game::InitObject(void)
 	//----------------------------
 	//ゲームマスター生成
 	//----------------------------
-	GameMaster::Create( &m_gameMaster,m_device,m_objectList,m_updateList,m_drawListManager,m_import,m_debugproc,m_padXManager);
+	GameMaster::Create( &m_gameMaster,m_device,m_objectList,m_updateList,m_drawListManager,m_import,m_fbxTexImport,m_debugproc,m_padXManager);
 
 	return true;
 }

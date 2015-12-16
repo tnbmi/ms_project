@@ -22,13 +22,16 @@
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // クラス定義
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+class FbxTexImport;
+
 class FbxModel : public ObjectBase
 {
 public:
-	FbxModel(LPDIRECT3DDEVICE9 device, ObjectList* objectList, int priority, OBJECT_TYPE type );
+	FbxModel(LPDIRECT3DDEVICE9 device, ObjectList* objectList, int priority, OBJECT_TYPE type,FbxTexImport *fbxTexImport );
 	virtual ~FbxModel(void);
 
-	static bool Create(FbxModel** outPointer, LPDIRECT3DDEVICE9 device, ObjectList* objectList, int priority  , OBJECT_TYPE type,const char *LoadModelPath);
+	static bool Create(FbxModel** outPointer, LPDIRECT3DDEVICE9 device, ObjectList* objectList, int priority  , OBJECT_TYPE type,const char *LoadModelPath,FbxTexImport *fbxTexImport);
 	bool Initialize(void);
 	void Finalize(void);
 	void Update(void);
@@ -39,6 +42,7 @@ public:
 private:
 
 	int m_noBone;//int値として使いたいんで
+	FbxTexImport *m_import;
 	
 	LPDIRECT3DVERTEXDECLARATION9 m_decl;
 

@@ -22,6 +22,7 @@ class Keyboard;
 class PadXManager;
 class Fade;
 class Sound;
+class FbxTexImport;
 
 class Phase
 {
@@ -48,6 +49,7 @@ protected:
 
 	Fade*	m_fade;
 	Sound*	m_sound;
+	FbxTexImport *m_fbxTexImport;
 };
 
 //=============================================================================
