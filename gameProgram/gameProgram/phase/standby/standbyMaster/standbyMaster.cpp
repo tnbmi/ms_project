@@ -203,7 +203,7 @@ void StandbyMaster::Finalize(void)
 //=============================================================================
 // çXêV
 //=============================================================================
-void StandbyMaster::Update(void)
+bool StandbyMaster::Update(void)
 {
 
 	D3DXVECTOR3 battleScl;
@@ -370,11 +370,13 @@ void StandbyMaster::Update(void)
 
 	case PHASE_NEXTSCENE:
 
+		return true;
 
 		break;
 
 	}
 
+	return false;
 }
 
 //=============================================================================

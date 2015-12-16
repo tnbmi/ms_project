@@ -194,7 +194,7 @@ void Standby::Update(void)
 	//----------------------------
 	m_updateList->AllUpdate();
 
-	m_standbyMaster->Update();
+	bool isStandby = m_standbyMaster->Update();
 
 	//----------------------------
 	// ‰æ–Ê‘JˆÚ

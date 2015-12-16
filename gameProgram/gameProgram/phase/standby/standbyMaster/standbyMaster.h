@@ -40,7 +40,7 @@ public:
 						StandbyImport* import,Debugproc* debugproc,PadXManager* padXManager,Light *light);
 	bool Initialize(void);
 	void Finalize(void);
-	void Update(void);
+	bool Update(void);
 	void Draw(void);
 
 private:
