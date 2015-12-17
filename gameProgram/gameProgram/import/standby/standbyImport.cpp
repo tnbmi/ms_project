@@ -28,6 +28,7 @@ const char* _standby_texture_name[] =
 	"/Select_ZyunbiOK_Red.png",
 	"/Select_Syoubu.png",
 	"/Select_Blue.png",
+	"/Select_RedScroll.png",
 	"/B‡@.png",
 	"/B‡H.png",
 	"/R‡@.png",

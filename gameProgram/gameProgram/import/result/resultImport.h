@@ -31,7 +31,9 @@ public:
 		SKY,
 
 		NUM,
-		SYOURI,
+		SYOURIRED,
+		SYOURIBLUE,
+		KEKKA,
 
 		TEX_MAX
 	};

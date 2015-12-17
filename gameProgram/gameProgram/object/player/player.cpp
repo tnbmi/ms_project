@@ -145,6 +145,7 @@ void Player::Update(void)
 void Player::Move( const D3DXVECTOR3 &stPos,const D3DXVECTOR3 &edPos,const float compTime )
 {
 	m_stPos = stPos;
+	m_pos = stPos;
 	m_edPos = edPos;
 	m_compTime = compTime;
 	m_elepsed = 0;
@@ -167,6 +168,28 @@ void Player::StartAnimationChild( const int startKeyFrame,const int endKeyFrame,
 void Player::StartAnimationSecondChild( const int startKeyFrame,const int endKeyFrame,const bool isRoop )
 {
 	m_secondChild->StartAnimation( startKeyFrame,endKeyFrame,isRoop );
+}
+
+void Player::ApplySclRotPos()
+{
+	//親の位置更新
+	m_parent->pos( m_pos );
+	m_parent->rot( m_rot );
+	m_parent->scl( m_scl );
+
+	//子の位置更新
+	m_child->pos( m_pos + m_offsetPos );
+	m_child->rot( m_rot + m_offsetRot );
+	m_child->scl( m_scl );
+
+	//第二子の更新
+	m_secondChild->pos( m_pos + m_secondOffsetPos );
+	m_secondChild->rot( m_rot + m_secondOffsetRot );
+	m_secondChild->scl( m_scl );
+
+	m_parent->Update();
+	m_child->Update();
+	m_secondChild->Update();
 }
 
 // EOF

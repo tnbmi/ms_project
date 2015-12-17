@@ -264,7 +264,7 @@ bool Title::InitObject(void)
 	m_updateList->Link( nebBlue );
 	m_drawListManager->Link( nebBlue,0,Shader::PAT_FBX );
 
-	nebBlue->pos( D3DXVECTOR3( -900,-300,1300 ) );
+	nebBlue->pos( D3DXVECTOR3( -1000,0,1300 ) );
 	nebBlue->rot( D3DXVECTOR3(0,3*PAI /4,0 ) );
 
 	FbxModel *nebRed;
@@ -273,7 +273,7 @@ bool Title::InitObject(void)
 	m_updateList->Link( nebRed );
 	m_drawListManager->Link( nebRed,0,Shader::PAT_FBX );
 
-	nebRed->pos( D3DXVECTOR3( 900,-300,1300 ) );
+	nebRed->pos( D3DXVECTOR3( 1000,0,1300 ) );
 	nebRed->rot( D3DXVECTOR3(0,-3*PAI /4,0 ) );
 
 	//----------------------------

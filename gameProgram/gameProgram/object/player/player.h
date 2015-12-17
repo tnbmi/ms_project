@@ -69,6 +69,7 @@ public:
 	void StartAnimationParent( const int startKeyFrame,const int endKeyFrame,const bool isRoop );
 	void StartAnimationChild( const int startKeyFrame,const int endKeyFrame,const bool isRoop );
 	void StartAnimationSecondChild( const int startKeyFrame,const int endKeyFrame,const bool isRoop );
+	void ApplySclRotPos();
 	
 
 private:

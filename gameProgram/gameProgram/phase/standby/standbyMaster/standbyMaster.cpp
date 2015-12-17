@@ -81,7 +81,7 @@ bool StandbyMaster::Initialize(void)
 	Polygon2D::Create( &m_redTeamStandby[0].pol,m_device,m_objectList,m_import->texture( StandbyImport::PREPARE_RED ),ObjectBase::TYPE_2D );
 	Polygon2D::Create( &m_redTeamStandby[1].pol,m_device,m_objectList,m_import->texture( StandbyImport::PREPARE_RED ),ObjectBase::TYPE_2D );
 	Polygon2D::Create( &m_battle,m_device,m_objectList,m_import->texture( StandbyImport::BATTLE ),ObjectBase::TYPE_2D );
-	Polygon2D::Create( &m_redLogo.pol,m_device,m_objectList,m_import->texture( StandbyImport::SELECT_BLUE ),ObjectBase::TYPE_2D );
+	Polygon2D::Create( &m_redLogo.pol,m_device,m_objectList,m_import->texture( StandbyImport::SELECT_RED ),ObjectBase::TYPE_2D );
 	Polygon2D::Create( &m_blueLogo.pol,m_device,m_objectList,m_import->texture( StandbyImport::SELECT_BLUE ),ObjectBase::TYPE_2D );
 
 
@@ -184,10 +184,10 @@ bool StandbyMaster::Initialize(void)
 
 	m_redLogo.pol->pos(944.0f,689.0f,0.0f);
 	m_redLogo.pol->scl(417.0f,59.0f,1.0f);
-	m_redLogo.uv[0] = D3DXVECTOR2(0.0f,0.999f);
-	m_redLogo.uv[1] = D3DXVECTOR2(1.0f,0.999f);
-	m_redLogo.uv[2] = D3DXVECTOR2(0.0f,0.999f);
-	m_redLogo.uv[3] = D3DXVECTOR2(1.0f,1.0f);
+	m_redLogo.uv[0] = D3DXVECTOR2(0.0f,0.0f);
+	m_redLogo.uv[1] = D3DXVECTOR2(1.0f,0.01f);
+	m_redLogo.uv[2] = D3DXVECTOR2(0.0f,0.111f);
+	m_redLogo.uv[3] = D3DXVECTOR2(1.0f,0.111f);
 	m_redLogo.offsetUv = D3DXVECTOR2(0.0f,0.111f);
 
 	//èâä˙âª

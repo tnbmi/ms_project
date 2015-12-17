@@ -26,7 +26,9 @@ const char* _result_texture_name[] =
 	"/sky.jpg",
 
 	"/number.png",
-	"/SyouriUI.png"
+	"/syouriscrollRed.png",
+	"/syouriscrollBlue.png",
+	"/kekkaUI.png"
 };
 
 //=============================================================================

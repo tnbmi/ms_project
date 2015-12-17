@@ -195,11 +195,14 @@ bool GameMaster::Initialize(void)
 
 	m_redTeam->Move( D3DXVECTOR3(700.0f,0.0f,0.0f),D3DXVECTOR3(700.0f,0.0f,0.0f),300.0f );
 	m_blueTeam->Move( D3DXVECTOR3(-700.0f,0.0f,0.0f),D3DXVECTOR3(-700.0f,0.0f,0.0f),300.0f );
+	m_redTeam->ApplySclRotPos();
+	m_blueTeam->ApplySclRotPos();
 
 	m_effectManager->LoadEffectData( "./resources/effect/FireWorks.OEF" );
 	m_effectManager->LoadEffectData( "./resources/effect/FireWorks2.OEF" );
 	m_effectManager->LoadEffectData( "./resources/effect/FireWorks3.OEF" );
 	m_effectManager->LoadEffectData( "./resources/effect/Ene.OEF" );
+	m_effectManager->LoadEffectData( "./resources/effect/Effect.OEF" );
 	m_effectManager->SetOption( InstancingBillboard::OPTION( true,false,false ));
 
 	//アニメーションデータいれてやる
@@ -421,6 +424,11 @@ void GameMaster::SelectAnimation( const int judge,Player *player,Ggy2DAnimationM
 
 			player->StartAnimationSecondChild( m_nebAnim[ NANIM_SAME1+s ].stFrame,m_nebAnim[ NANIM_SAME1 +s].edFrame,false );
 			ggy->StartAnimation(m_nebAnim[ NANIM_SAME1+s ].polyGgyAnimIdx,false );
+			cutIn->time = 0;
+			cutIn->addVal =1;
+			cutIn->stBufPos = cutIn->stPos;
+			cutIn->edBufPos = cutIn->edPos;
+			m_effectManager->AddEffectFromDataBase(0,D3DXVECTOR3(0,900,1000));
 			break;
 
 		case 5:
@@ -431,9 +439,11 @@ void GameMaster::SelectAnimation( const int judge,Player *player,Ggy2DAnimationM
 			cutIn->addVal =1;
 			cutIn->stBufPos = cutIn->stPos;
 			cutIn->edBufPos = cutIn->edPos;
+			m_effectManager->AddEffectFromDataBase(0,D3DXVECTOR3(0,900,1000));
 			break;
 
 		case 6:
+
 
 			break;
 

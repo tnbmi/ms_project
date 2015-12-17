@@ -115,7 +115,7 @@ bool ResultMaster::Initialize(void)
 
 	//polygon2D
 	Polygon2D *pol;
-	Polygon2D::Create( &pol,m_device,m_objectList,m_import->texture(ResultImport::STONES),ObjectBase::TYPE_2D );
+	Polygon2D::Create( &pol,m_device,m_objectList,m_import->texture(ResultImport::KEKKA),ObjectBase::TYPE_2D );
 	m_updateList->Link( pol );
 	m_drawListManager->Link( pol,0,Shader::PAT_2D );
 
@@ -124,7 +124,7 @@ bool ResultMaster::Initialize(void)
 	m_resultPoly->scl(300,200,0);
 	m_resultPoly->color(1,1,1,1);
 
-	Polygon2D::Create( &pol,m_device,m_objectList,m_import->texture(ResultImport::SYOURI),ObjectBase::TYPE_2D );
+	Polygon2D::Create( &pol,m_device,m_objectList,m_import->texture(ResultImport::SYOURIRED),ObjectBase::TYPE_2D );
 	m_updateList->Link( pol );
 	m_drawListManager->Link( pol,0,Shader::PAT_2D );
 
@@ -136,14 +136,14 @@ bool ResultMaster::Initialize(void)
 	//----------------------------
 	//‰ŠúˆÊ’u
 	//----------------------------
-	m_redTeamScore->pos( D3DXVECTOR3( 640 +320,280,0 ) );
-	m_blueTeamScore->pos( D3DXVECTOR3( 320,280,0 ) );
+	m_redTeamScore->pos( D3DXVECTOR3( 640 +320,180,0 ) );
+	m_blueTeamScore->pos( D3DXVECTOR3( 320,180,0 ) );
 	m_redTeamScore->StartRandView(200);
 	m_redTeamScore->score(3419);
 	m_redTeamScore->col(D3DXCOLOR(1,0,0,1));
 	
 	m_blueTeamScore->StartRandView(200);
-	m_blueTeamScore->score(1145);
+	m_blueTeamScore->score(9145);
 	m_blueTeamScore->col(D3DXCOLOR(0,0,1,1));
 
 	m_redTeam->rot( D3DXVECTOR3(0,PAI,0 ) );
@@ -151,16 +151,24 @@ bool ResultMaster::Initialize(void)
 	m_redTeam->Move( D3DXVECTOR3(-500,0,0),D3DXVECTOR3(-500,0,0),300 );
 	m_blueTeam->Move( D3DXVECTOR3(500,0,0),D3DXVECTOR3(500,0,0),300 );
 
+	m_redTeam->ApplySclRotPos();
+	m_blueTeam->ApplySclRotPos();
+
 	m_redGgy->pos( D3DXVECTOR3(100,0,-1200) );
 	m_blueGgy->pos( D3DXVECTOR3(-100,0,-1200) );
 	m_redGgy->rot( D3DXVECTOR3(0,PAI,0));
 	m_blueGgy->rot( D3DXVECTOR3(0,PAI,0));
-	
+
 	m_effectManager->LoadEffectData( "./resources/effect/FireWorks.OEF" );
 	m_effectManager->LoadEffectData( "./resources/effect/FireWorks2.OEF" );
 	m_effectManager->LoadEffectData( "./resources/effect/FireWorks3.OEF" );
 	m_effectManager->LoadEffectData( "./resources/effect/Ene.OEF" );
 	m_effectManager->SetOption( InstancingBillboard::OPTION( true,false,false ));
+
+			m_redTeam->StartAnimationSecondChild(1,30,true );
+		m_blueTeam->StartAnimationSecondChild(1,30,true );
+		m_redGgy->StartAnimation(1,30,true );
+		m_blueGgy->StartAnimation(1,30,true );
 
 	m_phase = PHASE_RESULTSTART;
 	return true;
@@ -189,10 +197,6 @@ void ResultMaster::Update(void)
 
 		m_redTeamScore->StartRandView( 60 * 3 );
 		m_blueTeamScore->StartRandView( 60 * 3 );
-		m_redTeam->StartAnimationSecondChild(1,30,true );
-		m_blueTeam->StartAnimationSecondChild(1,30,true );
-		m_redGgy->StartAnimation(1,30,true );
-		m_blueGgy->StartAnimation(1,30,true );
 		m_phase = PHASE_ANNOUNCEMENT;
 		break;
 
@@ -205,18 +209,25 @@ void ResultMaster::Update(void)
 
 			if( m_redTeamScore->score() > m_blueTeamScore->score() )
 			{
-				m_winPoly->scl( 300,200,1);
+				m_winPoly->scl( 300,450,1);
 				m_winPoly->pos( 1100,500,0);
+				m_winPoly->texture( m_import->texture( ResultImport::SYOURIRED ) );
 				m_redGgy->StartAnimation(31,90,false );
 				m_blueGgy->StartAnimation(91,150,false );
+				m_blueTeam->StartAnimationSecondChild( 451,510,false ); 
+				m_redTeam->StartAnimationSecondChild( 511,570,false ); 
+
 			}
 			else
 			{
 
-				m_winPoly->scl( 300,200,1);
+				m_winPoly->scl( 300,450,1);
 				m_winPoly->pos(200,500,0);
+				m_winPoly->texture( m_import->texture( ResultImport::SYOURIBLUE ) );
 				m_redGgy->StartAnimation(91,150,false );
 				m_blueGgy->StartAnimation(31,90,false );
+				m_redTeam->StartAnimationSecondChild( 451,510,false ); 
+				m_blueTeam->StartAnimationSecondChild( 511,570,false ); 
 			}
 
 		}
