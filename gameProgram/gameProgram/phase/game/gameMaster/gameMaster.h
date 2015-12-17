@@ -79,6 +79,8 @@ private:
 		int polyGgyAnimIdx;
 	};
 
+	void SelectAnimation( const int judge );
+
 	NEBTAANIMATIONFRAME m_nebAnim[Max];
 
 	static const int _ScoreMax = 500;//ëçÉXÉRÉA
