@@ -17,7 +17,7 @@
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // 定数定義
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
+bool RoadManager::m_closeFlag;
 const float _changeColorSpeed = 0.2f;
 const int _checkMax = 4;
 
@@ -31,8 +31,8 @@ const D3DXVECTOR3 _eye	= D3DXVECTOR3(0.0f, 150.0f, -3000.0f);
 	const D3DXVECTOR3 _husumaCloseLeftInitPos = D3DXVECTOR3( SCREEN_WIDTH * 0.5f - _husumaSize.x * 0.5f , SCREEN_HEIGHT * 0.5f , 0.0f);
 		const D3DXVECTOR3 _husumaCloseRightInitPos = D3DXVECTOR3( SCREEN_WIDTH * 0.5f + _husumaSize.x * 0.5f , SCREEN_HEIGHT * 0.5f , 0.0f);
 	// 開状態定数	   
-		const D3DXVECTOR3 _husumaOpenLeftInitPos = D3DXVECTOR3( 0.0f + _husumaSize.x * 0.5f , SCREEN_HEIGHT * 0.5f , 0.0f);
-		const D3DXVECTOR3 _husumaOpenRightInitPos = D3DXVECTOR3( SCREEN_WIDTH - _husumaSize.x * 0.5f , SCREEN_HEIGHT * 0.5f , 0.0f);
+		const D3DXVECTOR3 _husumaOpenLeftInitPos = D3DXVECTOR3( 0.0f - _husumaSize.x * 0.5f , SCREEN_HEIGHT * 0.5f , 0.0f);
+		const D3DXVECTOR3 _husumaOpenRightInitPos = D3DXVECTOR3( SCREEN_WIDTH + _husumaSize.x * 0.5f , SCREEN_HEIGHT * 0.5f , 0.0f);
 // アイコン定数
 const D3DXVECTOR3 _iconSize = D3DXVECTOR3( 144.0f , 144.0f , 0.0f );
 const D3DXVECTOR3 _iconInitPos = D3DXVECTOR3( SCREEN_WIDTH - _iconSize.x  , SCREEN_HEIGHT - _iconSize.y , 0.0f );
@@ -54,6 +54,7 @@ RoadManager::RoadManager(void)
 	m_textSpeed = _textSpeed;
 	m_state = ROAD_STATE_NONE;
 	m_shader = nullptr;
+	m_closeFlag = false;
 
 }
 
@@ -241,6 +242,7 @@ void RoadManager::Draw(Phase* phase)
 //=============================================================================
 void RoadManager::InitializeOpenPos( void )
 {
+	m_closeFlag = false;
 	m_fadeLeft->SetPosition( _husumaOpenLeftInitPos );
 	m_fadeRight->SetPosition( _husumaOpenRightInitPos );
 	m_icon->SetPosition( _iconInitPos );
@@ -254,6 +256,7 @@ void RoadManager::InitializeOpenPos( void )
 //=============================================================================
 void RoadManager::InitializeClosePos( void )
 {
+	m_closeFlag = true;
 	m_fadeLeft->SetPosition( _husumaCloseLeftInitPos );
 	m_fadeRight->SetPosition( _husumaCloseRightInitPos );
 	m_icon->SetPosition( _iconInitPos );
@@ -271,8 +274,9 @@ void RoadManager::Open( void )
 	D3DXVECTOR3 pos;
 	D3DXVECTOR3 rot;
 	D3DXCOLOR diff;
-	int checkNum = 0;
+	int checkNum = 0;//クローズに遷移できるかのチェック項目
 	// 襖左更新
+
 	pos = m_fadeLeft->GetPosition();
 	if( pos.x > ( 0.0f - _husumaSize.x * 0.5f ) )
 	{
@@ -283,9 +287,11 @@ void RoadManager::Open( void )
 		checkNum++;
 	}
 	m_fadeLeft->SetPosition( pos );
+
 	m_fadeLeft->Update();
 
 	// 襖右更新
+
 	pos = m_fadeRight->GetPosition();
 	if( pos.x < ( SCREEN_WIDTH + _husumaSize.x * 0.5f ) )
 	{
@@ -296,12 +302,15 @@ void RoadManager::Open( void )
 		checkNum++;
 	}
 	m_fadeRight->SetPosition( pos );
+
 	m_fadeRight->Update();
 
 	// アイコン更新
+
 	rot = m_icon->GetRot();
 	rot.z+=_iconRotSpeed;
 	m_icon->SetRot(rot);
+
 	diff = m_icon->GetColor();
 	if( diff.a > 0.0f )
 	{
@@ -312,19 +321,24 @@ void RoadManager::Open( void )
 	{
 		checkNum++;
 	}
+
 	m_icon->Update();
 
 	//テキスト更新
-	int sheetNum = m_text->GetSheetNum();
+
+	float sheetNum = m_text->GetSheetNum();
 	if( sheetNum > _textSheetMax )
 	{
 		sheetNum = 0;
 	}
 	else
 	{
-		sheetNum++;
+		sheetNum+=0.01f;
 	}
-	m_text->SetUvY( 0.2f , sheetNum );
+	if( (int)sheetNum % 1 == 0.0f )
+	{
+		m_text->SetUvX( 0.2f , sheetNum );
+	}
 	m_text->SetSheetNum( sheetNum );
 	m_text->SetPosition( pos );
 	diff = m_text->GetColor();
@@ -352,20 +366,34 @@ void RoadManager::Close( void )
 	D3DXVECTOR3 pos;
 	D3DXVECTOR3 rot;
 	D3DXCOLOR diff;
+	int closepoint = 0;//前フェーズの描画を切っていいかのチェック項目
 	// 襖左更新
 	pos = m_fadeLeft->GetPosition();
-	if( pos.x < ( SCREEN_WIDTH * 0.5f ) - _husumaSize.x )
+	if( pos.x < _husumaCloseLeftInitPos.x )
 	{
 		pos.x+=_husumaSpeed;
+	}
+	else
+	{
+		closepoint++;
 	}
 	m_fadeLeft->SetPosition( pos );
 	m_fadeLeft->Update();
 
 	// 襖右更新
 	pos = m_fadeRight->GetPosition();
-	if( pos.x > ( SCREEN_WIDTH * 0.5f ) + _husumaSize.x )
+	if( pos.x > _husumaCloseRightInitPos.x )
 	{
 		pos.x-=_husumaSpeed;
+	}
+	else
+	{
+		closepoint++;
+	}
+
+	if( closepoint == 2 )
+	{
+		m_closeFlag = true;
 	}
 	m_fadeRight->SetPosition( pos );
 	m_fadeRight->Update();
@@ -381,22 +409,22 @@ void RoadManager::Close( void )
 	}
 	m_icon->Update();
 	//テキスト更新
+
 	pos = m_text->GetPosition();
-	if( pos.y > -( _textInitPos.y + _textMoveLimit ) || pos.y < 0.0f )
-	{
-		m_textSpeed *= -1.0f;
-	}
-	pos.y += m_textSpeed;
-	int sheetNum = m_text->GetSheetNum();
+
+	float sheetNum = m_text->GetSheetNum();
 	if( sheetNum > _textSheetMax )
 	{
 		sheetNum = 0;
 	}
 	else
 	{
-		sheetNum++;
+		sheetNum+=0.01f;
 	}
-	m_text->SetUvY( 0.2f , sheetNum );
+	if( (int)sheetNum % 1 == 0.0f )
+	{
+		m_text->SetUvX( 0.2f , sheetNum );
+	}
 	m_text->SetSheetNum( sheetNum );
 
 	m_text->SetPosition( pos );

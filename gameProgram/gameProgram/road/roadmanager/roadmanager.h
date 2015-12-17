@@ -48,6 +48,8 @@ public:
 	void StateOpen( void ){ m_state = ROAD_STATE_OPEN; }
 	void StateClose( void ){ m_state = ROAD_STATE_CLOSE; }
 	void StateNone( void ){ m_state = ROAD_STATE_NONE; }
+	static bool GetCloseFlag( void ){return m_closeFlag;}
+	static void SetCloseFlag( bool flag ){ m_closeFlag = flag ;}
 private:
 	void Open( void );
 	void Close( void );
@@ -69,7 +71,7 @@ private:
 
 	ROAD_STATE m_state;
 
-
+	static bool m_closeFlag;
 };
 
 //=============================================================================

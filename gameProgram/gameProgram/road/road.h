@@ -46,14 +46,15 @@ public:
 	static void StateClose( void );
 
 	static void Change( void );
-	static void Change1( Phase *Initialize );
-	static void Change2( Phase* finalize , Phase *Initialize );
+	static void Change1( void );
+	static void Change2( void );
 
 private:
 	 Thread* m_thread;
 	 static RoadManager *m_roadManager;
 	 static bool m_roadingFlag;
 	 static bool m_primUpdate;
+	 static bool m_closeFlag;
 	 static ROAD_STATE m_roadState;
 	 static Phase* m_initialize;
 	 static Phase* m_finalize;

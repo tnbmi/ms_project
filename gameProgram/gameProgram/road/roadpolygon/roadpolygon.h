@@ -51,8 +51,8 @@ public:
 	D3DXCOLOR GetColor( void ){ return m_diffuse; }
 	void SetColor( D3DCOLOR diff){m_diffuse = diff;SetVertexColor();}
 	void SetColor( float r , float g , float b , float a ){m_diffuse = D3DXCOLOR( r,g,b,a );SetVertexColor();}
-	int GetSheetNum( void ){return m_sheetNum;}
-	void SetSheetNum( int Num ){ m_sheetNum = Num; }
+	float GetSheetNum( void ){return m_sheetNum;}
+	void SetSheetNum( float Num ){ m_sheetNum = Num; }
 private:
 	struct VERTEX
 	{
@@ -61,7 +61,7 @@ private:
 		D3DXVECTOR2	uv;
 	};
 	VERTEX m_vtx[4];
-	int m_sheetNum;
+	float m_sheetNum;
 	LPDIRECT3DDEVICE9	m_device;		// Deviceオブジェクト(描画に必要)
 	LPDIRECT3DTEXTURE9	m_tex;			//テクスチャへのポインタ
 	D3DXVECTOR3 m_scl;

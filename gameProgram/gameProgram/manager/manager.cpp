@@ -206,7 +206,7 @@ bool Manager::Update(void)
 	if(m_nextPhase != m_phase)
 	{
 		// 現在フェーズを破棄
-		SafeFinalizeDelete(m_phase);
+		//SafeFinalizeDelete(m_phase);
 
 		// 入力設定
 		m_nextPhase->padXManager(m_padXManager);
