@@ -31,6 +31,7 @@ class CommandManager;
 class TimeManager;
 class FbxTexImport;
 class Ggy2DAnimationManager;
+class Polygon2D;
 
 class GameMaster
 {
@@ -79,7 +80,24 @@ private:
 		int polyGgyAnimIdx;
 	};
 
-	void SelectAnimation( const int judge,Player *player );
+	struct CUTIN
+	{
+		Polygon2D *pol;
+		int time;
+		int addVal;
+		D3DXVECTOR3 stPos;
+		D3DXVECTOR3 edPos;
+		D3DXVECTOR3 stBufPos;
+		D3DXVECTOR3 edBufPos;
+	};
+
+	//カットイン
+	static const int _cutInFrame = 20;
+	CUTIN m_redTeamCutIn;
+	CUTIN m_blueTeamCutIn;
+
+	void SelectAnimation( const int judge,Player *player,Ggy2DAnimationManager *ggy,CUTIN *cutIn );
+	void UpdateCutIn();
 
 	NEBTAANIMATIONFRAME m_nebAnim[Max];
 
@@ -96,6 +114,7 @@ private:
 	//じじー
 	Ggy2DAnimationManager *m_blueGgyAnim;
 	Ggy2DAnimationManager *m_redGgyAnim;
+
 
 
 	//観客制御

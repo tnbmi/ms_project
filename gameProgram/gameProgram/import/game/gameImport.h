@@ -57,6 +57,8 @@ public:
 		GGYRED_LEFT,
 		GGYRED_P,
 		GGYRED_POSE,
+		CUTINRED,
+		CUTINBLUE,
 
 		TEX_MAX
 	};
