@@ -121,7 +121,7 @@ private:
 
 	static const int _usingBoneMax = 50;
 	//ブレンドフレーム
-	static const int _blendFrame = 100;
+	static const int _blendFrame = 30;
 
 	BONEDATA *m_boneArray;//ボーン
 	int m_boneSum;

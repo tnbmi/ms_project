@@ -24,6 +24,9 @@
 #include "..\..\..\object\player\player.h"
 #include "..\..\..\ggy2DAnimationManager\ggy2DAnimationManager.h"
 #include "..\..\..\import\game\gameImport.h"
+#include "..\..\..\common\complement\complement.h"
+
+#include "..\..\..\objectBase\polygon2D\polygon2D.h"
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // マクロ定義
@@ -152,6 +155,31 @@ bool GameMaster::Initialize(void)
 	m_redTeam  = redTeam;
 
 	//----------------------------
+	//カットイン
+	//----------------------------
+	Polygon2D::Create( &m_redTeamCutIn.pol,m_device,m_objectList,m_import->texture(GameImport::CUTINRED),ObjectBase::TYPE_2D );
+	Polygon2D::Create( &m_blueTeamCutIn.pol,m_device,m_objectList,m_import->texture(GameImport::CUTINBLUE),ObjectBase::TYPE_2D );
+
+	m_updateList->Link( m_redTeamCutIn.pol );
+	m_drawListManager->Link( m_redTeamCutIn.pol,0,Shader::PAT_2D );
+	m_updateList->Link( m_blueTeamCutIn.pol );
+	m_drawListManager->Link( m_blueTeamCutIn.pol,0,Shader::PAT_2D );
+
+	m_redTeamCutIn.pol->pos(0,10000,0);
+	m_redTeamCutIn.pol->scl(450,300,0);
+	m_redTeamCutIn.addVal = 0;
+	m_redTeamCutIn.time = 0;
+	m_redTeamCutIn.stPos = D3DXVECTOR3( SCREEN_WIDTH + 200,500,0 );
+	m_redTeamCutIn.edPos = D3DXVECTOR3( SCREEN_WIDTH - 320,500,0 );
+
+	m_blueTeamCutIn.pol->pos(0,10000,0);
+	m_blueTeamCutIn.pol->scl(450,300,0);
+	m_blueTeamCutIn.addVal = 0;
+	m_blueTeamCutIn.time = 0;
+	m_blueTeamCutIn.stPos = D3DXVECTOR3( -200,500,0 );
+	m_blueTeamCutIn.edPos = D3DXVECTOR3( 320,500,0 );
+
+	//----------------------------
 	// 配置
 	//----------------------------
 	m_redTeamAddVal = 0;
@@ -231,10 +259,10 @@ bool GameMaster::Initialize(void)
 	m_nebAnim[NANIM_LOSE].edFrame = 570;
 	m_nebAnim[NANIM_LOSE].polyGgyAnimIdx = 2;
 
-	redTeam->StartAnimationSecondChild( m_nebAnim[NANIM_SAME1].stFrame,m_nebAnim[NANIM_SAME1].edFrame,true );
-	m_redGgyAnim->StartAnimation( m_nebAnim[NANIM_SAME1].polyGgyAnimIdx,true );
-	blueTeam->StartAnimationSecondChild( m_nebAnim[NANIM_ACOMUP].stFrame,m_nebAnim[NANIM_ACOMUP].edFrame,true );
-	m_blueGgyAnim->StartAnimation( m_nebAnim[NANIM_ACOMUP].polyGgyAnimIdx,true );
+	redTeam->StartAnimationSecondChild( m_nebAnim[NANIM_WAIT].stFrame,m_nebAnim[NANIM_WAIT].edFrame,true );
+	m_redGgyAnim->StartAnimation( m_nebAnim[NANIM_WAIT].polyGgyAnimIdx,true );
+	blueTeam->StartAnimationSecondChild( m_nebAnim[NANIM_WAIT].stFrame,m_nebAnim[NANIM_WAIT].edFrame,true );
+	m_blueGgyAnim->StartAnimation( m_nebAnim[NANIM_WAIT].polyGgyAnimIdx,true );
 	return true;
 }
 
@@ -275,13 +303,9 @@ bool GameMaster::Update(void)
 	CommandManager::COM_MANA_RTN get = {0,0};
 	get = m_command_manager->Update();
 	AddTeamScore(get.score[1], get.score[0]);
-	for(int i = 0; i < 2; i++)
-	{
-		if(get.score[i] != 0)
-		{
-			m_effectManager->AddEffectFromDataBase( i, _effect_pos[i] );
-		}
-	}
+
+	SelectAnimation( get.state[1],m_redTeam,m_redGgyAnim,&m_redTeamCutIn );
+	SelectAnimation( get.state[0],m_blueTeam,m_blueGgyAnim,&m_blueTeamCutIn );
 
 	//スコア確定
 	DetermineTeamScore();
@@ -302,7 +326,7 @@ bool GameMaster::Update(void)
 
 	m_blueGgyAnim->Update();
 	m_redGgyAnim->Update();
-
+	UpdateCutIn();
 
 	return false;
 }
@@ -361,31 +385,52 @@ void GameMaster::DetermineTeamScore()
 //
 //=============================================================================
 
-void GameMaster::SelectAnimation( const int judge,Player *player )
+void GameMaster::SelectAnimation( const int judge,Player *player,Ggy2DAnimationManager *ggy,CUTIN *cutIn )
 {
+	//	ここでランダムで違うポーズをだす
+	int r = rand() %2;
+	int s = RandRange( 2,0);
+
 	switch( judge )
 	{
 		case 0:
 
+			player->StartAnimationSecondChild( m_nebAnim[ NANIM_ACOMUP+r ].stFrame,m_nebAnim[ NANIM_ACOMUP+r ].edFrame,false );
+			ggy->StartAnimation(m_nebAnim[ NANIM_ACOMUP ].polyGgyAnimIdx,false );
+
 			break;
 		case 1:
 
+			player->StartAnimationSecondChild( m_nebAnim[ NANIM_ACOMDOWN +r].stFrame,m_nebAnim[ NANIM_ACOMDOWN +r].edFrame,false );
+			ggy->StartAnimation(m_nebAnim[ NANIM_ACOMDOWN +r].polyGgyAnimIdx,false );
 			break;
 
 		case 2:
 
+			player->StartAnimationSecondChild( m_nebAnim[ NANIM_ACOML+r ].stFrame,m_nebAnim[ NANIM_ACOML+r ].edFrame,false );
+			ggy->StartAnimation(m_nebAnim[ NANIM_ACOML+r ].polyGgyAnimIdx,false );
 			break;
 
 		case 3:
 
+			player->StartAnimationSecondChild( m_nebAnim[ NANIM_ACOMR +r].stFrame,m_nebAnim[ NANIM_ACOMR +r].edFrame,false );
+			ggy->StartAnimation(m_nebAnim[ NANIM_ACOMR+r ].polyGgyAnimIdx,false );
 			break;
 
 		case 4:
 
+			player->StartAnimationSecondChild( m_nebAnim[ NANIM_SAME1+s ].stFrame,m_nebAnim[ NANIM_SAME1 +s].edFrame,false );
+			ggy->StartAnimation(m_nebAnim[ NANIM_SAME1+s ].polyGgyAnimIdx,false );
 			break;
 
 		case 5:
 
+			player->StartAnimationSecondChild( m_nebAnim[ NANIM_LOSE ].stFrame,m_nebAnim[ NANIM_LOSE ].edFrame,false );
+			ggy->StartAnimation(m_nebAnim[ NANIM_LOSE ].polyGgyAnimIdx,false );
+			cutIn->time = 0;
+			cutIn->addVal =1;
+			cutIn->stBufPos = cutIn->stPos;
+			cutIn->edBufPos = cutIn->edPos;
 			break;
 
 		case 6:
@@ -395,5 +440,67 @@ void GameMaster::SelectAnimation( const int judge,Player *player )
 	}
 }
 
+//=============================================================================
+//
+//=============================================================================
+void GameMaster::UpdateCutIn()
+{
+	D3DXVECTOR3 vec;
+	int time = m_blueTeamCutIn.time % _cutInFrame;
+
+	m_blueTeamCutIn.time+= m_blueTeamCutIn.addVal;
+
+	if( m_blueTeamCutIn.time == (_cutInFrame + 1) )
+	{
+		m_blueTeamCutIn.stBufPos = m_blueTeamCutIn.edPos;
+		m_blueTeamCutIn.edBufPos = m_blueTeamCutIn.edPos;
+	}
+
+	if( m_blueTeamCutIn.time == (_cutInFrame*2 ) )
+	{
+		m_blueTeamCutIn.stBufPos = m_blueTeamCutIn.edPos;
+		m_blueTeamCutIn.edBufPos = m_blueTeamCutIn.stPos;		
+	}
+
+	if( m_blueTeamCutIn.time > (_cutInFrame*3) )
+	{
+		m_blueTeamCutIn.addVal = 0;
+		m_blueTeamCutIn.stBufPos = m_blueTeamCutIn.stPos;
+		m_blueTeamCutIn.edBufPos = m_blueTeamCutIn.edPos;
+		m_blueTeamCutIn.time = 0;
+	}
+
+	vec = LerpVec3( m_blueTeamCutIn.stBufPos,m_blueTeamCutIn.edBufPos,0,_cutInFrame,time,Cube );
+
+	m_blueTeamCutIn.pol->pos( vec );
+
+	time = m_redTeamCutIn.time % _cutInFrame;
+	
+	m_redTeamCutIn.time+= m_redTeamCutIn.addVal;
+
+	if( m_redTeamCutIn.time == (_cutInFrame + 1) )
+	{	
+		m_redTeamCutIn.stBufPos = m_redTeamCutIn.edPos;
+		m_redTeamCutIn.edBufPos = m_redTeamCutIn.edPos;
+	}	
+	if( m_redTeamCutIn.time == (_cutInFrame*2 ) )
+	{	
+		m_redTeamCutIn.stBufPos = m_redTeamCutIn.edPos;
+		m_redTeamCutIn.edBufPos = m_redTeamCutIn.stPos;		
+	}	
+		
+	if( m_redTeamCutIn.time > (_cutInFrame*3) )
+	{	
+		m_redTeamCutIn.addVal = 0;
+		m_redTeamCutIn.stBufPos = m_redTeamCutIn.stPos;
+		m_redTeamCutIn.edBufPos = m_redTeamCutIn.edPos;
+		m_redTeamCutIn.time = 0;
+	}
+
+	vec = LerpVec3( m_redTeamCutIn.stBufPos,m_redTeamCutIn.edBufPos,0,_cutInFrame,time,Cube );
+
+	m_redTeamCutIn.pol->pos( vec );
+
+}
 
 // EOF

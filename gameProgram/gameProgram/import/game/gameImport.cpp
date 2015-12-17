@@ -52,6 +52,8 @@ const char* _game_texture_name[] =
 	"/R‡F.png",
 	"/R‡G.png",
 	"/R‡H.png",
+	"/CutinRed.png",
+	"/Cutinblue.png",
 };
 
 //=============================================================================

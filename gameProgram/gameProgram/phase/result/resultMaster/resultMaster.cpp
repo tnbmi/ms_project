@@ -124,13 +124,13 @@ bool ResultMaster::Initialize(void)
 	m_resultPoly->scl(300,200,0);
 	m_resultPoly->color(1,1,1,1);
 
-	Polygon2D::Create( &pol,m_device,m_objectList,m_import->texture(ResultImport::STONES),ObjectBase::TYPE_2D );
+	Polygon2D::Create( &pol,m_device,m_objectList,m_import->texture(ResultImport::SYOURI),ObjectBase::TYPE_2D );
 	m_updateList->Link( pol );
 	m_drawListManager->Link( pol,0,Shader::PAT_2D );
 
 	m_winPoly = pol;
 	m_winPoly->scl(0,0,0);
-	m_winPoly->color(1,0,0,1);
+	m_winPoly->color(1,1,1,1);
 	
 
 	//----------------------------
@@ -139,7 +139,7 @@ bool ResultMaster::Initialize(void)
 	m_redTeamScore->pos( D3DXVECTOR3( 640 +320,280,0 ) );
 	m_blueTeamScore->pos( D3DXVECTOR3( 320,280,0 ) );
 	m_redTeamScore->StartRandView(200);
-	m_redTeamScore->score(419);
+	m_redTeamScore->score(3419);
 	m_redTeamScore->col(D3DXCOLOR(1,0,0,1));
 	
 	m_blueTeamScore->StartRandView(200);
@@ -205,7 +205,7 @@ void ResultMaster::Update(void)
 
 			if( m_redTeamScore->score() > m_blueTeamScore->score() )
 			{
-				m_winPoly->scl( 100,200,1);
+				m_winPoly->scl( 300,200,1);
 				m_winPoly->pos( 1100,500,0);
 				m_redGgy->StartAnimation(31,90,false );
 				m_blueGgy->StartAnimation(91,150,false );
@@ -213,7 +213,7 @@ void ResultMaster::Update(void)
 			else
 			{
 
-				m_winPoly->scl( 100,200,1);
+				m_winPoly->scl( 300,200,1);
 				m_winPoly->pos(200,500,0);
 				m_redGgy->StartAnimation(91,150,false );
 				m_blueGgy->StartAnimation(31,90,false );
@@ -259,6 +259,8 @@ void ResultMaster::Update(void)
 	m_blueTeam->Update();
 	m_effectManager->Update();
 }
+
+
 
 //=============================================================================
 // •`‰æ

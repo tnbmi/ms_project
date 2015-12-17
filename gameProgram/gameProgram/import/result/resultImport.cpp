@@ -25,7 +25,8 @@ const char* _result_texture_name[] =
 	"/stones_normal.bmp",
 	"/sky.jpg",
 
-	"/number.png"
+	"/number.png",
+	"/SyouriUI.png"
 };
 
 //=============================================================================

@@ -204,7 +204,10 @@ void FbxModel::Draw(LPD3DXCONSTANTTABLE vsc, LPD3DXCONSTANTTABLE psc, D3DXMATRIX
 	vsc->SetInt( m_device,"no_bone",m_noBone);
 	vsc->SetMatrix( m_device,"mtx_world",&mtxWorld );
 
-	
+	//アルファテスト
+	m_device->SetRenderState( D3DRS_ALPHATESTENABLE,true );
+	m_device->SetRenderState( D3DRS_ALPHAREF, 0 );
+	m_device->SetRenderState( D3DRS_ALPHAFUNC, D3DCMP_GREATER );
 
 	for( int i = 0 ; i < m_partSum ; i++ )
 	{
@@ -231,6 +234,9 @@ void FbxModel::Draw(LPD3DXCONSTANTTABLE vsc, LPD3DXCONSTANTTABLE psc, D3DXMATRIX
 		
 		}
 	}
+
+	//アルファテスト解除
+	m_device->SetRenderState( D3DRS_ALPHATESTENABLE,false );
 
 	//戻す
 	m_device->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
@@ -315,7 +321,7 @@ void FbxModel::UpdateAnimation()
 
 			//ブレンドレートを決
 
-
+			//rate = 1.0f;
 
 			s._11 = scl.x * rate + bscl.x * (1.0f-rate);
 			s._22 = scl.y * rate + bscl.y * (1.0f-rate);

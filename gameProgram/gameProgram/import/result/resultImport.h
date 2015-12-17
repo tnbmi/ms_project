@@ -31,6 +31,7 @@ public:
 		SKY,
 
 		NUM,
+		SYOURI,
 
 		TEX_MAX
 	};
