@@ -87,6 +87,12 @@ bool ResultMaster::Initialize(void)
 	m_redTeam = redTeam;
 	m_blueTeam= blueTeam;
 
+	redTeam->StartAnimationChild( 1,60,true );
+	blueTeam->StartAnimationChild( 1,60,true );
+
+	redTeam->StartAnimationParent( 1,60,true );
+	blueTeam->StartAnimationParent( 1,60,true );
+
 	//Ç®Ç∂Ç¢ÇøÇ·ÇÒê∂ê¨
 	FbxModel *redGgy;
 	FbxModel *blueGgy;

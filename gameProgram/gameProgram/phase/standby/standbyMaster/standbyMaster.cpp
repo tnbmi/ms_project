@@ -86,14 +86,23 @@ bool StandbyMaster::Initialize(void)
 
 
 
-	Ggy2DAnimationManager::Create( &m_ggyAnimManager,m_device,m_objectList,m_updateList,m_drawListManager );
+	Ggy2DAnimationManager::Create( &m_ggyRedAnimManager,m_device,m_objectList,m_updateList,m_drawListManager );
 
-	m_ggyAnimManager->SetTexture( 0,m_import->texture(StandbyImport::GGYBLUE_WAIT) );
-	m_ggyAnimManager->SetTexture( 8,m_import->texture(StandbyImport::GGYBLUE_POSE) );
-	m_ggyAnimManager->pos(D3DXVECTOR3( 330,391,0 ));
-	m_ggyAnimManager->scl(D3DXVECTOR3( 640,512,0 ));
+	m_ggyRedAnimManager->SetTexture( 0,m_import->texture(StandbyImport::GGYBLUE_WAIT) );
+	m_ggyRedAnimManager->SetTexture( 8,m_import->texture(StandbyImport::GGYBLUE_POSE) );
+	m_ggyRedAnimManager->pos(D3DXVECTOR3( 330,420,0 ));
+	m_ggyRedAnimManager->scl(D3DXVECTOR3( 320,256,0 ));
 
-	m_ggyAnimManager->StartAnimation(0,true);
+	m_ggyRedAnimManager->StartAnimation(0,true);
+
+	Ggy2DAnimationManager::Create( &m_ggyBlueAnimManager,m_device,m_objectList,m_updateList,m_drawListManager );
+
+	m_ggyBlueAnimManager->SetTexture( 0,m_import->texture(StandbyImport::GGYRED_WAIT) );
+	m_ggyBlueAnimManager->SetTexture( 8,m_import->texture(StandbyImport::GGYRED_POSE) );
+	m_ggyBlueAnimManager->pos(D3DXVECTOR3( 950,420,0 ));
+	m_ggyBlueAnimManager->scl(D3DXVECTOR3( 320,256,0 ));
+
+	m_ggyBlueAnimManager->StartAnimation(0,true);
 
 
 
@@ -213,7 +222,8 @@ void StandbyMaster::Finalize(void)
 	m_redTeamStandby[1].isStandby = false;
 	m_redTeamStandby[1].time = 0;
 
-	SafeFinalizeDelete( m_ggyAnimManager );
+	SafeFinalizeDelete( m_ggyRedAnimManager );
+	SafeFinalizeDelete( m_ggyBlueAnimManager );
 }
 
 //=============================================================================
@@ -364,7 +374,8 @@ bool StandbyMaster::Update(void)
 			&& m_redTeamStandby[0].time >= _compFrame  && m_redTeamStandby[0].time >= _compFrame)
 		{
 			m_phase = PHASE_STANDBY;
-			m_ggyAnimManager->StartAnimation(8,true);
+			m_ggyRedAnimManager->StartAnimation(8,true);
+			m_ggyBlueAnimManager->StartAnimation(8,true);
 		}
 
 		break;
@@ -393,7 +404,8 @@ bool StandbyMaster::Update(void)
 
 	}
 
-	m_ggyAnimManager->Update();
+	m_ggyRedAnimManager->Update();
+	m_ggyBlueAnimManager->Update();
 
 	return false;
 }

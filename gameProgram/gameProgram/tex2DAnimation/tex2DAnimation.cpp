@@ -107,7 +107,7 @@ void Tex2DAnimation::Draw(void)
 //
 //=============================================================================
 
-void Tex2DAnimation::SetAnimationData( const int wait,const int animSum,
+void Tex2DAnimation::SetAnimationData( const float wait,const int animSum,
 							const D3DXVECTOR2 &startUv0,const D3DXVECTOR2 &startUv1,
 							const D3DXVECTOR2 &startUv2,const D3DXVECTOR2 &startUv3,
 							const D3DXVECTOR2 &offset )

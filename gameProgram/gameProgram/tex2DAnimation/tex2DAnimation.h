@@ -34,7 +34,7 @@ public:
 
 	void Set2DPolygon( Polygon2D *poly ){ m_poly = poly; }
 	void SetTexture( LPDIRECT3DTEXTURE9 tex ){ m_tex = tex; }
-	void SetAnimationData( const int wait,const int animSum,
+	void SetAnimationData( const float wait,const int animSum,
 							const D3DXVECTOR2 &startUv0,const D3DXVECTOR2 &startUv1,
 							const D3DXVECTOR2 &startUv2,const D3DXVECTOR2 &startUv3,
 							const D3DXVECTOR2 &offset );
@@ -46,7 +46,7 @@ private:
 	LPDIRECT3DTEXTURE9 m_tex;
 	Polygon2D *m_poly;
 	int m_time;
-	int m_wait;
+	float m_wait;
 	int m_animSum;
 	D3DXVECTOR2 m_startUv[4];
 	D3DXVECTOR2 m_offset;

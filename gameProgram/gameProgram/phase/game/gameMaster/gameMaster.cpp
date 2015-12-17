@@ -22,6 +22,8 @@
 #include "..\..\..\timemanager\timeManager.h"
 
 #include "..\..\..\object\player\player.h"
+#include "..\..\..\ggy2DAnimationManager\ggy2DAnimationManager.h"
+#include "..\..\..\import\game\gameImport.h"
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // マクロ定義
@@ -101,6 +103,40 @@ bool GameMaster::Initialize(void)
 	Player::Create( &blueTeam,m_device,m_objectList,m_updateList,m_drawListManager,0,ObjectBase::TYPE_3D,"./resources/fbxModel/daisya.bin","./resources/fbxModel/ground.bin","./resources/fbxModel/nebta_blue.bin",m_fbxTexImport);
 	Player::Create( &redTeam,m_device,m_objectList,m_updateList,m_drawListManager,0,ObjectBase::TYPE_3D,"./resources/fbxModel/daisya.bin","./resources/fbxModel/ground.bin","./resources/fbxModel/nebta_red.bin",m_fbxTexImport);
 
+	//じじいポリゴン召喚
+	Ggy2DAnimationManager::Create( &m_blueGgyAnim,m_device,m_objectList,m_updateList,m_drawListManager );
+	Ggy2DAnimationManager::Create( &m_redGgyAnim,m_device,m_objectList,m_updateList,m_drawListManager );
+
+	//
+	m_blueGgyAnim->SetTexture(0,m_import->texture( GameImport::GGYBLUE_WAIT ) );
+	m_blueGgyAnim->SetTexture(1,m_import->texture( GameImport::GGYBLUE_WIN ) );
+	m_blueGgyAnim->SetTexture(2,m_import->texture( GameImport::GGYBLUE_LOSE ) );
+	m_blueGgyAnim->SetTexture(3,m_import->texture( GameImport::GGYBLUE_UP ) );
+	m_blueGgyAnim->SetTexture(4,m_import->texture( GameImport::GGYBLUE_RIGHT ) );
+	m_blueGgyAnim->SetTexture(5,m_import->texture( GameImport::GGYBLUE_DOWN ) );
+	m_blueGgyAnim->SetTexture(6,m_import->texture( GameImport::GGYBLUE_LEFT ) );
+	m_blueGgyAnim->SetTexture(7,m_import->texture( GameImport::GGYBLUE_P ) );
+	m_blueGgyAnim->SetTexture(8,m_import->texture( GameImport::GGYBLUE_POSE ) );
+
+	m_blueGgyAnim->pos(D3DXVECTOR3( 280,580,0 ));
+	m_blueGgyAnim->scl(D3DXVECTOR3( 320,256,0 ));
+	m_blueGgyAnim->StartAnimation(0,true);
+
+	m_redGgyAnim->SetTexture(0,m_import->texture( GameImport::GGYRED_WAIT ) );
+	m_redGgyAnim->SetTexture(1,m_import->texture( GameImport::GGYRED_WIN ) );
+	m_redGgyAnim->SetTexture(2,m_import->texture( GameImport::GGYRED_LOSE ) );
+	m_redGgyAnim->SetTexture(3,m_import->texture( GameImport::GGYRED_UP ) );
+	m_redGgyAnim->SetTexture(4,m_import->texture( GameImport::GGYRED_RIGHT ) );
+	m_redGgyAnim->SetTexture(5,m_import->texture( GameImport::GGYRED_DOWN ) );
+	m_redGgyAnim->SetTexture(6,m_import->texture( GameImport::GGYRED_LEFT ) );
+	m_redGgyAnim->SetTexture(7,m_import->texture( GameImport::GGYRED_P ) );
+	m_redGgyAnim->SetTexture(8,m_import->texture( GameImport::GGYRED_POSE ) );
+
+	m_redGgyAnim->pos(D3DXVECTOR3( 1000,580,0 ));
+	m_redGgyAnim->scl(D3DXVECTOR3( 320,256,0 ));
+	m_redGgyAnim->StartAnimation(0,true);
+
+
 	redTeam->StartAnimationSecondChild( 1,570,true );
 	blueTeam->StartAnimationSecondChild( 1,570,true );
 
@@ -141,49 +177,64 @@ bool GameMaster::Initialize(void)
 	//アニメーションデータいれてやる
 	m_nebAnim[NANIM_WAIT].stFrame = 1;
 	m_nebAnim[NANIM_WAIT].edFrame = 30;
+	m_nebAnim[NANIM_WAIT].polyGgyAnimIdx =0;
 
 	m_nebAnim[NANIM_ACOMUP].stFrame = 31;
 	m_nebAnim[NANIM_ACOMUP].edFrame = 60;
+	m_nebAnim[NANIM_ACOMUP].polyGgyAnimIdx = 3;
 
 	m_nebAnim[NANIM_BCOMUP].stFrame = 61;
 	m_nebAnim[NANIM_BCOMUP].edFrame = 90;
+	m_nebAnim[NANIM_BCOMUP].polyGgyAnimIdx = 3;
 
 	m_nebAnim[NANIM_ACOMR].stFrame = 91;
 	m_nebAnim[NANIM_ACOMR].edFrame = 120;
+	m_nebAnim[NANIM_ACOMR].polyGgyAnimIdx = 4;
 
 	m_nebAnim[NANIM_BCOMR].stFrame = 121;
 	m_nebAnim[NANIM_BCOMR].edFrame = 150;
+	m_nebAnim[NANIM_BCOMR].polyGgyAnimIdx = 4;
 
 	m_nebAnim[NANIM_ACOMDOWN].stFrame = 151;
 	m_nebAnim[NANIM_ACOMDOWN].edFrame = 180;
+	m_nebAnim[NANIM_ACOMDOWN].polyGgyAnimIdx = 5;
 
 	m_nebAnim[NANIM_BCOMDOWN].stFrame = 181;
 	m_nebAnim[NANIM_BCOMDOWN].edFrame = 210;
+	m_nebAnim[NANIM_BCOMDOWN].polyGgyAnimIdx = 5;
 
 	m_nebAnim[NANIM_ACOML].stFrame = 211;
 	m_nebAnim[NANIM_ACOML].edFrame = 240;
+	m_nebAnim[NANIM_ACOML].polyGgyAnimIdx = 6;
 
 	m_nebAnim[NANIM_BCOML].stFrame = 241;
 	m_nebAnim[NANIM_BCOML].edFrame = 270;
+	m_nebAnim[NANIM_BCOML].polyGgyAnimIdx = 6;
 
 	m_nebAnim[NANIM_SAME1].stFrame = 271;
 	m_nebAnim[NANIM_SAME1].edFrame = 330;
+	m_nebAnim[NANIM_SAME1].polyGgyAnimIdx = 8;
 
 	m_nebAnim[NANIM_SAME2].stFrame = 331;
 	m_nebAnim[NANIM_SAME2].edFrame = 390;
+	m_nebAnim[NANIM_SAME2].polyGgyAnimIdx = 8;
 
 	m_nebAnim[NANIM_SAME3].stFrame = 391;
 	m_nebAnim[NANIM_SAME3].edFrame = 450;
+	m_nebAnim[NANIM_SAME3].polyGgyAnimIdx = 8;
 
 	m_nebAnim[NANIM_WIN].stFrame = 451;
 	m_nebAnim[NANIM_WIN].edFrame = 510;
+	m_nebAnim[NANIM_WIN].polyGgyAnimIdx = 1;
 
 	m_nebAnim[NANIM_LOSE].stFrame = 511;
 	m_nebAnim[NANIM_LOSE].edFrame = 570;
+	m_nebAnim[NANIM_LOSE].polyGgyAnimIdx = 2;
 
 	redTeam->StartAnimationSecondChild( m_nebAnim[NANIM_SAME1].stFrame,m_nebAnim[NANIM_SAME1].edFrame,true );
-	blueTeam->StartAnimationSecondChild( 1,570,true );
-
+	m_redGgyAnim->StartAnimation( m_nebAnim[NANIM_SAME1].polyGgyAnimIdx,true );
+	blueTeam->StartAnimationSecondChild( m_nebAnim[NANIM_ACOMUP].stFrame,m_nebAnim[NANIM_ACOMUP].edFrame,true );
+	m_blueGgyAnim->StartAnimation( m_nebAnim[NANIM_ACOMUP].polyGgyAnimIdx,true );
 	return true;
 }
 
@@ -203,6 +254,9 @@ void GameMaster::Finalize(void)
 
 	SafeFinalizeDelete( m_audienceManager );
 	SafeFinalizeDelete( m_effectManager );
+
+	SafeFinalizeDelete( m_blueGgyAnim );
+	SafeFinalizeDelete( m_redGgyAnim );
 }
 
 //=============================================================================
@@ -245,6 +299,10 @@ bool GameMaster::Update(void)
 
 	m_blueTeamAddVal = 0;
 	m_redTeamAddVal	 = 0;
+
+	m_blueGgyAnim->Update();
+	m_redGgyAnim->Update();
+
 
 	return false;
 }

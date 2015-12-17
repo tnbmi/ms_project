@@ -39,7 +39,7 @@
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // マクロ定義
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-const D3DXVECTOR3 _at	= D3DXVECTOR3(0.0f, 200.0f, 800.0f);
+const D3DXVECTOR3 _at	= D3DXVECTOR3(0.0f, 500.0f, 800.0f);
 const D3DXVECTOR3 _eye	= D3DXVECTOR3(0.0f, 100.0f, -800.0f);
 
 //=============================================================================
@@ -257,6 +257,24 @@ bool Title::InitObject(void)
 
 	fbx->pos( D3DXVECTOR3( -0,0,0 ) );
 	fbx->rot( D3DXVECTOR3(0,PAI,0 ) );
+
+	FbxModel *nebBlue;
+	FbxModel::Create( &nebBlue,m_device,m_objectList,0,ObjectBase::TYPE_3D,"./resources/fbxModel/nebta_blue.bin",m_fbxTexImport );
+	nebBlue->StartAnimation( 1,30,true );
+	m_updateList->Link( nebBlue );
+	m_drawListManager->Link( nebBlue,0,Shader::PAT_FBX );
+
+	nebBlue->pos( D3DXVECTOR3( -900,-300,1300 ) );
+	nebBlue->rot( D3DXVECTOR3(0,3*PAI /4,0 ) );
+
+	FbxModel *nebRed;
+	FbxModel::Create( &nebRed,m_device,m_objectList,0,ObjectBase::TYPE_3D,"./resources/fbxModel/nebta_red.bin",m_fbxTexImport );
+	nebRed->StartAnimation( 1,30,true );
+	m_updateList->Link( nebRed );
+	m_drawListManager->Link( nebRed,0,Shader::PAT_FBX );
+
+	nebRed->pos( D3DXVECTOR3( 900,-300,1300 ) );
+	nebRed->rot( D3DXVECTOR3(0,-3*PAI /4,0 ) );
 
 	//----------------------------
 	// タイトルロゴ

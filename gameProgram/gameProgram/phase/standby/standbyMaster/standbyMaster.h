@@ -93,7 +93,8 @@ private:
 	PHASE m_phase;
 	ANIMPOLDATA m_redLogo;
 	ANIMPOLDATA m_blueLogo;
-	Ggy2DAnimationManager *m_ggyAnimManager;
+	Ggy2DAnimationManager *m_ggyRedAnimManager;
+	Ggy2DAnimationManager *m_ggyBlueAnimManager;
 
 };
 

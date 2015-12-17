@@ -30,6 +30,7 @@ class Player;
 class CommandManager;
 class TimeManager;
 class FbxTexImport;
+class Ggy2DAnimationManager;
 
 class GameMaster
 {
@@ -44,13 +45,6 @@ public:
 	void Finalize(void);
 	bool Update(void);
 
-	//テスト用セッターゲッター群
-	//int totalScore(){ return m_totalScore; }
-	//void totalScore( const int score ){ m_totalScore = score; }
-	//int redTeamAddVal(){ return m_redTeamAddVal; }
-	//int blueTeamAddVal(){ return m_blueTeamAddVal; }
-	//void redTeamAddVal( const int Val ){ m_redTeamAddVal = Val; }
-	///void blueTeamAddVal( const int Val ){ m_blueTeamAddVal = Val; }
 	int redTeamScore(){return m_redTeamScore;}
 	int blueTeamScore(){return m_blueTeamScore;}
 
@@ -82,6 +76,7 @@ private:
 	{
 		int stFrame;
 		int edFrame;
+		int polyGgyAnimIdx;
 	};
 
 	NEBTAANIMATIONFRAME m_nebAnim[Max];
@@ -96,6 +91,10 @@ private:
 	Debugproc*		 m_debugProc;
 	PadXManager*	 m_padXManager;
 	FbxTexImport*	 m_fbxTexImport;
+	//じじー
+	Ggy2DAnimationManager *m_blueGgyAnim;
+	Ggy2DAnimationManager *m_redGgyAnim;
+
 
 	//観客制御
 	AudienceManager *m_audienceManager;
