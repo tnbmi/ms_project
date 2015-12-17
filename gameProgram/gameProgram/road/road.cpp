@@ -212,6 +212,7 @@ void Road::Change2( void )
 	}
 	m_roadState = ROAD_STATE_FINALIZE_START;
 	m_finalize->Finalize();
+	delete m_finalize;
 	m_roadState = ROAD_STATE_FINALIZE_END;
 	m_roadState = ROAD_STATE_INITIALIZE_START;
 	m_initialize->Initialize();
