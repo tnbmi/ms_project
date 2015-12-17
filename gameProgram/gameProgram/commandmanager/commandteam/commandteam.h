@@ -36,16 +36,30 @@ public:
 		COLOR_RED
 	}TEAM_COLOR;
 
+	typedef enum{
+		STATE_UP = 0,
+		STATE_DOWN,
+		STATE_LEFT,
+		STATE_RIGHT,
+		STATE_DOUBLE,
+		STATE_FAIL,
+		STATE_NONE,
+		STATE_WAIT
+	}COMMAND_STATE;
+
 	typedef struct{
 		unsigned int num_data;
 		Polygon2D* polygon_pointer;
 		float pos_y;
 		bool hit;
+		COMMAND_STATE state;
+		int anime_count;
 	}COMMAND_DATA;
 
 	typedef struct{
 		int return_score;
 		bool flag;
+		COMMAND_STATE state;
 	}COM_TEAM_RTN;
 
 	static bool Create(CommandTeam** outPointer,

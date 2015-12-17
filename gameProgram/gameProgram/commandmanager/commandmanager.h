@@ -13,6 +13,7 @@
 // インクルードファイル
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 #include "..\main\main.h"
+#include "commandteam\commandteam.h"
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // マクロ定義
@@ -23,7 +24,6 @@
 // クラス定義
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 class CommandDataLoad;
-class CommandTeam;
 class PadXManager;
 class ObjectList;
 class UpdateList;
@@ -40,6 +40,7 @@ public:
 
 	typedef struct{
 		int	score[2];
+		CommandTeam::COMMAND_STATE state[2];
 	}COM_MANA_RTN;
 
 	static bool Create(CommandManager** outPointer,

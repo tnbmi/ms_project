@@ -85,6 +85,8 @@ CommandTeam::CommandTeam(void)
 			m_command_data[i][j].polygon_pointer = nullptr;
 			m_command_data[i][j].hit = false;
 			m_command_data[i][j].pos_y = 0.0f;
+			m_command_data[i][j].state = STATE_NONE;
+			m_command_data[i][j].anime_count = 0;
 		}
 	}
 
@@ -173,15 +175,43 @@ void CommandTeam::Finalize(void)
 //=============================================================================
 CommandTeam::COM_TEAM_RTN CommandTeam::Update(void)
 {
-	COM_TEAM_RTN rtn = {0,false};
+	COM_TEAM_RTN rtn = {0,false,STATE_NONE};
 
-	// ポリゴンスクロール
 	for(int i = 0; i < 2; i++)
 	{
 		for(int j = 0; j < 10; j++)
-		{
+		{	// ポリゴンスクロール
 			m_command_data[i][j].pos_y += (_polygon_speed_def + m_speed);
 			m_command_data[i][j].polygon_pointer->pos_y(m_command_data[i][j].pos_y);
+			// アニメーション
+			switch(m_command_data[i][j].state)
+			{
+			case STATE_UP :
+			case STATE_DOWN :
+			case STATE_LEFT:
+			case STATE_RIGHT:
+				m_command_data[i][j].polygon_pointer->scl(m_command_data[i][j].polygon_pointer->scl().x + 1.0f,
+														  m_command_data[i][j].polygon_pointer->scl().y + 1.0f,
+														  0.0f);
+				m_command_data[i][j].anime_count++;
+				if(m_command_data[i][j].anime_count > 30)
+					m_command_data[i][j].state = STATE_NONE;
+				break;
+			case STATE_FAIL:
+				m_command_data[i][j].polygon_pointer->scl(m_command_data[i][j].polygon_pointer->scl().x - 1.0f,
+														  m_command_data[i][j].polygon_pointer->scl().y - 1.0f,
+														  0.0f);
+				m_command_data[i][j].anime_count++;
+				if(m_command_data[i][j].anime_count > 30)
+					m_command_data[i][j].state = STATE_NONE;
+				break;
+			case STATE_WAIT:
+				break;
+			case STATE_DOUBLE:
+				break;
+			defalut:
+				break;
+			}
 		}
 	}
 
@@ -213,11 +243,14 @@ CommandTeam::COM_TEAM_RTN CommandTeam::Update(void)
 				{	// 成功(同時押し1人目)
 					if(m_command_data[(1 - i%2)][command_count].num_data != 4 && !m_command_data[(1 - i%2)][command_count].hit)
 					{
+						m_command_data[i][command_count].state = STATE_WAIT;
 						m_same_count = 1;
 					}
 					else if(m_same_count > 0)
 					{// 成功(同時押し2人目)
 						m_speed += _speed_add;
+						m_command_data[i][command_count].state = STATE_DOUBLE;
+						rtn.state = m_command_data[i][command_count].state;
 						m_same_count = 0;
 						if(m_speed > _speed_max)
 							m_speed = _speed_max;
@@ -226,6 +259,8 @@ CommandTeam::COM_TEAM_RTN CommandTeam::Update(void)
 					else
 					{// 成功(単体)
 						m_speed += _speed_add;
+						m_command_data[i][command_count].state = (COMMAND_STATE)m_command_data[i][command_count].num_data;
+						rtn.state = m_command_data[i][command_count].state;
 						if(m_speed > _speed_max)
 							m_speed = _speed_max;
 						rtn.return_score = _return_score1;
@@ -235,6 +270,8 @@ CommandTeam::COM_TEAM_RTN CommandTeam::Update(void)
 				{// 失敗
 					m_same_count = 0;
 					m_speed = 0.0f;
+					m_command_data[i][command_count].state = STATE_FAIL;
+					rtn.state = m_command_data[i][command_count].state;
 				}
 				m_command_data[i][command_count].polygon_pointer->color(0.75f, 0.75f, 0.75f, 0.5f);
 				m_command_data[i][command_count].hit = true;
@@ -278,6 +315,9 @@ CommandTeam::COM_TEAM_RTN CommandTeam::Update(void)
 				m_command_data[i][delete_count].polygon_pointer->pos_x(m_polygon_pos.x + _polygon_pos_offset / 2 + i * _polygon_pos_offset );
 				m_command_data[i][delete_count].polygon_pointer->pos_y(m_command_data[i][delete_count].pos_y);
 				m_command_data[i][delete_count].polygon_pointer->color(1.0f, 1.0f, 1.0f, 1.0f);
+				m_command_poly[i][delete_count]->scl(_polygon_size_x, _polygon_size_x, 0.0f);
+				m_command_data[i][delete_count].state = STATE_NONE;
+				m_command_data[i][delete_count].anime_count = 0;
 			}
 		}
 		m_delete_count++;

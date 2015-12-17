@@ -20,7 +20,6 @@
 #include "..\list\drawList\drawListManager.h"
 #include "..\import\game\gameImport.h"
 
-#include "commandteam\commandteam.h"
 #include "commandData\commandDataLoad.h"
 
 #include "..\objectBase\polygon2D\polygon2D.h"
@@ -153,11 +152,12 @@ void CommandManager::Finalize(void)
 CommandManager::COM_MANA_RTN CommandManager::Update(void)
 {
 	CommandTeam::COM_TEAM_RTN get = {0, false};
-	COM_MANA_RTN rtn = {0,0};
+	COM_MANA_RTN rtn = {0,0,CommandTeam::STATE_NONE,CommandTeam::STATE_NONE};
 	for(int i = 0; i < _team_max; i++)
 	{
 		get = m_team[i]->Update();
 		rtn.score[i] = get.return_score;
+		rtn.state[i] = get.state;
 		if(get.flag)
 		{
 			m_command_prev[i] = (rand() % 5 * 2) + (1 - m_command_prev[i] % 2);
