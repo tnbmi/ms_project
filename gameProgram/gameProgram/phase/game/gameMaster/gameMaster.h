@@ -79,7 +79,7 @@ private:
 		int polyGgyAnimIdx;
 	};
 
-	void SelectAnimation( const int judge );
+	void SelectAnimation( const int judge,Player *player );
 
 	NEBTAANIMATIONFRAME m_nebAnim[Max];
 
