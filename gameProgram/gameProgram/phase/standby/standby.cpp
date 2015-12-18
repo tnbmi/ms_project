@@ -202,7 +202,7 @@ void Standby::Update(void)
 	//----------------------------
 	// ‰æ–Ê‘JˆÚ
 	//----------------------------
-	if(pad->buttonTrigger(XINPUT_GAMEPAD_START) || m_keyboard->trigger(DIK_RETURN))
+	if(isStandby || m_keyboard->trigger(DIK_RETURN))
 	{
 		Manager::nextPhase((Phase*)new Game(m_device));
 	}

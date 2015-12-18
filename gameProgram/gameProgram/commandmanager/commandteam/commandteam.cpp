@@ -209,7 +209,7 @@ CommandTeam::COM_TEAM_RTN CommandTeam::Update(void)
 				break;
 			case STATE_DOUBLE:
 				break;
-			defalut:
+			default:
 				break;
 			}
 		}

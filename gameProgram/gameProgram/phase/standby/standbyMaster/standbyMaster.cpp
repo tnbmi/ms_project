@@ -267,7 +267,7 @@ bool StandbyMaster::Update(void)
 		//キー判定　青
 		for( int i = 0 ; i < 2 ; i++ )
 		{
-			if( m_padXManager->pad(i)->buttonTrigger( XINPUT_GAMEPAD_A ) )
+			if( m_padXManager->pad(i)->buttonTrigger( XINPUT_GAMEPAD_START ) )
 			{
 				m_blueTeamStandby[i].isStandby = true;
 			}
@@ -281,7 +281,7 @@ bool StandbyMaster::Update(void)
 		//キー判定　赤
 		for( int i = 0 ; i < 2 ; i++ )
 		{
-			if( m_padXManager->pad(i+2)->buttonTrigger( XINPUT_GAMEPAD_A ) )
+			if( m_padXManager->pad(i+2)->buttonTrigger( XINPUT_GAMEPAD_START ) )
 			{
 				m_redTeamStandby[i].isStandby = true;
 			}

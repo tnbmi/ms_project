@@ -11,6 +11,8 @@
 #include "resultMaster.h"
 #include "..\..\..\common\safe.h"
 
+#include "..\..\..\manager\manager.h"
+
 #include "..\..\..\list\objectList\objectList.h"
 #include "..\..\..\list\updateList\updateList.h"
 #include "..\..\..\list\drawList\drawListManager.h"
@@ -139,11 +141,11 @@ bool ResultMaster::Initialize(void)
 	m_redTeamScore->pos( D3DXVECTOR3( 640 +320,180,0 ) );
 	m_blueTeamScore->pos( D3DXVECTOR3( 320,180,0 ) );
 	m_redTeamScore->StartRandView(200);
-	m_redTeamScore->score(3419);
+	m_redTeamScore->score(Manager::scoreRed());
 	m_redTeamScore->col(D3DXCOLOR(1,0,0,1));
 	
 	m_blueTeamScore->StartRandView(200);
-	m_blueTeamScore->score(9145);
+	m_blueTeamScore->score(Manager::scoreBlue());
 	m_blueTeamScore->col(D3DXCOLOR(0,0,1,1));
 
 	m_redTeam->rot( D3DXVECTOR3(0,PAI,0 ) );

@@ -40,12 +40,19 @@ public:
 	void CalculateFPS(DWORD frameCnt, DWORD curTime, DWORD FPSLastTime);
 
 	static void nextPhase(Phase* nextPhase) {m_nextPhase = nextPhase;}
+	static void score(int scoreBlue, int scoreRed) {m_scoreBlue = scoreBlue; m_scoreRed = scoreRed;}
+
+	static int	scoreBlue(void) {return m_scoreBlue;}
+	static int	scoreRed(void) {return m_scoreRed;}
 
 private:
 	int m_countFPS;
 
-	static Phase* m_phase;
-	static Phase* m_nextPhase;
+	Phase*			m_phase;
+	static Phase*	m_nextPhase;
+
+	static int m_scoreBlue;
+	static int m_scoreRed;
 
 	Renderer*	m_renderer;
 	Sound*		m_sound;

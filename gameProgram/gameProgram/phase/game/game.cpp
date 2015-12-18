@@ -222,6 +222,7 @@ void Game::Update(void)
 	//----------------------------
 	if(m_gameMaster->Update() || m_keyboard->trigger(DIK_RETURN))
 	{
+		Manager::score(m_gameMaster->blueTeamScore(), m_gameMaster->redTeamScore());
 		Manager::nextPhase((Phase*)new Result(m_device));
 	}
 }
@@ -249,6 +250,11 @@ void Game::Draw(void)
 //=============================================================================
 bool Game::InitObject(void)
 {
+	//----------------------------
+	// スコア初期化
+	//----------------------------
+	Manager::score(0, 0);
+
 	//----------------------------
 	// 地面3Dポリゴン
 	//----------------------------
