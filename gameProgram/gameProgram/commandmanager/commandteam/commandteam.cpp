@@ -286,6 +286,8 @@ CommandTeam::COM_TEAM_RTN CommandTeam::Update(void)
 			if(!m_command_data[i][command_count].hit)
 			{
 				m_speed = 0.0f;
+				m_command_data[i][command_count].state = STATE_FAIL;
+				rtn.state = m_command_data[i][command_count].state;
 			}
 		}
 		m_command_count++;
