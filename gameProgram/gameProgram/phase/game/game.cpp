@@ -87,9 +87,9 @@ bool Game::Initialize(void)
 	//----------------------------
 	if(!GameImport::Create(&m_import, m_device))
 		return false;
-
-	if(!FbxTexImport::Create(&m_fbxTexImport,m_device ))
-		return false;
+	//if(!FbxTexImport::Create(&m_fbxTexImport,m_device ))
+	//	return false;
+	m_fbxTexImport = Manager::fbxTexImport();
 
 	//----------------------------
 	// シェーダー
@@ -194,7 +194,7 @@ void Game::Finalize(void)
 	// インポート
 	//----------------------------
 	SafeFinalizeDelete(m_import);
-	SafeFinalizeDelete(m_fbxTexImport);
+	//SafeFinalizeDelete(m_fbxTexImport);
 }
 
 //=============================================================================

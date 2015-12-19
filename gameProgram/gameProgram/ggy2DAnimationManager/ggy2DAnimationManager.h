@@ -46,6 +46,7 @@ public:
 	D3DXVECTOR3 scl(){ return m_scl;}
 
 	void StartAnimation( const int idx,bool isRoop );
+	bool isEndAnimation();
 
 private:
 	D3DXVECTOR3 m_pos;

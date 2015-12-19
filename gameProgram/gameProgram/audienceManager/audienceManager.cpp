@@ -106,8 +106,8 @@ bool AudienceManager::Create(AudienceManager** outPointer,LPDIRECT3DDEVICE9 devi
 						const D3DXVECTOR3 &leftPosLimBlue,const D3DXVECTOR3 &rightPosLimBlue)
 {
 	//インスタンシングビルボードを作成
-	D3DXVECTOR2 texSize = D3DXVECTOR2(1,1);
-	D3DXVECTOR2 oneSize = D3DXVECTOR2(1,1);
+	D3DXVECTOR2 texSize = D3DXVECTOR2(800,400);
+	D3DXVECTOR2 oneSize = D3DXVECTOR2(400,400);
 	InstancingBillboard *bill ;
 	InstancingBillboard::Create( &bill,device,objectList,priority,type,scoreMax,textureLoadPath,texSize,oneSize );
 
@@ -156,10 +156,10 @@ bool AudienceManager::Initialize(void)
 		m_audienceArray[i].state = m_stateStayBlue;
 		m_audienceArray[i].stPos = D3DXVECTOR3(0,0,0);
 		m_audienceArray[i].edPos = D3DXVECTOR3(0,0,0);
-		m_audienceArray[i].pos = D3DXVECTOR3( 0,50,-1000 );
-		m_audienceArray[i].scl = D3DXVECTOR3(50,100,0 );
+		m_audienceArray[i].pos = D3DXVECTOR3(-300,50,-3000 );
+		m_audienceArray[i].scl = D3DXVECTOR3(100,100,0 );
 		m_audienceArray[i].team = TEAM_BLUE;
-		m_audienceArray[i].col  = D3DXCOLOR(0,0,1,1);
+		m_audienceArray[i].col  = D3DXCOLOR(1,1,1,1);
 		m_audienceArray[i].poly->pos = m_audienceArray[i].pos;
 		m_audienceArray[i].poly->scl = m_audienceArray[i].scl;
 		m_audienceArray[i].poly->col = m_audienceArray[i].col;
@@ -173,14 +173,14 @@ bool AudienceManager::Initialize(void)
 		m_audienceArray[i].state = m_stateStayRed;
 		m_audienceArray[i].stPos = D3DXVECTOR3(0,0,0);
 		m_audienceArray[i].edPos = D3DXVECTOR3(0,0,0);
-		m_audienceArray[i].pos = D3DXVECTOR3( 150,50,-1000 );
-		m_audienceArray[i].scl = D3DXVECTOR3(50,100,0 );
+		m_audienceArray[i].pos = D3DXVECTOR3( 350,50,-3000 );
+		m_audienceArray[i].scl = D3DXVECTOR3(100,100,0 );
 		m_audienceArray[i].team = TEAM_RED;
-		m_audienceArray[i].col  = D3DXCOLOR(1,0,0,1);
+		m_audienceArray[i].col  = D3DXCOLOR(1,1,1,1);
 		m_audienceArray[i].poly->pos = m_audienceArray[i].pos;
 		m_audienceArray[i].poly->scl = m_audienceArray[i].scl;
 		m_audienceArray[i].poly->col = m_audienceArray[i].col;
-		m_audienceArray[i].poly->uvOffset = D3DXVECTOR2(0,0);
+		m_audienceArray[i].poly->uvOffset = D3DXVECTOR2(1,0);
 		m_audienceArray[i].state->Init( &m_audienceArray[i] );
 	}
 
@@ -540,7 +540,7 @@ void AudienceStateMoveRedTeam::Update( AudienceManager::AUDIENCEDATA *audienceDa
 
 	if( audienceData->pos.x >= m_leftLimit.x )
 	{
-		audienceData->col = D3DXCOLOR(1,0,0,1);
+		audienceData->poly->uvOffset=D3DXVECTOR2(1,0);
 		audienceData->poly->col = audienceData->col;
 	}
 
@@ -548,7 +548,7 @@ void AudienceStateMoveRedTeam::Update( AudienceManager::AUDIENCEDATA *audienceDa
 	//移動終了
 	if( audienceData->eraseTime >= audienceData->compTime && audienceData->eraseTimeY == 0 )
 	{
-		audienceData->col = D3DXCOLOR(1,0,0,1);
+		audienceData->col = D3DXCOLOR(1,1,1,1);
 
 		//開始位置を現在位置に
 		audienceData->stPos = audienceData->pos;
@@ -589,7 +589,7 @@ void AudienceStateMoveBlueTeam::Update( AudienceManager::AUDIENCEDATA *audienceD
 	
 	if( audienceData->pos.x <= m_rightLimit.x )
 	{
-		audienceData->col = D3DXCOLOR(0,0,1,1);
+		audienceData->poly->uvOffset=D3DXVECTOR2(0,0);
 		audienceData->poly->col = audienceData->col;
 	}
 
@@ -597,7 +597,7 @@ void AudienceStateMoveBlueTeam::Update( AudienceManager::AUDIENCEDATA *audienceD
 	//移動終了
 	if( audienceData->eraseTime >= audienceData->compTime && audienceData->eraseTimeY == 0 )
 	{
-		audienceData->col = D3DXCOLOR(0,0,1,1);
+		audienceData->col = D3DXCOLOR(1,1,1,1);
 
 		//開始位置を現在位置に
 		audienceData->stPos = audienceData->pos;

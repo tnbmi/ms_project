@@ -132,5 +132,10 @@ void Ggy2DAnimationManager::StartAnimation( const int idx,bool isRoop )
 	m_animIdx = idx;
 }
 
+bool Ggy2DAnimationManager::isEndAnimation()
+{
+	return m_animArray[m_animIdx].isEndAnimation();
+}
+
 
 // EOF

@@ -20,7 +20,7 @@
 const char* _standby_texture_name[] =
 {
 	nullptr,
-
+	
 	"/Select_Back.png",
 	"/Select_Mid.png",
 	"/Select_Front.png",
@@ -33,6 +33,7 @@ const char* _standby_texture_name[] =
 	"/B‡H.png",
 	"/R‡@.png",
 	"/R‡H.png"
+
 };
 
 //=============================================================================

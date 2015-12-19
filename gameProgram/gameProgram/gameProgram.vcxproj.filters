@@ -1,12 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="main">
-      <UniqueIdentifier>{96dd5fe8-dae8-4d1d-b622-95773e21bcec}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="main\window">
-      <UniqueIdentifier>{45a4370b-238b-478e-b2e5-a6c1b70869d9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="common">
       <UniqueIdentifier>{0d5e359b-77df-43d0-b607-974d97384b58}</UniqueIdentifier>
     </Filter>
@@ -206,13 +200,19 @@
     <Filter Include="import\main">
       <UniqueIdentifier>{7dc40bcf-0c23-4483-af25-d416ce629686}</UniqueIdentifier>
     </Filter>
+    <Filter Include="list\main">
+      <UniqueIdentifier>{96dd5fe8-dae8-4d1d-b622-95773e21bcec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="list\main\window">
+      <UniqueIdentifier>{45a4370b-238b-478e-b2e5-a6c1b70869d9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main\main.h">
-      <Filter>main</Filter>
+      <Filter>list\main</Filter>
     </ClInclude>
     <ClInclude Include="main\window\window.h">
-      <Filter>main\window</Filter>
+      <Filter>list\main\window</Filter>
     </ClInclude>
     <ClInclude Include="common\safe.h">
       <Filter>common</Filter>
@@ -391,10 +391,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main\main.cpp">
-      <Filter>main</Filter>
+      <Filter>list\main</Filter>
     </ClCompile>
     <ClCompile Include="main\window\window.cpp">
-      <Filter>main\window</Filter>
+      <Filter>list\main\window</Filter>
     </ClCompile>
     <ClCompile Include="manager\manager.cpp">
       <Filter>manager</Filter>

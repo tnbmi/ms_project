@@ -20,6 +20,8 @@ class RoadManager;
 class Thread;
 class Phase;
 class Manager;
+class FbxTexImport;
+
 class Road
 {
 public:
@@ -36,11 +38,11 @@ public:
 	Road(void);
 	virtual ~Road(void);
 
-	static bool Create(Road** outPointer , LPDIRECT3DDEVICE9 device , Manager* manager );
-	bool Initialize(LPDIRECT3DDEVICE9 device , Manager* manager);
+	static bool Create(Road** outPointer , LPDIRECT3DDEVICE9 device);
+	bool Initialize(LPDIRECT3DDEVICE9 device);
 	void Finalize(void);
 
-	void Roading( Phase* initialize );
+	void Roading( Phase* initialize , FbxTexImport* fbxImport);
 	void Roading( Phase* finalize , Phase* initialize );
 	static void StateOpen( void );
 	static void StateClose( void );
@@ -58,7 +60,6 @@ private:
 	 static ROAD_STATE m_roadState;
 	 static Phase* m_initialize;
 	 static Phase* m_finalize;
-	 static Manager* m_manager;
 };
 
 //=============================================================================

@@ -28,6 +28,7 @@
 #include "..\..\..\input\padX\padXManager.h"
 #include "..\..\..\input\padX\padX.h"
 #include "..\..\..\ggy2DAnimationManager\ggy2DAnimationManager.h"
+#include "..\..\..\sound\sound.h"
 
 
 //=============================================================================
@@ -86,23 +87,23 @@ bool StandbyMaster::Initialize(void)
 
 
 
-	Ggy2DAnimationManager::Create( &m_ggyRedAnimManager,m_device,m_objectList,m_updateList,m_drawListManager );
-
-	m_ggyRedAnimManager->SetTexture( 0,m_import->texture(StandbyImport::GGYBLUE_WAIT) );
-	m_ggyRedAnimManager->SetTexture( 8,m_import->texture(StandbyImport::GGYBLUE_POSE) );
-	m_ggyRedAnimManager->pos(D3DXVECTOR3( 330,420,0 ));
-	m_ggyRedAnimManager->scl(D3DXVECTOR3( 320,256,0 ));
-
-	m_ggyRedAnimManager->StartAnimation(0,true);
-
 	Ggy2DAnimationManager::Create( &m_ggyBlueAnimManager,m_device,m_objectList,m_updateList,m_drawListManager );
 
-	m_ggyBlueAnimManager->SetTexture( 0,m_import->texture(StandbyImport::GGYRED_WAIT) );
-	m_ggyBlueAnimManager->SetTexture( 8,m_import->texture(StandbyImport::GGYRED_POSE) );
-	m_ggyBlueAnimManager->pos(D3DXVECTOR3( 950,420,0 ));
+	m_ggyBlueAnimManager->SetTexture( 0,m_import->texture(StandbyImport::GGYBLUE_WAIT) );
+	m_ggyBlueAnimManager->SetTexture( 8,m_import->texture(StandbyImport::GGYBLUE_POSE) );
+	m_ggyBlueAnimManager->pos(D3DXVECTOR3( 330,420,0 ));
 	m_ggyBlueAnimManager->scl(D3DXVECTOR3( 320,256,0 ));
 
 	m_ggyBlueAnimManager->StartAnimation(0,true);
+
+	Ggy2DAnimationManager::Create( &m_ggyRedAnimManager,m_device,m_objectList,m_updateList,m_drawListManager );
+
+	m_ggyRedAnimManager->SetTexture( 0,m_import->texture(StandbyImport::GGYRED_WAIT) );
+	m_ggyRedAnimManager->SetTexture( 8,m_import->texture(StandbyImport::GGYRED_POSE) );
+	m_ggyRedAnimManager->pos(D3DXVECTOR3( 950,420,0 ));
+	m_ggyRedAnimManager->scl(D3DXVECTOR3( 320,256,0 ));
+
+	m_ggyRedAnimManager->StartAnimation(0,true);
 
 
 
@@ -184,9 +185,13 @@ bool StandbyMaster::Initialize(void)
 
 	m_redLogo.pol->pos(944.0f,689.0f,0.0f);
 	m_redLogo.pol->scl(417.0f,59.0f,1.0f);
+	m_redLogo.pol->texcoord(0,0.0f,0.0f);
+	m_redLogo.pol->texcoord(1,1.0f,0.111f);
+	m_redLogo.pol->texcoord(2,0.0f,0.0f);
+	m_redLogo.pol->texcoord(3,1.0f,0.111f);
 	m_redLogo.uv[0] = D3DXVECTOR2(0.0f,0.0f);
-	m_redLogo.uv[1] = D3DXVECTOR2(1.0f,0.01f);
-	m_redLogo.uv[2] = D3DXVECTOR2(0.0f,0.111f);
+	m_redLogo.uv[1] = D3DXVECTOR2(1.0f,0.111f);
+	m_redLogo.uv[2] = D3DXVECTOR2(0.0f,0.0f);
 	m_redLogo.uv[3] = D3DXVECTOR2(1.0f,0.111f);
 	m_redLogo.offsetUv = D3DXVECTOR2(0.0f,0.111f);
 
@@ -198,7 +203,7 @@ bool StandbyMaster::Initialize(void)
 
 	m_redTeamStandby[0].isStandby = true;
 	m_redTeamStandby[0].time = _compFrame;
-	m_redTeamStandby[1].isStandby = true;
+	m_redTeamStandby[1].isStandby = false;
 	m_redTeamStandby[1].time = _compFrame;
 	
 	m_compTime = 0;
@@ -291,20 +296,61 @@ bool StandbyMaster::Update(void)
 			}
 		}
 
-
+		bool isDiffStandby[4];
+		isDiffStandby[0] = false;
+		isDiffStandby[1] = false;
+		isDiffStandby[2] = false;
+		isDiffStandby[3] = false;
 
 		//状況が変われば再補完
 		if( m_blueTeamStandby[0].isPrevStandby != m_blueTeamStandby[0].isStandby )
+		{
 			m_blueTeamStandby[0].time = 0;
-
+			isDiffStandby[0] = true;
+		}
+			
 		if( m_blueTeamStandby[1].isPrevStandby != m_blueTeamStandby[1].isStandby )
+		{
 			m_blueTeamStandby[1].time = 0;
+			isDiffStandby[1] = true;
+		}
 
 		if( m_redTeamStandby[0].isPrevStandby != m_redTeamStandby[0].isStandby )
+		{
 			m_redTeamStandby[0].time = 0;
+			isDiffStandby[2] = true;
+		}
 
 		if( m_redTeamStandby[1].isPrevStandby != m_redTeamStandby[1].isStandby )
+		{
 			m_redTeamStandby[1].time = 0;
+			isDiffStandby[3] = true;
+		}
+
+		if( isDiffStandby[0] || isDiffStandby[1] )
+		{
+			if( m_blueTeamStandby[0].isStandby && m_blueTeamStandby[1].isStandby )
+			{
+				m_ggyBlueAnimManager->StartAnimation(8,false );
+			}
+			else
+			{
+				m_ggyBlueAnimManager->StartAnimation(0,true );
+			}
+
+		}
+
+		if( isDiffStandby[2] || isDiffStandby[3] )
+		{
+			if( m_redTeamStandby[0].isStandby && m_redTeamStandby[1].isStandby )
+			{
+				m_ggyRedAnimManager->StartAnimation(8,false );
+			}
+			else
+			{
+				m_ggyRedAnimManager->StartAnimation(0,true );
+			}
+		}
 
 
 
@@ -371,13 +417,24 @@ bool StandbyMaster::Update(void)
 		//メンバー全てが準備完了なら
 		if( m_blueTeamStandby[0].isStandby && m_blueTeamStandby[0].isStandby && m_redTeamStandby[0].isStandby && m_redTeamStandby[1].isStandby
 			&& m_blueTeamStandby[0].time >= _compFrame && m_blueTeamStandby[1].time >= _compFrame 
-			&& m_redTeamStandby[0].time >= _compFrame  && m_redTeamStandby[0].time >= _compFrame)
+			&& m_redTeamStandby[0].time >= _compFrame  && m_redTeamStandby[1].time >= _compFrame)
 		{
-			m_phase = PHASE_STANDBY;
-			m_ggyRedAnimManager->StartAnimation(8,true);
-			m_ggyBlueAnimManager->StartAnimation(8,true);
+			m_phase = PHASE_MOTION;
+			m_ggyRedAnimManager->StartAnimation(8,false);
+			m_ggyBlueAnimManager->StartAnimation(8,false);
 		}
 
+		break;
+
+	case PHASE_MOTION:
+
+		//赤も青も同じフレーム数なので赤で判定しとく
+		if( m_ggyRedAnimManager->isEndAnimation() )
+		{
+			m_phase = PHASE_STANDBY;
+		}
+
+		
 		break;
 
 	case PHASE_STANDBY:

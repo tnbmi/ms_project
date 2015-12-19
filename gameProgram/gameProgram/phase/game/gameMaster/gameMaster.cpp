@@ -27,6 +27,7 @@
 #include "..\..\..\common\complement\complement.h"
 
 #include "..\..\..\objectBase\polygon2D\polygon2D.h"
+#include "..\..\..\sound\sound.h"
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // マクロ定義
@@ -103,8 +104,8 @@ bool GameMaster::Initialize(void)
 	//プレイヤー生成
 	Player *redTeam;
 	Player *blueTeam;
-	Player::Create( &blueTeam,m_device,m_objectList,m_updateList,m_drawListManager,0,ObjectBase::TYPE_3D,"./resources/fbxModel/daisya.bin","./resources/fbxModel/ground.bin","./resources/fbxModel/nebta_blue.bin",m_fbxTexImport);
-	Player::Create( &redTeam,m_device,m_objectList,m_updateList,m_drawListManager,0,ObjectBase::TYPE_3D,"./resources/fbxModel/daisya.bin","./resources/fbxModel/ground.bin","./resources/fbxModel/nebta_red.bin",m_fbxTexImport);
+	Player::Create( &blueTeam,m_device,m_objectList,m_updateList,m_drawListManager,0,ObjectBase::TYPE_3D,"./resources/fbxModel/daisya.bin","./resources/fbxModel/ground.bin","./resources/fbxModel/nebta_blue_short.bin",m_fbxTexImport);
+	Player::Create( &redTeam,m_device,m_objectList,m_updateList,m_drawListManager,0,ObjectBase::TYPE_3D,"./resources/fbxModel/daisya.bin","./resources/fbxModel/ground.bin","./resources/fbxModel/nebta_red_short.bin",m_fbxTexImport);
 
 	//じじいポリゴン召喚
 	Ggy2DAnimationManager::Create( &m_blueGgyAnim,m_device,m_objectList,m_updateList,m_drawListManager );
@@ -170,14 +171,16 @@ bool GameMaster::Initialize(void)
 	m_redTeamCutIn.addVal = 0;
 	m_redTeamCutIn.time = 0;
 	m_redTeamCutIn.stPos = D3DXVECTOR3( SCREEN_WIDTH + 200,500,0 );
-	m_redTeamCutIn.edPos = D3DXVECTOR3( SCREEN_WIDTH - 320,500,0 );
+	m_redTeamCutIn.edPos = D3DXVECTOR3( SCREEN_WIDTH - 420,500,0 );
+	m_redTeamCutIn.isCutIn = false;
 
 	m_blueTeamCutIn.pol->pos(0,10000,0);
 	m_blueTeamCutIn.pol->scl(450,300,0);
 	m_blueTeamCutIn.addVal = 0;
 	m_blueTeamCutIn.time = 0;
 	m_blueTeamCutIn.stPos = D3DXVECTOR3( -200,500,0 );
-	m_blueTeamCutIn.edPos = D3DXVECTOR3( 320,500,0 );
+	m_blueTeamCutIn.edPos = D3DXVECTOR3( 420,500,0 );
+	m_blueTeamCutIn.isCutIn = false;
 
 	//----------------------------
 	// 配置
@@ -211,55 +214,55 @@ bool GameMaster::Initialize(void)
 	m_nebAnim[NANIM_WAIT].polyGgyAnimIdx =0;
 
 	m_nebAnim[NANIM_ACOMUP].stFrame = 31;
-	m_nebAnim[NANIM_ACOMUP].edFrame = 60;
+	m_nebAnim[NANIM_ACOMUP].edFrame = 45;
 	m_nebAnim[NANIM_ACOMUP].polyGgyAnimIdx = 3;
 
-	m_nebAnim[NANIM_BCOMUP].stFrame = 61;
-	m_nebAnim[NANIM_BCOMUP].edFrame = 90;
+	m_nebAnim[NANIM_BCOMUP].stFrame = 46;
+	m_nebAnim[NANIM_BCOMUP].edFrame = 60;
 	m_nebAnim[NANIM_BCOMUP].polyGgyAnimIdx = 3;
 
-	m_nebAnim[NANIM_ACOMR].stFrame = 91;
-	m_nebAnim[NANIM_ACOMR].edFrame = 120;
+	m_nebAnim[NANIM_ACOMR].stFrame = 61;
+	m_nebAnim[NANIM_ACOMR].edFrame = 75;
 	m_nebAnim[NANIM_ACOMR].polyGgyAnimIdx = 4;
 
-	m_nebAnim[NANIM_BCOMR].stFrame = 121;
-	m_nebAnim[NANIM_BCOMR].edFrame = 150;
+	m_nebAnim[NANIM_BCOMR].stFrame = 76;
+	m_nebAnim[NANIM_BCOMR].edFrame = 90;
 	m_nebAnim[NANIM_BCOMR].polyGgyAnimIdx = 4;
 
-	m_nebAnim[NANIM_ACOMDOWN].stFrame = 151;
-	m_nebAnim[NANIM_ACOMDOWN].edFrame = 180;
+	m_nebAnim[NANIM_ACOMDOWN].stFrame = 91;
+	m_nebAnim[NANIM_ACOMDOWN].edFrame = 105;
 	m_nebAnim[NANIM_ACOMDOWN].polyGgyAnimIdx = 5;
 
-	m_nebAnim[NANIM_BCOMDOWN].stFrame = 181;
-	m_nebAnim[NANIM_BCOMDOWN].edFrame = 210;
+	m_nebAnim[NANIM_BCOMDOWN].stFrame = 106;
+	m_nebAnim[NANIM_BCOMDOWN].edFrame = 120;
 	m_nebAnim[NANIM_BCOMDOWN].polyGgyAnimIdx = 5;
 
-	m_nebAnim[NANIM_ACOML].stFrame = 211;
-	m_nebAnim[NANIM_ACOML].edFrame = 240;
+	m_nebAnim[NANIM_ACOML].stFrame = 121;
+	m_nebAnim[NANIM_ACOML].edFrame = 135;
 	m_nebAnim[NANIM_ACOML].polyGgyAnimIdx = 6;
 
-	m_nebAnim[NANIM_BCOML].stFrame = 241;
-	m_nebAnim[NANIM_BCOML].edFrame = 270;
+	m_nebAnim[NANIM_BCOML].stFrame = 136;
+	m_nebAnim[NANIM_BCOML].edFrame = 150;
 	m_nebAnim[NANIM_BCOML].polyGgyAnimIdx = 6;
 
-	m_nebAnim[NANIM_SAME1].stFrame = 271;
-	m_nebAnim[NANIM_SAME1].edFrame = 330;
+	m_nebAnim[NANIM_SAME1].stFrame = 151;
+	m_nebAnim[NANIM_SAME1].edFrame = 210;
 	m_nebAnim[NANIM_SAME1].polyGgyAnimIdx = 8;
 
-	m_nebAnim[NANIM_SAME2].stFrame = 331;
-	m_nebAnim[NANIM_SAME2].edFrame = 390;
+	m_nebAnim[NANIM_SAME2].stFrame = 211;
+	m_nebAnim[NANIM_SAME2].edFrame = 270;
 	m_nebAnim[NANIM_SAME2].polyGgyAnimIdx = 8;
 
-	m_nebAnim[NANIM_SAME3].stFrame = 391;
-	m_nebAnim[NANIM_SAME3].edFrame = 450;
+	m_nebAnim[NANIM_SAME3].stFrame = 271;
+	m_nebAnim[NANIM_SAME3].edFrame = 330;
 	m_nebAnim[NANIM_SAME3].polyGgyAnimIdx = 8;
 
-	m_nebAnim[NANIM_WIN].stFrame = 451;
-	m_nebAnim[NANIM_WIN].edFrame = 510;
+	m_nebAnim[NANIM_WIN].stFrame = 331;
+	m_nebAnim[NANIM_WIN].edFrame = 390;
 	m_nebAnim[NANIM_WIN].polyGgyAnimIdx = 1;
 
-	m_nebAnim[NANIM_LOSE].stFrame = 511;
-	m_nebAnim[NANIM_LOSE].edFrame = 570;
+	m_nebAnim[NANIM_LOSE].stFrame = 391;
+	m_nebAnim[NANIM_LOSE].edFrame = 450;
 	m_nebAnim[NANIM_LOSE].polyGgyAnimIdx = 2;
 
 	redTeam->StartAnimationSecondChild( m_nebAnim[NANIM_WAIT].stFrame,m_nebAnim[NANIM_WAIT].edFrame,true );
@@ -424,22 +427,33 @@ void GameMaster::SelectAnimation( const int judge,Player *player,Ggy2DAnimationM
 
 			player->StartAnimationSecondChild( m_nebAnim[ NANIM_SAME1+s ].stFrame,m_nebAnim[ NANIM_SAME1 +s].edFrame,false );
 			ggy->StartAnimation(m_nebAnim[ NANIM_SAME1+s ].polyGgyAnimIdx,false );
-			cutIn->time = 0;
-			cutIn->addVal =1;
-			cutIn->stBufPos = cutIn->stPos;
-			cutIn->edBufPos = cutIn->edPos;
 			m_effectManager->AddEffectFromDataBase(0,D3DXVECTOR3(0,900,1000));
+			Sound::Play( Sound::SE_FIREWORKS );
+			if( !cutIn->isCutIn )
+			{
+				cutIn->time = 0;
+				cutIn->addVal =1;
+				cutIn->stBufPos = cutIn->stPos;
+				cutIn->edBufPos = cutIn->edPos;
+				cutIn->isCutIn = true;
+			}
 			break;
 
 		case 5:
-
+			//m_effectManager->AddEffectFromDataBase(0,D3DXVECTOR3(0,900,1000));
+			//Sound::Play( Sound::SE_FIREWORKS );
 			player->StartAnimationSecondChild( m_nebAnim[ NANIM_LOSE ].stFrame,m_nebAnim[ NANIM_LOSE ].edFrame,false );
 			ggy->StartAnimation(m_nebAnim[ NANIM_LOSE ].polyGgyAnimIdx,false );
-			cutIn->time = 0;
-			cutIn->addVal =1;
-			cutIn->stBufPos = cutIn->stPos;
-			cutIn->edBufPos = cutIn->edPos;
-			m_effectManager->AddEffectFromDataBase(0,D3DXVECTOR3(0,900,1000));
+			/*
+			if( !cutIn->isCutIn )
+			{
+				cutIn->time = 0;
+				cutIn->addVal =1;
+				cutIn->stBufPos = cutIn->stPos;
+				cutIn->edBufPos = cutIn->edPos;
+				cutIn->isCutIn = true;
+			}
+			*/
 			break;
 
 		case 6:
@@ -466,18 +480,19 @@ void GameMaster::UpdateCutIn()
 		m_blueTeamCutIn.edBufPos = m_blueTeamCutIn.edPos;
 	}
 
-	if( m_blueTeamCutIn.time == (_cutInFrame*2 ) )
+	if( m_blueTeamCutIn.time == (_cutInFrame*4 ) )
 	{
 		m_blueTeamCutIn.stBufPos = m_blueTeamCutIn.edPos;
 		m_blueTeamCutIn.edBufPos = m_blueTeamCutIn.stPos;		
 	}
 
-	if( m_blueTeamCutIn.time > (_cutInFrame*3) )
+	if( m_blueTeamCutIn.time > (_cutInFrame*5) )
 	{
 		m_blueTeamCutIn.addVal = 0;
 		m_blueTeamCutIn.stBufPos = m_blueTeamCutIn.stPos;
 		m_blueTeamCutIn.edBufPos = m_blueTeamCutIn.edPos;
 		m_blueTeamCutIn.time = 0;
+		m_blueTeamCutIn.isCutIn = false;
 	}
 
 	vec = LerpVec3( m_blueTeamCutIn.stBufPos,m_blueTeamCutIn.edBufPos,0,_cutInFrame,time,Cube );
@@ -493,18 +508,19 @@ void GameMaster::UpdateCutIn()
 		m_redTeamCutIn.stBufPos = m_redTeamCutIn.edPos;
 		m_redTeamCutIn.edBufPos = m_redTeamCutIn.edPos;
 	}	
-	if( m_redTeamCutIn.time == (_cutInFrame*2 ) )
+	if( m_redTeamCutIn.time == (_cutInFrame*4 ) )
 	{	
 		m_redTeamCutIn.stBufPos = m_redTeamCutIn.edPos;
 		m_redTeamCutIn.edBufPos = m_redTeamCutIn.stPos;		
 	}	
 		
-	if( m_redTeamCutIn.time > (_cutInFrame*3) )
+	if( m_redTeamCutIn.time > (_cutInFrame*5) )
 	{	
 		m_redTeamCutIn.addVal = 0;
 		m_redTeamCutIn.stBufPos = m_redTeamCutIn.stPos;
 		m_redTeamCutIn.edBufPos = m_redTeamCutIn.edPos;
 		m_redTeamCutIn.time = 0;
+		m_redTeamCutIn.isCutIn = false;
 	}
 
 	vec = LerpVec3( m_redTeamCutIn.stBufPos,m_redTeamCutIn.edBufPos,0,_cutInFrame,time,Cube );

@@ -9,10 +9,13 @@
 // インクルードファイル
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 #include "road.h"
+
 #include "..\thread\thread.h"
-#include"roadmanager\roadmanager.h"
+#include "roadmanager\roadmanager.h"
+
 #include "..\phase\phase.h"
-#include "..\manager\manager.h"
+#include "..\import\fbx\fbxTexImport.h"
+
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // 性的変数定義
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -23,7 +26,6 @@ bool					Road::m_closeFlag;
 Road::ROAD_STATE		Road::m_roadState;
 Phase*					Road::m_initialize;
 Phase*					Road::m_finalize;
-Manager*				Road::m_manager;
 //=============================================================================
 // コンストラクタ
 //=============================================================================
@@ -49,10 +51,10 @@ Road::~Road(void)
 //=============================================================================
 // 生成
 //=============================================================================
-bool Road::Create(Road** outPointer , LPDIRECT3DDEVICE9 device , Manager *manager)
+bool Road::Create(Road** outPointer , LPDIRECT3DDEVICE9 device)
 {
 	Road* pointer = new Road();
-	if(!pointer->Initialize(device , manager ))
+	if(!pointer->Initialize(device))
 		return false;
 
 	*outPointer = pointer;
@@ -63,13 +65,12 @@ bool Road::Create(Road** outPointer , LPDIRECT3DDEVICE9 device , Manager *manage
 //=============================================================================
 // 初期化
 //=============================================================================
-bool Road::Initialize( LPDIRECT3DDEVICE9 device , Manager *manager)
+bool Road::Initialize( LPDIRECT3DDEVICE9 device)
 {
 	//----------------------------
 	// コメント
 	//----------------------------
 	m_thread = new Thread;
-	m_manager = manager;
 	RoadManager::Create( &m_roadManager , device );
 	return true;
 }
@@ -102,7 +103,7 @@ void Road::StateClose( void )
 //=============================================================================
 // ロード画面
 //=============================================================================
-void Road::Roading( Phase* initialize )
+void Road::Roading( Phase* initialize , FbxTexImport* fbxImport)
 {
 
 
