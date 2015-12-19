@@ -12,20 +12,21 @@
 #include "..\common\safe.h"
 
 #include "..\renderer\renderer.h"
-#include "..\sound\sound.h"
 #include "..\debugproc\debugproc.h"
 
 #include "..\input\keyboard\keyboard.h"
 #include "..\input\padX\padXManager.h"
+
+#include "..\sound\sound.h"
+#include "..\import\main\mainImport.h"
+#include "..\import\fbx\fbxTexImport.h"
 
 #include "..\phase\title\title.h"
 #include "..\phase\standby\standby.h"
 #include "..\phase\game\game.h"
 #include "..\phase\result\result.h"
 
-#include "..\road\road.h"
-#include "..\import\fbx\fbxTexImport.h"
-#include "..\import\game\gameImport.h"
+#include "..\load\load.h"
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // 静的変数
@@ -35,8 +36,8 @@ Phase* Manager::m_nextPhase	= nullptr;
 int Manager::m_scoreBlue = 600;
 int Manager::m_scoreRed = 400;
 
-FbxTexImport* Manager::m_fbxTexImport = nullptr;
-
+FbxTexImport*	Manager::m_fbxTexImport = nullptr;
+MainImport*		Manager::m_mainImport	= nullptr;
 
 //=============================================================================
 // コンストラクタ
@@ -57,7 +58,7 @@ Manager::Manager(void)
 
 	m_keyboard		= nullptr;
 	m_padXManager	= nullptr;
-	m_road			= nullptr;
+	m_load			= nullptr;
 }
 
 //=============================================================================
@@ -92,21 +93,12 @@ bool Manager::Initialize(HINSTANCE hInstance, HWND hWnd, bool windowFlg)
 		return false;
 	LPDIRECT3DDEVICE9 device = m_renderer->device();
 
-	//fbxインポーター（テクスチャ）
-	FbxTexImport::Create( &m_fbxTexImport,device );
-
 	//----------------------------
 	// 入力
 	//----------------------------
 	if(!Keyboard::Create(&m_keyboard, hInstance, hWnd))
 		return false;
 	if(!PadXManager::Create(&m_padXManager))
-		return false;
-
-	//----------------------------
-	// サウンド
-	//----------------------------
-	if(!Sound::Create(&m_sound, hWnd))
 		return false;
 
 #ifdef _DEBUG
@@ -118,10 +110,17 @@ bool Manager::Initialize(HINSTANCE hInstance, HWND hWnd, bool windowFlg)
 	m_renderer->debugproc(m_debugproc);
 	m_padXManager->debugproc(m_debugproc);
 #endif
+
+	//----------------------------
+	// サウンド
+	//----------------------------
+	if(!Sound::Create(&m_sound, hWnd))
+		return false;
+
 	//----------------------------
 	// ローディング画面
 	//----------------------------
-	Road::Create( &m_road , device );
+	Load::Create( &m_load , device );
 
 	//----------------------------
 	// フェーズ
@@ -138,10 +137,16 @@ bool Manager::Initialize(HINSTANCE hInstance, HWND hWnd, bool windowFlg)
 	m_phase->debugproc(m_debugproc);
 #endif
 
-	// 初期化
-	//if(!m_phase->Initialize())
-	//	return false;
-	m_road->Roading( m_phase, m_fbxTexImport);
+	//----------------------------
+	// ローディング
+	//----------------------------
+	Load::START_LOAD startLoad;
+	startLoad.phase			= m_phase;
+	startLoad.mainImport	= &m_mainImport;
+	startLoad.fbxTexImport	= &m_fbxTexImport;
+
+	m_load->StartLoading(&startLoad);
+
 	m_nextPhase = m_phase;
 	m_renderer->phase(m_phase);
 
@@ -154,16 +159,24 @@ bool Manager::Initialize(HINSTANCE hInstance, HWND hWnd, bool windowFlg)
 void Manager::Finalize(void)
 {
 	//----------------------------
+	// ローディング画面
+	//----------------------------
+	SafeFinalizeDelete(m_load);
+
+	//----------------------------
+	//fbxテクスチャインポート
+	//----------------------------
+	SafeFinalizeDelete( m_fbxTexImport );
+
+	//----------------------------
+	// メインインポート
+	//----------------------------
+	SafeFinalizeDelete(m_mainImport);
+
+	//----------------------------
 	// フェーズ
 	//----------------------------
 	SafeFinalizeDelete(m_phase);
-
-#ifdef _DEBUG
-	//----------------------------
-	// デバッグコメント
-	//----------------------------
-	SafeFinalizeDelete(m_debugproc);
-#endif
 
 	//----------------------------
 	// サウンド
@@ -177,20 +190,17 @@ void Manager::Finalize(void)
 	SafeFinalizeDelete(m_keyboard);
 	SafeFinalizeDelete(m_padXManager);
 
+#ifdef _DEBUG
+	//----------------------------
+	// デバッグコメント
+	//----------------------------
+	SafeFinalizeDelete(m_debugproc);
+#endif
+
 	//----------------------------
 	// レンダラー
 	//----------------------------
 	SafeFinalizeDelete(m_renderer);
-
-	//----------------------------
-	// ローディング画面
-	//----------------------------
-	m_road->Finalize();
-
-	//----------------------------
-	//fbxテクスチャインポート
-	//----------------------------
-	SafeFinalizeDelete( m_fbxTexImport );
 }
 
 //=============================================================================
@@ -235,7 +245,7 @@ bool Manager::Update(void)
 #endif
 
 		// 次のフェーズを初期化・設定
-		m_road->Roading( m_phase , m_nextPhase );
+		m_load->Loading( m_phase , m_nextPhase );
 		//if(!m_nextPhase->Initialize())
 		//	return false;
 		m_phase = m_nextPhase;

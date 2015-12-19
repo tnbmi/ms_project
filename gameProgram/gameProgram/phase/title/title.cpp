@@ -81,8 +81,6 @@ bool Title::Initialize(void)
 	if(!TitleImport::Create(&m_import, m_device))
 		return false;
 
-	//if(!FbxTexImport::Create(&m_fbxTexImport,m_device ))
-	//	return false;
 	m_fbxTexImport = Manager::fbxTexImport();
 
 	//----------------------------
@@ -133,16 +131,6 @@ bool Title::Initialize(void)
 	//----------------------------
 	Sound::Play(Sound::BGM_TITLE03);
 
-	//----------------------------
-	// フェード
-	//----------------------------
-	//m_fade = CFade::Create(m_device);
-	//m_fade->Start(CFade::FADESTATE_IN, 1, 1.0f, 1.0f, 1.0f, 1.0f);
-
-	//----------------------------
-	// ステータス初期化
-	//----------------------------
-
 	return true;
 }
 
@@ -184,7 +172,6 @@ void Title::Finalize(void)
 	// インポート
 	//----------------------------
 	SafeFinalizeDelete(m_import);
-	//SafeFinalizeDelete(m_fbxTexImport);
 }
 
 //=============================================================================

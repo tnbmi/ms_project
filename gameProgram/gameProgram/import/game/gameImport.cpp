@@ -34,26 +34,8 @@ const char* _game_texture_name[] =
 	"/num_yellow.png",
 	"/num_white.png",
 	"/GameUI.png",
-	"/B‡@.png",
-	"/B‡A.png",
-	"/B‡B.png",
-	"/B‡C.png",
-	"/B‡D.png",
-	"/B‡E.png",
-	"/B‡F.png",
-	"/B‡G.png",
-	"/B‡H.png",
-	"/R‡@.png",
-	"/R‡A.png",
-	"/R‡B.png",
-	"/R‡C.png",
-	"/R‡D.png",
-	"/R‡E.png",
-	"/R‡F.png",
-	"/R‡G.png",
-	"/R‡H.png",
 	"/CutinRed.png",
-	"/Cutinblue.png",
+	"/Cutinblue.png"
 };
 
 //=============================================================================

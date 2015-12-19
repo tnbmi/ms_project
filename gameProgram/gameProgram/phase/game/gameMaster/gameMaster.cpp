@@ -11,6 +11,9 @@
 #include "GameMaster.h"
 #include "..\..\..\common\safe.h"
 
+#include "..\..\..\manager\manager.h"
+#include "..\..\..\import\main\mainImport.h"
+
 #include "..\..\..\list\objectList\objectList.h"
 #include "..\..\..\list\updateList\updateList.h"
 #include "..\..\..\list\drawList\drawListManager.h"
@@ -112,29 +115,30 @@ bool GameMaster::Initialize(void)
 	Ggy2DAnimationManager::Create( &m_redGgyAnim,m_device,m_objectList,m_updateList,m_drawListManager );
 
 	//
-	m_blueGgyAnim->SetTexture(0,m_import->texture( GameImport::GGYBLUE_WAIT ) );
-	m_blueGgyAnim->SetTexture(1,m_import->texture( GameImport::GGYBLUE_WIN ) );
-	m_blueGgyAnim->SetTexture(2,m_import->texture( GameImport::GGYBLUE_LOSE ) );
-	m_blueGgyAnim->SetTexture(3,m_import->texture( GameImport::GGYBLUE_UP ) );
-	m_blueGgyAnim->SetTexture(4,m_import->texture( GameImport::GGYBLUE_RIGHT ) );
-	m_blueGgyAnim->SetTexture(5,m_import->texture( GameImport::GGYBLUE_DOWN ) );
-	m_blueGgyAnim->SetTexture(6,m_import->texture( GameImport::GGYBLUE_LEFT ) );
-	m_blueGgyAnim->SetTexture(7,m_import->texture( GameImport::GGYBLUE_P ) );
-	m_blueGgyAnim->SetTexture(8,m_import->texture( GameImport::GGYBLUE_POSE ) );
+	MainImport* mainImport = Manager::mainImport();
+	m_blueGgyAnim->SetTexture(0,mainImport->texture( MainImport::GGYBLUE_WAIT ) );
+	m_blueGgyAnim->SetTexture(1,mainImport->texture( MainImport::GGYBLUE_WIN ) );
+	m_blueGgyAnim->SetTexture(2,mainImport->texture( MainImport::GGYBLUE_LOSE ) );
+	m_blueGgyAnim->SetTexture(3,mainImport->texture( MainImport::GGYBLUE_UP ) );
+	m_blueGgyAnim->SetTexture(4,mainImport->texture( MainImport::GGYBLUE_RIGHT ) );
+	m_blueGgyAnim->SetTexture(5,mainImport->texture( MainImport::GGYBLUE_DOWN ) );
+	m_blueGgyAnim->SetTexture(6,mainImport->texture( MainImport::GGYBLUE_LEFT ) );
+	m_blueGgyAnim->SetTexture(7,mainImport->texture( MainImport::GGYBLUE_P ) );
+	m_blueGgyAnim->SetTexture(8,mainImport->texture( MainImport::GGYBLUE_POSE ) );
 
 	m_blueGgyAnim->pos(D3DXVECTOR3( 280,580,0 ));
 	m_blueGgyAnim->scl(D3DXVECTOR3( 320,256,0 ));
 	m_blueGgyAnim->StartAnimation(0,true);
 
-	m_redGgyAnim->SetTexture(0,m_import->texture( GameImport::GGYRED_WAIT ) );
-	m_redGgyAnim->SetTexture(1,m_import->texture( GameImport::GGYRED_WIN ) );
-	m_redGgyAnim->SetTexture(2,m_import->texture( GameImport::GGYRED_LOSE ) );
-	m_redGgyAnim->SetTexture(3,m_import->texture( GameImport::GGYRED_UP ) );
-	m_redGgyAnim->SetTexture(4,m_import->texture( GameImport::GGYRED_RIGHT ) );
-	m_redGgyAnim->SetTexture(5,m_import->texture( GameImport::GGYRED_DOWN ) );
-	m_redGgyAnim->SetTexture(6,m_import->texture( GameImport::GGYRED_LEFT ) );
-	m_redGgyAnim->SetTexture(7,m_import->texture( GameImport::GGYRED_P ) );
-	m_redGgyAnim->SetTexture(8,m_import->texture( GameImport::GGYRED_POSE ) );
+	m_redGgyAnim->SetTexture(0,mainImport->texture( MainImport::GGYRED_WAIT ) );
+	m_redGgyAnim->SetTexture(1,mainImport->texture( MainImport::GGYRED_WIN ) );
+	m_redGgyAnim->SetTexture(2,mainImport->texture( MainImport::GGYRED_LOSE ) );
+	m_redGgyAnim->SetTexture(3,mainImport->texture( MainImport::GGYRED_UP ) );
+	m_redGgyAnim->SetTexture(4,mainImport->texture( MainImport::GGYRED_RIGHT ) );
+	m_redGgyAnim->SetTexture(5,mainImport->texture( MainImport::GGYRED_DOWN ) );
+	m_redGgyAnim->SetTexture(6,mainImport->texture( MainImport::GGYRED_LEFT ) );
+	m_redGgyAnim->SetTexture(7,mainImport->texture( MainImport::GGYRED_P ) );
+	m_redGgyAnim->SetTexture(8,mainImport->texture( MainImport::GGYRED_POSE ) );
 
 	m_redGgyAnim->pos(D3DXVECTOR3( 1000,580,0 ));
 	m_redGgyAnim->scl(D3DXVECTOR3( 320,256,0 ));
@@ -395,7 +399,7 @@ void GameMaster::SelectAnimation( const int judge,Player *player,Ggy2DAnimationM
 {
 	//	ここでランダムで違うポーズをだす
 	int r = rand() %2;
-	int s = RandRange( 2,0);
+	int s = (int)RandRange( 2.0f,0.0f);
 
 	switch( judge )
 	{
@@ -495,7 +499,7 @@ void GameMaster::UpdateCutIn()
 		m_blueTeamCutIn.isCutIn = false;
 	}
 
-	vec = LerpVec3( m_blueTeamCutIn.stBufPos,m_blueTeamCutIn.edBufPos,0,_cutInFrame,time,Cube );
+	vec = LerpVec3( m_blueTeamCutIn.stBufPos,m_blueTeamCutIn.edBufPos,0.0f,(float)_cutInFrame,(float)time,Cube );
 
 	m_blueTeamCutIn.pol->pos( vec );
 
@@ -523,7 +527,7 @@ void GameMaster::UpdateCutIn()
 		m_redTeamCutIn.isCutIn = false;
 	}
 
-	vec = LerpVec3( m_redTeamCutIn.stBufPos,m_redTeamCutIn.edBufPos,0,_cutInFrame,time,Cube );
+	vec = LerpVec3( m_redTeamCutIn.stBufPos,m_redTeamCutIn.edBufPos,0.0f,(float)_cutInFrame,(float)time,Cube );
 
 	m_redTeamCutIn.pol->pos( vec );
 

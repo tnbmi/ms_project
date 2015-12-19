@@ -158,18 +158,6 @@
     <Filter Include="thread">
       <UniqueIdentifier>{96daaa9c-06fb-4b21-a132-d51f0fc9e6c3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="import\road">
-      <UniqueIdentifier>{834f389d-fa44-42e7-86de-dec39983185b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="road">
-      <UniqueIdentifier>{6094bceb-f14b-4713-adf6-b8124c7ffd0e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="road\roadmanager">
-      <UniqueIdentifier>{85906048-150d-44e8-8656-853f22f105de}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="road\roadpolygon">
-      <UniqueIdentifier>{3a3c33f2-28a3-4765-b9d1-976f4afb13f4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="phase\standby">
       <UniqueIdentifier>{209378e2-acd0-4a0c-adac-52609ef5a5a0}</UniqueIdentifier>
     </Filter>
@@ -200,19 +188,31 @@
     <Filter Include="import\main">
       <UniqueIdentifier>{7dc40bcf-0c23-4483-af25-d416ce629686}</UniqueIdentifier>
     </Filter>
-    <Filter Include="list\main">
+    <Filter Include="main">
       <UniqueIdentifier>{96dd5fe8-dae8-4d1d-b622-95773e21bcec}</UniqueIdentifier>
     </Filter>
-    <Filter Include="list\main\window">
+    <Filter Include="main\window">
       <UniqueIdentifier>{45a4370b-238b-478e-b2e5-a6c1b70869d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="load">
+      <UniqueIdentifier>{fa59b4fd-180a-4a97-9925-97ad1717e69e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="load\loadManager">
+      <UniqueIdentifier>{00c30916-fc8a-4061-b2b6-57e47fadc71b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="load\loadPolygon">
+      <UniqueIdentifier>{e0b3bd31-c9e3-4e9b-90c6-d2c20ae2cbd3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="import\load">
+      <UniqueIdentifier>{834f389d-fa44-42e7-86de-dec39983185b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main\main.h">
-      <Filter>list\main</Filter>
+      <Filter>main</Filter>
     </ClInclude>
     <ClInclude Include="main\window\window.h">
-      <Filter>list\main\window</Filter>
+      <Filter>main\window</Filter>
     </ClInclude>
     <ClInclude Include="common\safe.h">
       <Filter>common</Filter>
@@ -346,20 +346,8 @@
     <ClInclude Include="thread\thread.h">
       <Filter>thread</Filter>
     </ClInclude>
-    <ClInclude Include="import\road\roadImport.h">
-      <Filter>import\road</Filter>
-    </ClInclude>
-    <ClInclude Include="road\roadpolygon\roadpolygon.h">
-      <Filter>road\roadpolygon</Filter>
-    </ClInclude>
-    <ClInclude Include="road\road.h">
-      <Filter>road</Filter>
-    </ClInclude>
     <ClInclude Include="shader\shader.h">
       <Filter>shader</Filter>
-    </ClInclude>
-    <ClInclude Include="road\roadmanager\roadmanager.h">
-      <Filter>road\roadmanager</Filter>
     </ClInclude>
     <ClInclude Include="phase\standby\standby.h">
       <Filter>phase\standby</Filter>
@@ -388,13 +376,25 @@
     <ClInclude Include="import\main\mainImport.h">
       <Filter>import\main</Filter>
     </ClInclude>
+    <ClInclude Include="load\loadmanager\loadmanager.h">
+      <Filter>load\loadManager</Filter>
+    </ClInclude>
+    <ClInclude Include="load\loadpolygon\loadpolygon.h">
+      <Filter>load\loadPolygon</Filter>
+    </ClInclude>
+    <ClInclude Include="load\load.h">
+      <Filter>load</Filter>
+    </ClInclude>
+    <ClInclude Include="import\load\loadImport.h">
+      <Filter>import\load</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main\main.cpp">
-      <Filter>list\main</Filter>
+      <Filter>main</Filter>
     </ClCompile>
     <ClCompile Include="main\window\window.cpp">
-      <Filter>list\main\window</Filter>
+      <Filter>main\window</Filter>
     </ClCompile>
     <ClCompile Include="manager\manager.cpp">
       <Filter>manager</Filter>
@@ -522,18 +522,6 @@
     <ClCompile Include="thread\thread.cpp">
       <Filter>thread</Filter>
     </ClCompile>
-    <ClCompile Include="import\road\roadImport.cpp">
-      <Filter>import\road</Filter>
-    </ClCompile>
-    <ClCompile Include="road\roadpolygon\roadpolygon.cpp">
-      <Filter>road\roadpolygon</Filter>
-    </ClCompile>
-    <ClCompile Include="road\roadmanager\roadmanager.cpp">
-      <Filter>road\roadmanager</Filter>
-    </ClCompile>
-    <ClCompile Include="road\road.cpp">
-      <Filter>road</Filter>
-    </ClCompile>
     <ClCompile Include="shader\shader.cpp">
       <Filter>shader</Filter>
     </ClCompile>
@@ -563,6 +551,18 @@
     </ClCompile>
     <ClCompile Include="import\main\mainImport.cpp">
       <Filter>import\main</Filter>
+    </ClCompile>
+    <ClCompile Include="load\loadmanager\loadmanager.cpp">
+      <Filter>load\loadManager</Filter>
+    </ClCompile>
+    <ClCompile Include="load\loadpolygon\loadpolygon.cpp">
+      <Filter>load\loadPolygon</Filter>
+    </ClCompile>
+    <ClCompile Include="load\load.cpp">
+      <Filter>load</Filter>
+    </ClCompile>
+    <ClCompile Include="import\load\loadImport.cpp">
+      <Filter>import\load</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

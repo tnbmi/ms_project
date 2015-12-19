@@ -11,6 +11,9 @@
 #include "standbyMaster.h"
 #include "..\..\..\common\safe.h"
 
+#include "..\..\..\manager\manager.h"
+#include "..\..\..\import\main\mainImport.h"
+
 #include "..\..\..\list\objectList\objectList.h"
 #include "..\..\..\list\updateList\updateList.h"
 #include "..\..\..\list\drawList\drawListManager.h"
@@ -87,10 +90,11 @@ bool StandbyMaster::Initialize(void)
 
 
 
+	MainImport* mainImport = Manager::mainImport();
 	Ggy2DAnimationManager::Create( &m_ggyBlueAnimManager,m_device,m_objectList,m_updateList,m_drawListManager );
 
-	m_ggyBlueAnimManager->SetTexture( 0,m_import->texture(StandbyImport::GGYBLUE_WAIT) );
-	m_ggyBlueAnimManager->SetTexture( 8,m_import->texture(StandbyImport::GGYBLUE_POSE) );
+	m_ggyBlueAnimManager->SetTexture( 0,mainImport->texture(MainImport::GGYBLUE_WAIT) );
+	m_ggyBlueAnimManager->SetTexture( 8,mainImport->texture(MainImport::GGYBLUE_POSE) );
 	m_ggyBlueAnimManager->pos(D3DXVECTOR3( 330,420,0 ));
 	m_ggyBlueAnimManager->scl(D3DXVECTOR3( 320,256,0 ));
 
@@ -98,8 +102,8 @@ bool StandbyMaster::Initialize(void)
 
 	Ggy2DAnimationManager::Create( &m_ggyRedAnimManager,m_device,m_objectList,m_updateList,m_drawListManager );
 
-	m_ggyRedAnimManager->SetTexture( 0,m_import->texture(StandbyImport::GGYRED_WAIT) );
-	m_ggyRedAnimManager->SetTexture( 8,m_import->texture(StandbyImport::GGYRED_POSE) );
+	m_ggyRedAnimManager->SetTexture( 0,mainImport->texture(MainImport::GGYRED_WAIT) );
+	m_ggyRedAnimManager->SetTexture( 8,mainImport->texture(MainImport::GGYRED_POSE) );
 	m_ggyRedAnimManager->pos(D3DXVECTOR3( 950,420,0 ));
 	m_ggyRedAnimManager->scl(D3DXVECTOR3( 320,256,0 ));
 
@@ -198,10 +202,10 @@ bool StandbyMaster::Initialize(void)
 	//‰Šú‰»
 	m_blueTeamStandby[0].isStandby = false;
 	m_blueTeamStandby[0].time = _compFrame;
-	m_blueTeamStandby[1].isStandby = true;
+	m_blueTeamStandby[1].isStandby = false;
 	m_blueTeamStandby[1].time = _compFrame;
 
-	m_redTeamStandby[0].isStandby = true;
+	m_redTeamStandby[0].isStandby = false;
 	m_redTeamStandby[0].time = _compFrame;
 	m_redTeamStandby[1].isStandby = false;
 	m_redTeamStandby[1].time = _compFrame;

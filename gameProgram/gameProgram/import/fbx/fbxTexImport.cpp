@@ -64,7 +64,7 @@ bool FbxTexImport::Initialize( LPDIRECT3DDEVICE9 device )
 	{
 		char p[512];
 
-		sprintf( p,"%s%s",path,_fbxTexName[i] );
+		sprintf_s( p,"%s%s",path,_fbxTexName[i] );
 		LoadTexture( p );
 	
 	}
@@ -125,7 +125,7 @@ LPDIRECT3DTEXTURE9 FbxTexImport::LoadTexture( const char *texPath )
 
 			int len = strlen( texPath )+1;
 			m_texDataArray[i].texPath = new char[ len ];
-			strcpy( m_texDataArray[i].texPath,texPath );
+			strcpy_s( m_texDataArray[i].texPath,len,texPath );
 
 			return m_texDataArray[i].m_tex;
 		}

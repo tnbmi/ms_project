@@ -24,9 +24,9 @@
     <ClCompile Include="import\fbx\fbxTexImport.cpp" />
     <ClCompile Include="import\game\gameImport.cpp" />
     <ClCompile Include="import\import.cpp" />
+    <ClCompile Include="import\load\loadImport.cpp" />
     <ClCompile Include="import\main\mainImport.cpp" />
     <ClCompile Include="import\result\resultImport.cpp" />
-    <ClCompile Include="import\road\roadImport.cpp" />
     <ClCompile Include="import\standby\standbyImport.cpp" />
     <ClCompile Include="import\title\titleImport.cpp" />
     <ClCompile Include="input\keyboard\keyboard.cpp" />
@@ -37,6 +37,9 @@
     <ClCompile Include="list\list.cpp" />
     <ClCompile Include="list\objectList\objectList.cpp" />
     <ClCompile Include="list\updateList\updateList.cpp" />
+    <ClCompile Include="load\load.cpp" />
+    <ClCompile Include="load\loadmanager\loadmanager.cpp" />
+    <ClCompile Include="load\loadpolygon\loadpolygon.cpp" />
     <ClCompile Include="main\main.cpp" />
     <ClCompile Include="main\window\window.cpp" />
     <ClCompile Include="manager\manager.cpp" />
@@ -63,9 +66,6 @@
     <ClCompile Include="sound\sound.cpp" />
     <ClCompile Include="tex2DAnimation\tex2DAnimation.cpp" />
     <ClCompile Include="timemanager\timeManager.cpp" />
-    <ClCompile Include="road\road.cpp" />
-    <ClCompile Include="road\roadmanager\roadmanager.cpp" />
-    <ClCompile Include="road\roadpolygon\roadpolygon.cpp" />
     <ClCompile Include="thread\thread.cpp" />
     <ClCompile Include="view\camera\camera.cpp" />
     <ClCompile Include="view\light\light.cpp" />
@@ -86,9 +86,9 @@
     <ClInclude Include="import\fbx\fbxTexImport.h" />
     <ClInclude Include="import\game\gameImport.h" />
     <ClInclude Include="import\import.h" />
+    <ClInclude Include="import\load\loadImport.h" />
     <ClInclude Include="import\main\mainImport.h" />
     <ClInclude Include="import\result\resultImport.h" />
-    <ClInclude Include="import\road\roadImport.h" />
     <ClInclude Include="import\standby\standbyImport.h" />
     <ClInclude Include="import\title\titleImport.h" />
     <ClInclude Include="input\keyboard\keyboard.h" />
@@ -99,6 +99,9 @@
     <ClInclude Include="list\list.h" />
     <ClInclude Include="list\objectList\objectList.h" />
     <ClInclude Include="list\updateList\updateList.h" />
+    <ClInclude Include="load\load.h" />
+    <ClInclude Include="load\loadmanager\loadmanager.h" />
+    <ClInclude Include="load\loadpolygon\loadpolygon.h" />
     <ClInclude Include="main\main.h" />
     <ClInclude Include="main\window\window.h" />
     <ClInclude Include="manager\manager.h" />
@@ -125,9 +128,6 @@
     <ClInclude Include="sound\sound.h" />
     <ClInclude Include="tex2DAnimation\tex2DAnimation.h" />
     <ClInclude Include="timemanager\timeManager.h" />
-    <ClInclude Include="road\road.h" />
-    <ClInclude Include="road\roadmanager\roadmanager.h" />
-    <ClInclude Include="road\roadpolygon\roadpolygon.h" />
     <ClInclude Include="thread\thread.h" />
     <ClInclude Include="view\camera\camera.h" />
     <ClInclude Include="view\light\light.h" />

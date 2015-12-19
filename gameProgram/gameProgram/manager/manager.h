@@ -18,14 +18,15 @@
 // ƒNƒ‰ƒX’è‹`
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 class Phase;
+
 class Renderer;
 class Sound;
 class Debugproc;
 class Keyboard;
 class PadXManager;
-class Road;
+class MainImport;
 class FbxTexImport;
-class GameImport;
+class Load;
 
 class Manager
 {
@@ -46,7 +47,8 @@ public:
 
 	static int	scoreBlue(void) {return m_scoreBlue;}
 	static int	scoreRed(void) {return m_scoreRed;}
-	static FbxTexImport *fbxTexImport(void) { return m_fbxTexImport; }
+	static MainImport	*mainImport(void) { return m_mainImport; }
+	static FbxTexImport	*fbxTexImport(void) { return m_fbxTexImport; }
 
 private:
 	int m_countFPS;
@@ -56,7 +58,8 @@ private:
 
 	static int m_scoreBlue;
 	static int m_scoreRed;
-	static FbxTexImport *m_fbxTexImport;
+	static MainImport*	 m_mainImport;
+	static FbxTexImport* m_fbxTexImport;
 
 	Renderer*	m_renderer;
 	Sound*		m_sound;
@@ -64,7 +67,7 @@ private:
 
 	Keyboard*	 m_keyboard;
 	PadXManager* m_padXManager;
-	Road*		 m_road;
+	Load*		 m_load;
 };
 
 //=============================================================================

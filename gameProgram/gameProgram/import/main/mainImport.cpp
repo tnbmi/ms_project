@@ -21,19 +21,6 @@ const char* _main_texture_name[] =
 {
 	nullptr,
 
-	"/stones.bmp",
-	"/stones_normal.bmp",
-	"/sky.jpg",
-
-	"/COMMAND_TEX.png",
-	"/blue.png",
-	"/red.png",
-	"/commandfram00.png",
-	"/commandfram01.png",
-	"/number.png",
-	"/num_yellow.png",
-	"/num_white.png",
-	"/MainUI.png",
 	"/B‡@.png",
 	"/B‡A.png",
 	"/B‡B.png",
@@ -51,9 +38,7 @@ const char* _main_texture_name[] =
 	"/R‡E.png",
 	"/R‡F.png",
 	"/R‡G.png",
-	"/R‡H.png",
-	"/CutinRed.png",
-	"/Cutinblue.png",
+	"/R‡H.png"
 };
 
 //=============================================================================

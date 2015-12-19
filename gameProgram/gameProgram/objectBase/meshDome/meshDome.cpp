@@ -41,6 +41,8 @@ MeshDome::MeshDome(LPDIRECT3DDEVICE9 device, ObjectList* objectList, OBJECT_TYPE
 //=============================================================================
 MeshDome::~MeshDome(void)
 {
+	SafeDelete(m_vtx);
+	SafeDelete(m_idx);
 }
 
 //=============================================================================
@@ -121,8 +123,6 @@ bool MeshDome::Initialize(D3DXVECTOR2 blockNum, float radius, float height, LPDI
 //=============================================================================
 void MeshDome::Finalize(void)
 {
-	SafeDelete(m_vtx);
-	SafeDelete(m_idx);
 }
 
 //=============================================================================
