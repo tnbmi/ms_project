@@ -35,6 +35,7 @@ class TimeManager;
 class FbxTexImport;
 class Ggy2DAnimationManager;
 class Polygon2D;
+class Tex2DAnimation;
 
 class GameMaster
 {
@@ -95,6 +96,33 @@ private:
 		bool isCutIn;
 	};
 
+	enum GAMEPHASE
+	{
+		PHASE_COUNTDOWN,
+		PHASE_CALL,
+		PHASE_GAME,
+		PHASE_FINISH,
+		PHASE_NEXT_SCENE,
+		PHASE_MAX
+	};
+
+	//ゲームフェーズ
+	GAMEPHASE m_gamePhase;
+
+	//フェーズ用更新関数
+	void UpdateCountDown();
+	void UpdateCall();
+	void UpdateGame();
+	void UpdateFinish();
+	bool UpdateNextScene();
+
+	//フェーズ用変数
+	//--------------------------------
+	Tex2DAnimation	*m_countDown;//3..2..1
+	Polygon2D		*m_call;//始め そこまでを使いまわす
+	float m_callTime;//コール用補完時間
+
+	//--------------------------------
 	//カットイン
 	static const int _cutInFrame = 20;
 	CUTIN m_redTeamCutIn;

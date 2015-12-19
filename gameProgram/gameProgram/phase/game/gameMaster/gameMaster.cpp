@@ -32,6 +32,8 @@
 #include "..\..\..\objectBase\polygon2D\polygon2D.h"
 #include "..\..\..\sound\sound.h"
 
+#include "..\..\..\tex2DAnimation\tex2DAnimation.h"
+
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // マクロ定義
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -114,6 +116,20 @@ bool GameMaster::Initialize(void)
 	Ggy2DAnimationManager::Create( &m_blueGgyAnim,m_device,m_objectList,m_updateList,m_drawListManager );
 	Ggy2DAnimationManager::Create( &m_redGgyAnim,m_device,m_objectList,m_updateList,m_drawListManager );
 
+	//カウントダウン　コール系ポリゴン（使いまわし)
+	Polygon2D::Create( &m_call,m_device,m_objectList,nullptr,ObjectBase::TYPE_2D );
+	m_updateList->Link( m_call );
+	m_drawListManager->Link( m_call,0,Shader::PAT_2D );
+
+	m_call->pos( SCREEN_WIDTH/2,SCREEN_HEIGHT/2,0);
+	m_call->scl( 400,200,0 );
+
+	//カウントダウンアニメーション制御
+	Tex2DAnimation::Create( &m_countDown );
+	m_countDown->Set2DPolygon( m_call );
+	m_countDown->SetTexture( m_import->texture( GameImport::COUNTDOWN ) );
+	m_countDown->SetAnimationData(60,4,D3DXVECTOR2(0.0f,0.0f),D3DXVECTOR2(0.2f,0.0f),D3DXVECTOR2(0.0f,1.0f),D3DXVECTOR2(0.2f,1.0f),D3DXVECTOR2(0.2f,0.0f) );
+	m_countDown->StartAnimaton(false);
 	//
 	MainImport* mainImport = Manager::mainImport();
 	m_blueGgyAnim->SetTexture(0,mainImport->texture( MainImport::GGYBLUE_WAIT ) );
@@ -273,6 +289,9 @@ bool GameMaster::Initialize(void)
 	m_redGgyAnim->StartAnimation( m_nebAnim[NANIM_WAIT].polyGgyAnimIdx,true );
 	blueTeam->StartAnimationSecondChild( m_nebAnim[NANIM_WAIT].stFrame,m_nebAnim[NANIM_WAIT].edFrame,true );
 	m_blueGgyAnim->StartAnimation( m_nebAnim[NANIM_WAIT].polyGgyAnimIdx,true );
+
+	//ゲームフェーズ設定
+	m_gamePhase = PHASE_COUNTDOWN;
 	return true;
 }
 
@@ -295,6 +314,8 @@ void GameMaster::Finalize(void)
 
 	SafeFinalizeDelete( m_blueGgyAnim );
 	SafeFinalizeDelete( m_redGgyAnim );
+
+	SafeFinalizeDelete( m_countDown );
 }
 
 //=============================================================================
@@ -302,50 +323,43 @@ void GameMaster::Finalize(void)
 //=============================================================================
 bool GameMaster::Update(void)
 {
-	// エフェクトマネージャ
-	m_effectManager->Update();
+	switch( m_gamePhase )
+	{
+		case PHASE_COUNTDOWN:
 
-	//プレイヤー更新
-	m_redTeam->Update();
-	m_blueTeam->Update();
+			UpdateCountDown();
 
-	// コマンドマネージャ
-	CommandManager::COM_MANA_RTN get = {0,0};
-	get = m_command_manager->Update();
-	AddTeamScore(get.score[1], get.score[0]);
+			break;
 
-	Sound::SOUND_TABLE blueTable[5]={ Sound::SE_ATTACK_BLUE1,Sound::SE_ATTACK_BLUE2,Sound::SE_ATTACK_BLUE3,Sound::SE_FAIL_BLUE,Sound::SE_SAME_NEB_BLUE };
-	Sound::SOUND_TABLE redTable[5] ={ Sound::SE_ATTACK_RED1,Sound::SE_ATTACK_RED2,Sound::SE_ATTACK_RED3,Sound::SE_FAIL_RED,Sound::SE_SAME_NEB_RED };;
+		case PHASE_CALL:
 
-	SelectAnimation( get.state[1],m_redTeam,m_redGgyAnim,&m_redTeamCutIn,redTable );
-	SelectAnimation( get.state[0],m_blueTeam,m_blueGgyAnim,&m_blueTeamCutIn,blueTable );
+			UpdateCall();
 
-	//スコア確定
-	DetermineTeamScore();
+			break;
 
-	//移動値を伝える
-	m_audienceManager->MoveBlueTeamFromRedTeam( m_blueTeamAddVal );
-	m_audienceManager->MoveRedTeamFromBlueTeam( m_redTeamAddVal );
+		case PHASE_GAME:
 
-	//観客更新
-	m_audienceManager->Update();
+			UpdateGame();
 
-	// タイムマネージャ
-	if(m_time_manager->Update())
-		return true;
+			break;
 
-	m_blueTeamAddVal = 0;
-	m_redTeamAddVal	 = 0;
+		case PHASE_FINISH:
 
-	m_blueGgyAnim->Update();
-	m_redGgyAnim->Update();
-	UpdateCutIn();
+			UpdateFinish();
+
+			break;
+
+		case PHASE_NEXT_SCENE:
+
+			return UpdateNextScene();
+			break;
+	}
 
 	return false;
 }
 
 //=============================================================================
-//
+//スコア加算
 //=============================================================================
 
 void GameMaster::AddTeamScore( const int addRedTeamVal,const int addBlueTeamVal )
@@ -358,7 +372,7 @@ void GameMaster::AddTeamScore( const int addRedTeamVal,const int addBlueTeamVal 
 }
 
 //=============================================================================
-//
+//スコアを確定する
 //=============================================================================
 
 void GameMaster::DetermineTeamScore()
@@ -395,7 +409,7 @@ void GameMaster::DetermineTeamScore()
 }
 
 //=============================================================================
-//
+//アニメーション選択
 //=============================================================================
 
 void GameMaster::SelectAnimation( const int judge,Player *player,Ggy2DAnimationManager *ggy,CUTIN *cutIn,Sound::SOUND_TABLE *soundTable )
@@ -484,7 +498,7 @@ void GameMaster::SelectAnimation( const int judge,Player *player,Ggy2DAnimationM
 }
 
 //=============================================================================
-//
+//カットイン更新
 //=============================================================================
 void GameMaster::UpdateCutIn()
 {
@@ -547,5 +561,133 @@ void GameMaster::UpdateCutIn()
 	m_redTeamCutIn.pol->pos( vec );
 
 }
+
+//=============================================================================
+//カウントダウン更新
+//=============================================================================
+void GameMaster::UpdateCountDown()
+{
+
+	m_countDown->Update();
+	if( m_countDown->isEndAnimation() )
+	{
+		m_gamePhase = PHASE_CALL;
+		m_call->texcoord(0,0.6f,0.0f);
+		m_call->texcoord(1,0.8f,0.0f);
+		m_call->texcoord(2,0.6f,1.0f);
+		m_call->texcoord(3,0.8f,1.0f);
+		m_callTime = 0.0f;
+
+		Sound::Play(Sound::SE_START_VOICE);
+	}
+}
+
+//=============================================================================
+//コール更新
+//=============================================================================
+void GameMaster::UpdateCall()
+{
+	D3DXVECTOR3 scl;
+
+	scl = LerpVec3( D3DXVECTOR3(SCREEN_WIDTH,SCREEN_HEIGHT,0),D3DXVECTOR3(400,200,0),0,60,m_callTime,Cube );
+	m_callTime++;
+	m_call->scl(scl);
+
+	if( m_callTime > 60 )
+	{
+		m_gamePhase = PHASE_GAME;
+		m_call->scl(0,0,0);
+	}
+}
+
+//=============================================================================
+//ゲーム更新
+//=============================================================================
+void GameMaster::UpdateGame()
+{
+// エフェクトマネージャ
+	m_effectManager->Update();
+
+	//プレイヤー更新
+	m_redTeam->Update();
+	m_blueTeam->Update();
+
+	// コマンドマネージャ
+	CommandManager::COM_MANA_RTN get = {0,0};
+	get = m_command_manager->Update();
+	AddTeamScore(get.score[1], get.score[0]);
+
+	Sound::SOUND_TABLE blueTable[5]={ Sound::SE_ATTACK_BLUE1,Sound::SE_ATTACK_BLUE2,Sound::SE_ATTACK_BLUE3,Sound::SE_FAIL_BLUE,Sound::SE_SAME_NEB_BLUE };
+	Sound::SOUND_TABLE redTable[5] ={ Sound::SE_ATTACK_RED1,Sound::SE_ATTACK_RED2,Sound::SE_ATTACK_RED3,Sound::SE_FAIL_RED,Sound::SE_SAME_NEB_RED };;
+
+	SelectAnimation( get.state[1],m_redTeam,m_redGgyAnim,&m_redTeamCutIn,redTable );
+	SelectAnimation( get.state[0],m_blueTeam,m_blueGgyAnim,&m_blueTeamCutIn,blueTable );
+
+	//スコア確定
+	DetermineTeamScore();
+
+	//移動値を伝える
+	m_audienceManager->MoveBlueTeamFromRedTeam( m_blueTeamAddVal );
+	m_audienceManager->MoveRedTeamFromBlueTeam( m_redTeamAddVal );
+
+	//観客更新
+	m_audienceManager->Update();
+
+	// タイムマネージャ
+	if(m_time_manager->Update())
+	{
+		m_gamePhase = PHASE_FINISH;
+
+		m_call->texcoord(0,0.8f,0);
+		m_call->texcoord(1,1.0f,0);
+		m_call->texcoord(2,0.8f,1);
+		m_call->texcoord(3,1.0f,1);
+		m_callTime = 0;
+		Sound::Play(Sound::SE_END_VOICE);
+	}
+
+	m_blueTeamAddVal = 0;
+	m_redTeamAddVal	 = 0;
+
+	m_blueGgyAnim->Update();
+	m_redGgyAnim->Update();
+	UpdateCutIn();
+}
+
+//=============================================================================
+//終了更新
+//=============================================================================
+void GameMaster::UpdateFinish()
+{
+	D3DXVECTOR3 scl;
+
+	scl = LerpVec3( D3DXVECTOR3(SCREEN_WIDTH,SCREEN_HEIGHT,0),D3DXVECTOR3(400,200,0),0,60,m_callTime,Cube );
+	m_callTime++;
+	m_call->scl(scl);
+
+	if( m_callTime > 60 )
+	{
+		m_gamePhase = PHASE_NEXT_SCENE;
+		m_callTime = 0;
+	}
+}
+//=============================================================================
+//移行更新
+//=============================================================================
+bool GameMaster::UpdateNextScene()
+{
+	m_callTime++;
+
+	if( m_callTime == 60 )
+	{
+		return true;
+	}
+
+	return false;
+}
+
+//=============================================================================
+//カットイン更新
+//=============================================================================
 
 // EOF
