@@ -24,6 +24,8 @@ class Debugproc;
 class Keyboard;
 class PadXManager;
 class Road;
+class FbxTexImport;
+class GameImport;
 
 class Manager
 {
@@ -44,6 +46,7 @@ public:
 
 	static int	scoreBlue(void) {return m_scoreBlue;}
 	static int	scoreRed(void) {return m_scoreRed;}
+	static FbxTexImport *fbxTexImport(void) { return m_fbxTexImport; }
 
 private:
 	int m_countFPS;
@@ -53,6 +56,7 @@ private:
 
 	static int m_scoreBlue;
 	static int m_scoreRed;
+	static FbxTexImport *m_fbxTexImport;
 
 	Renderer*	m_renderer;
 	Sound*		m_sound;

@@ -114,7 +114,16 @@ bool CommandManager::Initialize(PadXManager* padXManager,
 		CommandTeam::Create(&m_team[i], m_objectList, m_updateList, m_drawListManager, device, import, _team_position[i], (CommandTeam::TEAM_COLOR)_team_color[i]);
 		m_team[i]->debugproc(debugproc);
 #ifdef _DEBUG
-		m_team[i]->SetPlayer( padXManager->pad(i), padXManager->pad(i) );
+
+		if( i == 0 )
+		{
+			m_team[i]->SetPlayer( padXManager->pad(i), padXManager->pad(i+1) );
+		}
+		else if( i == 1 )
+		{
+			m_team[i]->SetPlayer( padXManager->pad(i+1), padXManager->pad(i+1) );
+		}
+		//m_team[i]->SetPlayer( padXManager->pad(i), padXManager->pad(i) );
 		//m_team[i]->SetPlayer( padXManager->pad(i * 2), padXManager->pad(i * 2 + 1) );
 #else
 		m_team[i]->SetPlayer( padXManager->pad(i * 2), padXManager->pad(i * 2 + 1) );

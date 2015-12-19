@@ -80,10 +80,12 @@ void Tex2DAnimation::Update(void)
 	if( animNum >= m_animSum -1 )
 	{
 		m_time--;
+		m_isEndAnimation = true;
 
 		if( m_isRoop )
 		{
 			m_time =0;
+			m_isEndAnimation = false;
 		}
 
 	}
@@ -119,6 +121,7 @@ void Tex2DAnimation::SetAnimationData( const float wait,const int animSum,
 	m_startUv[2] = startUv2;
 	m_startUv[3] = startUv3;
 	m_offset = offset;
+	m_isEndAnimation = false;
 }
 
 // EOF

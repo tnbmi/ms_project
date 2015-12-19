@@ -49,6 +49,7 @@ private:
 	enum PHASE
 	{
 		PHASE_WAIT,
+		PHASE_MOTION,
 		PHASE_STANDBY,
 		PHASE_NEXTSCENE
 	};

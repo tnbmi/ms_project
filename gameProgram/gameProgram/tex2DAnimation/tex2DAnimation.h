@@ -40,6 +40,7 @@ public:
 							const D3DXVECTOR2 &offset );
 
 	void StartAnimaton( bool isRoop ){ m_time = 0; m_isRoop = isRoop; }
+	bool isEndAnimation(){ return m_isEndAnimation; }
 							
 
 private:
@@ -51,6 +52,7 @@ private:
 	D3DXVECTOR2 m_startUv[4];
 	D3DXVECTOR2 m_offset;
 	bool m_isRoop;
+	bool m_isEndAnimation;
 };
 
 //=============================================================================

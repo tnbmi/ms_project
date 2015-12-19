@@ -89,6 +89,7 @@ private:
 		D3DXVECTOR3 edPos;
 		D3DXVECTOR3 stBufPos;
 		D3DXVECTOR3 edBufPos;
+		bool isCutIn;
 	};
 
 	//カットイン

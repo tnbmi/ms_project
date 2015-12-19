@@ -23,6 +23,8 @@
 #include "..\phase\result\result.h"
 
 #include "..\road\road.h"
+#include "..\import\fbx\fbxTexImport.h"
+#include "..\import\game\gameImport.h"
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // 静的変数
@@ -31,6 +33,9 @@ Phase* Manager::m_nextPhase	= nullptr;
 
 int Manager::m_scoreBlue = 600;
 int Manager::m_scoreRed = 400;
+
+FbxTexImport* Manager::m_fbxTexImport = nullptr;
+
 
 //=============================================================================
 // コンストラクタ
@@ -86,6 +91,9 @@ bool Manager::Initialize(HINSTANCE hInstance, HWND hWnd, bool windowFlg)
 		return false;
 	LPDIRECT3DDEVICE9 device = m_renderer->device();
 
+	//fbxインポーター（テクスチャ）
+	FbxTexImport::Create( &m_fbxTexImport,device );
+
 	//----------------------------
 	// 入力
 	//----------------------------
@@ -135,6 +143,7 @@ bool Manager::Initialize(HINSTANCE hInstance, HWND hWnd, bool windowFlg)
 	m_road->Roading( m_phase);
 	m_nextPhase = m_phase;
 	m_renderer->phase(m_phase);
+
 	return true;
 }
 
@@ -176,6 +185,11 @@ void Manager::Finalize(void)
 	// ローディング画面
 	//----------------------------
 	m_road->Finalize();
+
+	//----------------------------
+	//fbxテクスチャインポート
+	//----------------------------
+	SafeFinalizeDelete( m_fbxTexImport );
 }
 
 //=============================================================================

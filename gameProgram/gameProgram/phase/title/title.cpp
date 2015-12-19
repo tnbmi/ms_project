@@ -15,6 +15,7 @@
 #include "..\..\manager\manager.h"
 #include "..\..\sound\sound.h"
 #include "..\standby\standby.h"
+#include "..\game\game.h"
 
 #include "..\..\input\keyboard\keyboard.h"
 #include "..\..\input\padX\padXManager.h"
@@ -80,8 +81,9 @@ bool Title::Initialize(void)
 	if(!TitleImport::Create(&m_import, m_device))
 		return false;
 
-	if(!FbxTexImport::Create(&m_fbxTexImport,m_device ))
-		return false;
+	//if(!FbxTexImport::Create(&m_fbxTexImport,m_device ))
+	//	return false;
+	m_fbxTexImport = Manager::fbxTexImport();
 
 	//----------------------------
 	// シェーダー
@@ -182,7 +184,7 @@ void Title::Finalize(void)
 	// インポート
 	//----------------------------
 	SafeFinalizeDelete(m_import);
-	SafeFinalizeDelete(m_fbxTexImport);
+	//SafeFinalizeDelete(m_fbxTexImport);
 }
 
 //=============================================================================

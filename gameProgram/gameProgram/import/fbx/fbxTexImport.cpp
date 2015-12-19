@@ -12,6 +12,18 @@
 #include "..\..\common\safe.h"
 #include <string.h>
 
+const char *_fbxTexName[]=
+{
+	"/Ground_Texture_PNG.png",
+	"/Kuruma_Texture_PNG.png",
+	"/Nebuta_Blue_Texture.png",
+	"/Nebuta_Red_Texture.png",
+	"/Blue_Model.png",
+	"/Red_Model.png",
+	"/Title.png",
+	"/Title_Ground_UV",
+};
+
 //=============================================================================
 // コンストラクタ
 //=============================================================================
@@ -42,6 +54,19 @@ bool FbxTexImport::Initialize( LPDIRECT3DDEVICE9 device )
 	{
 		m_texDataArray[i].m_tex = nullptr;
 		m_texDataArray[i].texPath = nullptr;
+	}
+
+	int size = sizeof( _fbxTexName ) / sizeof( _fbxTexName[0]);
+
+	char path[256] = "./resources/texture";
+
+	for( int i = 0 ; i < size ; i++ )
+	{
+		char p[512];
+
+		sprintf( p,"%s%s",path,_fbxTexName[i] );
+		LoadTexture( p );
+	
 	}
 
 
@@ -95,7 +120,7 @@ LPDIRECT3DTEXTURE9 FbxTexImport::LoadTexture( const char *texPath )
 		{
 			if( FAILED( D3DXCreateTextureFromFile(m_device,texPath,&m_texDataArray[i].m_tex) ) )
 			{
-				return NULL;
+				return nullptr;
 			}
 
 			int len = strlen( texPath )+1;
