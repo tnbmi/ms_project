@@ -32,7 +32,6 @@ public:
 
 private:
 	int m_patternMax;
-	int m_size;
 
 	unsigned int* m_commandDataA;
 	unsigned int* m_commandDataB;

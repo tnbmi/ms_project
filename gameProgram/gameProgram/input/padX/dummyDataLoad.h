@@ -31,7 +31,6 @@ public:
 
 private:
 	int m_patternMax;
-	int m_size;
 
 	unsigned int* m_dummyData;
 };

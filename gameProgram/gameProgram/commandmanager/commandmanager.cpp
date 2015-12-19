@@ -12,6 +12,8 @@
 #include "..\common\safe.h"
 
 #include "..\input\padX\padXManager.h"
+#include "..\input\padX\padX.h"
+#include "..\input\padX\dummyPadX.h"
 
 #include "..\debugproc\debugproc.h"
 
@@ -109,26 +111,54 @@ bool CommandManager::Initialize(PadXManager* padXManager,
 	m_command_list[0] = m_commandDataLoad->commandDataA();
 	m_command_list[1] = m_commandDataLoad->commandDataB();
 
+	//----------------------------
+	// チーム生成
+	//----------------------------
 	for(int i = 0; i < _team_max; i++)
 	{
 		CommandTeam::Create(&m_team[i], m_objectList, m_updateList, m_drawListManager, device, import, _team_position[i], (CommandTeam::TEAM_COLOR)_team_color[i]);
 		m_team[i]->debugproc(debugproc);
-#ifdef _DEBUG
 
+		//----------------------------
+		// パッド設定
+		//----------------------------
+		PadX* pad[4];
+		if(padXManager->pad(i*2)->conected())
+			pad[i*2] = padXManager->pad(i*2);
+		else
+		{
+			DummyPadX::Create(&pad[i*2], i*2, _list_pattern_max);
+			pad[i*2]->debugproc(m_debugproc);
+		}
+
+		if(padXManager->pad(i*2+1)->conected())
+			pad[i*2+1] = padXManager->pad(i*2+1);
+		else
+		{
+			DummyPadX::Create(&pad[i*2+1], i*2+1, _list_pattern_max);
+			pad[i*2+1]->debugproc(m_debugproc);
+		}
+
+#ifdef _DEBUG
 		if( i == 0 )
 		{
-			m_team[i]->SetPlayer( padXManager->pad(i), padXManager->pad(i+1) );
+			m_team[i]->SetPlayer( pad[i], pad[i+1] );
 		}
 		else if( i == 1 )
 		{
-			m_team[i]->SetPlayer( padXManager->pad(i+1), padXManager->pad(i+1) );
+			m_team[i]->SetPlayer( pad[i+1], pad[i+1] );
 		}
-		//m_team[i]->SetPlayer( padXManager->pad(i), padXManager->pad(i) );
-		//m_team[i]->SetPlayer( padXManager->pad(i * 2), padXManager->pad(i * 2 + 1) );
+		//m_team[i]->SetPlayer( pad[i], pad[i] );
+		//m_team[i]->SetPlayer( pad[i*2], pad[i*2+1] );
 #else
-		m_team[i]->SetPlayer( padXManager->pad(i * 2), padXManager->pad(i * 2 + 1) );
+		m_team[i]->SetPlayer( pad[i*2], pad[i*2+1] );
 #endif
+
+		//----------------------------
+		// コマンド設定
+		//----------------------------
 		m_command_prev[i] = rand()%10;
+		m_team[i]->commandPrev(m_command_prev[i]);
 		m_team[i]->SetCommand(m_command_list[0], m_command_list[0] + m_command_prev[i] * 10, 0, 144.0f);
 		m_team[i]->SetCommand(m_command_list[1], m_command_list[1] + m_command_prev[i] * 10, 1, 144.0f);
 	}
@@ -171,6 +201,7 @@ CommandManager::COM_MANA_RTN CommandManager::Update(void)
 		if(get.flag)
 		{
 			m_command_prev[i] = (rand() % 5 * 2) + (1 - m_command_prev[i] % 2);
+			m_team[i]->commandPrev(m_command_prev[i]);
 			m_team[i]->SetCommandNext(m_command_list[0] + m_command_prev[i] * 10, 0);
 			m_team[i]->SetCommandNext(m_command_list[1] + m_command_prev[i] * 10, 1);
 		}

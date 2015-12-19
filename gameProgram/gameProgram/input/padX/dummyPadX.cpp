@@ -11,11 +11,29 @@
 #include "dummyPadX.h"
 #include "..\..\debugproc\debugproc.h"
 
+#include "..\..\input\padX\dummyDataLoad.h"
+
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // マクロ定義
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 const int _repeatMin		= 30;	// リピート開始カウント数
 const int _repeatInterval	= 3;	// リピート間隔カウント数
+
+const char* _fileName[] =
+{
+	"./resources/command/dumDataBlueA.txt",
+	"./resources/command/dumDataBlueB.txt",
+	"./resources/command/dumDataRedA.txt",
+	"./resources/command/dumDataRedB.txt"
+};
+const int _commandData[5] =
+{
+	XINPUT_GAMEPAD_DPAD_UP,
+	XINPUT_GAMEPAD_DPAD_DOWN,
+	XINPUT_GAMEPAD_DPAD_LEFT,
+	XINPUT_GAMEPAD_DPAD_RIGHT,
+	0x0000
+};
 
 //=============================================================================
 // コンストラクタ
@@ -25,46 +43,11 @@ DummyPadX::DummyPadX(void)
 	//----------------------------
 	// メンバー初期化
 	//----------------------------
-	m_debugproc = nullptr;
+	// ダミーフラグ
+	m_dummy = true;
 
-	// 入力情報
-	m_state.wButtons		= 0x0000;
-	m_state.bLeftTrigger	= 0x0000;
-	m_state.bRightTrigger	= 0x0000;
-	m_state.sThumbLX		= 0x0000;
-	m_state.sThumbLY		= 0x0000;
-	m_state.sThumbRX		= 0x0000;
-	m_state.sThumbRY		= 0x0000;
-
-	m_trigger.wButtons		= 0x0000;
-	m_trigger.bLeftTrigger	= 0x0000;
-	m_trigger.bRightTrigger	= 0x0000;
-	m_trigger.sThumbLX		= 0x0000;
-	m_trigger.sThumbLY		= 0x0000;
-	m_trigger.sThumbRX		= 0x0000;
-	m_trigger.sThumbRY		= 0x0000;
-
-	m_release.wButtons		= 0x0000;
-	m_release.bLeftTrigger	= 0x0000;
-	m_release.bRightTrigger	= 0x0000;
-	m_release.sThumbLX		= 0x0000;
-	m_release.sThumbLY		= 0x0000;
-	m_release.sThumbRX		= 0x0000;
-	m_release.sThumbRY		= 0x0000;
-
-	m_repeat.wButtons		= 0x0000;
-	m_repeat.bLeftTrigger	= 0x0000;
-	m_repeat.bRightTrigger	= 0x0000;
-	m_repeat.sThumbLX		= 0x0000;
-	m_repeat.sThumbLY		= 0x0000;
-	m_repeat.sThumbRX		= 0x0000;
-	m_repeat.sThumbRY		= 0x0000;
-
-	// リピートカウント
-	for(int cnt = 0; cnt < BUTTON_NUM; ++cnt)
-		m_cntRepeatBtn[cnt] = 0;
-	for(int cnt = 0; cnt < TRIGGER_NUM; ++cnt)
-		m_cntRepeatTrigger[cnt] = 0;
+	// ダミーのデータ
+	m_dummyDataLoad = nullptr;
 }
 
 //=============================================================================
@@ -77,10 +60,10 @@ DummyPadX::~DummyPadX(void)
 //=============================================================================
 // 生成
 //=============================================================================
-bool DummyPadX::Create(DummyPadX** outPointer, int no)
+bool DummyPadX::Create(PadX** outPointer, int no, int patternMax)
 {
 	DummyPadX* pointer = new DummyPadX();
-	if(!pointer->Initialize(no))
+	if(!pointer->Initialize(no, patternMax))
 		return false;
 
 	*outPointer = pointer;
@@ -90,11 +73,18 @@ bool DummyPadX::Create(DummyPadX** outPointer, int no)
 //=============================================================================
 // 初期化
 //=============================================================================
-bool DummyPadX::Initialize(int no)
+bool DummyPadX::Initialize(int no, int patternMax)
 {
+	//----------------------------
+	// 入力ナンバー
+	//----------------------------
+	m_no = no;
+
 	//----------------------------
 	// コマンド読み込み
 	//----------------------------
+	DummyDataLoad::Create(&m_dummyDataLoad, _fileName[m_no], patternMax);
+	m_commandList = m_dummyDataLoad->dummyData();
 
 	return true;
 }
@@ -111,72 +101,55 @@ void DummyPadX::Finalize(void)
 //=============================================================================
 void DummyPadX::Update(void)
 {
-	//----------------------------
-	// パッド情報更新
-	//----------------------------
 #ifdef _DEBUG
 	m_debugproc->PrintDebugProc("***パッドNo:%1d******\n", m_no);
-	m_debugproc->PrintDebugProc("！ダミー！\n", m_no);
+	m_debugproc->PrintDebugProc("！ダミー！\n");
 #endif
 
 	//----------------------------
 	// 入力情報更新
 	//----------------------------
+	XINPUT_GAMEPAD padInput;
+	padInput.wButtons		= 0x0000;
+	padInput.bLeftTrigger	= 0x0000;
+	padInput.bRightTrigger	= 0x0000;
+	padInput.sThumbLX		= 0x0000;
+	padInput.sThumbLY		= 0x0000;
+	padInput.sThumbRX		= 0x0000;
+	padInput.sThumbRY		= 0x0000;
+
+	if(m_pressFlg)
+		padInput.wButtons = _commandData[m_commandList[m_commandPrev*10 + m_commandCnt]];
+
 	// トリガー
-	m_trigger.wButtons		= 0x0000;
-	m_trigger.bLeftTrigger	= 0x0000;
-	m_trigger.bRightTrigger	= 0x0000;
-	m_trigger.sThumbLX		= 0x0000;
-	m_trigger.sThumbLY		= 0x0000;
-	m_trigger.sThumbRX		= 0x0000;
-	m_trigger.sThumbRY		= 0x0000;
+	m_trigger.wButtons		= (padInput.wButtons	  ^ m_state.wButtons)		& padInput.wButtons;
+	m_trigger.bLeftTrigger	= (padInput.bLeftTrigger  ^ m_state.bLeftTrigger)	& padInput.bLeftTrigger;
+	m_trigger.bRightTrigger	= (padInput.bRightTrigger ^ m_state.bRightTrigger)	& padInput.bRightTrigger;
+	m_trigger.sThumbLX		= (padInput.sThumbLX	  ^ m_state.sThumbLX)		& padInput.sThumbLX;
+	m_trigger.sThumbLY		= (padInput.sThumbLY	  ^ m_state.sThumbLY)		& padInput.sThumbLY;
+	m_trigger.sThumbRX		= (padInput.sThumbRX	  ^ m_state.sThumbRX)		& padInput.sThumbRX;
+	m_trigger.sThumbRY		= (padInput.sThumbRY	  ^ m_state.sThumbRY)		& padInput.sThumbRY;
 
 	// リリース
-	m_release.wButtons		= 0x0000;
-	m_release.bLeftTrigger	= 0x0000;
-	m_release.bRightTrigger	= 0x0000;
-	m_release.sThumbLX		= 0x0000;
-	m_release.sThumbLY		= 0x0000;
-	m_release.sThumbRX		= 0x0000;
-	m_release.sThumbRY		= 0x0000;
+	m_release.wButtons		= (padInput.wButtons	  ^ m_state.wButtons)		& m_state.wButtons;
+	m_release.bLeftTrigger	= (padInput.bLeftTrigger  ^ m_state.bLeftTrigger)	& m_state.bLeftTrigger;
+	m_release.bRightTrigger	= (padInput.bRightTrigger ^ m_state.bRightTrigger)	& m_state.bRightTrigger;
+	m_release.sThumbLX		= (padInput.sThumbLX	  ^ m_state.sThumbLX)		& m_state.sThumbLX;
+	m_release.sThumbLY		= (padInput.sThumbLY	  ^ m_state.sThumbLY)		& m_state.sThumbLY;
+	m_release.sThumbRX		= (padInput.sThumbRX	  ^ m_state.sThumbRX)		& m_state.sThumbRX;
+	m_release.sThumbRY		= (padInput.sThumbRY	  ^ m_state.sThumbRY)		& m_state.sThumbRY;
 
 	// プレス
-	m_state.wButtons		= 0x0000;
-	m_state.bLeftTrigger	= 0x0000;
-	m_state.bRightTrigger	= 0x0000;
-	m_state.sThumbLX		= 0x0000;
-	m_state.sThumbLY		= 0x0000;
-	m_state.sThumbRX		= 0x0000;
-	m_state.sThumbRY		= 0x0000;
+	m_state = padInput;
 
 #ifdef _DEBUG
 	// パッド表示情報更新
-	m_debugproc->PrintDebugProc("StickL X:%d Y:%d StickR X:%d Y:%d\n",
-								thumbLX(),
-								thumbLY(),
-								thumbRX(),
-								thumbRY());
-
-	m_debugproc->PrintDebugProc("---Press---\n");
-	m_debugproc->PrintDebugProc("上:%d 下:%d 左:%d 右:%d | A:%d B:%d X:%d Y:%d\n",
+	m_debugproc->PrintDebugProc("---入力コマンド---\n");
+	m_debugproc->PrintDebugProc("上:%d 下:%d 左:%d 右:%d\n",
 								buttonPress(XINPUT_GAMEPAD_DPAD_UP),
 								buttonPress(XINPUT_GAMEPAD_DPAD_DOWN),
 								buttonPress(XINPUT_GAMEPAD_DPAD_LEFT),
-								buttonPress(XINPUT_GAMEPAD_DPAD_RIGHT),
-								buttonPress(XINPUT_GAMEPAD_A),
-								buttonPress(XINPUT_GAMEPAD_B),
-								buttonPress(XINPUT_GAMEPAD_X),
-								buttonPress(XINPUT_GAMEPAD_Y));
-	m_debugproc->PrintDebugProc("LB:%d RB:%d LT:%d RT:%d | LThumb:%d RThumb:%d\n",
-								buttonPress(XINPUT_GAMEPAD_LEFT_SHOULDER),
-								buttonPress(XINPUT_GAMEPAD_RIGHT_SHOULDER),
-								triggerLPress(),
-								triggerRPress(),
-								buttonPress(XINPUT_GAMEPAD_LEFT_THUMB),
-								buttonPress(XINPUT_GAMEPAD_RIGHT_THUMB));
-	m_debugproc->PrintDebugProc("start:%d back:%d\n",
-								buttonPress(XINPUT_GAMEPAD_START),
-								buttonPress(XINPUT_GAMEPAD_BACK));
+								buttonPress(XINPUT_GAMEPAD_DPAD_RIGHT));
 #endif
 }
 

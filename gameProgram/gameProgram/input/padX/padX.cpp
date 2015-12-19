@@ -44,43 +44,55 @@ PadX::PadX(void)
 	//----------------------------
 	// メンバー初期化
 	//----------------------------
-	m_debugproc = nullptr;
-
 	// 接続情報
 	m_connected = false;
 
+	// デバックプロシージャ
+	m_debugproc = nullptr;
+
+	// パッド番号
+	m_no = -1;
+
+	// ダミー系フラグ
+	m_dummy = false;
+	m_pressFlg = false;
+
+	// ダミー番号管理
+	m_commandPrev	= 0;
+	m_commandCnt	= 0;
+
 	// 入力情報
-	m_state.wButtons		= 0;
-	m_state.bLeftTrigger	= 0;
-	m_state.bRightTrigger	= 0;
-	m_state.sThumbLX		= 0;
-	m_state.sThumbLY		= 0;
-	m_state.sThumbRX		= 0;
-	m_state.sThumbRY		= 0;
+	m_state.wButtons		= 0x0000;
+	m_state.bLeftTrigger	= 0x0000;
+	m_state.bRightTrigger	= 0x0000;
+	m_state.sThumbLX		= 0x0000;
+	m_state.sThumbLY		= 0x0000;
+	m_state.sThumbRX		= 0x0000;
+	m_state.sThumbRY		= 0x0000;
 
-	m_trigger.wButtons		= 0;
-	m_trigger.bLeftTrigger	= 0;
-	m_trigger.bRightTrigger	= 0;
-	m_trigger.sThumbLX		= 0;
-	m_trigger.sThumbLY		= 0;
-	m_trigger.sThumbRX		= 0;
-	m_trigger.sThumbRY		= 0;
+	m_trigger.wButtons		= 0x0000;
+	m_trigger.bLeftTrigger	= 0x0000;
+	m_trigger.bRightTrigger	= 0x0000;
+	m_trigger.sThumbLX		= 0x0000;
+	m_trigger.sThumbLY		= 0x0000;
+	m_trigger.sThumbRX		= 0x0000;
+	m_trigger.sThumbRY		= 0x0000;
 
-	m_release.wButtons		= 0;
-	m_release.bLeftTrigger	= 0;
-	m_release.bRightTrigger	= 0;
-	m_release.sThumbLX		= 0;
-	m_release.sThumbLY		= 0;
-	m_release.sThumbRX		= 0;
-	m_release.sThumbRY		= 0;
+	m_release.wButtons		= 0x0000;
+	m_release.bLeftTrigger	= 0x0000;
+	m_release.bRightTrigger	= 0x0000;
+	m_release.sThumbLX		= 0x0000;
+	m_release.sThumbLY		= 0x0000;
+	m_release.sThumbRX		= 0x0000;
+	m_release.sThumbRY		= 0x0000;
 
-	m_repeat.wButtons		= 0;
-	m_repeat.bLeftTrigger	= 0;
-	m_repeat.bRightTrigger	= 0;
-	m_repeat.sThumbLX		= 0;
-	m_repeat.sThumbLY		= 0;
-	m_repeat.sThumbRX		= 0;
-	m_repeat.sThumbRY		= 0;
+	m_repeat.wButtons		= 0x0000;
+	m_repeat.bLeftTrigger	= 0x0000;
+	m_repeat.bRightTrigger	= 0x0000;
+	m_repeat.sThumbLX		= 0x0000;
+	m_repeat.sThumbLY		= 0x0000;
+	m_repeat.sThumbRX		= 0x0000;
+	m_repeat.sThumbRY		= 0x0000;
 
 	// リピートカウント
 	for(int cnt = 0; cnt < BUTTON_NUM; ++cnt)

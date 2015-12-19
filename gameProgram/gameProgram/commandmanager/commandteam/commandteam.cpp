@@ -234,6 +234,18 @@ CommandTeam::COM_TEAM_RTN CommandTeam::Update(void)
 
 	for(int i = 0; i < 2; i++)
 	{
+		//----------------------------
+		// ダミーパッドの更新
+		//----------------------------
+		if(m_pad[i]->dummy())
+		{
+			if(!m_command_data[i][command_count].hit && 
+				m_command_data[i][command_count].pos_y > m_polygon_pos.y - (_first_line-10.0f))
+				m_pad[i]->dummyPress();
+
+			m_pad[i]->Update();
+		}
+
 		if( m_pad[i]->buttonTrigger( 0x000f ) )
 		{
 			if(!m_command_data[i][command_count].hit && 
@@ -281,6 +293,8 @@ CommandTeam::COM_TEAM_RTN CommandTeam::Update(void)
 
 	if(m_command_data[0][command_count].pos_y > m_polygon_pos.y - _end_line)
 	{
+		m_command_count++;
+
 		for(int i = 0; i < 2; i++)
 		{
 			if(!m_command_data[i][command_count].hit)
@@ -289,8 +303,10 @@ CommandTeam::COM_TEAM_RTN CommandTeam::Update(void)
 				m_command_data[i][command_count].state = STATE_FAIL;
 				rtn.state = m_command_data[i][command_count].state;
 			}
+
+			if(m_pad[i]->dummy())
+				m_pad[i]->commandCnt(m_command_count%10);
 		}
-		m_command_count++;
 	}
 
 	// コマンドデータ更新
@@ -401,6 +417,9 @@ void CommandTeam::SetCommand(unsigned int* command, unsigned int* nextCommand, i
 			m_command_data[player][i].hit = true;
 	}
 
+	if(m_pad[player]->dummy())
+		m_pad[player]->commandPrev(m_commandPrev);
+
 	SetPolygon(player);
 }
 
@@ -412,6 +431,9 @@ void CommandTeam::SetCommandNext(unsigned int* command, int player, float offset
 	m_command_pointer_Next[player] = command;
 	if(offset != 0.0f)
 		m_offset = offset;
+
+	if(m_pad[player]->dummy())
+		m_pad[player]->commandPrev(m_commandPrev);
 }
 
 //=============================================================================

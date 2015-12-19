@@ -87,6 +87,8 @@ public:
 
 	void debugproc(Debugproc* debugproc) {m_debugproc = debugproc;}
 
+	void commandPrev(int commandPrev) {m_commandPrev = commandPrev;}
+
 private:
 	unsigned int*	m_command_pointer_Next[2];
 	COMMAND_DATA	m_command_data[2][10];
@@ -100,6 +102,7 @@ private:
 	Debugproc*		m_debugproc;
 	float			m_speed;
 	float			m_offset;
+	int				m_commandPrev;
 
 	GameImport*	m_import;
 	LPDIRECT3DDEVICE9	m_device;

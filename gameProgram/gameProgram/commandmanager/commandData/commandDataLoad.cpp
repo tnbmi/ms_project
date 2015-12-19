@@ -24,12 +24,12 @@ CommandDataLoad::CommandDataLoad(int patternMax)
 	// ƒƒ“ƒo[‰Šú‰»
 	//----------------------------
 	m_patternMax = patternMax;
-	m_size		 = patternMax * 10;
+	int size	 = patternMax * 10;
 
-	m_commandDataA = new unsigned int[m_size];
-	m_commandDataB = new unsigned int[m_size];
+	m_commandDataA = new unsigned int[size];
+	m_commandDataB = new unsigned int[size];
 
-	for(int cnt = 0; cnt < m_size; ++cnt)
+	for(int cnt = 0; cnt < size; ++cnt)
 	{
 		m_commandDataA[cnt] = 0;
 		m_commandDataB[cnt] = 0;

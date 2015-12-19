@@ -24,14 +24,12 @@ DummyDataLoad::DummyDataLoad(int patternMax)
 	// ƒƒ“ƒo[‰Šú‰»
 	//----------------------------
 	m_patternMax = patternMax;
-	m_size		 = patternMax * 10;
+	int size	 = patternMax * 10;
 
-	m_dummyData = new unsigned int[m_size];
+	m_dummyData = new unsigned int[size];
 
-	for(int cnt = 0; cnt < m_size; ++cnt)
-	{
+	for(int cnt = 0; cnt < size; ++cnt)
 		m_dummyData[cnt] = 0;
-	}
 }
 
 //=============================================================================

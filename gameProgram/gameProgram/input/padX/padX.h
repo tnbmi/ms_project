@@ -32,37 +32,48 @@ public:
 	~PadX(void);
 
 	static bool Create(PadX** outPointer, int no);
-	bool Initialize(int no);
-	void Finalize(void);
-	void Update(void);
+	virtual bool Initialize(int no);
+	virtual void Finalize(void);
+	virtual void Update(void);
 
 	void debugproc(Debugproc* debugproc) {m_debugproc = debugproc;}
 
 	bool conected(void) {return m_connected;}
 
-	virtual bool buttonPress(WORD wButton) {return (m_state.wButtons & wButton) ? true : false;}
-	virtual bool buttonTrigger(WORD wButton) {return (m_trigger.wButtons & wButton) ? true : false;}
-	virtual bool buttonRelease(WORD wButton) {return (m_release.wButtons & wButton) ? true : false;}
+	bool dummy(void) {return m_dummy;}
+	void dummyPress(void) {m_pressFlg = true;}
+	void commandPrev(int commandPrev) {m_commandPrev = commandPrev;}
+	void commandCnt(int commandCnt){m_commandCnt = commandCnt;}
 
-	virtual bool triggerLPress(void) {return (m_state.bLeftTrigger > XINPUT_GAMEPAD_TRIGGER_THRESHOLD) ? true : false;}
-	virtual bool triggerLTrigger(void) {return (m_trigger.bLeftTrigger > XINPUT_GAMEPAD_TRIGGER_THRESHOLD) ? true : false;}
-	virtual bool triggerLRelease(void) {return (m_release.bLeftTrigger > XINPUT_GAMEPAD_TRIGGER_THRESHOLD) ? true : false;}
+	bool buttonPress(WORD wButton) {return (m_state.wButtons & wButton) ? true : false;}
+	bool buttonTrigger(WORD wButton) {return (m_trigger.wButtons & wButton) ? true : false;}
+	bool buttonRelease(WORD wButton) {return (m_release.wButtons & wButton) ? true : false;}
 
-	virtual bool triggerRPress(void) {return (m_state.bRightTrigger > XINPUT_GAMEPAD_TRIGGER_THRESHOLD) ? true : false;}
-	virtual bool triggerRTrigger(void) {return (m_trigger.bRightTrigger > XINPUT_GAMEPAD_TRIGGER_THRESHOLD) ? true : false;}
-	virtual bool triggerRRelease(void) {return (m_release.bRightTrigger > XINPUT_GAMEPAD_TRIGGER_THRESHOLD) ? true : false;}
+	bool triggerLPress(void) {return (m_state.bLeftTrigger > XINPUT_GAMEPAD_TRIGGER_THRESHOLD) ? true : false;}
+	bool triggerLTrigger(void) {return (m_trigger.bLeftTrigger > XINPUT_GAMEPAD_TRIGGER_THRESHOLD) ? true : false;}
+	bool triggerLRelease(void) {return (m_release.bLeftTrigger > XINPUT_GAMEPAD_TRIGGER_THRESHOLD) ? true : false;}
 
-	virtual SHORT thumbLX(void) {return (abs(m_state.sThumbLX) > XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE) ? m_state.sThumbLX : 0;}
-	virtual SHORT thumbLY(void) {return (abs(m_state.sThumbLY) > XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE) ? m_state.sThumbLY : 0;}
-	virtual SHORT thumbRX(void) {return (abs(m_state.sThumbRX) > XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE) ? m_state.sThumbRX : 0;}
-	virtual SHORT thumbRY(void) {return (abs(m_state.sThumbRY) > XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE) ? m_state.sThumbRY : 0;}
+	bool triggerRPress(void) {return (m_state.bRightTrigger > XINPUT_GAMEPAD_TRIGGER_THRESHOLD) ? true : false;}
+	bool triggerRTrigger(void) {return (m_trigger.bRightTrigger > XINPUT_GAMEPAD_TRIGGER_THRESHOLD) ? true : false;}
+	bool triggerRRelease(void) {return (m_release.bRightTrigger > XINPUT_GAMEPAD_TRIGGER_THRESHOLD) ? true : false;}
+
+	SHORT thumbLX(void) {return (abs(m_state.sThumbLX) > XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE) ? m_state.sThumbLX : 0;}
+	SHORT thumbLY(void) {return (abs(m_state.sThumbLY) > XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE) ? m_state.sThumbLY : 0;}
+	SHORT thumbRX(void) {return (abs(m_state.sThumbRX) > XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE) ? m_state.sThumbRX : 0;}
+	SHORT thumbRY(void) {return (abs(m_state.sThumbRY) > XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE) ? m_state.sThumbRY : 0;}
 
 private:
 	bool m_connected;
 
 protected:
 	Debugproc* m_debugproc;
+
 	int	 m_no;
+
+	bool m_dummy;
+	bool m_pressFlg;
+	int m_commandPrev;
+	int m_commandCnt;
 
 	XINPUT_GAMEPAD m_state;
 	XINPUT_GAMEPAD m_trigger;
