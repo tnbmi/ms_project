@@ -15,6 +15,9 @@
 #include "..\..\..\main\main.h"
 #include "..\..\..\objectBase\objectBase.h"
 
+//サウンド
+#include "..\..\..\sound\sound.h"
+
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // クラス定義
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -97,7 +100,8 @@ private:
 	CUTIN m_redTeamCutIn;
 	CUTIN m_blueTeamCutIn;
 
-	void SelectAnimation( const int judge,Player *player,Ggy2DAnimationManager *ggy,CUTIN *cutIn );
+	//soundTableにはかならず5つの配列に攻撃1~3 敗北　同時押しのサウンドデータを差し込むこと
+	void SelectAnimation( const int judge,Player *player,Ggy2DAnimationManager *ggy,CUTIN *cutIn,Sound::SOUND_TABLE *soundTable );
 	void UpdateCutIn();
 
 	NEBTAANIMATIONFRAME m_nebAnim[Max];

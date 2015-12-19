@@ -26,6 +26,8 @@
 #include "..\..\..\objectBase\polygon2D\polygon2D.h"
 #include "..\..\..\import\result\resultImport.h"
 
+#include "..\..\..\sound\sound.h"
+
 
 //=============================================================================
 // コンストラクタ
@@ -167,10 +169,10 @@ bool ResultMaster::Initialize(void)
 	m_effectManager->LoadEffectData( "./resources/effect/Ene.OEF" );
 	m_effectManager->SetOption( InstancingBillboard::OPTION( true,false,false ));
 
-			m_redTeam->StartAnimationSecondChild(1,30,true );
-		m_blueTeam->StartAnimationSecondChild(1,30,true );
-		m_redGgy->StartAnimation(1,30,true );
-		m_blueGgy->StartAnimation(1,30,true );
+	m_redTeam->StartAnimationSecondChild(1,30,true );
+	m_blueTeam->StartAnimationSecondChild(1,30,true );
+	m_redGgy->StartAnimation(1,30,true );
+	m_blueGgy->StartAnimation(1,30,true );
 
 	m_phase = PHASE_RESULTSTART;
 	return true;
@@ -200,6 +202,7 @@ void ResultMaster::Update(void)
 		m_redTeamScore->StartRandView( 60 * 3 );
 		m_blueTeamScore->StartRandView( 60 * 3 );
 		m_phase = PHASE_ANNOUNCEMENT;
+		Sound::Play( Sound::SE_DRUM_DODON );
 		break;
 
 	case PHASE_ANNOUNCEMENT:
@@ -218,6 +221,7 @@ void ResultMaster::Update(void)
 				m_blueGgy->StartAnimation(91,150,false );
 				m_blueTeam->StartAnimationSecondChild( 451,510,false ); 
 				m_redTeam->StartAnimationSecondChild( 511,570,false ); 
+				Sound::Play( Sound::SE_SYOURI_RED );
 
 			}
 			else
@@ -229,10 +233,13 @@ void ResultMaster::Update(void)
 				m_redGgy->StartAnimation(91,150,false );
 				m_blueGgy->StartAnimation(31,90,false );
 				m_redTeam->StartAnimationSecondChild( 451,510,false ); 
-				m_blueTeam->StartAnimationSecondChild( 511,570,false ); 
+				m_blueTeam->StartAnimationSecondChild( 511,570,false );
+				Sound::Play( Sound::SE_SYOURI_BLUE );
 			}
 
 		}
+
+		Sound::Play( Sound::SE_MORIAGARI );
 
 		m_fireTime = _shotFrame;
 		break;

@@ -207,7 +207,7 @@ bool StandbyMaster::Initialize(void)
 
 	m_redTeamStandby[0].isStandby = false;
 	m_redTeamStandby[0].time = _compFrame;
-	m_redTeamStandby[1].isStandby = false;
+	m_redTeamStandby[1].isStandby = true;
 	m_redTeamStandby[1].time = _compFrame;
 	
 	m_compTime = 0;
@@ -279,10 +279,12 @@ bool StandbyMaster::Update(void)
 			if( m_padXManager->pad(i)->buttonTrigger( XINPUT_GAMEPAD_START ) )
 			{
 				m_blueTeamStandby[i].isStandby = true;
+				Sound::Play( Sound::SE_DRUM );
 			}
 			else if( m_padXManager->pad(i)->buttonTrigger( XINPUT_GAMEPAD_BACK ) )
 			{
 				m_blueTeamStandby[i].isStandby = false;
+
 			}
 		}
 
@@ -293,6 +295,7 @@ bool StandbyMaster::Update(void)
 			if( m_padXManager->pad(i+2)->buttonTrigger( XINPUT_GAMEPAD_START ) )
 			{
 				m_redTeamStandby[i].isStandby = true;
+				Sound::Play( Sound::SE_DRUM );
 			}
 			else if( m_padXManager->pad(i+2)->buttonTrigger( XINPUT_GAMEPAD_BACK ) )
 			{
@@ -336,6 +339,7 @@ bool StandbyMaster::Update(void)
 			if( m_blueTeamStandby[0].isStandby && m_blueTeamStandby[1].isStandby )
 			{
 				m_ggyBlueAnimManager->StartAnimation(8,false );
+				Sound::Play( Sound::SE_SELECT_VOICEA );
 			}
 			else
 			{
@@ -349,6 +353,7 @@ bool StandbyMaster::Update(void)
 			if( m_redTeamStandby[0].isStandby && m_redTeamStandby[1].isStandby )
 			{
 				m_ggyRedAnimManager->StartAnimation(8,false );
+				Sound::Play( Sound::SE_SELECT_VOICEB );
 			}
 			else
 			{
@@ -426,6 +431,7 @@ bool StandbyMaster::Update(void)
 			m_phase = PHASE_MOTION;
 			m_ggyRedAnimManager->StartAnimation(8,false);
 			m_ggyBlueAnimManager->StartAnimation(8,false);
+			Sound::Play( Sound::SE_SELECT_VOICE_IZA );
 		}
 
 		break;
@@ -436,6 +442,7 @@ bool StandbyMaster::Update(void)
 		if( m_ggyRedAnimManager->isEndAnimation() )
 		{
 			m_phase = PHASE_STANDBY;
+			Sound::Play( Sound::SE_SELECT_VOICE_BATTLE );
 		}
 
 		
