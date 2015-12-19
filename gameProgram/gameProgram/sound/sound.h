@@ -62,6 +62,8 @@ public:
 		SE_SAME,
 		SE_SAME_NEB_BLUE,
 		SE_SAME_NEB_RED,
+		SE_START_VOICE,
+		SE_END_VOICE,
 		SOUND_MAX
 	};
 

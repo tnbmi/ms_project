@@ -41,7 +41,7 @@ public:
 		GAME_UI,
 		CUTINRED,
 		CUTINBLUE,
-
+		COUNTDOWN,
 		TEX_MAX
 	};
 

@@ -71,6 +71,8 @@ const SOUND_PARAM _sound_data[] =
 	{"/se/douzioshi.wav",false},
 	{"/se/nebtaDouziBlue.wav",false},
 	{"/se/nebtaDouziRed.wav",false},
+	{"/se/hazime.wav",false},
+	{"/se/soremade.wav",false},
 };
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
