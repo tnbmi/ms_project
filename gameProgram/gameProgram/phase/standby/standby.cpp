@@ -124,16 +124,6 @@ bool Standby::Initialize(void)
 	//----------------------------
 	Sound::Play(Sound::BGM_STANDBY02);
 
-	//----------------------------
-	// フェード
-	//----------------------------
-	//m_fade = CFade::Create(m_device);
-	//m_fade->Start(CFade::FADESTATE_IN, 1, 1.0f, 1.0f, 1.0f, 1.0f);
-
-	//----------------------------
-	// ステータス初期化
-	//----------------------------
-
 	return true;
 }
 

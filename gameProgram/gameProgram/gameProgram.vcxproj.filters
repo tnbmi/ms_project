@@ -203,6 +203,9 @@
     <Filter Include="ggy2DAnimationManager">
       <UniqueIdentifier>{4d236605-b9e9-4b7f-b552-2213476d8590}</UniqueIdentifier>
     </Filter>
+    <Filter Include="import\main">
+      <UniqueIdentifier>{7dc40bcf-0c23-4483-af25-d416ce629686}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main\main.h">
@@ -382,6 +385,9 @@
     <ClInclude Include="ggy2DAnimationManager\ggy2DAnimationManager.h">
       <Filter>ggy2DAnimationManager</Filter>
     </ClInclude>
+    <ClInclude Include="import\main\mainImport.h">
+      <Filter>import\main</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main\main.cpp">
@@ -554,6 +560,9 @@
     </ClCompile>
     <ClCompile Include="ggy2DAnimationManager\ggy2DAnimationManager.cpp">
       <Filter>ggy2DAnimationManager</Filter>
+    </ClCompile>
+    <ClCompile Include="import\main\mainImport.cpp">
+      <Filter>import\main</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

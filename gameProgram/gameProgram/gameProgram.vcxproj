@@ -24,6 +24,7 @@
     <ClCompile Include="import\fbx\fbxTexImport.cpp" />
     <ClCompile Include="import\game\gameImport.cpp" />
     <ClCompile Include="import\import.cpp" />
+    <ClCompile Include="import\main\mainImport.cpp" />
     <ClCompile Include="import\result\resultImport.cpp" />
     <ClCompile Include="import\road\roadImport.cpp" />
     <ClCompile Include="import\standby\standbyImport.cpp" />
@@ -85,6 +86,7 @@
     <ClInclude Include="import\fbx\fbxTexImport.h" />
     <ClInclude Include="import\game\gameImport.h" />
     <ClInclude Include="import\import.h" />
+    <ClInclude Include="import\main\mainImport.h" />
     <ClInclude Include="import\result\resultImport.h" />
     <ClInclude Include="import\road\roadImport.h" />
     <ClInclude Include="import\standby\standbyImport.h" />
@@ -175,7 +177,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(SolutionDir)$(ProjectName)</OutDir>
+    <OutDir>$(SolutionDir)$(ProjectName)\</OutDir>
     <TargetName>H411_Game</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">

@@ -17,7 +17,6 @@
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // 定数定義
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-bool RoadManager::m_closeFlag;
 const float _changeColorSpeed = 0.2f;
 const int _checkMax = 4;
 
@@ -43,6 +42,12 @@ const D3DXVECTOR3 _textInitPos = D3DXVECTOR3( SCREEN_WIDTH - _iconSize.x - _text
 const float _textMoveLimit = _textInitPos.y + 10.0f;
 const float _textSpeed = 0.1f;
 const int _textSheetMax = 5;
+
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+// 静的変数
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+bool RoadManager::m_closeFlag;
+
 //=============================================================================
 // コンストラクタ
 //=============================================================================
@@ -375,7 +380,7 @@ void RoadManager::Close( void )
 	}
 	else
 	{
-		closepoint++;
+		closepoint+=1;
 	}
 	m_fadeLeft->SetPosition( pos );
 	m_fadeLeft->Update();
@@ -388,7 +393,7 @@ void RoadManager::Close( void )
 	}
 	else
 	{
-		closepoint++;
+		closepoint+=1;
 	}
 
 	if( closepoint == 2 )

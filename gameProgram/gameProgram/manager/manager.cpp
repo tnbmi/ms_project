@@ -19,6 +19,7 @@
 #include "..\input\padX\padXManager.h"
 
 #include "..\phase\title\title.h"
+#include "..\phase\standby\standby.h"
 #include "..\phase\game\game.h"
 #include "..\phase\result\result.h"
 

@@ -208,8 +208,7 @@ void Road::Change2( void )
 	m_roadManager->InitializeOpenPos();
 	StateClose();
 	while( m_roadManager->GetCloseFlag() == false )
-	{
-	}
+		Sleep(10);
 	m_roadState = ROAD_STATE_FINALIZE_START;
 	m_finalize->Finalize();
 	delete m_finalize;
