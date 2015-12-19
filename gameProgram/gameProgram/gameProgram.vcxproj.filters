@@ -167,12 +167,6 @@
     <Filter Include="phase\standby\standbyMaster">
       <UniqueIdentifier>{c2ba8c8e-68b0-4e1b-bf95-41f03dbb8912}</UniqueIdentifier>
     </Filter>
-    <Filter Include="commandmanager\dummyInput">
-      <UniqueIdentifier>{b23b84e0-017b-4007-9deb-c8f6c6d6efdb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="commandmanager\dummyData">
-      <UniqueIdentifier>{d1415066-dbc0-4ed6-8510-63f9062bd4cd}</UniqueIdentifier>
-    </Filter>
     <Filter Include="import\fbx">
       <UniqueIdentifier>{cbe7d3d0-6d8a-4990-847a-f80baaf21201}</UniqueIdentifier>
     </Filter>
@@ -358,12 +352,6 @@
     <ClInclude Include="phase\standby\standbyMaster\standbyMaster.h">
       <Filter>phase\standby\standbyMaster</Filter>
     </ClInclude>
-    <ClInclude Include="commandmanager\dummyInput\dummyInput.h">
-      <Filter>commandmanager\dummyInput</Filter>
-    </ClInclude>
-    <ClInclude Include="commandmanager\dummyData\dummyDataLoad.h">
-      <Filter>commandmanager\dummyData</Filter>
-    </ClInclude>
     <ClInclude Include="import\fbx\fbxTexImport.h">
       <Filter>import\fbx</Filter>
     </ClInclude>
@@ -387,6 +375,12 @@
     </ClInclude>
     <ClInclude Include="import\load\loadImport.h">
       <Filter>import\load</Filter>
+    </ClInclude>
+    <ClInclude Include="input\padX\dummyPadX.h">
+      <Filter>input\padX</Filter>
+    </ClInclude>
+    <ClInclude Include="input\padX\dummyDataLoad.h">
+      <Filter>input\padX</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -534,12 +528,6 @@
     <ClCompile Include="phase\standby\standbyMaster\standbyMaster.cpp">
       <Filter>phase\standby\standbyMaster</Filter>
     </ClCompile>
-    <ClCompile Include="commandmanager\dummyInput\dummyInput.cpp">
-      <Filter>commandmanager\dummyInput</Filter>
-    </ClCompile>
-    <ClCompile Include="commandmanager\dummyData\dummyDataLoad.cpp">
-      <Filter>commandmanager\dummyData</Filter>
-    </ClCompile>
     <ClCompile Include="import\fbx\fbxTexImport.cpp">
       <Filter>import\fbx</Filter>
     </ClCompile>
@@ -563,6 +551,12 @@
     </ClCompile>
     <ClCompile Include="import\load\loadImport.cpp">
       <Filter>import\load</Filter>
+    </ClCompile>
+    <ClCompile Include="input\padX\dummyDataLoad.cpp">
+      <Filter>input\padX</Filter>
+    </ClCompile>
+    <ClCompile Include="input\padX\dummyPadX.cpp">
+      <Filter>input\padX</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

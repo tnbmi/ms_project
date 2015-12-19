@@ -17,6 +17,7 @@
 const int _repeatMin		= 30;	// リピート開始カウント数
 const int _repeatInterval	= 3;	// リピート間隔カウント数
 
+// パッドフラグ確認用
 const WORD _padButton[BUTTON_NUM] =
 {
 	XINPUT_GAMEPAD_DPAD_UP,
@@ -83,13 +84,9 @@ PadX::PadX(void)
 
 	// リピートカウント
 	for(int cnt = 0; cnt < BUTTON_NUM; ++cnt)
-	{
 		m_cntRepeatBtn[cnt] = 0;
-	}
 	for(int cnt = 0; cnt < TRIGGER_NUM; ++cnt)
-	{
 		m_cntRepeatTrigger[cnt] = 0;
-	}
 }
 
 //=============================================================================

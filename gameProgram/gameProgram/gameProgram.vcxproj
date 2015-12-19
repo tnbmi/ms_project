@@ -15,8 +15,6 @@
     <ClCompile Include="audienceManager\audienceManager.cpp" />
     <ClCompile Include="commandmanager\commandmanager.cpp" />
     <ClCompile Include="commandmanager\commandteam\commandteam.cpp" />
-    <ClCompile Include="commandmanager\dummyData\dummyDataLoad.cpp" />
-    <ClCompile Include="commandmanager\dummyInput\dummyInput.cpp" />
     <ClCompile Include="debugproc\debugproc.cpp" />
     <ClCompile Include="effectManager\effectManager.cpp" />
     <ClCompile Include="ggy2DAnimationManager\ggy2DAnimationManager.cpp" />
@@ -30,6 +28,8 @@
     <ClCompile Include="import\standby\standbyImport.cpp" />
     <ClCompile Include="import\title\titleImport.cpp" />
     <ClCompile Include="input\keyboard\keyboard.cpp" />
+    <ClCompile Include="input\padX\dummyDataLoad.cpp" />
+    <ClCompile Include="input\padX\dummyPadX.cpp" />
     <ClCompile Include="input\padX\padX.cpp" />
     <ClCompile Include="input\padX\padXManager.cpp" />
     <ClCompile Include="list\drawList\drawList.cpp" />
@@ -75,8 +75,6 @@
     <ClInclude Include="audienceManager\audienceManager.h" />
     <ClInclude Include="commandmanager\commandmanager.h" />
     <ClInclude Include="commandmanager\commandteam\commandteam.h" />
-    <ClInclude Include="commandmanager\dummyData\dummyDataLoad.h" />
-    <ClInclude Include="commandmanager\dummyInput\dummyInput.h" />
     <ClInclude Include="common\complement\complement.h" />
     <ClInclude Include="common\safe.h" />
     <ClInclude Include="debugproc\debugproc.h" />
@@ -92,6 +90,8 @@
     <ClInclude Include="import\standby\standbyImport.h" />
     <ClInclude Include="import\title\titleImport.h" />
     <ClInclude Include="input\keyboard\keyboard.h" />
+    <ClInclude Include="input\padX\dummyDataLoad.h" />
+    <ClInclude Include="input\padX\dummyPadX.h" />
     <ClInclude Include="input\padX\padX.h" />
     <ClInclude Include="input\padX\padXManager.h" />
     <ClInclude Include="list\drawList\drawList.h" />
