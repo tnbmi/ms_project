@@ -47,8 +47,30 @@ const SOUND_PARAM _sound_data[] =
 	{"/bgm/GameBGM03.wav", true},	// BGM_GAME03
 	{"/bgm/GameBGM04.wav", true},	// BGM_GAME04
 
+	{"/bgm/ResultBgm.wav",true},
+
 	// SE
-	{"/se/fireworks.wav", false}	// SE_FIREWORKS
+	{"/se/fireworks.wav", false},	// SE_FIREWORKS
+	{"/se/don.wav",false},//SE_DRUM
+	{"/se/selectkanryouBlue.wav",false},//SE_SELECT_VOICEA
+	{"/se/slectkanryouRED.wav",false},//SE_SELECT_VOICEB
+	{"/se/iza.wav",false},//SE_VOICE_IZA
+	{"/se/syoubu.wav",false},//SE_VOICE_BATTLE
+	{"/se/dodon.wav",false},
+	{"/se/syouriBlue.wav",false},
+	{"/se/syouriRed.wav",false},
+	{"/se/moriagariMid.wav",false},
+	{"/se/attackBlue1.wav",false},
+	{"/se/attackBlue2.wav",false},
+	{"/se/attackBlue3.wav",false},
+	{"/se/attackRed1.wav",false},
+	{"/se/attackRed2.wav",false},
+	{"/se/attackRed3.wav",false},
+	{"/se/missBlue.wav",false},
+	{"/se/missRed.wav",false},
+	{"/se/douzioshi.wav",false},
+	{"/se/nebtaDouziBlue.wav",false},
+	{"/se/nebtaDouziRed.wav",false},
 };
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

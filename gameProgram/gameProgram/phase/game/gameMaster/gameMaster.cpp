@@ -310,8 +310,11 @@ bool GameMaster::Update(void)
 	get = m_command_manager->Update();
 	AddTeamScore(get.score[1], get.score[0]);
 
-	SelectAnimation( get.state[1],m_redTeam,m_redGgyAnim,&m_redTeamCutIn );
-	SelectAnimation( get.state[0],m_blueTeam,m_blueGgyAnim,&m_blueTeamCutIn );
+	Sound::SOUND_TABLE blueTable[5]={ Sound::SE_ATTACK_BLUE1,Sound::SE_ATTACK_BLUE2,Sound::SE_ATTACK_BLUE3,Sound::SE_FAIL_BLUE,Sound::SE_SAME_NEB_BLUE };
+	Sound::SOUND_TABLE redTable[5] ={ Sound::SE_ATTACK_RED1,Sound::SE_ATTACK_RED2,Sound::SE_ATTACK_RED3,Sound::SE_FAIL_RED,Sound::SE_SAME_NEB_RED };;
+
+	SelectAnimation( get.state[1],m_redTeam,m_redGgyAnim,&m_redTeamCutIn,redTable );
+	SelectAnimation( get.state[0],m_blueTeam,m_blueGgyAnim,&m_blueTeamCutIn,blueTable );
 
 	//スコア確定
 	DetermineTeamScore();
@@ -391,7 +394,7 @@ void GameMaster::DetermineTeamScore()
 //
 //=============================================================================
 
-void GameMaster::SelectAnimation( const int judge,Player *player,Ggy2DAnimationManager *ggy,CUTIN *cutIn )
+void GameMaster::SelectAnimation( const int judge,Player *player,Ggy2DAnimationManager *ggy,CUTIN *cutIn,Sound::SOUND_TABLE *soundTable )
 {
 	//	ここでランダムで違うポーズをだす
 	int r = rand() %2;
@@ -403,24 +406,27 @@ void GameMaster::SelectAnimation( const int judge,Player *player,Ggy2DAnimationM
 
 			player->StartAnimationSecondChild( m_nebAnim[ NANIM_ACOMUP+r ].stFrame,m_nebAnim[ NANIM_ACOMUP+r ].edFrame,false );
 			ggy->StartAnimation(m_nebAnim[ NANIM_ACOMUP ].polyGgyAnimIdx,false );
-
+			Sound::Play( soundTable[0] );
 			break;
 		case 1:
 
 			player->StartAnimationSecondChild( m_nebAnim[ NANIM_ACOMDOWN +r].stFrame,m_nebAnim[ NANIM_ACOMDOWN +r].edFrame,false );
 			ggy->StartAnimation(m_nebAnim[ NANIM_ACOMDOWN +r].polyGgyAnimIdx,false );
+			Sound::Play( soundTable[1] );
 			break;
 
 		case 2:
 
 			player->StartAnimationSecondChild( m_nebAnim[ NANIM_ACOML+r ].stFrame,m_nebAnim[ NANIM_ACOML+r ].edFrame,false );
 			ggy->StartAnimation(m_nebAnim[ NANIM_ACOML+r ].polyGgyAnimIdx,false );
+			Sound::Play( soundTable[0] );
 			break;
 
 		case 3:
 
 			player->StartAnimationSecondChild( m_nebAnim[ NANIM_ACOMR +r].stFrame,m_nebAnim[ NANIM_ACOMR +r].edFrame,false );
 			ggy->StartAnimation(m_nebAnim[ NANIM_ACOMR+r ].polyGgyAnimIdx,false );
+			Sound::Play( soundTable[1] );
 			break;
 
 		case 4:
@@ -428,6 +434,14 @@ void GameMaster::SelectAnimation( const int judge,Player *player,Ggy2DAnimationM
 			player->StartAnimationSecondChild( m_nebAnim[ NANIM_SAME1+s ].stFrame,m_nebAnim[ NANIM_SAME1 +s].edFrame,false );
 			ggy->StartAnimation(m_nebAnim[ NANIM_SAME1+s ].polyGgyAnimIdx,false );
 			m_effectManager->AddEffectFromDataBase(0,D3DXVECTOR3(0,900,1000));
+
+			//汎用同時押し音
+			Sound::Play( Sound::SE_SAME );
+			//専用同時押し音
+			Sound::Play( soundTable[2] );
+			//専用同時押し音ねぶた
+			Sound::Play( soundTable[4] );
+
 			Sound::Play( Sound::SE_FIREWORKS );
 			if( !cutIn->isCutIn )
 			{
@@ -444,6 +458,7 @@ void GameMaster::SelectAnimation( const int judge,Player *player,Ggy2DAnimationM
 			//Sound::Play( Sound::SE_FIREWORKS );
 			player->StartAnimationSecondChild( m_nebAnim[ NANIM_LOSE ].stFrame,m_nebAnim[ NANIM_LOSE ].edFrame,false );
 			ggy->StartAnimation(m_nebAnim[ NANIM_LOSE ].polyGgyAnimIdx,false );
+			Sound::Play( soundTable[3] );
 			/*
 			if( !cutIn->isCutIn )
 			{
