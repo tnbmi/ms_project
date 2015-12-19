@@ -22,6 +22,7 @@
 #include "..\..\list\drawList\drawListManager.h"
 
 #include "..\..\objectBase\polygon2D\polygon2D.h"
+#include "commandEffect\commandEffect.h"
 #include "..\..\import\game\gameImport.h"
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -37,6 +38,8 @@ const float _speed_add = 0.02f;
 const int _return_score1 = 1;
 const int _return_score2 = 5;
 const int	_polygon_num = 6;
+const int	_effect_time = 30;
+const int	_same_check_time = 17;
 typedef struct{
 	float list[4];
 }UV_LIST;
@@ -83,6 +86,7 @@ CommandTeam::CommandTeam(void)
 		{
 			m_command_data[i][j].num_data = 0;
 			m_command_data[i][j].polygon_pointer = nullptr;
+			m_command_data[i][j].effect_pointer = nullptr;
 			m_command_data[i][j].hit = false;
 			m_command_data[i][j].pos_y = 0.0f;
 			m_command_data[i][j].state = STATE_NONE;
@@ -177,37 +181,70 @@ CommandTeam::COM_TEAM_RTN CommandTeam::Update(void)
 {
 	COM_TEAM_RTN rtn = {0,false,STATE_NONE};
 
+	//----------------------------
+	// ポリゴン系アップデート
+	//----------------------------
 	for(int i = 0; i < 2; i++)
 	{
 		for(int j = 0; j < 10; j++)
 		{	// ポリゴンスクロール
 			m_command_data[i][j].pos_y += (_polygon_speed_def + m_speed);
 			m_command_data[i][j].polygon_pointer->pos_y(m_command_data[i][j].pos_y);
-			// アニメーション
+			// アニメーション処理
 			switch(m_command_data[i][j].state)
 			{
+			// コマンド成功時
 			case STATE_UP :
 			case STATE_DOWN :
 			case STATE_LEFT:
 			case STATE_RIGHT:
-				m_command_data[i][j].polygon_pointer->scl(m_command_data[i][j].polygon_pointer->scl().x + 1.0f,
-														  m_command_data[i][j].polygon_pointer->scl().y + 1.0f,
-														  0.0f);
-				m_command_data[i][j].anime_count++;
-				if(m_command_data[i][j].anime_count > 30)
+			case STATE_DOUBLE:
+				// エフェクトオブジェクトのない場合、オブジェクトの生成
+				if(m_command_data[i][j].effect_pointer == nullptr)
+					m_command_data[i][j].effect_pointer = CreateEffect(m_command_data[i][j].num_data, m_command_data[i][j].polygon_pointer->pos(), m_command_data[i][j].state);
+				// ある場合更新を行う
+				else
+				{
+					m_command_data[i][j].effect_pointer->pos(m_command_data[i][j].polygon_pointer->pos());
+					m_command_data[i][j].effect_pointer->scl(m_command_data[i][j].effect_pointer->scl().x + 2.0f,
+															 m_command_data[i][j].effect_pointer->scl().y + 2.0f,
+															 0.0f);
+					m_command_data[i][j].effect_pointer->color_a(m_command_data[i][j].effect_pointer->color().a - 0.02f);
+				}
+				// アニメーション終了
+				if(m_command_data[i][j].anime_count > _effect_time)
+				{
+					// エフェクトオブジェクトがある場合、オブジェクトの破棄
+					if(m_command_data[i][j].effect_pointer != nullptr)
+					{
+						SafeFinalizeDelete(m_command_data[i][j].effect_pointer);
+						m_command_data[i][j].effect_pointer = nullptr;
+					}
 					m_command_data[i][j].state = STATE_NONE;
+				}
+				// アニメーション用カウンタ
+				m_command_data[i][j].anime_count++;
 				break;
+			// コマンド失敗時
 			case STATE_FAIL:
 				m_command_data[i][j].polygon_pointer->scl(m_command_data[i][j].polygon_pointer->scl().x - 1.0f,
 														  m_command_data[i][j].polygon_pointer->scl().y - 1.0f,
 														  0.0f);
 				m_command_data[i][j].anime_count++;
-				if(m_command_data[i][j].anime_count > 30)
+				if(m_command_data[i][j].anime_count > _effect_time)
 					m_command_data[i][j].state = STATE_NONE;
 				break;
+			// 同時押し待機時
 			case STATE_WAIT:
-				break;
-			case STATE_DOUBLE:
+				// エフェクトオブジェクトのない場合、オブジェクトの生成
+				if(m_command_data[i][j].effect_pointer == nullptr)
+					m_command_data[i][j].effect_pointer = CreateEffect(m_command_data[i][j].num_data, m_command_data[i][j].polygon_pointer->pos(), m_command_data[i][j].state);
+				// ある場合更新を行う
+				else
+				{
+					m_command_data[i][j].effect_pointer->pos(m_command_data[i][j].polygon_pointer->pos());
+					m_command_data[i][j].effect_pointer->color_a(m_command_data[i][j].effect_pointer->color().a - 0.04f);
+				}
 				break;
 			default:
 				break;
@@ -215,23 +252,34 @@ CommandTeam::COM_TEAM_RTN CommandTeam::Update(void)
 		}
 	}
 
+	//----------------------------
 	// コマンド判定
+	//----------------------------
 	int command_count = m_command_count % 10;
-
+	// 同時押し待機処理
 	if(m_same_count > 0)
 	{
 		m_same_count++;
-		if(m_same_count >= 17)
+		// 猶予フレームオーバー
+		if(m_same_count >= _same_check_time)
 		{
 			m_same_count = 0;
 			for(int i = 0; i < 2; i++)
 			{
 				m_command_data[i][command_count].polygon_pointer->color(0.75f, 0.75f, 0.75f, 0.5f);
+				// エフェクトオブジェクトがある場合、オブジェクトの破棄
+				if(m_command_data[i][command_count].effect_pointer != nullptr)
+				{
+					SafeFinalizeDelete(m_command_data[i][command_count].effect_pointer);
+					m_command_data[i][command_count].effect_pointer = nullptr;
+				}
 				m_command_data[i][command_count].hit = true;
+				m_command_data[i][command_count].state = STATE_FAIL;
+				rtn.state = m_command_data[i][command_count].state;
 			}
 		}
 	}
-
+	// 入力判定
 	for(int i = 0; i < 2; i++)
 	{
 		//----------------------------
@@ -262,7 +310,14 @@ CommandTeam::COM_TEAM_RTN CommandTeam::Update(void)
 					{// 成功(同時押し2人目)
 						m_speed += _speed_add;
 						m_command_data[i][command_count].state = STATE_DOUBLE;
+						m_command_data[1-(i%2)][command_count].state = STATE_DOUBLE;
 						rtn.state = m_command_data[i][command_count].state;
+						// 1人目のエフェクトオブジェクトの破棄
+						if(m_command_data[1-(i%2)][command_count].effect_pointer != nullptr)
+						{
+							SafeFinalizeDelete(m_command_data[i][command_count].effect_pointer);
+							m_command_data[i][command_count].effect_pointer = nullptr;
+						}
 						m_same_count = 0;
 						if(m_speed > _speed_max)
 							m_speed = _speed_max;
@@ -273,6 +328,7 @@ CommandTeam::COM_TEAM_RTN CommandTeam::Update(void)
 						m_speed += _speed_add;
 						m_command_data[i][command_count].state = (COMMAND_STATE)m_command_data[i][command_count].num_data;
 						rtn.state = m_command_data[i][command_count].state;
+						m_command_data[i][command_count].polygon_pointer->color(0.75f, 0.75f, 0.75f, 0.5f);
 						if(m_speed > _speed_max)
 							m_speed = _speed_max;
 						rtn.return_score = _return_score1;
@@ -282,15 +338,15 @@ CommandTeam::COM_TEAM_RTN CommandTeam::Update(void)
 				{// 失敗
 					m_same_count = 0;
 					m_speed = 0.0f;
+					m_command_data[i][command_count].polygon_pointer->color(0.75f, 0.75f, 0.75f, 0.5f);
 					m_command_data[i][command_count].state = STATE_FAIL;
 					rtn.state = m_command_data[i][command_count].state;
 				}
-				m_command_data[i][command_count].polygon_pointer->color(0.75f, 0.75f, 0.75f, 0.5f);
 				m_command_data[i][command_count].hit = true;
 			}
 		}
 	}
-
+	// スクロールアウト判定
 	if(m_command_data[0][command_count].pos_y > m_polygon_pos.y - _end_line)
 	{
 		m_command_count++;
@@ -319,6 +375,13 @@ CommandTeam::COM_TEAM_RTN CommandTeam::Update(void)
 			m_command_data[i][delete_count].num_data = *(m_command_pointer_Next[i] + delete_count);
 			m_command_data[i][delete_count].pos_y = m_command_data[i][delete_count].pos_y - m_offset * COMMAND_MAX;
 			m_command_data[i][delete_count].hit = false;
+			// エフェクトオブジェクトがある場合、オブジェクトの破棄(念のため)
+			if(m_command_data[i][delete_count].effect_pointer != nullptr)
+			{
+				SafeFinalizeDelete(m_command_data[i][delete_count].effect_pointer);
+				m_command_data[i][delete_count].effect_pointer = nullptr;
+			}
+			// ポリゴン初期化
 			if(m_command_data[i][delete_count].num_data == 4)
 			{
 				m_command_data[i][delete_count].hit = true;
@@ -341,11 +404,11 @@ CommandTeam::COM_TEAM_RTN CommandTeam::Update(void)
 		m_delete_count++;
 	}
 
+	// 次ポインタ要求判定
 	if(m_delete_count != 0 && m_delete_count % COMMAND_MAX == 0)
 	{
 		rtn.flag = true;
 	}
-
 	return rtn;
 }
 
@@ -364,6 +427,7 @@ bool CommandTeam::InitObject(void)
 	//----------------------------
 	// 2Dポリゴン
 	//----------------------------
+	// コマンドポリゴン用オブジェクト
 	for(int i = 0; i < 2; i++)
 	{
 		for(int j = 0; j < 10; j++)
@@ -382,6 +446,7 @@ bool CommandTeam::InitObject(void)
 		}
 	}
 
+	// 背景ライン用オブジェクト
 	GameImport::TEX_TABLE texture = (GameImport::TEX_TABLE)(GameImport::BLUE_TEX + m_team_color);
 	if(!Polygon2D::Create(&m_back_poly[0], m_device, m_objectList, m_import->texture(texture)))
 		return false;
@@ -390,6 +455,7 @@ bool CommandTeam::InitObject(void)
 	m_back_poly[0]->pos(m_polygon_pos.x + _polygon_pos_offset, m_polygon_pos.y - _polygon_pos_offset * 3, 0.0f);
 	m_back_poly[0]->scl(_polygon_pos_offset * 2, _polygon_pos_offset * 6, 0.0f);
 
+	// フレームウィンドウ用オブジェクト
 	if(!Polygon2D::Create(&m_back_poly[1], m_device, m_objectList, m_import->texture(GameImport::COMMAND_FRAM_00)))
 		return false;
 	m_updateList->Link(m_back_poly[1]);
@@ -454,6 +520,46 @@ void CommandTeam::SetPolygon(int player)
 			m_command_data[player][i].polygon_pointer->color_a(1.0f);
 		}
 	}
+}
+
+//=============================================================================
+// エフェクト生成
+//=============================================================================
+CommandEffect* CommandTeam::CreateEffect(int num, D3DXVECTOR3 pos, COMMAND_STATE state)
+{
+	CommandEffect* pointer;
+
+	switch(state)
+	{
+	case STATE_UP :
+	case STATE_DOWN :
+	case STATE_LEFT:
+	case STATE_RIGHT:
+	case STATE_DOUBLE:
+		CommandEffect::Create(&pointer, m_device, m_objectList, m_import->texture(GameImport::COMMAND_TEX));
+		m_updateList->Link(pointer);
+		m_drawListManager->Link(pointer, 3, Shader::PAT_2D);
+		pointer->pos(pos);
+		pointer->scl(_polygon_size_x, _polygon_size_x, 0.0f);
+		for(int n = 0; n < 4; n++)
+		{
+			pointer->texcoord_u(n, _comtexU_list[num].list[n]);
+		}
+		pointer->color_a(0.8f);
+		break;
+	case STATE_WAIT:
+		CommandEffect::Create(&pointer, m_device, m_objectList, m_import->texture(GameImport::EFFECT));
+		m_updateList->Link(pointer);
+		m_drawListManager->Link(pointer, 3, Shader::PAT_2D);
+		pointer->pos(pos);
+		pointer->scl(_polygon_size_x, _polygon_size_x, 0.0f);
+		pointer->color_a(1.0f);
+		break;
+	default:
+		break;
+	}
+
+	return pointer;
 }
 
 // EOF

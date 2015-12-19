@@ -36,7 +36,8 @@ const char* _game_texture_name[] =
 	"/GameUI.png",
 	"/CutinRed.png",
 	"/Cutinblue.png",
-	"/ougi.png"
+	"/ougi.png",
+	"/effect.jpg"
 };
 
 //=============================================================================
