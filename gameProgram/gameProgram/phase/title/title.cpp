@@ -284,7 +284,7 @@ bool Title::InitObject(void)
 		return false;
 	m_updateList->Link(poly2d);
 	m_drawListManager->Link(poly2d, 4, Shader::PAT_2D);
-	poly2d->scl(701.5f, 248.0f, 0.0f);
+	poly2d->scl(701.0f, 248.0f, 0.0f);
 	poly2d->pos(SCREEN_WIDTH * 0.5f, 200.0f, 0.0f);
 
 	return true;
