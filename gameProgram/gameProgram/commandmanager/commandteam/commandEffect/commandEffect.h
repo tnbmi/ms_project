@@ -1,59 +1,36 @@
 //*****************************************************************************
 //
-// ゲームのインポート [gameImport.h]
-// Author : MAI TANABE
+// コマンドエフェクト用ポリゴン [commandEffect.h]
+// Author : KEN MATSUURA
 //
 //*****************************************************************************
 
-#ifndef MY_GAME_IMPORT_H_
-#define MY_GAME_IMPORT_H_
+#ifndef MY_COMMAND_EFFECT_H_
+#define MY_COMMAND_EFFECT_H_
 //=============================================================================
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // インクルードファイル
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-#include "..\..\main\main.h"
-#include "..\import.h"
+#include "..\..\..\main\main.h"
+#include "..\..\..\objectBase\polygon2D\polygon2D.h"
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // クラス定義
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-class GameImport : public Import
+class CommandEffect : public Polygon2D
 {
 public:
-	enum TEX_TABLE
-	{
-		// なし
-		NONE = 0,
+	CommandEffect(LPDIRECT3DDEVICE9 device, ObjectList* objectList, OBJECT_TYPE type);
+	~CommandEffect(void);
 
-		STONES,
-		STONES_NOR,
-		SKY,
-
-		COMMAND_TEX,
-		BLUE_TEX,
-		RED_TEX,
-		COMMAND_FRAM_00,
-		COMMAND_FRAM_01,
-		NUMBER_TEX,
-		NUMBER_YELLOW,
-		NUMBER_WHITE,
-		GAME_UI,
-		CUTINRED,
-		CUTINBLUE,
-		EFFECT,
-
-		TEX_MAX
-	};
-
-	GameImport(void);
-	~GameImport(void);
-
-	static bool Create(GameImport** outPointer, LPDIRECT3DDEVICE9 device);
-	bool Initialize(LPDIRECT3DDEVICE9 device);
+	static bool Create(CommandEffect** outPointer, LPDIRECT3DDEVICE9 device, ObjectList* objectList, LPDIRECT3DTEXTURE9 texture, OBJECT_TYPE type = ObjectBase::TYPE_2D);
+	bool Initialize(LPDIRECT3DTEXTURE9 texture);
 	void Finalize(void);
+	void Update(void);
+	void Draw(LPD3DXCONSTANTTABLE vsc, LPD3DXCONSTANTTABLE psc, D3DXMATRIX vp);
 
-	LPDIRECT3DTEXTURE9 texture(TEX_TABLE id) {return m_texture[id];}
+private:
 };
 
 //=============================================================================

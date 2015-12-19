@@ -200,6 +200,9 @@
     <Filter Include="import\load">
       <UniqueIdentifier>{834f389d-fa44-42e7-86de-dec39983185b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="commandmanager\commandteam\commandEffect">
+      <UniqueIdentifier>{3c3b74a6-828a-4f37-8cbc-2e1d77eed0a5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main\main.h">
@@ -382,6 +385,9 @@
     <ClInclude Include="input\padX\dummyDataLoad.h">
       <Filter>input\padX</Filter>
     </ClInclude>
+    <ClInclude Include="commandmanager\commandteam\commandEffect\commandEffect.h">
+      <Filter>commandmanager\commandteam\commandEffect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main\main.cpp">
@@ -557,6 +563,9 @@
     </ClCompile>
     <ClCompile Include="input\padX\dummyPadX.cpp">
       <Filter>input\padX</Filter>
+    </ClCompile>
+    <ClCompile Include="commandmanager\commandteam\commandEffect\commandEffect.cpp">
+      <Filter>commandmanager\commandteam\commandEffect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

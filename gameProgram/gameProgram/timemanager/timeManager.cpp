@@ -21,8 +21,8 @@
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // マクロ定義
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-const D3DXVECTOR2 _time_poly_size = D3DXVECTOR2(70.0f, 120.0f);
-const D3DXVECTOR3 _time_pos = D3DXVECTOR3(SCREEN_WIDTH*0.5f - _time_poly_size.x*0.5f, 80.0f, 0.0f);
+const D3DXVECTOR2 _time_poly_size = D3DXVECTOR2(45.0f, 80.0f);
+const D3DXVECTOR3 _time_pos = D3DXVECTOR3(SCREEN_WIDTH*0.5f - _time_poly_size.x*0.5f, 75.0f, 0.0f);
 
 //=============================================================================
 // コンストラクタ
@@ -143,14 +143,14 @@ bool TimeManager::InitObject(void)
 		return false;
 	m_updateList->Link(m_poly_list[0]);
 	m_drawListManager->Link(m_poly_list[0], 4, Shader::PAT_2D);
-	m_poly_list[0]->pos(_time_pos.x, _time_pos.y, 0.0f);
+	m_poly_list[0]->pos(SCREEN_WIDTH / 2 - _time_poly_size.x/3*2, _time_pos.y, 0.0f);
 	m_poly_list[0]->scl(_time_poly_size.x, _time_poly_size.y, 0.0f);
 
 	if(!Number::Create(&m_poly_list[1], m_device, m_objectList, m_import->texture(GameImport::NUMBER_YELLOW)))
 		return false;
 	m_updateList->Link(m_poly_list[1]);
 	m_drawListManager->Link(m_poly_list[1], 4, Shader::PAT_2D);
-	m_poly_list[1]->pos(_time_pos.x + _time_poly_size.x, _time_pos.y, 0.0f);
+	m_poly_list[1]->pos(SCREEN_WIDTH / 2 + _time_poly_size.x/3*2, _time_pos.y, 0.0f);
 	m_poly_list[1]->scl(_time_poly_size.x, _time_poly_size.y, 0.0f);
 
 	return true;

@@ -24,6 +24,7 @@ class UpdateList;
 class DrawListManager;
 class GameImport;
 class Polygon2D;
+class CommandEffect;
 
 class CommandTeam
 {
@@ -50,6 +51,7 @@ public:
 	typedef struct{
 		unsigned int num_data;
 		Polygon2D* polygon_pointer;
+		CommandEffect* effect_pointer;
 		float pos_y;
 		bool hit;
 		COMMAND_STATE state;
@@ -112,6 +114,7 @@ private:
 
 	bool	InitObject(void);
 	void	SetPolygon(int player);
+	CommandEffect*	CreateEffect(int num, D3DXVECTOR3 pos, COMMAND_STATE state);
 };
 
 //=============================================================================
