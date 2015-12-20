@@ -128,15 +128,6 @@ bool Result::Initialize(void)
 	// サウンドの再生
 	//----------------------------
 	Sound::Play(Sound::BGM_RESULT01 );
-	//----------------------------
-	// フェード
-	//----------------------------
-	//m_fade = CFade::Create(device);
-	//m_fade->Start(CFade::FADESTATE_IN, 1, 1.0f, 1.0f, 1.0f, 1.0f);
-
-	//----------------------------
-	// ステータス初期化
-	//----------------------------
 
 	return true;
 }
@@ -165,7 +156,6 @@ void Result::Finalize(void)
 	// インポート
 	//----------------------------
 	SafeFinalizeDelete(m_import);
-	//SafeFinalizeDelete(m_fbxTexImport);
 
 	//----------------------------
 	// ビュー
@@ -197,10 +187,8 @@ void Result::Update(void)
 #endif
 
 	//----------------------------
-	// 更新内容
+	// オブジェクト更新
 	//----------------------------
-	PadX* pad = m_padXManager->pad(0);
-
 	m_updateList->AllUpdate();
 
 	//----------------------------
@@ -211,7 +199,7 @@ void Result::Update(void)
 	//----------------------------
 	// 画面遷移
 	//----------------------------
-	if(pad->buttonTrigger(XINPUT_GAMEPAD_START) || m_keyboard->trigger(DIK_RETURN))
+	if(m_padXManager->InputChk() || m_keyboard->trigger(DIK_RETURN))
 	{
 		Manager::nextPhase((Phase*)new Title(m_device));
 	}

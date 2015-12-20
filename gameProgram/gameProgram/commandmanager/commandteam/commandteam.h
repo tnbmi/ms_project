@@ -22,7 +22,7 @@ class PadX;
 class ObjectList;
 class UpdateList;
 class DrawListManager;
-class GameImport;
+class Import;
 class Polygon2D;
 class CommandEffect;
 
@@ -69,14 +69,14 @@ public:
 					   UpdateList* updList,
 					   DrawListManager* drwList,
 					   LPDIRECT3DDEVICE9 device,
-					   GameImport* import,
+					   Import* import,
 					   D3DXVECTOR3 pos,
 					   TEAM_COLOR team_color);
 	bool Initialize(ObjectList* objList,
 					UpdateList* updList,
 					DrawListManager* drwList,
 					LPDIRECT3DDEVICE9 device,
-					GameImport* import,
+					Import* import,
 					D3DXVECTOR3 pos,
 					TEAM_COLOR team_color);
 	void Finalize(void);
@@ -106,7 +106,7 @@ private:
 	float			m_offset;
 	int				m_commandPrev;
 
-	GameImport*	m_import;
+	Import*	m_import;
 	LPDIRECT3DDEVICE9	m_device;
 
 	ObjectList*			m_objectList;

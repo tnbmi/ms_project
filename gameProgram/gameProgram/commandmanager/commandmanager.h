@@ -29,7 +29,7 @@ class ObjectList;
 class UpdateList;
 class DrawListManager;
 class Debugproc;
-class GameImport;
+class Import;
 class Polygon2D;
 
 class CommandManager
@@ -50,14 +50,16 @@ public:
 					   UpdateList* updList,
 					   DrawListManager* drwList,
 					   LPDIRECT3DDEVICE9 device,
-					   GameImport* import);
+					   Import* import,
+					   bool demoFlg = false);
 	bool Initialize(PadXManager* padXManager,
 					Debugproc* debugproc,
 					ObjectList* objList,
 					UpdateList* updList,
 					DrawListManager* drwList,
 					LPDIRECT3DDEVICE9 device,
-					GameImport* import);
+					Import* import,
+					bool demoFlg);
 	void Finalize(void);
 	COM_MANA_RTN Update(void);
 	void Draw(void);
@@ -74,9 +76,11 @@ private:
 	ObjectList*		 m_objectList;
 	UpdateList*		 m_updateList;
 	DrawListManager* m_drawListManager;
-	GameImport*	m_import;
+	Import*	m_import;
 
 	Debugproc*		m_debugproc;
+
+	bool m_demoFlg;
 };
 
 //=============================================================================

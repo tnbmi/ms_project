@@ -21,7 +21,23 @@ const char* _demo_texture_name[] =
 {
 	nullptr,
 
-	"/test_0.png"
+	"/ground1.png",
+	"/BG1.png",
+	"/sky.jpg",
+
+	"/COMMAND_TEX.png",
+	"/blue.png",
+	"/red.png",
+	"/commandfram00.png",
+	"/commandfram01.png",
+	"/number.png",
+	"/num_yellow.png",
+	"/num_white.png",
+	"/GameUI.png",
+	"/CutinRed.png",
+	"/Cutinblue.png",
+	"/ougi.png",
+	"/effect.jpg"
 };
 
 //=============================================================================

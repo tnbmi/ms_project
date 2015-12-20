@@ -56,6 +56,8 @@ CommandManager::CommandManager(void)
 	m_objectList = nullptr;
 	m_updateList = nullptr;
 	m_drawListManager = nullptr;
+
+	m_demoFlg = false;
 }
 
 //=============================================================================
@@ -75,10 +77,11 @@ bool CommandManager::Create(CommandManager** outPointer,
 							UpdateList* updList,
 							DrawListManager* drwList,
 							LPDIRECT3DDEVICE9 device,
-							GameImport* import)
+							Import* import,
+							bool demoFlg)
 {
 	CommandManager* pointer = new CommandManager();
-	if(!pointer->Initialize(padXManager, debugproc, objList, updList, drwList, device, import))
+	if(!pointer->Initialize(padXManager, debugproc, objList, updList, drwList, device, import, demoFlg))
 		return false;
 
 	*outPointer = pointer;
@@ -94,7 +97,8 @@ bool CommandManager::Initialize(PadXManager* padXManager,
 								UpdateList* updList,
 								DrawListManager* drwList,
 								LPDIRECT3DDEVICE9 device,
-								GameImport* import)
+								Import* import,
+								bool demoFlg)
 {
 	m_objectList = objList;
 	m_updateList = updList;
@@ -102,6 +106,8 @@ bool CommandManager::Initialize(PadXManager* padXManager,
 
 	m_debugproc = debugproc;
 	m_import = import;
+
+	m_demoFlg = demoFlg;
 
 	//----------------------------
 	// コマンドの読み込み
@@ -123,20 +129,31 @@ bool CommandManager::Initialize(PadXManager* padXManager,
 		// パッド設定
 		//----------------------------
 		PadX* pad[4];
-		if(padXManager->pad(i*2)->conected())
-			pad[i*2] = padXManager->pad(i*2);
-		else
+		if(m_demoFlg)
 		{
 			DummyPadX::Create(&pad[i*2], i*2, _list_pattern_max);
 			pad[i*2]->debugproc(m_debugproc);
-		}
 
-		if(padXManager->pad(i*2+1)->conected())
-			pad[i*2+1] = padXManager->pad(i*2+1);
-		else
-		{
 			DummyPadX::Create(&pad[i*2+1], i*2+1, _list_pattern_max);
 			pad[i*2+1]->debugproc(m_debugproc);
+		}
+		else
+		{
+			if(padXManager->pad(i*2)->conected())
+				pad[i*2] = padXManager->pad(i*2);
+			else
+			{
+				DummyPadX::Create(&pad[i*2], i*2, _list_pattern_max);
+				pad[i*2]->debugproc(m_debugproc);
+			}
+
+			if(padXManager->pad(i*2+1)->conected())
+				pad[i*2+1] = padXManager->pad(i*2+1);
+			else
+			{
+				DummyPadX::Create(&pad[i*2+1], i*2+1, _list_pattern_max);
+				pad[i*2+1]->debugproc(m_debugproc);
+			}
 		}
 
 #ifdef _DEBUG

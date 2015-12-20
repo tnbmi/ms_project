@@ -61,9 +61,6 @@
     <Filter Include="import\demo">
       <UniqueIdentifier>{c2dfe9db-bd5e-46f2-9b34-6ed5d0045e59}</UniqueIdentifier>
     </Filter>
-    <Filter Include="import\game">
-      <UniqueIdentifier>{12217eeb-87ef-4676-a3d1-0e6ab8d0233e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="import\result">
       <UniqueIdentifier>{9c93fe32-6d8c-4c1b-ae51-6e0e72c03c49}</UniqueIdentifier>
     </Filter>
@@ -202,6 +199,12 @@
     </Filter>
     <Filter Include="commandmanager\commandteam\commandEffect">
       <UniqueIdentifier>{3c3b74a6-828a-4f37-8cbc-2e1d77eed0a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="phase\demo\demoMastar">
+      <UniqueIdentifier>{b7e00b71-fd83-41da-a01e-4a140bd379cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="import\game">
+      <UniqueIdentifier>{12217eeb-87ef-4676-a3d1-0e6ab8d0233e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -388,6 +391,9 @@
     <ClInclude Include="commandmanager\commandteam\commandEffect\commandEffect.h">
       <Filter>commandmanager\commandteam\commandEffect</Filter>
     </ClInclude>
+    <ClInclude Include="phase\demo\demoMaster\demoMaster.h">
+      <Filter>phase\demo\demoMastar</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main\main.cpp">
@@ -566,6 +572,9 @@
     </ClCompile>
     <ClCompile Include="commandmanager\commandteam\commandEffect\commandEffect.cpp">
       <Filter>commandmanager\commandteam\commandEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="phase\demo\demoMaster\demoMaster.cpp">
+      <Filter>phase\demo\demoMastar</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

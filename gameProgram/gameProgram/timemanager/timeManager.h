@@ -20,7 +20,7 @@
 class ObjectList;
 class UpdateList;
 class DrawListManager;
-class GameImport;
+class Import;
 class Number;
 
 class TimeManager
@@ -34,13 +34,13 @@ public:
 					   UpdateList* updList,
 					   DrawListManager* drwList,
 					   LPDIRECT3DDEVICE9 device,
-					   GameImport* import,
+					   Import* import,
 					   int time);
 	bool Initialize(ObjectList* objList,
 					UpdateList* updList,
 					DrawListManager* drwList,
 					LPDIRECT3DDEVICE9 device,
-					GameImport* import,
+					Import* import,
 					int time);
 	void Finalize(void);
 	bool Update(void);
@@ -51,7 +51,7 @@ public:
 private:
 	bool InitObject(void);
 
-	GameImport*	m_import;
+	Import*	m_import;
 	LPDIRECT3DDEVICE9	m_device;
 
 	ObjectList*			m_objectList;

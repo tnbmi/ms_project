@@ -60,7 +60,7 @@ bool TimeManager::Create(TimeManager** outPointer,
 						 UpdateList* updList,
 						 DrawListManager* drwList,
 						 LPDIRECT3DDEVICE9 device,
-						 GameImport* import,
+						 Import* import,
 						 int time)
 {
 	TimeManager* pointer = new TimeManager();
@@ -78,7 +78,7 @@ bool TimeManager::Initialize(ObjectList* objList,
 							 UpdateList* updList,
 							 DrawListManager* drwList,
 							 LPDIRECT3DDEVICE9 device,
-							 GameImport* import,
+							 Import* import,
 							 int time)
 {
 	//----------------------------

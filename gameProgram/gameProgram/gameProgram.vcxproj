@@ -53,6 +53,7 @@
     <ClCompile Include="objectBase\polygon3D\polygon3D.cpp" />
     <ClCompile Include="object\player\player.cpp" />
     <ClCompile Include="phase\demo\demo.cpp" />
+    <ClCompile Include="phase\demo\demoMaster\demoMaster.cpp" />
     <ClCompile Include="phase\game\game.cpp" />
     <ClCompile Include="phase\game\gameMaster\gameMaster.cpp" />
     <ClCompile Include="phase\phase.cpp" />
@@ -116,6 +117,7 @@
     <ClInclude Include="objectBase\polygon3D\polygon3D.h" />
     <ClInclude Include="object\player\player.h" />
     <ClInclude Include="phase\demo\demo.h" />
+    <ClInclude Include="phase\demo\demoMaster\demoMaster.h" />
     <ClInclude Include="phase\game\game.h" />
     <ClInclude Include="phase\game\gameMaster\gameMaster.h" />
     <ClInclude Include="phase\phase.h" />

@@ -124,7 +124,7 @@ bool CommandTeam::Create(CommandTeam** outPointer,
 						 UpdateList* updList,
 						 DrawListManager* drwList,
 						 LPDIRECT3DDEVICE9 device,
-						 GameImport* import,
+						 Import* import,
 						 D3DXVECTOR3 pos,
 						 TEAM_COLOR team_color)
 {
@@ -143,7 +143,7 @@ bool CommandTeam::Initialize(ObjectList* objList,
 							 UpdateList* updList,
 							 DrawListManager* drwList,
 							 LPDIRECT3DDEVICE9 device,
-							 GameImport* import,
+							 Import* import,
 							 D3DXVECTOR3 pos,
 							 TEAM_COLOR team_color)
 {

@@ -40,6 +40,9 @@ public:
 
 	PadX* pad(int no) {return m_pad[no];}
 
+	bool InputChk(void);
+	bool InputChk(WORD wButton);
+
 private:
 	PadX* m_pad[PAD_MAX];
 };

@@ -43,6 +43,7 @@ public:
 		CUTINBLUE,
 		COUNTDOWN,
 		EFFECT,
+
 		TEX_MAX
 	};
 

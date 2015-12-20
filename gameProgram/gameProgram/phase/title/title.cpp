@@ -15,7 +15,7 @@
 #include "..\..\manager\manager.h"
 #include "..\..\sound\sound.h"
 #include "..\standby\standby.h"
-#include "..\game\game.h"
+#include "..\demo\demo.h"
 
 #include "..\..\input\keyboard\keyboard.h"
 #include "..\..\input\padX\padXManager.h"
@@ -185,11 +185,6 @@ void Title::Update(void)
 #endif
 
 	//----------------------------
-	// 更新内容
-	//----------------------------
-	PadX* pad = m_padXManager->pad(0);
-
-	//----------------------------
 	// オブジェクト更新
 	//----------------------------
 	m_updateList->AllUpdate();
@@ -197,8 +192,11 @@ void Title::Update(void)
 	//----------------------------
 	// 画面遷移
 	//----------------------------
-	if(pad->buttonTrigger(XINPUT_GAMEPAD_START) || m_keyboard->trigger(DIK_RETURN))
+	if(m_padXManager->InputChk(0xf03f) || m_keyboard->trigger(DIK_RETURN))
 		Manager::nextPhase((Phase*)new Standby(m_device));
+
+	if(m_padXManager->InputChk(0x0100) || m_keyboard->trigger(DIK_0))
+		Manager::nextPhase((Phase*)new Demo(m_device));
 }
 
 //=============================================================================

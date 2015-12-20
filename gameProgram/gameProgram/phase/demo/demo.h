@@ -19,7 +19,17 @@
 // ƒNƒ‰ƒX’è‹`
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 class DemoImport;
+
+class Shader;
 class Camera;
+class Light;
+
+class ObjectList;
+class UpdateList;
+class DrawListManager;
+
+class Player;
+class DemoMaster;
 
 class Demo : public Phase
 {
@@ -36,7 +46,16 @@ private:
 	bool InitObject(void);
 
 	DemoImport*	m_import;
-	Camera*		m_camera;
+
+	Shader*	m_shader;
+	Camera*	m_camera;
+	Light*	m_light;
+
+	ObjectList*		 m_objectList;
+	UpdateList*		 m_updateList;
+	DrawListManager* m_drawListManager;
+
+	DemoMaster *m_demoMaster;
 };
 
 //=============================================================================

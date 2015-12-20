@@ -56,10 +56,8 @@ bool PadXManager::Initialize(void)
 	// パッド生成
 	//----------------------------
 	for(int cnt = 0; cnt < PAD_MAX; ++cnt)
-	{
 		if(!PadX::Create(&m_pad[cnt], cnt))
 			MessageBox(NULL, "PadXManager", "パッド生成時にエラーが発生しました。", MB_OK);
-	}
 
 	return true;
 }
@@ -70,9 +68,7 @@ bool PadXManager::Initialize(void)
 void PadXManager::Finalize(void)
 {
 	for(int cnt = 0; cnt < PAD_MAX; ++cnt)
-	{
 		SafeFinalizeDelete(m_pad[cnt]);
-	}
 }
 
 //=============================================================================
@@ -84,9 +80,7 @@ void PadXManager::Update(void)
 	// パッド情報更新
 	//----------------------------
 	for(int cnt = 0; cnt < PAD_MAX; ++cnt)
-	{
 		m_pad[cnt]->Update();
-	}
 }
 
 //=============================================================================
@@ -96,6 +90,28 @@ void PadXManager::debugproc(Debugproc* debugproc)
 {
 	for(int cnt = 0; cnt < PAD_MAX; ++cnt)
 		m_pad[cnt]->debugproc(debugproc);
+}
+
+//=============================================================================
+// 入力の有無判定
+//=============================================================================
+bool PadXManager::InputChk(void)
+{
+	for(int cnt = 0; cnt < PAD_MAX; ++cnt)
+		if(m_pad[cnt]->buttonTrigger(0xffff))
+			return true;
+	return false;
+}
+
+//=============================================================================
+// 任意入力の有無判定
+//=============================================================================
+bool PadXManager::InputChk(WORD wButton)
+{
+	for(int cnt = 0; cnt < PAD_MAX; ++cnt)
+		if(m_pad[cnt]->buttonTrigger(wButton))
+			return true;
+	return false;
 }
 
 // [EOF]

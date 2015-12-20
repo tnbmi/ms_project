@@ -140,16 +140,6 @@ bool Game::Initialize(void)
 	//----------------------------
 	Sound::Play(Sound::BGM_GAME01);
 
-	//----------------------------
-	// フェード
-	//----------------------------
-	//Fade::Create( &m_fade , m_updateList , m_drawListManager , m_device , m_objectList , m_import );
-	//m_fade->Start(Fade::FADESTATE_IN, 10, 1.0f, 1.0f, 1.0f, 0.0f);
-
-	//----------------------------
-	// ステータス初期化
-	//----------------------------
-
 	return true;
 }
 
@@ -206,11 +196,10 @@ void Game::Update(void)
 	m_debugproc->PrintDebugProc("===ゲームフェーズ===\n");
 #endif
 
+	//----------------------------
+	// カメラ設定
+	//----------------------------
 	m_camera->SetCamera();
-	//----------------------------
-	// 更新内容
-	//----------------------------
-	PadX* pad = m_padXManager->pad(0);
 
 	//----------------------------
 	// オブジェクト更新
