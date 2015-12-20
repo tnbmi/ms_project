@@ -461,7 +461,7 @@ void GameMaster::SelectAnimation( const int judge,Player *player,Ggy2DAnimationM
 
 			player->StartAnimationSecondChild( m_nebAnim[ NANIM_SAME1+s ].stFrame,m_nebAnim[ NANIM_SAME1 +s].edFrame,false );
 			ggy->StartAnimation(m_nebAnim[ NANIM_SAME1+s ].polyGgyAnimIdx,false );
-			m_effectManager->AddEffectFromDataBase(0,D3DXVECTOR3(0,900,1000));
+			m_effectManager->AddEffectFromDataBase(0,D3DXVECTOR3(0,900,400));
 
 			//”Ä—p“¯Žž‰Ÿ‚µ‰¹
 			Sound::Play( Sound::SE_SAME );
