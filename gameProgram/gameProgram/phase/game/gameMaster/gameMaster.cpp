@@ -122,7 +122,7 @@ bool GameMaster::Initialize(void)
 	m_drawListManager->Link( m_call,0,Shader::PAT_2D );
 
 	m_call->pos( SCREEN_WIDTH/2,SCREEN_HEIGHT/2,0);
-	m_call->scl( 400,200,0 );
+	m_call->scl( 0,0,0 );
 
 	//カウントダウンアニメーション制御
 	Tex2DAnimation::Create( &m_countDown );
@@ -567,7 +567,7 @@ void GameMaster::UpdateCutIn()
 //=============================================================================
 void GameMaster::UpdateCountDown()
 {
-
+	m_call->scl( 400,200,0 );
 	m_countDown->Update();
 	if( m_countDown->isEndAnimation() )
 	{
