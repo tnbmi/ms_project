@@ -130,7 +130,6 @@ bool GameMaster::Initialize(void)
 	m_countDown->SetTexture( m_import->texture( GameImport::COUNTDOWN ) );
 	m_countDown->SetAnimationData(60,3,D3DXVECTOR2(0.0f,0.0f),D3DXVECTOR2(0.2f,0.0f),D3DXVECTOR2(0.0f,1.0f),D3DXVECTOR2(0.2f,1.0f),D3DXVECTOR2(0.2f,0.0f) );
 	m_countDown->StartAnimation(false);
-	//
 	MainImport* mainImport = Manager::mainImport();
 	m_blueGgyAnim->SetTexture(0,mainImport->texture( MainImport::GGYBLUE_WAIT ) );
 	m_blueGgyAnim->SetTexture(1,mainImport->texture( MainImport::GGYBLUE_WIN ) );
@@ -145,6 +144,7 @@ bool GameMaster::Initialize(void)
 	m_blueGgyAnim->pos(D3DXVECTOR3( 280,580,0 ));
 	m_blueGgyAnim->scl(D3DXVECTOR3( 320,256,0 ));
 	m_blueGgyAnim->StartAnimation(0,true);
+	m_blueGgyAnim->Update();
 
 	m_redGgyAnim->SetTexture(0,mainImport->texture( MainImport::GGYRED_WAIT ) );
 	m_redGgyAnim->SetTexture(1,mainImport->texture( MainImport::GGYRED_WIN ) );
@@ -159,6 +159,7 @@ bool GameMaster::Initialize(void)
 	m_redGgyAnim->pos(D3DXVECTOR3( 1000,580,0 ));
 	m_redGgyAnim->scl(D3DXVECTOR3( 320,256,0 ));
 	m_redGgyAnim->StartAnimation(0,true);
+	m_redGgyAnim->Update();
 
 
 	redTeam->StartAnimationSecondChild( 1,570,true );
@@ -201,6 +202,11 @@ bool GameMaster::Initialize(void)
 	m_blueTeamCutIn.stPos = D3DXVECTOR3( -200.0f,500.0f,0.0f );
 	m_blueTeamCutIn.edPos = D3DXVECTOR3( 420.0f,500.0f,0.0f );
 	m_blueTeamCutIn.isCutIn = false;
+
+	m_redTeamCutIn.stBufPos = m_redTeamCutIn.stPos;
+	m_redTeamCutIn.edBufPos = m_redTeamCutIn.edPos;
+	m_blueTeamCutIn.stBufPos = m_blueTeamCutIn.stPos;
+	m_blueTeamCutIn.edBufPos = m_blueTeamCutIn.edPos;
 
 	//----------------------------
 	// ”z’u
@@ -354,6 +360,10 @@ bool GameMaster::Update(void)
 			return UpdateNextScene();
 			break;
 	}
+
+	m_blueGgyAnim->Update();
+	m_redGgyAnim->Update();
+	UpdateCutIn();
 
 	return false;
 }
@@ -648,10 +658,6 @@ void GameMaster::UpdateGame()
 
 	m_blueTeamAddVal = 0;
 	m_redTeamAddVal	 = 0;
-
-	m_blueGgyAnim->Update();
-	m_redGgyAnim->Update();
-	UpdateCutIn();
 }
 
 //=============================================================================

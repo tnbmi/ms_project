@@ -281,6 +281,9 @@ bool Title::InitObject(void)
 	p->pos( SCREEN_WIDTH/2,SCREEN_HEIGHT - SCREEN_HEIGHT/4,0);
 	p->scl( 883,162,0 );
 
+	//‰Šú‰»‘Îô
+	m_pushLogo->Update();
+
 	//------------------------------
 	//fbx
 	//------------------------------
