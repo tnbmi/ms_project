@@ -119,7 +119,10 @@ void DummyPadX::Update(void)
 	padInput.sThumbRY		= 0x0000;
 
 	if(m_pressFlg)
+	{
 		padInput.wButtons = _commandData[m_commandList[m_commandPrev*10 + m_commandCnt]];
+		m_pressFlg = false;
+	}
 
 	// ƒgƒŠƒK[
 	m_trigger.wButtons		= (padInput.wButtons	  ^ m_state.wButtons)		& padInput.wButtons;

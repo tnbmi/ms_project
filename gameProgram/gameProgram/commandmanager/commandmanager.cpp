@@ -140,14 +140,15 @@ bool CommandManager::Initialize(PadXManager* padXManager,
 		}
 
 #ifdef _DEBUG
-		if( i == 0 )
-		{
-			m_team[i]->SetPlayer( pad[i], pad[i+1] );
-		}
-		else if( i == 1 )
-		{
-			m_team[i]->SetPlayer( pad[i+1], pad[i+1] );
-		}
+		m_team[i]->SetPlayer( pad[i*2], pad[i*2+1] );
+		//if( i == 0 )
+		//{
+		//	m_team[i]->SetPlayer( pad[i], pad[i+1] );
+		//}
+		//else if( i == 1 )
+		//{
+		//	m_team[i]->SetPlayer( pad[i+1], pad[i+1] );
+		//}
 		//m_team[i]->SetPlayer( pad[i], pad[i] );
 		//m_team[i]->SetPlayer( pad[i*2], pad[i*2+1] );
 #else
@@ -157,8 +158,8 @@ bool CommandManager::Initialize(PadXManager* padXManager,
 		//----------------------------
 		// ƒRƒ}ƒ“ƒhÝ’è
 		//----------------------------
+		m_team[i]->commandPrev(0);
 		m_command_prev[i] = rand()%10;
-		m_team[i]->commandPrev(m_command_prev[i]);
 		m_team[i]->SetCommand(m_command_list[0], m_command_list[0] + m_command_prev[i] * 10, 0, 144.0f);
 		m_team[i]->SetCommand(m_command_list[1], m_command_list[1] + m_command_prev[i] * 10, 1, 144.0f);
 	}
@@ -191,7 +192,8 @@ void CommandManager::Finalize(void)
 //=============================================================================
 CommandManager::COM_MANA_RTN CommandManager::Update(void)
 {
-	CommandTeam::COM_TEAM_RTN get = {0, false};
+	CommandTeam::COM_TEAM_RTN get = {0, false, CommandTeam::STATE_NONE};
+
 	COM_MANA_RTN rtn = {0,0,CommandTeam::STATE_NONE,CommandTeam::STATE_NONE};
 	for(int i = 0; i < _team_max; i++)
 	{
@@ -200,8 +202,8 @@ CommandManager::COM_MANA_RTN CommandManager::Update(void)
 		rtn.state[i] = get.state;
 		if(get.flag)
 		{
-			m_command_prev[i] = (rand() % 5 * 2) + (1 - m_command_prev[i] % 2);
 			m_team[i]->commandPrev(m_command_prev[i]);
+			m_command_prev[i] = (rand() % 5 * 2) + (1 - m_command_prev[i] % 2);
 			m_team[i]->SetCommandNext(m_command_list[0] + m_command_prev[i] * 10, 0);
 			m_team[i]->SetCommandNext(m_command_list[1] + m_command_prev[i] * 10, 1);
 		}

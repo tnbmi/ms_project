@@ -32,6 +32,7 @@ const float	_polygon_size_x = 50.0f;
 const float	_polygon_pos_offset = 72.0f;
 const float _polygon_speed_def = 2.0f;
 const float _first_line = 169.0f;
+const float _middlet_line = 120.5f;
 const float _end_line = 72.0f;
 const float _speed_max = 1.5f;
 const float _speed_add = 0.02f;
@@ -288,7 +289,7 @@ CommandTeam::COM_TEAM_RTN CommandTeam::Update(void)
 		if(m_pad[i]->dummy())
 		{
 			if(!m_command_data[i][command_count].hit && 
-				m_command_data[i][command_count].pos_y > m_polygon_pos.y - (_first_line-10.0f))
+				m_command_data[i][command_count].pos_y > m_polygon_pos.y - _middlet_line)
 				m_pad[i]->dummyPress();
 
 			m_pad[i]->Update();
@@ -361,7 +362,7 @@ CommandTeam::COM_TEAM_RTN CommandTeam::Update(void)
 			}
 
 			if(m_pad[i]->dummy())
-				m_pad[i]->commandCnt(m_command_count%10);
+				m_pad[i]->commandCnt(m_command_count % 10);
 		}
 	}
 
@@ -408,6 +409,7 @@ CommandTeam::COM_TEAM_RTN CommandTeam::Update(void)
 	if(m_delete_count != 0 && m_delete_count % COMMAND_MAX == 0)
 	{
 		rtn.flag = true;
+		m_delete_count = 0;
 	}
 	return rtn;
 }
