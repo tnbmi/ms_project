@@ -108,6 +108,10 @@ bool StandbyMaster::Initialize(void)
 
 	m_ggyRedAnimManager->StartAnimation(0,true);
 
+	//‰Šú‰»‘Îô
+	m_ggyRedAnimManager->Update();
+	m_ggyBlueAnimManager->Update();
+
 
 
 	//”wŒiƒŠƒ“ƒN

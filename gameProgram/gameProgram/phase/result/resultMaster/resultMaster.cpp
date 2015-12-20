@@ -103,6 +103,9 @@ bool ResultMaster::Initialize(void)
 	FbxModel::Create( &redGgy,m_device,m_objectList,0,ObjectBase::TYPE_3D,"./resources/fbxModel/gg_red.bin",m_fbxTexImport );
 	FbxModel::Create( &blueGgy,m_device,m_objectList,0,ObjectBase::TYPE_3D,"./resources/fbxModel/gg_blue.bin",m_fbxTexImport );
 
+	//‰Šú‰»‘Îô
+	redGgy->Update();
+	blueGgy->Update();
 	m_redGgy = redGgy;
 	m_blueGgy= blueGgy;
 
