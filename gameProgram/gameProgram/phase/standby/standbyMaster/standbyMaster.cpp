@@ -215,6 +215,17 @@ bool StandbyMaster::Initialize(void)
 
 	m_compTime = 0;
 
+	//デバック用　各チームのスタンバイを見てかいおーけん
+	if( m_blueTeamStandby[0].isStandby && m_blueTeamStandby[1].isStandby )
+	{
+		m_ggyBlueAnimManager->StartAnimation(8,false);
+	}
+
+	if( m_redTeamStandby[0].isStandby && m_redTeamStandby[1].isStandby )
+	{
+		m_ggyRedAnimManager->StartAnimation(8,false);
+	}
+
 	m_phase = PHASE_WAIT;
 	return true;
 }
@@ -433,8 +444,8 @@ bool StandbyMaster::Update(void)
 			&& m_redTeamStandby[0].time >= _compFrame  && m_redTeamStandby[1].time >= _compFrame)
 		{
 			m_phase = PHASE_MOTION;
-			m_ggyRedAnimManager->StartAnimation(8,false);
-			m_ggyBlueAnimManager->StartAnimation(8,false);
+			//m_ggyRedAnimManager->StartAnimation(8,false);
+			//m_ggyBlueAnimManager->StartAnimation(8,false);
 			Sound::Play( Sound::SE_SELECT_VOICE_IZA );
 		}
 
@@ -463,11 +474,24 @@ bool StandbyMaster::Update(void)
 		if( m_compTime > _compFrame*2 )
 		{
 			m_compTime = _compFrame*2;
-			m_phase = PHASE_NEXTSCENE;
+			m_phase = PHASE_STANDBY_WAIT;
+			m_compTime = 0;
 		}
 
 		break;
 
+	case PHASE_STANDBY_WAIT:
+
+		m_compTime++;
+
+		if( m_compTime >= _compFrame*2 )
+		{
+			m_compTime = 0;
+			m_phase = PHASE_NEXTSCENE;
+		}
+
+		break;
+		
 	case PHASE_NEXTSCENE:
 
 		return true;
