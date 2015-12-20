@@ -23,7 +23,8 @@ const char* _title_texture_name[] =
 
 	"/titleLogo.png",
 	"/BG1.png",
-	"/sky.jpg"
+	"/sky.jpg",
+	"/oshitekaishikansei.png",
 };
 
 //=============================================================================
