@@ -290,6 +290,17 @@ bool DemoMaster::Initialize(void)
 	blueTeam->StartAnimationSecondChild( m_nebAnim[NANIM_WAIT].stFrame,m_nebAnim[NANIM_WAIT].edFrame,true );
 	m_blueGgyAnim->StartAnimation( m_nebAnim[NANIM_WAIT].polyGgyAnimIdx,true );
 
+	//----------------------------
+	// デモロゴ
+	//----------------------------
+	Polygon2D* demoLogo;
+	if(!Polygon2D::Create(&demoLogo, m_device, m_objectList, m_import->texture(DemoImport::DEMO_LOGO)))
+		return false;
+	m_updateList->Link(demoLogo);
+	m_drawListManager->Link(demoLogo, 4, Shader::PAT_2D);
+	demoLogo->scl(573.0f*0.8f, 191.0f * 0.8f, 0.0f);
+	demoLogo->pos(SCREEN_WIDTH*0.5f, 650.0f, 0.0f);
+
 	//デモフェーズ設定
 	m_demoPhase = PHASE_COUNTDOWN;
 	return true;

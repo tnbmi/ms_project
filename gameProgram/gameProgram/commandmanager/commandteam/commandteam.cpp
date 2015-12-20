@@ -31,7 +31,7 @@
 const float	_polygon_size_x = 50.0f;
 const float	_polygon_pos_offset = 72.0f;
 const float _polygon_speed_def = 2.0f;
-const float _first_line = 169.0f;
+const float _first_line = 144.0f;
 const float _middlet_line = 120.5f;
 const float _end_line = 72.0f;
 const float _speed_max = 1.5f;

@@ -28,8 +28,7 @@ const char* _demo_texture_name[] =
 	"/COMMAND_TEX.png",
 	"/blue.png",
 	"/red.png",
-	"/commandfram00.png",
-	"/commandfram01.png",
+	"/wakuwhite.png",
 	"/number.png",
 	"/num_yellow.png",
 	"/num_white.png",
@@ -37,7 +36,9 @@ const char* _demo_texture_name[] =
 	"/CutinRed.png",
 	"/Cutinblue.png",
 	"/ougi.png",
-	"/effect.jpg"
+	"/effect.jpg",
+
+	"/mogisen.png"
 };
 
 //=============================================================================
