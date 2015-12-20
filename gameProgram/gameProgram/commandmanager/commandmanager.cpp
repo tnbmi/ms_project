@@ -130,10 +130,10 @@ bool CommandManager::Initialize(PadXManager* padXManager,
 		//----------------------------
 		if(m_demoFlg)
 		{
-			DummyPadX::Create(&m_pad[i*2], i*2, _list_pattern_max, m_command_list[0], rand()%35 + 65);
+			DummyPadX::Create(&m_pad[i*2], i*2, _list_pattern_max, m_command_list[0], rand()%22 + 75);
 			m_pad[i*2]->debugproc(m_debugproc);
 
-			DummyPadX::Create(&m_pad[i*2+1], i*2+1, _list_pattern_max, m_command_list[1], rand()%35 + 65);
+			DummyPadX::Create(&m_pad[i*2+1], i*2+1, _list_pattern_max, m_command_list[1], rand()%22 + 75);
 			m_pad[i*2+1]->debugproc(m_debugproc);
 		}
 		else
@@ -142,7 +142,7 @@ bool CommandManager::Initialize(PadXManager* padXManager,
 				m_pad[i*2] = padXManager->pad(i*2);
 			else
 			{
-				DummyPadX::Create(&m_pad[i*2], i*2, _list_pattern_max, m_command_list[0], rand()%35 + 65);
+				DummyPadX::Create(&m_pad[i*2], i*2, _list_pattern_max, m_command_list[0], rand()%22 + 75);
 				m_pad[i*2]->debugproc(m_debugproc);
 			}
 
@@ -150,7 +150,7 @@ bool CommandManager::Initialize(PadXManager* padXManager,
 				m_pad[i*2+1] = padXManager->pad(i*2+1);
 			else
 			{
-				DummyPadX::Create(&m_pad[i*2+1], i*2+1, _list_pattern_max, m_command_list[1], rand()%35 + 65);
+				DummyPadX::Create(&m_pad[i*2+1], i*2+1, _list_pattern_max, m_command_list[1], rand()%22 + 75);
 				m_pad[i*2+1]->debugproc(m_debugproc);
 			}
 		}
