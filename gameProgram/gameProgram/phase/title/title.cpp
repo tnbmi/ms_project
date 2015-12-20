@@ -314,6 +314,10 @@ bool Title::InitObject(void)
 	nebRed->pos( D3DXVECTOR3( 1000,0,1300 ) );
 	nebRed->rot( D3DXVECTOR3(0,-3*PAI /4,0 ) );
 
+	//‰Šú‰»‘Îô
+	nebRed->Update();
+	nebBlue->Update();
+	fbx->Update();
 	//----------------------------
 	// ƒ^ƒCƒgƒ‹ƒƒS
 	//----------------------------
