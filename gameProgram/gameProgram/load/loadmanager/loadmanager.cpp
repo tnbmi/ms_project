@@ -35,11 +35,11 @@ const D3DXVECTOR3 _eye	= D3DXVECTOR3(0.0f, 150.0f, -3000.0f);
 		const D3DXVECTOR3 _husumaOpenRightInitPos = D3DXVECTOR3( SCREEN_WIDTH + _husumaSize.x * 0.5f , SCREEN_HEIGHT * 0.5f , 0.0f);
 // アイコン定数
 const D3DXVECTOR3 _iconSize = D3DXVECTOR3( 144.0f , 144.0f , 0.0f );
-const D3DXVECTOR3 _iconInitPos = D3DXVECTOR3( SCREEN_WIDTH - _iconSize.x  , SCREEN_HEIGHT - _iconSize.y , 0.0f );
+const D3DXVECTOR3 _iconInitPos = D3DXVECTOR3( SCREEN_WIDTH - _iconSize.x * 0.8f  , SCREEN_HEIGHT - _iconSize.y * 0.7f , 0.0f );
 const float _iconRotSpeed = 0.01f;
 // テキスト定数
 const D3DXVECTOR3 _textSize = D3DXVECTOR3( 432.0f , 144.0f , 0.0f );
-const D3DXVECTOR3 _textInitPos = D3DXVECTOR3( SCREEN_WIDTH - _iconSize.x - _textSize.x , SCREEN_HEIGHT - _textSize.y , 0.0f );
+const D3DXVECTOR3 _textInitPos = D3DXVECTOR3( SCREEN_WIDTH * 0.5f + _textSize.x * 0.6f , SCREEN_HEIGHT - _textSize.y * 0.6f , 0.0f );
 const float _textMoveLimit = _textInitPos.y + 10.0f;
 const float _textSpeed = 0.1f;
 const int _textSheetMax = 5;

@@ -14,6 +14,7 @@
 #include "..\list\drawList\drawListManager.h"
 #include "..\tex2DAnimation\tex2DAnimation.h"
 #include "..\objectBase\polygon2D\polygon2D.h"
+#include "..\common\safe.h"
 
 //=============================================================================
 // コンストラクタ
@@ -68,22 +69,24 @@ bool Ggy2DAnimationManager::Initialize(void)
 	//----------------------------
 	// コメント
 	//----------------------------
-	m_animArray = new Tex2DAnimation[ _animMax ];
+	m_animArray = new Tex2DAnimation*[ _animMax ];
+
 
 	for( int i = 0 ; i < _animMax ; i++ )
 	{
-		m_animArray[i].Set2DPolygon( p );
+		Tex2DAnimation::Create( &m_animArray[i] );
+		m_animArray[i]->Set2DPolygon( p );
 	}
 
-	m_animArray[0].SetAnimationData( 3.0f,10,D3DXVECTOR2(0.0f,0.0f),D3DXVECTOR2(0.1f,0.0f),D3DXVECTOR2(0.0f,1.0f),D3DXVECTOR2(0.1f,1.0f),D3DXVECTOR2(0.1f,0.0f));
-	m_animArray[1].SetAnimationData( 1.5f,20,D3DXVECTOR2(0.0f,0.0f),D3DXVECTOR2(0.05f,0.0f),D3DXVECTOR2(0.0f,1.0f),D3DXVECTOR2(0.05f,1.0f),D3DXVECTOR2(0.05f,0.0f));
-	m_animArray[2].SetAnimationData( 1.5f,20,D3DXVECTOR2(0.0f,0.0f),D3DXVECTOR2(0.05f,0.0f),D3DXVECTOR2(0.0f,1.0f),D3DXVECTOR2(0.05f,1.0f),D3DXVECTOR2(0.05f,0.0f));
-	m_animArray[3].SetAnimationData( 3.0f,10,D3DXVECTOR2(0.0f,0.0f),D3DXVECTOR2(0.1f,0.0f),D3DXVECTOR2(0.0f,1.0f),D3DXVECTOR2(0.1f,1.0f),D3DXVECTOR2(0.1f,0.0f));
-	m_animArray[4].SetAnimationData( 3.0f,10,D3DXVECTOR2(0.0f,0.0f),D3DXVECTOR2(0.1f,0.0f),D3DXVECTOR2(0.0f,1.0f),D3DXVECTOR2(0.1f,1.0f),D3DXVECTOR2(0.1f,0.0f));
-	m_animArray[5].SetAnimationData( 3.0f,10,D3DXVECTOR2(0.0f,0.0f),D3DXVECTOR2(0.1f,0.0f),D3DXVECTOR2(0.0f,1.0f),D3DXVECTOR2(0.1f,1.0f),D3DXVECTOR2(0.1f,0.0f));
-	m_animArray[6].SetAnimationData( 3.0f,10,D3DXVECTOR2(0.0f,0.0f),D3DXVECTOR2(0.1f,0.0f),D3DXVECTOR2(0.0f,1.0f),D3DXVECTOR2(0.1f,1.0f),D3DXVECTOR2(0.1f,0.0f));
-	m_animArray[7].SetAnimationData( 3.0f,20,D3DXVECTOR2(0.0f,0.0f),D3DXVECTOR2(0.05f,0.0f),D3DXVECTOR2(0.0f,1.0f),D3DXVECTOR2(0.05f,1.0f),D3DXVECTOR2(0.05f,0.0f));
-	m_animArray[8].SetAnimationData( 3.0f,20,D3DXVECTOR2(0.0f,0.0f),D3DXVECTOR2(0.05f,0.0f),D3DXVECTOR2(0.0f,1.0f),D3DXVECTOR2(0.05f,1.0f),D3DXVECTOR2(0.05f,0.0f));
+	m_animArray[0]->SetAnimationData( 3.0f,10,D3DXVECTOR2(0.0f,0.0f),D3DXVECTOR2(0.1f,0.0f),D3DXVECTOR2(0.0f,1.0f),D3DXVECTOR2(0.1f,1.0f),D3DXVECTOR2(0.1f,0.0f));
+	m_animArray[1]->SetAnimationData( 1.5f,20,D3DXVECTOR2(0.0f,0.0f),D3DXVECTOR2(0.05f,0.0f),D3DXVECTOR2(0.0f,1.0f),D3DXVECTOR2(0.05f,1.0f),D3DXVECTOR2(0.05f,0.0f));
+	m_animArray[2]->SetAnimationData( 1.5f,20,D3DXVECTOR2(0.0f,0.0f),D3DXVECTOR2(0.05f,0.0f),D3DXVECTOR2(0.0f,1.0f),D3DXVECTOR2(0.05f,1.0f),D3DXVECTOR2(0.05f,0.0f));
+	m_animArray[3]->SetAnimationData( 3.0f,10,D3DXVECTOR2(0.0f,0.0f),D3DXVECTOR2(0.1f,0.0f),D3DXVECTOR2(0.0f,1.0f),D3DXVECTOR2(0.1f,1.0f),D3DXVECTOR2(0.1f,0.0f));
+	m_animArray[4]->SetAnimationData( 3.0f,10,D3DXVECTOR2(0.0f,0.0f),D3DXVECTOR2(0.1f,0.0f),D3DXVECTOR2(0.0f,1.0f),D3DXVECTOR2(0.1f,1.0f),D3DXVECTOR2(0.1f,0.0f));
+	m_animArray[5]->SetAnimationData( 3.0f,10,D3DXVECTOR2(0.0f,0.0f),D3DXVECTOR2(0.1f,0.0f),D3DXVECTOR2(0.0f,1.0f),D3DXVECTOR2(0.1f,1.0f),D3DXVECTOR2(0.1f,0.0f));
+	m_animArray[6]->SetAnimationData( 3.0f,10,D3DXVECTOR2(0.0f,0.0f),D3DXVECTOR2(0.1f,0.0f),D3DXVECTOR2(0.0f,1.0f),D3DXVECTOR2(0.1f,1.0f),D3DXVECTOR2(0.1f,0.0f));
+	m_animArray[7]->SetAnimationData( 3.0f,20,D3DXVECTOR2(0.0f,0.0f),D3DXVECTOR2(0.05f,0.0f),D3DXVECTOR2(0.0f,1.0f),D3DXVECTOR2(0.05f,1.0f),D3DXVECTOR2(0.05f,0.0f));
+	m_animArray[8]->SetAnimationData( 3.0f,20,D3DXVECTOR2(0.0f,0.0f),D3DXVECTOR2(0.05f,0.0f),D3DXVECTOR2(0.0f,1.0f),D3DXVECTOR2(0.05f,1.0f),D3DXVECTOR2(0.05f,0.0f));
 
 	return true;
 }
@@ -93,7 +96,12 @@ bool Ggy2DAnimationManager::Initialize(void)
 //=============================================================================
 void Ggy2DAnimationManager::Finalize(void)
 {
-	delete []m_animArray;
+	for( int i = 0 ; i <_animMax;i++ )
+	{
+		SafeDelete( m_animArray[i] );
+	}
+
+	SafeDeleteArray( m_animArray );
 }
 
 //=============================================================================
@@ -101,7 +109,7 @@ void Ggy2DAnimationManager::Finalize(void)
 //=============================================================================
 void Ggy2DAnimationManager::Update(void)
 {
-	m_animArray[m_animIdx].Update();
+	m_animArray[m_animIdx]->Update();
 
 	m_poly->scl(m_scl);
 	m_poly->pos(m_pos);
@@ -119,7 +127,7 @@ void Ggy2DAnimationManager::Draw(void)
 //=============================================================================
 void Ggy2DAnimationManager::SetTexture( const int idx,LPDIRECT3DTEXTURE9 tex )
 {
-	m_animArray[idx].SetTexture( tex );
+	m_animArray[idx]->SetTexture( tex );
 }
 
 //=============================================================================
@@ -128,13 +136,13 @@ void Ggy2DAnimationManager::SetTexture( const int idx,LPDIRECT3DTEXTURE9 tex )
 
 void Ggy2DAnimationManager::StartAnimation( const int idx,bool isRoop )
 {
-	m_animArray[idx].StartAnimaton(isRoop);
+	m_animArray[idx]->StartAnimation(isRoop);
 	m_animIdx = idx;
 }
 
 bool Ggy2DAnimationManager::isEndAnimation()
 {
-	return m_animArray[m_animIdx].isEndAnimation();
+	return m_animArray[m_animIdx]->isEndAnimation();
 }
 
 

@@ -27,6 +27,7 @@ class Light;
 class ObjectList;
 class UpdateList;
 class DrawListManager;
+class Tex2DAnimation;
 
 class Title : public Phase
 {
@@ -51,6 +52,7 @@ private:
 	ObjectList*		 m_objectList;
 	UpdateList*		 m_updateList;
 	DrawListManager* m_drawListManager;
+	Tex2DAnimation * m_pushLogo;
 };
 
 //=============================================================================

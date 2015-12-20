@@ -37,6 +37,7 @@
 #include "..\..\objectBase\fbxModel\fbxModel.h"
 
 #include "..\..\import\fbx\fbxTexImport.h"
+#include "..\..\tex2DAnimation\tex2DAnimation.h"
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // マクロ定義
@@ -141,6 +142,11 @@ bool Title::Initialize(void)
 void Title::Finalize(void)
 {
 	//----------------------------
+	//アニメーションシステム
+	//----------------------------
+	SafeFinalizeDelete( m_pushLogo );
+
+	//----------------------------
 	// オブジェクト
 	//----------------------------
 	// 存在するオブジェクト全て削除
@@ -183,11 +189,16 @@ void Title::Update(void)
 #ifdef _DEBUG
 	m_debugproc->PrintDebugProc("===タイトルフェーズ===\n");
 #endif
+	//----------------------------
+	//アニメーション更新
+	//----------------------------
+	m_pushLogo->Update();
 
 	//----------------------------
 	// オブジェクト更新
 	//----------------------------
 	m_updateList->AllUpdate();
+	
 
 	//----------------------------
 	// 画面遷移
@@ -248,6 +259,28 @@ bool Title::InitObject(void)
 	bg3D->texcoord(0, 0.0f, 0.01f);
 	bg3D->texcoord(1, 1.0f, 0.01f);
 */
+	//------------------------------
+	//プッシュロゴ
+	//------------------------------
+	Tex2DAnimation::Create(&m_pushLogo);
+
+	Polygon2D *p;
+	Polygon2D::Create( &p,m_device,m_objectList,m_import->texture( TitleImport::START_LOGO ),ObjectBase::TYPE_2D );
+	
+	m_updateList->Link(p);
+	m_drawListManager->Link(p, 4, Shader::PAT_2D);
+	
+	
+
+	m_pushLogo->Set2DPolygon(p);
+	m_pushLogo->SetTexture( m_import->texture(TitleImport::START_LOGO) );
+	m_pushLogo->SetAnimationData( 15,10,D3DXVECTOR2( 0.0f,0.0f),D3DXVECTOR2( 1.0f,0.0f),
+									D3DXVECTOR2( 0.0f,0.1f),D3DXVECTOR2( 1.0f,0.1f),
+									D3DXVECTOR2( 0.0f,0.1f) );
+	m_pushLogo->StartAnimation(true);
+	p->pos( SCREEN_WIDTH/2,SCREEN_HEIGHT - SCREEN_HEIGHT/4,0);
+	p->scl( 883,162,0 );
+
 	//------------------------------
 	//fbx
 	//------------------------------
