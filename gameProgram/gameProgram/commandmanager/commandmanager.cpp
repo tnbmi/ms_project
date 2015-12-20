@@ -175,10 +175,11 @@ bool CommandManager::Initialize(PadXManager* padXManager,
 		//----------------------------
 		// ƒRƒ}ƒ“ƒhÝ’è
 		//----------------------------
-		m_team[i]->commandPrev(0);
-		m_command_prev[i] = rand()%10;
-		m_team[i]->SetCommand(m_command_list[0], m_command_list[0] + m_command_prev[i] * 10, 0, 144.0f);
-		m_team[i]->SetCommand(m_command_list[1], m_command_list[1] + m_command_prev[i] * 10, 1, 144.0f);
+		int num = rand()%10;
+		m_team[i]->commandPrev(num);
+		m_command_prev[i] = (rand() % 5 * 2) + (1 - num % 2);
+		m_team[i]->SetCommand(m_command_list[0] + num * 10, m_command_list[0] + m_command_prev[i] * 10, 0, 144.0f);
+		m_team[i]->SetCommand(m_command_list[1] + num * 10, m_command_list[1] + m_command_prev[i] * 10, 1, 144.0f);
 	}
 
 	if(!Polygon2D::Create(&m_ui_polygon, device, m_objectList, m_import->texture(GameImport::GAME_UI)))

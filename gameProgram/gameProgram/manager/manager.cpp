@@ -94,6 +94,11 @@ bool Manager::Initialize(HINSTANCE hInstance, HWND hWnd, bool windowFlg)
 	LPDIRECT3DDEVICE9 device = m_renderer->device();
 
 	//----------------------------
+	// —”‰Šú‰»
+	//----------------------------
+	srand(timeGetTime());
+
+	//----------------------------
 	// “ü—Í
 	//----------------------------
 	if(!Keyboard::Create(&m_keyboard, hInstance, hWnd))
