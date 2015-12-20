@@ -26,8 +26,8 @@ public:
 		// ‚È‚µ
 		NONE = 0,
 
-		STONES,
-		STONES_NOR,
+		GROUND,
+		BG,
 		SKY,
 
 		NUM,

@@ -162,7 +162,7 @@ bool Renderer::Initialize(HWND hWnd, bool windowFlg)
 	m_device->SetTextureStageState(0, D3DTSS_ALPHAARG2, D3DTA_CURRENT);	// ２番目のアルファ引数
 
 	// αテスト数値
-	m_device->SetRenderState(D3DRS_ALPHAREF, 0x55);					// 不透明にする値の設定
+	m_device->SetRenderState(D3DRS_ALPHAREF, 0x80);					// 不透明にする値の設定
 	m_device->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATEREQUAL);	// 比較方法
 
 	return true;

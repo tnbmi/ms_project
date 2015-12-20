@@ -16,5 +16,9 @@ sampler texSampler;
 float4 PS(float4 diffuse : COLOR0,
 		  float2 UV		 : TEXCOORD0) : COLOR0
 {
-	return float4(tex2D(texSampler, UV).rgb * diffuse.rgb, 1.0f);
+	float4 tex = tex2D(texSampler, UV);
+	if(tex.a <= 0.5f)
+		tex.a = 0;
+
+	return tex * diffuse;
 }

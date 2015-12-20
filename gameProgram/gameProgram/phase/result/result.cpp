@@ -227,7 +227,7 @@ void Result::Draw(void)
 	//----------------------------
 	m_device->Clear(0, NULL,
 					(D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER | D3DCLEAR_STENCIL),
-					D3DCOLOR_RGBA(128, 128, 128, 256), 1.0f, 0);
+					D3DCOLOR_RGBA(0, 0, 0, 0), 1.0f, 0);
 
 	//----------------------------
 	// オブジェクト描画
@@ -241,21 +241,6 @@ void Result::Draw(void)
 bool Result::InitObject(void)
 {
 	//----------------------------
-	// 地面3Dポリゴン
-	//----------------------------	
-	Polygon3D* poly3d;
-	if(!Polygon3D::Create(&poly3d, m_device, m_objectList, m_import->texture(ResultImport::STONES)))
-		return false;
-	m_updateList->Link(poly3d);
-	m_drawListManager->Link(poly3d, 4, Shader::PAT_NOR_DIR);
-	poly3d->norTexture(m_import->texture(ResultImport::STONES_NOR));
-	poly3d->scl(512.0f*5.0f, 512.0f*5.0f, 0.0f);
-	poly3d->rot_x(PAI * 0.5f);
-	poly3d->texcoord(1, 20.0f,  0.0f);
-	poly3d->texcoord(2,  0.0f, 20.0f);
-	poly3d->texcoord(3, 20.0f, 20.0f);
-
-	//----------------------------
 	// 空メッシュドーム
 	//----------------------------
 	MeshDome* dome;
@@ -266,6 +251,31 @@ bool Result::InitObject(void)
 	m_drawListManager->Link(dome, 2, Shader::PAT_NONE_LIGHT);
 	dome->pos_y(-150.0f);
 	dome->rot_y(PAI * 0.5f);
+
+	//----------------------------
+	// 背景3Dポリゴン
+	//----------------------------
+/*	Polygon3D* bg3D;
+	if(!Polygon3D::Create(&bg3D, m_device, m_objectList, m_import->texture(ResultImport::BG)))
+		return false;
+	m_updateList->Link(bg3D);
+	m_drawListManager->Link(bg3D, 1, Shader::PAT_NONE_LIGHT);
+	D3DXVECTOR3 size = D3DXVECTOR3(1800.0f, 720.0f, 0.0f);
+	bg3D->scl(size);
+	bg3D->pos(0.0f, size.y*0.5f, 512.0f*2.5f);
+	bg3D->texcoord(0, 0.0f, 0.01f);
+	bg3D->texcoord(1, 1.0f, 0.01f);
+*/
+	//----------------------------
+	// 地面3Dポリゴン
+	//----------------------------
+	Polygon3D* ground;
+	if(!Polygon3D::Create(&ground, m_device, m_objectList, m_import->texture(ResultImport::GROUND)))
+		return false;
+	m_updateList->Link(ground);
+	m_drawListManager->Link(ground, 2, Shader::PAT_NONE_LIGHT);
+	ground->scl(512.0f*5, 512.0f*5, 0.0f);
+	ground->rot_x(PAI * 0.5f);
 
 	//---------------------------
 	//リザルトマスター

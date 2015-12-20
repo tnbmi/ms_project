@@ -22,6 +22,7 @@ const char* _title_texture_name[] =
 	nullptr,
 
 	"/titleLogo.png",
+	"/BG1.png",
 	"/sky.jpg"
 };
 

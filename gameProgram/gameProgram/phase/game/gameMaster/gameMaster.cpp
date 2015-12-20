@@ -210,14 +210,14 @@ bool GameMaster::Initialize(void)
 	m_totalScore = _ScoreMax;
 	m_redTeamScore = _ScoreMax/2;
 	m_blueTeamScore=_ScoreMax/2;
-	m_redTeam->rot( D3DXVECTOR3(0,-3*D3DX_PI /4,0 ) );
-	m_blueTeam->rot( D3DXVECTOR3(0,3*D3DX_PI/4,0 ) );
+	m_redTeam->rot( D3DXVECTOR3(0,-3*PAI*0.25f,0 ) );
+	m_blueTeam->rot( D3DXVECTOR3(0,3*PAI*0.25f,0 ) );
 	m_redTeam->offsetPos( D3DXVECTOR3(0,0,0 ) );
 	m_redTeam->secondOffsetPos( D3DXVECTOR3(0,0,0));
 	m_blueTeam->offsetPos( D3DXVECTOR3(0,0,0 ) );
 
-	m_redTeam->Move( D3DXVECTOR3(700.0f,0.0f,0.0f),D3DXVECTOR3(700.0f,0.0f,0.0f),300.0f );
-	m_blueTeam->Move( D3DXVECTOR3(-700.0f,0.0f,0.0f),D3DXVECTOR3(-700.0f,0.0f,0.0f),300.0f );
+	m_redTeam->Move( D3DXVECTOR3(750.0f,0.0f,0.0f),D3DXVECTOR3(750.0f,0.0f,0.0f),300.0f );
+	m_blueTeam->Move( D3DXVECTOR3(-750.0f,0.0f,0.0f),D3DXVECTOR3(-750.0f,0.0f,0.0f),300.0f );
 	m_redTeam->ApplySclRotPos();
 	m_blueTeam->ApplySclRotPos();
 

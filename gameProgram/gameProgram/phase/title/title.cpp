@@ -31,6 +31,7 @@
 #include "..\..\list\updateList\updateList.h"
 #include "..\..\list\drawList\drawListManager.h"
 
+#include "..\..\objectBase\polygon3D\polygon3D.h"
 #include "..\..\objectBase\meshDome\meshDome.h"
 #include "..\..\objectBase\polygon2D\polygon2D.h"
 #include "..\..\objectBase\fbxModel\fbxModel.h"
@@ -41,7 +42,7 @@
 // マクロ定義
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 const D3DXVECTOR3 _at	= D3DXVECTOR3(0.0f, 500.0f, 800.0f);
-const D3DXVECTOR3 _eye	= D3DXVECTOR3(0.0f, 100.0f, -800.0f);
+const D3DXVECTOR3 _eye	= D3DXVECTOR3(0.0f, 100.0f, -760.0f);
 
 //=============================================================================
 // コンストラクタ
@@ -210,7 +211,7 @@ void Title::Draw(void)
 	//----------------------------
 	m_device->Clear(0, NULL,
 					(D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER | D3DCLEAR_STENCIL),
-					D3DCOLOR_RGBA(128, 64, 64, 255), 1.0f, 0);
+					D3DCOLOR_RGBA(0, 0, 0, 0), 1.0f, 0);
 
 	//----------------------------
 	// オブジェクト描画
@@ -235,6 +236,20 @@ bool Title::InitObject(void)
 	dome->pos(0.0f, -150.0f, 1000.0f);
 	dome->rot_y(PAI * 0.5f);
 
+	//----------------------------
+	// 背景3Dポリゴン
+	//----------------------------
+/*	Polygon3D* bg3D;
+	if(!Polygon3D::Create(&bg3D, m_device, m_objectList, m_import->texture(TitleImport::BG)))
+		return false;
+	m_updateList->Link(bg3D);
+	m_drawListManager->Link(bg3D, 1, Shader::PAT_NONE_LIGHT);
+	D3DXVECTOR3 size = D3DXVECTOR3(1800.0f, 720.0f, 0.0f);
+	bg3D->scl(size);
+	bg3D->pos(0.0f, size.y*0.5f, 512.0f*2.5f);
+	bg3D->texcoord(0, 0.0f, 0.01f);
+	bg3D->texcoord(1, 1.0f, 0.01f);
+*/
 	//------------------------------
 	//fbx
 	//------------------------------

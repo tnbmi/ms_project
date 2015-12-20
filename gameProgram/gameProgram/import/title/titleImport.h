@@ -27,6 +27,7 @@ public:
 		NONE = 0,
 
 		TITLE_LOGO,
+		BG,
 		SKY,
 
 		TEX_MAX

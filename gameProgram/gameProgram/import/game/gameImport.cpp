@@ -21,8 +21,8 @@ const char* _game_texture_name[] =
 {
 	nullptr,
 
-	"/stones.bmp",
-	"/stones_normal.bmp",
+	"/ground1.png",
+	"/BG1.png",
 	"/sky.jpg",
 
 	"/COMMAND_TEX.png",
