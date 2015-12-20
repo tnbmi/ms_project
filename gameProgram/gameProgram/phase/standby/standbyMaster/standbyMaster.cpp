@@ -127,7 +127,7 @@ bool StandbyMaster::Initialize(void)
 
 	//Ÿ•‰ƒƒSƒŠƒ“ƒN
 	m_updateList->Link( m_battle );
-	m_drawListManager->Link( m_battle,2,Shader::PAT_2D );
+	m_drawListManager->Link( m_battle,3,Shader::PAT_2D );
 
 	//ƒƒS
 	m_updateList->Link( m_blueLogo.pol );

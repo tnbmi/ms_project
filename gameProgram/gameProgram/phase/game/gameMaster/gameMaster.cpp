@@ -186,20 +186,20 @@ bool GameMaster::Initialize(void)
 	m_updateList->Link( m_blueTeamCutIn.pol );
 	m_drawListManager->Link( m_blueTeamCutIn.pol,0,Shader::PAT_2D );
 
-	m_redTeamCutIn.pol->pos(0,10000,0);
-	m_redTeamCutIn.pol->scl(450,300,0);
+	m_redTeamCutIn.pol->pos(0.0f,1500.0f,0.0f);
+	m_redTeamCutIn.pol->scl(450.0f,300.0f,0.0f);
 	m_redTeamCutIn.addVal = 0;
 	m_redTeamCutIn.time = 0;
-	m_redTeamCutIn.stPos = D3DXVECTOR3( SCREEN_WIDTH + 200,500,0 );
-	m_redTeamCutIn.edPos = D3DXVECTOR3( SCREEN_WIDTH - 420,500,0 );
+	m_redTeamCutIn.stPos = D3DXVECTOR3( SCREEN_WIDTH + 200.0f,500.0f,0.0f );
+	m_redTeamCutIn.edPos = D3DXVECTOR3( SCREEN_WIDTH - 420.0f,500.0f,0.0f );
 	m_redTeamCutIn.isCutIn = false;
 
-	m_blueTeamCutIn.pol->pos(0,10000,0);
-	m_blueTeamCutIn.pol->scl(450,300,0);
+	m_blueTeamCutIn.pol->pos(0.0f,1500.0f,0.0f);
+	m_blueTeamCutIn.pol->scl(450.0f,300.0f,0.0f);
 	m_blueTeamCutIn.addVal = 0;
 	m_blueTeamCutIn.time = 0;
-	m_blueTeamCutIn.stPos = D3DXVECTOR3( -200,500,0 );
-	m_blueTeamCutIn.edPos = D3DXVECTOR3( 420,500,0 );
+	m_blueTeamCutIn.stPos = D3DXVECTOR3( -200.0f,500.0f,0.0f );
+	m_blueTeamCutIn.edPos = D3DXVECTOR3( 420.0f,500.0f,0.0f );
 	m_blueTeamCutIn.isCutIn = false;
 
 	//----------------------------
