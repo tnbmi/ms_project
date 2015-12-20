@@ -27,6 +27,7 @@ class PadXManager;
 class Light;
 class Polygon2D;
 class Ggy2DAnimationManager;
+class Keyboard;
 
 class StandbyMaster
 {
@@ -43,6 +44,8 @@ public:
 	void Finalize(void);
 	bool Update(void);
 	void Draw(void);
+
+	void keyboard(Keyboard* keyboard) {m_keyboard = keyboard;}
 
 private:
 
@@ -82,8 +85,6 @@ private:
 	PadXManager*	 m_padXManager;
 	Light*	m_light;
 	Polygon2D* m_back;
-	Polygon2D* m_mid;
-	Polygon2D* m_front;
 	Polygon2D* m_battle;
 
 	float m_compTime;
@@ -97,6 +98,7 @@ private:
 	Ggy2DAnimationManager *m_ggyRedAnimManager;
 	Ggy2DAnimationManager *m_ggyBlueAnimManager;
 
+	Keyboard* m_keyboard;
 };
 
 //=============================================================================

@@ -187,10 +187,8 @@ void Standby::Update(void)
 	//----------------------------
 	// 画面遷移
 	//----------------------------
-	if(isStandby || m_keyboard->trigger(DIK_RETURN))
-	{
+	if(isStandby)
 		Manager::nextPhase((Phase*)new Game(m_device));
-	}
 }
 
 //=============================================================================
@@ -216,8 +214,10 @@ void Standby::Draw(void)
 //=============================================================================
 bool Standby::InitObject(void)
 {
-	//
+	// 準備マスター
 	StandbyMaster::Create( &m_standbyMaster,m_device,m_objectList,m_updateList,m_drawListManager,m_import,m_debugproc,m_padXManager,m_light );
+	m_standbyMaster->keyboard(m_keyboard);
+
 	return true;
 }
 

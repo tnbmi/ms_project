@@ -27,8 +27,6 @@ public:
 		NONE = 0,
 
 		BACK,
-		MID,
-		FRONT,
 		PREPARE_BLUE,
 		PREPARE_RED,
 		BATTLE,

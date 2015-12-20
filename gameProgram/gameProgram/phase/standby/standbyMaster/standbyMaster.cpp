@@ -33,6 +33,7 @@
 #include "..\..\..\ggy2DAnimationManager\ggy2DAnimationManager.h"
 #include "..\..\..\sound\sound.h"
 
+#include "..\..\..\input\keyboard\keyboard.h"
 
 //=============================================================================
 // コンストラクタ
@@ -78,8 +79,6 @@ bool StandbyMaster::Create(StandbyMaster** outPointer,LPDIRECT3DDEVICE9 device,
 bool StandbyMaster::Initialize(void)
 {
 	Polygon2D::Create( &m_back,m_device,m_objectList,m_import->texture( StandbyImport::BACK ),ObjectBase::TYPE_2D );
-	Polygon2D::Create( &m_mid,m_device,m_objectList,m_import->texture( StandbyImport::MID ),ObjectBase::TYPE_2D );
-	Polygon2D::Create( &m_front,m_device,m_objectList,m_import->texture( StandbyImport::FRONT ),ObjectBase::TYPE_2D );
 	Polygon2D::Create( &m_blueTeamStandby[0].pol,m_device,m_objectList,m_import->texture( StandbyImport::PREPARE_BLUE ),ObjectBase::TYPE_2D );
 	Polygon2D::Create( &m_blueTeamStandby[1].pol,m_device,m_objectList,m_import->texture( StandbyImport::PREPARE_BLUE ),ObjectBase::TYPE_2D );
 	Polygon2D::Create( &m_redTeamStandby[0].pol,m_device,m_objectList,m_import->texture( StandbyImport::PREPARE_RED ),ObjectBase::TYPE_2D );
@@ -115,12 +114,6 @@ bool StandbyMaster::Initialize(void)
 	m_updateList->Link( m_back );
 	m_drawListManager->Link( m_back,0,Shader::PAT_2D );
 
-	m_updateList->Link( m_mid );
-	m_drawListManager->Link( m_mid,1,Shader::PAT_2D );
-
-	m_updateList->Link( m_front );
-	m_drawListManager->Link( m_front,2,Shader::PAT_2D );
-
 	//スタンバイシートリンク
 	m_updateList->Link( m_blueTeamStandby[0].pol );
 	m_drawListManager->Link( m_blueTeamStandby[0].pol,2,Shader::PAT_2D );
@@ -144,13 +137,9 @@ bool StandbyMaster::Initialize(void)
 
 	//スケーリング指定(固定)
 	m_back->scl( SCREEN_WIDTH,SCREEN_HEIGHT,1 );
-	m_mid->scl( SCREEN_WIDTH,SCREEN_HEIGHT,1 );
-	m_front->scl( SCREEN_WIDTH,SCREEN_HEIGHT,1 );
 
 	//位置指定(固定)
 	m_back->pos( SCREEN_WIDTH/2,SCREEN_HEIGHT/2,0 );
-	m_mid->pos( SCREEN_WIDTH/2,SCREEN_HEIGHT/2,0 );
-	m_front->pos( SCREEN_WIDTH/2,SCREEN_HEIGHT/2,0 );
 
 	//スタンバイ
 	m_blueTeamStandby[0].pol->scl( 0.0f,0.0f,1.0f );
@@ -200,16 +189,30 @@ bool StandbyMaster::Initialize(void)
 	m_redLogo.offsetUv = D3DXVECTOR2(0.0f,0.111f);
 
 	//初期化
-	m_blueTeamStandby[0].isStandby = false;
 	m_blueTeamStandby[0].time = _compFrame;
-	m_blueTeamStandby[1].isStandby = false;
 	m_blueTeamStandby[1].time = _compFrame;
 
-	m_redTeamStandby[0].isStandby = false;
 	m_redTeamStandby[0].time = _compFrame;
-	m_redTeamStandby[1].isStandby = true;
 	m_redTeamStandby[1].time = _compFrame;
-	
+
+	// パッド確認
+	m_blueTeamStandby[0].isStandby = false;
+
+	if(m_padXManager->pad(1)->conected())
+		m_blueTeamStandby[1].isStandby = false;
+	else
+		m_blueTeamStandby[1].isStandby = true;
+
+	if(m_padXManager->pad(2)->conected())
+		m_redTeamStandby[0].isStandby = false;
+	else
+		m_redTeamStandby[0].isStandby = true;
+
+	if(m_padXManager->pad(3)->conected())
+		m_redTeamStandby[1].isStandby = false;
+	else
+		m_redTeamStandby[1].isStandby = true;
+
 	m_compTime = 0;
 
 	m_phase = PHASE_WAIT;
@@ -276,7 +279,8 @@ bool StandbyMaster::Update(void)
 		//キー判定　青
 		for( int i = 0 ; i < 2 ; i++ )
 		{
-			if( m_padXManager->pad(i)->buttonTrigger( XINPUT_GAMEPAD_START ) )
+			if( m_padXManager->pad(i)->buttonTrigger( XINPUT_GAMEPAD_START ) 
+			|| (i==0 && m_keyboard->trigger(DIK_RETURN)))
 			{
 				m_blueTeamStandby[i].isStandby = true;
 				Sound::Play( Sound::SE_DRUM );
