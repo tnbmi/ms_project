@@ -128,7 +128,7 @@ bool GameMaster::Initialize(void)
 	Tex2DAnimation::Create( &m_countDown );
 	m_countDown->Set2DPolygon( m_call );
 	m_countDown->SetTexture( m_import->texture( GameImport::COUNTDOWN ) );
-	m_countDown->SetAnimationData(60,4,D3DXVECTOR2(0.0f,0.0f),D3DXVECTOR2(0.2f,0.0f),D3DXVECTOR2(0.0f,1.0f),D3DXVECTOR2(0.2f,1.0f),D3DXVECTOR2(0.2f,0.0f) );
+	m_countDown->SetAnimationData(60,3,D3DXVECTOR2(0.0f,0.0f),D3DXVECTOR2(0.2f,0.0f),D3DXVECTOR2(0.0f,1.0f),D3DXVECTOR2(0.2f,1.0f),D3DXVECTOR2(0.2f,0.0f) );
 	m_countDown->StartAnimation(false);
 	//
 	MainImport* mainImport = Manager::mainImport();
