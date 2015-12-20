@@ -29,7 +29,6 @@
     <ClCompile Include="import\standby\standbyImport.cpp" />
     <ClCompile Include="import\title\titleImport.cpp" />
     <ClCompile Include="input\keyboard\keyboard.cpp" />
-    <ClCompile Include="input\padX\dummyDataLoad.cpp" />
     <ClCompile Include="input\padX\dummyPadX.cpp" />
     <ClCompile Include="input\padX\padX.cpp" />
     <ClCompile Include="input\padX\padXManager.cpp" />
@@ -93,7 +92,6 @@
     <ClInclude Include="import\standby\standbyImport.h" />
     <ClInclude Include="import\title\titleImport.h" />
     <ClInclude Include="input\keyboard\keyboard.h" />
-    <ClInclude Include="input\padX\dummyDataLoad.h" />
     <ClInclude Include="input\padX\dummyPadX.h" />
     <ClInclude Include="input\padX\padX.h" />
     <ClInclude Include="input\padX\padXManager.h" />

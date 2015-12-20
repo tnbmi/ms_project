@@ -26,10 +26,10 @@ DummyDataLoad::DummyDataLoad(int patternMax)
 	m_patternMax = patternMax;
 	int size	 = patternMax * 10;
 
-	m_dummyData = new unsigned int[size];
+	m_commandData = new unsigned int[size];
 
 	for(int cnt = 0; cnt < size; ++cnt)
-		m_dummyData[cnt] = 0;
+		m_commandData[cnt] = 0;
 }
 
 //=============================================================================
@@ -37,16 +37,16 @@ DummyDataLoad::DummyDataLoad(int patternMax)
 //=============================================================================
 DummyDataLoad::~DummyDataLoad(void)
 {
-	SafeDeleteArray(m_dummyData);
+	SafeDeleteArray(m_commandData);
 }
 
 //=============================================================================
 // 生成
 //=============================================================================
-bool DummyDataLoad::Create(DummyDataLoad** outPointer, const char* filePath, int patternMax)
+bool DummyDataLoad::Create(DummyDataLoad** outPointer, int patternMax, unsigned int* commandData)
 {
 	DummyDataLoad* pointer = new DummyDataLoad(patternMax);
-	if(!pointer->Initialize(filePath))
+	if(!pointer->Initialize(commandData))
 		return false;
 
 	*outPointer = pointer;
@@ -56,51 +56,9 @@ bool DummyDataLoad::Create(DummyDataLoad** outPointer, const char* filePath, int
 //=============================================================================
 // 初期化
 //=============================================================================
-bool DummyDataLoad::Initialize(const char* filePath)
+bool DummyDataLoad::Initialize(unsigned int* commandData)
 {
-	FILE*	file;
-	char	c;
-	int		offset = 0;
-
-	//----------------------------
-	// ファイルオープン
-	//----------------------------
-	fopen_s(&file, filePath, "r");
-
-	if(file == nullptr)
-		return false;
-
-	//----------------------------
-	// ダミー入力データ読み込み
-	//----------------------------
-	while((c = fgetc(file)) != EOF)
-	{
-		if(c == '/')
-		{
-			c = fgetc(file);
-			if(c == 'i')
-			{// 入力データ
-				fscanf_s(file,
-						" %d %d %d %d %d %d %d %d %d %d",
-						&m_dummyData[offset],
-						&m_dummyData[offset + 1],
-						&m_dummyData[offset + 2],
-						&m_dummyData[offset + 3],
-						&m_dummyData[offset + 4],
-						&m_dummyData[offset + 5],
-						&m_dummyData[offset + 6],
-						&m_dummyData[offset + 7],
-						&m_dummyData[offset + 8],
-						&m_dummyData[offset + 9]);
-				offset += 10;
-			}
-		}
-	}
-
-	//----------------------------
-	// ファイルクローズ
-	//----------------------------
-	fclose(file);
+	m_commandData = commandData;
 
 	return true;
 }

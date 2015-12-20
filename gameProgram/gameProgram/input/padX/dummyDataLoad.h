@@ -23,8 +23,8 @@ public:
 	DummyDataLoad(int patternMax);
 	~DummyDataLoad(void);
 
-	static bool Create(DummyDataLoad** outPointer, const char* filePath, int patternMax);
-	bool Initialize(const char* filePath);
+	static bool Create(DummyDataLoad** outPointer, int patternMax, unsigned int* commandData);
+	bool Initialize(unsigned int* commandData);
 	void Finalize(void);
 
 	unsigned int* dummyData(void){return m_dummyData;}
@@ -32,7 +32,7 @@ public:
 private:
 	int m_patternMax;
 
-	unsigned int* m_dummyData;
+	unsigned int* m_commandData;
 };
 
 //=============================================================================

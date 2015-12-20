@@ -385,9 +385,6 @@
     <ClInclude Include="input\padX\dummyPadX.h">
       <Filter>input\padX</Filter>
     </ClInclude>
-    <ClInclude Include="input\padX\dummyDataLoad.h">
-      <Filter>input\padX</Filter>
-    </ClInclude>
     <ClInclude Include="commandmanager\commandteam\commandEffect\commandEffect.h">
       <Filter>commandmanager\commandteam\commandEffect</Filter>
     </ClInclude>
@@ -563,9 +560,6 @@
     </ClCompile>
     <ClCompile Include="import\load\loadImport.cpp">
       <Filter>import\load</Filter>
-    </ClCompile>
-    <ClCompile Include="input\padX\dummyDataLoad.cpp">
-      <Filter>input\padX</Filter>
     </ClCompile>
     <ClCompile Include="input\padX\dummyPadX.cpp">
       <Filter>input\padX</Filter>

@@ -87,8 +87,6 @@ bool Demo::Initialize(void)
 	//----------------------------
 	if(!DemoImport::Create(&m_import, m_device))
 		return false;
-	//if(!FbxTexImport::Create(&m_fbxTexImport,m_device ))
-	//	return false;
 	m_fbxTexImport = Manager::fbxTexImport();
 
 	//----------------------------
@@ -184,7 +182,6 @@ void Demo::Finalize(void)
 	// インポート
 	//----------------------------
 	SafeFinalizeDelete(m_import);
-	//SafeFinalizeDelete(m_fbxTexImport);
 }
 
 //=============================================================================

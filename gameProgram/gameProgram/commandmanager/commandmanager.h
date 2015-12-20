@@ -70,6 +70,7 @@ private:
 	CommandTeam*	m_team[2];
 	int				m_command_prev[2];
 	unsigned int*	m_command_list[2];
+	PadX*			m_pad[4];
 
 	Polygon2D*		m_ui_polygon;
 

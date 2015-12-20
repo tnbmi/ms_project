@@ -45,7 +45,9 @@ const D3DXVECTOR3 _effect_pos[2] = {D3DXVECTOR3(-900.0f, 400.0f, 0.0f),D3DXVECTO
 //=============================================================================
 DemoMaster::DemoMaster( LPDIRECT3DDEVICE9 device,ObjectList *objectList,UpdateList *updateList,DrawListManager *drawList,DemoImport *import,FbxTexImport *fbxTexImport,Debugproc *proc,PadXManager* padXMaster )
 {
-	//
+	//----------------------------
+	// メンバー初期化
+	//----------------------------
 	m_device = device;
 	m_objectList = objectList;
 	m_updateList = updateList;
@@ -56,9 +58,6 @@ DemoMaster::DemoMaster( LPDIRECT3DDEVICE9 device,ObjectList *objectList,UpdateLi
 	m_fbxTexImport = fbxTexImport;
 	m_command_manager	= nullptr;
 	m_time_manager		= nullptr;
-	//----------------------------
-	// メンバー初期化
-	//----------------------------
 }
 
 //=============================================================================

@@ -27,13 +27,12 @@ public:
 	DummyPadX(void);
 	~DummyPadX(void);
 
-	static bool Create(PadX** outPointer, int no, int patternMax);
-	bool Initialize(int no, int patternMax);
+	static bool Create(PadX** outPointer, int no, int patternMax, unsigned int* commandList);
+	bool Initialize(int no, int patternMax, unsigned int* commandList);
 	void Finalize(void);
 	void Update(void);
 
 private:
-	DummyDataLoad* m_dummyDataLoad;
 	unsigned int* m_commandList;
 };
 

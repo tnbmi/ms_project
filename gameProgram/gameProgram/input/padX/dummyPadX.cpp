@@ -11,21 +11,12 @@
 #include "dummyPadX.h"
 #include "..\..\debugproc\debugproc.h"
 
-#include "..\..\input\padX\dummyDataLoad.h"
-
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // マクロ定義
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 const int _repeatMin		= 30;	// リピート開始カウント数
 const int _repeatInterval	= 3;	// リピート間隔カウント数
 
-const char* _fileName[] =
-{
-	"./resources/command/dumDataBlueA.txt",
-	"./resources/command/dumDataBlueB.txt",
-	"./resources/command/dumDataRedA.txt",
-	"./resources/command/dumDataRedB.txt"
-};
 const int _commandData[5] =
 {
 	XINPUT_GAMEPAD_DPAD_UP,
@@ -47,7 +38,7 @@ DummyPadX::DummyPadX(void)
 	m_dummy = true;
 
 	// ダミーのデータ
-	m_dummyDataLoad = nullptr;
+	m_commandList = nullptr;
 }
 
 //=============================================================================
@@ -60,10 +51,10 @@ DummyPadX::~DummyPadX(void)
 //=============================================================================
 // 生成
 //=============================================================================
-bool DummyPadX::Create(PadX** outPointer, int no, int patternMax)
+bool DummyPadX::Create(PadX** outPointer, int no, int patternMax, unsigned int* commandList)
 {
 	DummyPadX* pointer = new DummyPadX();
-	if(!pointer->Initialize(no, patternMax))
+	if(!pointer->Initialize(no, patternMax, commandList))
 		return false;
 
 	*outPointer = pointer;
@@ -73,7 +64,7 @@ bool DummyPadX::Create(PadX** outPointer, int no, int patternMax)
 //=============================================================================
 // 初期化
 //=============================================================================
-bool DummyPadX::Initialize(int no, int patternMax)
+bool DummyPadX::Initialize(int no, int patternMax, unsigned int* commandList)
 {
 	//----------------------------
 	// 入力ナンバー
@@ -83,8 +74,7 @@ bool DummyPadX::Initialize(int no, int patternMax)
 	//----------------------------
 	// コマンド読み込み
 	//----------------------------
-	DummyDataLoad::Create(&m_dummyDataLoad, _fileName[m_no], patternMax);
-	m_commandList = m_dummyDataLoad->dummyData();
+	m_commandList = commandList;
 
 	return true;
 }
