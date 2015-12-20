@@ -240,7 +240,7 @@ bool Title::InitObject(void)
 	//------------------------------
 	FbxModel *fbx;
 	FbxModel::Create( &fbx,m_device,m_objectList,0,ObjectBase::TYPE_3D,"./resources/fbxModel/title.bin",m_fbxTexImport );
-	fbx->StartAnimation( 1,60,true );
+	fbx->StartAnimation( 1,3,true );
 	m_updateList->Link( fbx );
 	m_drawListManager->Link( fbx,0,Shader::PAT_FBX );
 

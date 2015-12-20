@@ -167,7 +167,10 @@ void FbxModel::Finalize(void)
 //=============================================================================
 void FbxModel::Update(void)
 {
-	UpdateAnimation();
+	if( m_boneSum > 0 )
+	{
+		UpdateAnimation();
+	}
 }
 
 //=============================================================================
@@ -274,8 +277,8 @@ void FbxModel::UpdateAnimation()
 {
 	//時間は同じでしょ
 	//ルートボーンの時間を代表して使うよ
-	float time = float( ( m_animTime - 0 ) ) / float( ( 1 - 0 ) );// 時間を媒介変数に
-	float btime= float( ( m_blendTime- 0 ) ) / float( ( 1 - 0 ) );
+	float time = float( ( m_animTime - 0 ) ) / float( ( m_boneArray[0].keyFrameArray[m_curKeyFrame+1].time - m_boneArray[0].keyFrameArray[m_curKeyFrame].time ) );// 時間を媒介変数に
+	float btime= float( ( m_blendTime- 0 ) ) / float( (  m_boneArray[0].keyFrameArray[m_blendCurKeyFrame+1].time - m_boneArray[0].keyFrameArray[m_blendCurKeyFrame].time)  );
 	float blendWeight = float( ( m_blendWeight ) ) / float( ( _blendFrame ) );
 
 	float rate = Cube( blendWeight );
