@@ -42,7 +42,7 @@
 // マクロ定義
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 const D3DXVECTOR3 _at	= D3DXVECTOR3(0.0f, 500.0f, 800.0f);
-const D3DXVECTOR3 _eye	= D3DXVECTOR3(0.0f, 100.0f, -760.0f);
+const D3DXVECTOR3 _eye	= D3DXVECTOR3(0.0f, 100.0f, -770.0f);
 
 //=============================================================================
 // コンストラクタ
@@ -255,7 +255,7 @@ bool Title::InitObject(void)
 	//------------------------------
 	FbxModel *fbx;
 	FbxModel::Create( &fbx,m_device,m_objectList,0,ObjectBase::TYPE_3D,"./resources/fbxModel/title.bin",m_fbxTexImport );
-	fbx->StartAnimation( 1,60,true );
+	fbx->StartAnimation( 1,3,true );
 	m_updateList->Link( fbx );
 	m_drawListManager->Link( fbx,0,Shader::PAT_FBX );
 
