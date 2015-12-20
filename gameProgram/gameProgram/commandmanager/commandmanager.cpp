@@ -130,10 +130,10 @@ bool CommandManager::Initialize(PadXManager* padXManager,
 		//----------------------------
 		if(m_demoFlg)
 		{
-			DummyPadX::Create(&m_pad[i*2], i*2, _list_pattern_max, m_command_list[0]);
+			DummyPadX::Create(&m_pad[i*2], i*2, _list_pattern_max, m_command_list[0], rand()%60 + 40);
 			m_pad[i*2]->debugproc(m_debugproc);
 
-			DummyPadX::Create(&m_pad[i*2+1], i*2+1, _list_pattern_max, m_command_list[1]);
+			DummyPadX::Create(&m_pad[i*2+1], i*2+1, _list_pattern_max, m_command_list[1], rand()%60 + 40);
 			m_pad[i*2+1]->debugproc(m_debugproc);
 		}
 		else
@@ -142,7 +142,7 @@ bool CommandManager::Initialize(PadXManager* padXManager,
 				m_pad[i*2] = padXManager->pad(i*2);
 			else
 			{
-				DummyPadX::Create(&m_pad[i*2], i*2, _list_pattern_max, m_command_list[0]);
+				DummyPadX::Create(&m_pad[i*2], i*2, _list_pattern_max, m_command_list[0], rand()%60 + 40);
 				m_pad[i*2]->debugproc(m_debugproc);
 			}
 
@@ -150,12 +150,11 @@ bool CommandManager::Initialize(PadXManager* padXManager,
 				m_pad[i*2+1] = padXManager->pad(i*2+1);
 			else
 			{
-				DummyPadX::Create(&m_pad[i*2+1], i*2+1, _list_pattern_max, m_command_list[1]);
+				DummyPadX::Create(&m_pad[i*2+1], i*2+1, _list_pattern_max, m_command_list[1], rand()%60 + 40);
 				m_pad[i*2+1]->debugproc(m_debugproc);
 			}
 		}
 
-#ifdef _DEBUG
 		m_team[i]->SetPlayer( m_pad[i*2], m_pad[i*2+1] );
 		//if( i == 0 )
 		//{
@@ -167,9 +166,6 @@ bool CommandManager::Initialize(PadXManager* padXManager,
 		//}
 		//m_team[i]->SetPlayer( pad[i], pad[i] );
 		//m_team[i]->SetPlayer( pad[i*2], pad[i*2+1] );
-#else
-		m_team[i]->SetPlayer( pad[i*2], pad[i*2+1] );
-#endif
 
 		//----------------------------
 		// ƒRƒ}ƒ“ƒhİ’è
@@ -198,8 +194,12 @@ void CommandManager::Finalize(void)
 	for(int i = 0; i < _team_max; i++)
 	{
 		SafeFinalizeDelete(m_team[i]);
-		SafeFinalizeDelete(m_pad[i*2]);
-		SafeFinalizeDelete(m_pad[i*2+1]);
+
+		if(m_pad[i*2]->dummy())
+			SafeFinalizeDelete(m_pad[i*2]);
+
+		if(m_pad[i*2+1]->dummy())
+			SafeFinalizeDelete(m_pad[i*2+1]);
 	}
 
 	SafeFinalizeDelete(m_commandDataLoad);

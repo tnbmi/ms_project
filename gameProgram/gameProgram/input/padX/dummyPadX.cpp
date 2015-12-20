@@ -51,10 +51,10 @@ DummyPadX::~DummyPadX(void)
 //=============================================================================
 // 生成
 //=============================================================================
-bool DummyPadX::Create(PadX** outPointer, int no, int patternMax, unsigned int* commandList)
+bool DummyPadX::Create(PadX** outPointer, int no, int patternMax, unsigned int* commandList, int per)
 {
 	DummyPadX* pointer = new DummyPadX();
-	if(!pointer->Initialize(no, patternMax, commandList))
+	if(!pointer->Initialize(no, patternMax, commandList, per))
 		return false;
 
 	*outPointer = pointer;
@@ -64,7 +64,7 @@ bool DummyPadX::Create(PadX** outPointer, int no, int patternMax, unsigned int* 
 //=============================================================================
 // 初期化
 //=============================================================================
-bool DummyPadX::Initialize(int no, int patternMax, unsigned int* commandList)
+bool DummyPadX::Initialize(int no, int patternMax, unsigned int* commandList, int per)
 {
 	//----------------------------
 	// 入力ナンバー
@@ -75,6 +75,16 @@ bool DummyPadX::Initialize(int no, int patternMax, unsigned int* commandList)
 	// コマンド読み込み
 	//----------------------------
 	m_commandList = commandList;
+
+	//----------------------------
+	// 成功確率
+	//----------------------------
+	if(per < 0)
+		per = 0;
+	else if(per > 100)
+		per = 100;
+
+	m_per = per;
 
 	return true;
 }
@@ -93,7 +103,7 @@ void DummyPadX::Update(void)
 {
 #ifdef _DEBUG
 	m_debugproc->PrintDebugProc("***パッドNo:%1d******\n", m_no);
-	m_debugproc->PrintDebugProc("！ダミー！\n");
+	m_debugproc->PrintDebugProc("！ダミー！　[確率：%d％]\n", m_per);
 #endif
 
 	//----------------------------
@@ -110,7 +120,11 @@ void DummyPadX::Update(void)
 
 	if(m_pressFlg)
 	{
-		padInput.wButtons = _commandData[m_commandList[m_commandPrev*10 + m_commandCnt]];
+		if(rand()%100 <= m_per)
+			padInput.wButtons = _commandData[m_commandList[m_commandPrev*10 + m_commandCnt]];
+		else
+			padInput.wButtons = _commandData[rand()%4] | ~_commandData[m_commandList[m_commandPrev*10 + m_commandCnt]];
+
 		m_pressFlg = false;
 	}
 
