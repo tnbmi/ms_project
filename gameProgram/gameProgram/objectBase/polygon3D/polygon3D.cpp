@@ -130,7 +130,7 @@ void Polygon3D::Draw(LPD3DXCONSTANTTABLE vsc, LPD3DXCONSTANTTABLE psc, D3DXMATRI
 		m_device->SetSamplerState(texSampler, D3DSAMP_MAXANISOTROPY, 16);
 
 		// サンプラーインデックス
-		norSampler = psc->GetSamplerIndex("norSampler");
+/*		norSampler = psc->GetSamplerIndex("norSampler");
 
 		// サンプラーステートパラメータ
 		m_device->SetSamplerState(norSampler, D3DSAMP_ADDRESSU, D3DTADDRESS_WRAP);		// テクスチャアドレッシング方法(U値)を設定
@@ -138,7 +138,7 @@ void Polygon3D::Draw(LPD3DXCONSTANTTABLE vsc, LPD3DXCONSTANTTABLE psc, D3DXMATRI
 		m_device->SetSamplerState(norSampler, D3DSAMP_MINFILTER, D3DTEXF_ANISOTROPIC);	// テクスチャ縮小フィルタモードを設定
 		m_device->SetSamplerState(norSampler, D3DSAMP_MIPFILTER, D3DTEXF_LINEAR);
 		m_device->SetSamplerState(norSampler, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);		// テクスチャ拡大フィルタモードを設定
-		m_device->SetSamplerState(norSampler, D3DSAMP_MAXANISOTROPY, 16);
+		m_device->SetSamplerState(norSampler, D3DSAMP_MAXANISOTROPY, 16);*/
 	}
 	
 	//----------------------------
@@ -154,10 +154,10 @@ void Polygon3D::Draw(LPD3DXCONSTANTTABLE vsc, LPD3DXCONSTANTTABLE psc, D3DXMATRI
 	}
 	
 	// 法線テクスチャの設定
-	if(m_norTexture != nullptr)
+/*	if(m_norTexture != nullptr)
 		if(norSampler >= 0)
 			m_device->SetTexture(norSampler, m_norTexture);
-
+*/
 	//----------------------------
 	// 描画
 	//----------------------------
@@ -168,8 +168,8 @@ void Polygon3D::Draw(LPD3DXCONSTANTTABLE vsc, LPD3DXCONSTANTTABLE psc, D3DXMATRI
 	else
 		m_device->SetTexture(0, nullptr);
 
-	if(norSampler >= 0)
-		m_device->SetTexture(norSampler, nullptr);
+//	if(norSampler >= 0)
+//		m_device->SetTexture(norSampler, nullptr);
 }
 
 //=============================================================================
