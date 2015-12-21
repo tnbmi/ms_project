@@ -48,9 +48,9 @@ const SOUND_PARAM _sound_data[] =
 	{"/se/iza.wav",false},//SE_VOICE_IZA
 	{"/se/syoubu.wav",false},//SE_VOICE_BATTLE
 	{"/se/dodon.wav",false},
+	{"/se/moriagariMid.wav",false},
 	{"/se/syouriBlue.wav",false},
 	{"/se/syouriRed.wav",false},
-	{"/se/moriagariMid.wav",false},
 	{"/se/attackBlue1.wav",false},
 	{"/se/attackBlue2.wav",false},
 	{"/se/attackBlue3.wav",false},
