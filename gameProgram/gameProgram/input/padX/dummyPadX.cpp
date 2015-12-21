@@ -120,10 +120,15 @@ void DummyPadX::Update(void)
 
 	if(m_pressFlg)
 	{
+		WORD com = _commandData[m_commandList[m_commandPrev*10 + m_commandCnt]];
+
 		if(rand()%100 <= m_per)
-			padInput.wButtons = _commandData[m_commandList[m_commandPrev*10 + m_commandCnt]];
+			padInput.wButtons = com;
 		else
-			padInput.wButtons = _commandData[rand()%4] | ~_commandData[m_commandList[m_commandPrev*10 + m_commandCnt]];
+		{
+			WORD missCom = _commandData[rand()%4];
+			padInput.wButtons = missCom & ~com;
+		}
 
 		m_pressFlg = false;
 	}
