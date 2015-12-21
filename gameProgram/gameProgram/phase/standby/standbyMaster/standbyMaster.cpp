@@ -443,7 +443,7 @@ bool StandbyMaster::Update(void)
 		}
 
 		//ƒƒ“ƒo[‘S‚Ä‚ª€”õŠ®—¹‚È‚ç
-		if( m_blueTeamStandby[0].isStandby && m_blueTeamStandby[0].isStandby && m_redTeamStandby[0].isStandby && m_redTeamStandby[1].isStandby
+		if( m_blueTeamStandby[0].isStandby && m_blueTeamStandby[1].isStandby && m_redTeamStandby[0].isStandby && m_redTeamStandby[1].isStandby
 			&& m_blueTeamStandby[0].time >= _compFrame && m_blueTeamStandby[1].time >= _compFrame 
 			&& m_redTeamStandby[0].time >= _compFrame  && m_redTeamStandby[1].time >= _compFrame)
 		{

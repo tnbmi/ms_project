@@ -378,7 +378,7 @@ void AudienceStateStayRedTeam::Init( AudienceManager::AUDIENCEDATA *audienceData
 	end.x = RandRange( m_rightLimit.x,m_leftLimit.x+offset );
 	end.y = RandRange( m_rightLimit.y,m_leftLimit.y );
 	end.z = RandRange( m_rightLimit.z,m_leftLimit.z );
-
+	audienceData->addY = 1;
 	audienceData->edPos = end;
 	audienceData->stPos = audienceData->pos;
 	
@@ -394,7 +394,7 @@ void AudienceStateStayBlueTeam::Init( AudienceManager::AUDIENCEDATA *audienceDat
 	end.x = RandRange( m_rightLimit.x-offset,m_leftLimit.x );
 	end.y = RandRange( m_rightLimit.y,m_leftLimit.y );
 	end.z = RandRange( m_rightLimit.z,m_leftLimit.z );
-
+	audienceData->addY = 1;
 	audienceData->edPos = end;
 	audienceData->stPos = audienceData->pos;
 }
@@ -411,6 +411,7 @@ void AudienceStateMoveRedTeam::Init( AudienceManager::AUDIENCEDATA *audienceData
 	end.y = RandRange( m_rightLimit.y,m_leftLimit.y );
 	end.z = RandRange( m_rightLimit.z,m_leftLimit.z );
 
+	audienceData->addY = 1;
 	audienceData->edPos = end;
 	
 }
@@ -426,7 +427,7 @@ void AudienceStateMoveBlueTeam::Init( AudienceManager::AUDIENCEDATA *audienceDat
 	end.x = RandRange( m_rightLimit.x,m_leftLimit.x );
 	end.y = RandRange( m_rightLimit.y,m_leftLimit.y );
 	end.z = RandRange( m_rightLimit.z,m_leftLimit.z );
-
+	audienceData->addY = 1;
 	audienceData->edPos = end;
 }
 
@@ -437,20 +438,19 @@ void AudienceStateStayRedTeam::Update( AudienceManager::AUDIENCEDATA *audienceDa
 	audienceData->pos.x = Lerp( audienceData->stPos.x,audienceData->edPos.x,0,audienceData->compTime,audienceData->eraseTime,Cube );
 	audienceData->pos.z = Lerp( audienceData->stPos.z,audienceData->edPos.z,0,audienceData->compTime,audienceData->eraseTime,Cube );
 	audienceData->pos.y = Lerp( audienceData->stPos.y,audienceData->edPos.y,0,audienceData->compTime/4,audienceData->eraseTimeY,EaseIn );
-	audienceData->eraseTimeY++;
+	audienceData->eraseTimeY+= audienceData->addY;
 	audienceData->eraseTime++;
 
 
 	//Ｙ方向補完終了　上下ループ
-	if( audienceData->eraseTimeY >= audienceData->compTime/4 )
+	if( audienceData->eraseTimeY >= audienceData->compTime/4 || audienceData->eraseTimeY < 0 )
 	{
-		float buf = audienceData->stPos.y;
-		audienceData->stPos.y = audienceData->pos.y;
-		audienceData->edPos.y = buf;
-		audienceData->eraseTimeY = 0;
+		audienceData->addY *= -1;
+		audienceData->eraseTimeY += audienceData->addY;
 	}
 
 		//移動終了
+	/*
 	if( audienceData->eraseTime >= audienceData->compTime && audienceData->eraseTimeY == 0 )
 	{
 		D3DXVECTOR3 end;
@@ -468,7 +468,7 @@ void AudienceStateStayRedTeam::Update( AudienceManager::AUDIENCEDATA *audienceDa
 	{
 		audienceData->eraseTime = audienceData->compTime;
 	}
-
+	*/
 	audienceData->poly->col = audienceData->col;
 	audienceData->poly->pos = audienceData->pos;
 }
@@ -480,21 +480,20 @@ void AudienceStateStayBlueTeam::Update( AudienceManager::AUDIENCEDATA *audienceD
 	audienceData->pos.x = Lerp( audienceData->stPos.x,audienceData->edPos.x,0,audienceData->compTime,audienceData->eraseTime,Cube );
 	audienceData->pos.z = Lerp( audienceData->stPos.z,audienceData->edPos.z,0,audienceData->compTime,audienceData->eraseTime,Cube );
 	audienceData->pos.y = Lerp( audienceData->stPos.y,audienceData->edPos.y,0,audienceData->compTime/4,audienceData->eraseTimeY,EaseIn );
-	audienceData->eraseTimeY++;
+	audienceData->eraseTimeY+=audienceData->addY;
 	audienceData->eraseTime++;
 
 
 	//Ｙ方向補完終了　上下ループ
-	if( audienceData->eraseTimeY >= audienceData->compTime/4 )
+	if( audienceData->eraseTimeY >= audienceData->compTime/4 || audienceData->eraseTimeY < 0 )
 	{
-		float buf = audienceData->stPos.y;
-		audienceData->stPos.y = audienceData->pos.y;
-		audienceData->edPos.y = buf;
-		audienceData->eraseTimeY = 0;
+		audienceData->addY *= -1;
+		audienceData->eraseTimeY += audienceData->addY;
 	}
 
 
 	//移動終了
+	/*
 	if( audienceData->eraseTime >= audienceData->compTime && audienceData->eraseTimeY == 0 )
 	{
 		D3DXVECTOR3 end;
@@ -511,7 +510,7 @@ void AudienceStateStayBlueTeam::Update( AudienceManager::AUDIENCEDATA *audienceD
 	{
 		audienceData->eraseTime = audienceData->compTime;
 	}
-
+	*/
 	audienceData->poly->col = audienceData->col;
 	audienceData->poly->pos = audienceData->pos;
 }
@@ -523,17 +522,14 @@ void AudienceStateMoveRedTeam::Update( AudienceManager::AUDIENCEDATA *audienceDa
 	audienceData->pos.x = Lerp( audienceData->stPos.x,audienceData->edPos.x,0,audienceData->compTime,audienceData->eraseTime,Cube );
 	audienceData->pos.z = Lerp( audienceData->stPos.z,audienceData->edPos.z,0,audienceData->compTime,audienceData->eraseTime,Cube );
 	audienceData->pos.y = Lerp( audienceData->stPos.y,audienceData->edPos.y,0,audienceData->compTime/4,audienceData->eraseTimeY,EaseIn );
-	audienceData->eraseTimeY++;
+	audienceData->eraseTimeY+=audienceData->addY;
 	audienceData->eraseTime++;
 
 
-	//Ｙ方向補完終了　上下ループ
-	if( audienceData->eraseTimeY >= audienceData->compTime/4 )
+	if( audienceData->eraseTimeY >= audienceData->compTime/4 || audienceData->eraseTimeY < 0 )
 	{
-		float buf = audienceData->stPos.y;
-		audienceData->stPos.y = audienceData->pos.y;
-		audienceData->edPos.y = buf;
-		audienceData->eraseTimeY = 0;
+		audienceData->addY *= -1;
+		audienceData->eraseTimeY += audienceData->addY;
 	}
 
 	audienceData->poly->pos = audienceData->pos;
@@ -572,17 +568,14 @@ void AudienceStateMoveBlueTeam::Update( AudienceManager::AUDIENCEDATA *audienceD
 	audienceData->pos.x = Lerp( audienceData->stPos.x,audienceData->edPos.x,0,audienceData->compTime,audienceData->eraseTime,Cube );
 	audienceData->pos.z = Lerp( audienceData->stPos.z,audienceData->edPos.z,0,audienceData->compTime,audienceData->eraseTime,Cube );
 	audienceData->pos.y = Lerp( audienceData->stPos.y,audienceData->edPos.y,0,audienceData->compTime/4,audienceData->eraseTimeY,EaseIn );
-	audienceData->eraseTimeY++;
+	audienceData->eraseTimeY+=audienceData->addY;
 	audienceData->eraseTime++;
 
 
-	//Ｙ方向補完終了　上下ループ
-	if( audienceData->eraseTimeY >= audienceData->compTime/4 )
+	if( audienceData->eraseTimeY >= audienceData->compTime/4 || audienceData->eraseTimeY < 0 )
 	{
-		float buf = audienceData->stPos.y;
-		audienceData->stPos.y = audienceData->pos.y;
-		audienceData->edPos.y = buf;
-		audienceData->eraseTimeY = 0;
+		audienceData->addY *= -1;
+		audienceData->eraseTimeY += audienceData->addY;
 	}
 
 	audienceData->poly->pos = audienceData->pos;

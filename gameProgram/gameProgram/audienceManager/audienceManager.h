@@ -56,6 +56,7 @@ public:
 		float compTime;//補完に必要な時間
 		float eraseTime;//現在時間
 		float eraseTimeY;//Yジャンプ補完用現在時間
+		float addY;
 	};
 
 	AudienceManager( InstancingBillboard *insBill,const int scoreMax );

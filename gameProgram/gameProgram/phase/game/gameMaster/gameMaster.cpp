@@ -98,7 +98,7 @@ bool GameMaster::Initialize(void)
 	//観客制御生成
 	AudienceManager *audience;
 	if(!AudienceManager::Create( &audience,m_device,m_objectList,m_updateList,m_drawListManager,0,ObjectBase::TYPE_3D,
-							 "./resources/texture/boy.png",_ScoreMax,D3DXVECTOR3( 100.0f,50.0f,-1000.0f),D3DXVECTOR3(1000.0f,200.0f,-700.0f ),D3DXVECTOR3(  -1000.0f,50.0f,-1000.0f),D3DXVECTOR3( -100.0f,200.0f,-700.0f ) ))
+							 "./resources/texture/boy.png",_ScoreMax,D3DXVECTOR3( 100.0f,50.0f,-1500.0f),D3DXVECTOR3(1500.0f,200.0f,-450.0f ),D3DXVECTOR3(  -1500.0f,50.0f,-1500.0f),D3DXVECTOR3( -100.0f,200.0f,-450.0f ) ))
 		return false;
 
 	//エフェクトマネージャ
