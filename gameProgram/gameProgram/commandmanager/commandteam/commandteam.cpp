@@ -40,16 +40,23 @@ const int _return_score1 = 5;
 const int _return_score2 = 10;
 const int	_polygon_num = 6;
 const int	_effect_time = 30;
+const int	_effect_max = 30;
+const float	_add_scl_effect_success = 1.5f;
+const float	_add_alpha_effect_success = -0.02f;
+const float	_defalut_alpha_success = 1.0f;
+const float	_add_alpha_effect_wait = -0.04f;
+const float	_defalut_alpha_wait = 0.8f;
 const int	_same_check_time = 17;
 typedef struct{
 	float list[4];
 }UV_LIST;
-const UV_LIST	_comtexU_list[4] = 
+const UV_LIST	_comtexU_list[5] = 
 {
 	{0.5f, 0.625f, 0.5f, 0.625f},
 	{0.625f, 0.75f, 0.625f, 0.75f},
 	{0.75f, 0.875f, 0.75f, 0.875f},
 	{0.875f, 1.0f, 0.875f, 1.0f},
+	{0.0f, 1.0f, 0.0f, 1.0f},
 };
 const int	_command_data[4] =
 {
@@ -87,7 +94,10 @@ CommandTeam::CommandTeam(void)
 		{
 			m_command_data[i][j].num_data = 0;
 			m_command_data[i][j].polygon_pointer = nullptr;
-			m_command_data[i][j].effect_pointer = nullptr;
+			for(int num = 0; num < _effect_max; num++)
+			{
+				m_command_data[i][j].effect_pointer[num] = nullptr;
+			}
 			m_command_data[i][j].hit = false;
 			m_command_data[i][j].pos_y = 0.0f;
 			m_command_data[i][j].state = STATE_NONE;
@@ -200,26 +210,22 @@ CommandTeam::COM_TEAM_RTN CommandTeam::Update(void)
 			case STATE_LEFT:
 			case STATE_RIGHT:
 			case STATE_DOUBLE:
-				// エフェクトオブジェクトのない場合、オブジェクトの生成
-				if(m_command_data[i][j].effect_pointer == nullptr)
-					m_command_data[i][j].effect_pointer = CreateEffect(m_command_data[i][j].num_data, m_command_data[i][j].polygon_pointer->pos(), m_command_data[i][j].state);
-				// ある場合更新を行う
-				else
+				// エフェクトオブジェクトの更新を行う
+				for(int num = 0; num < _effect_max; num++)
 				{
-					m_command_data[i][j].effect_pointer->pos(m_command_data[i][j].polygon_pointer->pos());
-					m_command_data[i][j].effect_pointer->scl(m_command_data[i][j].effect_pointer->scl().x + 2.0f,
-															 m_command_data[i][j].effect_pointer->scl().y + 2.0f,
+					m_command_data[i][j].effect_pointer[num]->pos(m_command_data[i][j].polygon_pointer->pos());
+					m_command_data[i][j].effect_pointer[num]->scl(m_command_data[i][j].effect_pointer[num]->scl().x + _add_scl_effect_success,
+															 m_command_data[i][j].effect_pointer[num]->scl().y + _add_scl_effect_success,
 															 0.0f);
-					m_command_data[i][j].effect_pointer->color_a(m_command_data[i][j].effect_pointer->color().a - 0.02f);
+					m_command_data[i][j].effect_pointer[num]->color_a(m_command_data[i][j].effect_pointer[num]->color().a + _add_alpha_effect_success);
 				}
 				// アニメーション終了
 				if(m_command_data[i][j].anime_count > _effect_time)
 				{
-					// エフェクトオブジェクトがある場合、オブジェクトの破棄
-					if(m_command_data[i][j].effect_pointer != nullptr)
+					// エフェクトオブジェクトの隠匿
+					for(int num = 0; num < _effect_max; num++)
 					{
-						SafeFinalizeDelete(m_command_data[i][j].effect_pointer);
-						m_command_data[i][j].effect_pointer = nullptr;
+						m_command_data[i][j].effect_pointer[num]->color_a(0.0f);
 					}
 					m_command_data[i][j].state = STATE_NONE;
 				}
@@ -237,14 +243,11 @@ CommandTeam::COM_TEAM_RTN CommandTeam::Update(void)
 				break;
 			// 同時押し待機時
 			case STATE_WAIT:
-				// エフェクトオブジェクトのない場合、オブジェクトの生成
-				if(m_command_data[i][j].effect_pointer == nullptr)
-					m_command_data[i][j].effect_pointer = CreateEffect(m_command_data[i][j].num_data, m_command_data[i][j].polygon_pointer->pos(), m_command_data[i][j].state);
-				// ある場合更新を行う
-				else
+				// エフェクトオブジェクトの更新を行う
+				for(int num = 0; num < _effect_max; num++)
 				{
-					m_command_data[i][j].effect_pointer->pos(m_command_data[i][j].polygon_pointer->pos());
-					m_command_data[i][j].effect_pointer->color_a(m_command_data[i][j].effect_pointer->color().a - 0.04f);
+					m_command_data[i][j].effect_pointer[num]->pos(m_command_data[i][j].polygon_pointer->pos());
+					m_command_data[i][j].effect_pointer[num]->color_a(m_command_data[i][j].effect_pointer[num]->color().a - _add_alpha_effect_wait);
 				}
 				break;
 			default:
@@ -268,11 +271,10 @@ CommandTeam::COM_TEAM_RTN CommandTeam::Update(void)
 			for(int i = 0; i < 2; i++)
 			{
 				m_command_data[i][command_count].polygon_pointer->color(0.75f, 0.75f, 0.75f, 0.5f);
-				// エフェクトオブジェクトがある場合、オブジェクトの破棄
-				if(m_command_data[i][command_count].effect_pointer != nullptr)
+				// エフェクトオブジェクトの隠匿
+				for(int num = 0; num < _effect_max; num++)
 				{
-					SafeFinalizeDelete(m_command_data[i][command_count].effect_pointer);
-					m_command_data[i][command_count].effect_pointer = nullptr;
+					m_command_data[i][command_count].effect_pointer[num]->color_a(0.0f);
 				}
 				m_command_data[i][command_count].hit = true;
 				m_command_data[i][command_count].state = STATE_FAIL;
@@ -305,6 +307,18 @@ CommandTeam::COM_TEAM_RTN CommandTeam::Update(void)
 					if(m_command_data[(1 - i%2)][command_count].num_data != 4 && !m_command_data[(1 - i%2)][command_count].hit)
 					{
 						m_command_data[i][command_count].state = STATE_WAIT;
+						// エフェクトオブジェクトの表示
+						for(int num = 0; num < _effect_max; num++)
+						{
+							m_command_data[i][command_count].effect_pointer[num]->pos(m_command_data[i][command_count].polygon_pointer->pos());
+							m_command_data[i][command_count].effect_pointer[num]->texture(m_import->texture(GameImport::EFFECT));
+							for(int n = 0; n < 4; n++)
+							{
+								m_command_data[i][command_count].effect_pointer[num]->scl(_polygon_size_x, _polygon_size_x, 0.0f);
+								m_command_data[i][command_count].effect_pointer[num]->texcoord_u(n, _comtexU_list[5].list[n]);
+							}
+							m_command_data[i][command_count].effect_pointer[num]->color_a(_defalut_alpha_wait);
+						}
 						m_same_count = 1;
 					}
 					else if(m_same_count > 0)
@@ -313,11 +327,22 @@ CommandTeam::COM_TEAM_RTN CommandTeam::Update(void)
 						m_command_data[i][command_count].state = STATE_DOUBLE;
 						m_command_data[1-(i%2)][command_count].state = STATE_DOUBLE;
 						rtn.state = m_command_data[i][command_count].state;
-						// 1人目のエフェクトオブジェクトの破棄
-						if(m_command_data[1-(i%2)][command_count].effect_pointer != nullptr)
+						// 2人分のエフェクトオブジェクトの表示
+						for(int num = 0; num < _effect_max; num++)
 						{
-							SafeFinalizeDelete(m_command_data[i][command_count].effect_pointer);
-							m_command_data[i][command_count].effect_pointer = nullptr;
+							m_command_data[i][command_count].effect_pointer[num]->pos(m_command_data[i][command_count].polygon_pointer->pos());
+							m_command_data[i][command_count].effect_pointer[num]->scl(_polygon_size_x, _polygon_size_x, 0.0f);
+							m_command_data[i][command_count].effect_pointer[num]->texture(m_import->texture(GameImport::COMMAND_TEX));
+							m_command_data[1-(i%2)][command_count].effect_pointer[num]->pos(m_command_data[1-(i%2)][command_count].polygon_pointer->pos());
+							m_command_data[1-(i%2)][command_count].effect_pointer[num]->scl(_polygon_size_x, _polygon_size_x, 0.0f);
+							m_command_data[1-(i%2)][command_count].effect_pointer[num]->texture(m_import->texture(GameImport::COMMAND_TEX));
+							for(int n = 0; n < 4; n++)
+							{
+								m_command_data[i][command_count].effect_pointer[num]->texcoord_u(n, _comtexU_list[m_command_data[i][command_count].num_data].list[n]);
+								m_command_data[1-(i%2)][command_count].effect_pointer[num]->texcoord_u(n, _comtexU_list[m_command_data[1-(i%2)][command_count].num_data].list[n]);
+							}
+							m_command_data[i][command_count].effect_pointer[num]->color_a(_defalut_alpha_success);
+							m_command_data[1-(i%2)][command_count].effect_pointer[num]->color_a(_defalut_alpha_success);
 						}
 						m_same_count = 0;
 						if(m_speed > _speed_max)
@@ -330,6 +355,18 @@ CommandTeam::COM_TEAM_RTN CommandTeam::Update(void)
 						m_command_data[i][command_count].state = (COMMAND_STATE)m_command_data[i][command_count].num_data;
 						rtn.state = m_command_data[i][command_count].state;
 						m_command_data[i][command_count].polygon_pointer->color(0.75f, 0.75f, 0.75f, 0.5f);
+						// エフェクトオブジェクトの表示
+						for(int num = 0; num < _effect_max; num++)
+						{
+							m_command_data[i][command_count].effect_pointer[num]->pos(m_command_data[i][command_count].polygon_pointer->pos());
+							m_command_data[i][command_count].effect_pointer[num]->scl(_polygon_size_x, _polygon_size_x, 0.0f);
+							m_command_data[i][command_count].effect_pointer[num]->texture(m_import->texture(GameImport::COMMAND_TEX));
+							for(int n = 0; n < 4; n++)
+							{
+								m_command_data[i][command_count].effect_pointer[num]->texcoord_u(n, _comtexU_list[m_command_data[i][command_count].num_data].list[n]);
+							}
+							m_command_data[i][command_count].effect_pointer[num]->color_a(_defalut_alpha_success);
+						}
 						if(m_speed > _speed_max)
 							m_speed = _speed_max;
 						rtn.return_score = _return_score1;
@@ -376,11 +413,10 @@ CommandTeam::COM_TEAM_RTN CommandTeam::Update(void)
 			m_command_data[i][delete_count].num_data = *(m_command_pointer_Next[i] + delete_count);
 			m_command_data[i][delete_count].pos_y = m_command_data[i][delete_count].pos_y - m_offset * COMMAND_MAX;
 			m_command_data[i][delete_count].hit = false;
-			// エフェクトオブジェクトがある場合、オブジェクトの破棄(念のため)
-			if(m_command_data[i][delete_count].effect_pointer != nullptr)
+			// エフェクトオブジェクトの隠匿(念のため)
+			for(int num = 0; num < _effect_max; num++)
 			{
-				SafeFinalizeDelete(m_command_data[i][delete_count].effect_pointer);
-				m_command_data[i][delete_count].effect_pointer = nullptr;
+				m_command_data[i][delete_count].effect_pointer[num]->color_a(0.0f);
 			}
 			// ポリゴン初期化
 			if(m_command_data[i][delete_count].num_data == 4)
@@ -445,6 +481,24 @@ bool CommandTeam::InitObject(void)
 				m_command_poly[i][j]->texcoord_u(n, _comtexU_list[0].list[n]);
 			}
 			m_command_poly[i][j]->color_a(0.0f);
+		}
+	}
+
+	// コマンドエフェクト用オブジェクト
+	for(int i = 0; i < 2; i++)
+	{
+		for(int j = 0; j < 10; j++)
+		{
+			for(int num = 0; num < _effect_max; num++)
+			{
+				if(!CommandEffect::Create(&m_command_data[i][j].effect_pointer[num], m_device, m_objectList, m_import->texture(GameImport::EFFECT)))
+					return false;
+				m_updateList->Link(m_command_data[i][j].effect_pointer[num]);
+				m_drawListManager->Link(m_command_data[i][j].effect_pointer[num], 3, Shader::PAT_2D);
+				m_command_data[i][j].effect_pointer[num]->pos(0.0f, 0.0f, 0.0f);
+				m_command_data[i][j].effect_pointer[num]->scl(_polygon_size_x, _polygon_size_x, 0.0f);
+				m_command_data[i][j].effect_pointer[num]->color_a(0.0f);
+			}
 		}
 	}
 
@@ -522,46 +576,6 @@ void CommandTeam::SetPolygon(int player)
 			m_command_data[player][i].polygon_pointer->color_a(1.0f);
 		}
 	}
-}
-
-//=============================================================================
-// エフェクト生成
-//=============================================================================
-CommandEffect* CommandTeam::CreateEffect(int num, D3DXVECTOR3 pos, COMMAND_STATE state)
-{
-	CommandEffect* pointer;
-
-	switch(state)
-	{
-	case STATE_UP :
-	case STATE_DOWN :
-	case STATE_LEFT:
-	case STATE_RIGHT:
-	case STATE_DOUBLE:
-		CommandEffect::Create(&pointer, m_device, m_objectList, m_import->texture(GameImport::COMMAND_TEX));
-		m_updateList->Link(pointer);
-		m_drawListManager->Link(pointer, 3, Shader::PAT_2D);
-		pointer->pos(pos);
-		pointer->scl(_polygon_size_x, _polygon_size_x, 0.0f);
-		for(int n = 0; n < 4; n++)
-		{
-			pointer->texcoord_u(n, _comtexU_list[num].list[n]);
-		}
-		pointer->color_a(0.8f);
-		break;
-	case STATE_WAIT:
-		CommandEffect::Create(&pointer, m_device, m_objectList, m_import->texture(GameImport::EFFECT));
-		m_updateList->Link(pointer);
-		m_drawListManager->Link(pointer, 3, Shader::PAT_2D);
-		pointer->pos(pos);
-		pointer->scl(_polygon_size_x, _polygon_size_x, 0.0f);
-		pointer->color_a(1.0f);
-		break;
-	default:
-		break;
-	}
-
-	return pointer;
 }
 
 // EOF
