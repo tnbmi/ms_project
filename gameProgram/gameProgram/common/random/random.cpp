@@ -102,6 +102,8 @@ float Random::Rand(float minimum, float maximum)
 	//----------------------------
 	float chkMax = maximum;
 
+	maximum *= 10000;
+	minimum *= 10000;
 	maximum = max(minimum, maximum);
 	minimum = min(minimum, chkMax);
 
@@ -113,8 +115,9 @@ float Random::Rand(float minimum, float maximum)
 	//----------------------------
 	// ”ÍˆÍ“à‚ÉŠÛ‚ß‚İ
 	//----------------------------
-	unsigned int diff = maximum - minimum;
+	unsigned int diff = (int)maximum - (int)minimum;
 	float answer = rendomValue % diff + minimum;
+	answer *= 0.0001f;
 
 	return answer;
 }

@@ -21,13 +21,14 @@
 #include "..\..\..\effectManager\effectManager.h"
 #include "..\..\..\object\player\player.h"
 #include "..\..\..\objectBase\fbxModel\fbxModel.h"
-#include "..\..\..\common\complement\complement.h"
+#include "..\..\..\common\complement.h"
 
 #include "..\..\..\view\light\light.h"
 #include "..\..\..\objectBase\polygon2D\polygon2D.h"
 #include "..\..\..\import\result\resultImport.h"
 
 #include "..\..\..\sound\sound.h"
+#include "..\..\..\rainManager\rainManager.h"
 
 
 //=============================================================================
@@ -179,6 +180,11 @@ bool ResultMaster::Initialize(void)
 	m_blueGgy->StartAnimation(1,30,true );
 
 	m_phase = PHASE_RESULTSTART;
+
+	RainManager::Create( &m_rainManager,m_device,m_objectList,m_updateList,m_drawListManager,5000,"./resources/texture/sakura.png",D3DXVECTOR2(1,1),D3DXVECTOR2(1,1) );
+
+	m_rainManager->SetRainSeed(0,30,100,200,200,400,D3DXVECTOR3(0.001f,0,0),D3DXVECTOR3(0.002f,0,0),D3DXVECTOR3(-2800,1500,-300),D3DXVECTOR3(-2850,2000,300) );
+
 	return true;
 }
 
@@ -192,6 +198,7 @@ void ResultMaster::Finalize(void)
 	SafeFinalizeDelete( m_redTeam );
 	SafeFinalizeDelete( m_blueTeam );
 	SafeFinalizeDelete( m_effectManager );
+	SafeFinalizeDelete( m_rainManager );
 }
 
 //=============================================================================
@@ -257,17 +264,17 @@ void ResultMaster::Update(void)
 			pos.x = Random::Rand(-800.0f,-400.0f);
 			pos.z = Random::Rand(500.0f,700.0f);
 
-			m_effectManager->AddEffectFromDataBase( 0,pos );
+		//	m_effectManager->AddEffectFromDataBase( 0,pos );
 
 			pos.x = Random::Rand(-400.0f,400.0f);
 			pos.z = Random::Rand( 500.0f,700.0f);
 
-			m_effectManager->AddEffectFromDataBase( 1,pos);
+		//	m_effectManager->AddEffectFromDataBase( 1,pos);
 
 			pos.x = Random::Rand(400.0f,800.0f);
 			pos.z = Random::Rand(500.0f,700.0f);
 
-			m_effectManager->AddEffectFromDataBase( 2,pos );
+		//	m_effectManager->AddEffectFromDataBase( 2,pos );
 
 			m_fireTime = 0;
 		}
@@ -282,6 +289,7 @@ void ResultMaster::Update(void)
 	m_redTeam->Update();
 	m_blueTeam->Update();
 	m_effectManager->Update();
+	m_rainManager->Update();
 }
 
 

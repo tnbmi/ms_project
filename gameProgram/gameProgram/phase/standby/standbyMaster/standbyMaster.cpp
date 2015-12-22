@@ -21,13 +21,11 @@
 #include "..\..\..\effectManager\effectManager.h"
 #include "..\..\..\object\player\player.h"
 #include "..\..\..\objectBase\fbxModel\fbxModel.h"
-#include "..\..\..\common\complement\complement.h"
+#include "..\..\..\common\complement.h"
 
 #include "..\..\..\view\light\light.h"
 #include "..\..\..\objectBase\polygon2D\polygon2D.h"
 #include "..\..\..\import\standby\StandbyImport.h"
-
-#include "..\..\..\common\complement\complement.h"
 #include "..\..\..\input\padX\padXManager.h"
 #include "..\..\..\input\padX\padX.h"
 #include "..\..\..\ggy2DAnimationManager\ggy2DAnimationManager.h"

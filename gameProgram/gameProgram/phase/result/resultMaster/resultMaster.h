@@ -32,6 +32,7 @@ class PadXManager;
 class Light;
 class Polygon2D;
 class FbxTexImport;
+class RainManager;
 
 class ResultMaster
 {
@@ -77,6 +78,7 @@ private:
 	FbxModel*		m_redGgy;
 	FbxModel*		m_blueGgy;
 	EffectManager*	m_effectManager;
+	RainManager*	m_rainManager;
 
 	//ƒ|ƒŠƒSƒ“
 	Polygon2D*	m_resultPoly;//Œ‹‰Ê”­•\‚Ìƒ|ƒŠƒSƒ“
