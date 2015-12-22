@@ -206,6 +206,9 @@
     <Filter Include="import\game">
       <UniqueIdentifier>{12217eeb-87ef-4676-a3d1-0e6ab8d0233e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="common\random">
+      <UniqueIdentifier>{039f3863-f310-4264-afee-a837c3003e1a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main\main.h">
@@ -391,6 +394,9 @@
     <ClInclude Include="phase\demo\demoMaster\demoMaster.h">
       <Filter>phase\demo\demoMastar</Filter>
     </ClInclude>
+    <ClInclude Include="common\random\random.h">
+      <Filter>common\random</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main\main.cpp">
@@ -569,6 +575,9 @@
     </ClCompile>
     <ClCompile Include="phase\demo\demoMaster\demoMaster.cpp">
       <Filter>phase\demo\demoMastar</Filter>
+    </ClCompile>
+    <ClCompile Include="common\random\random.cpp">
+      <Filter>common\random</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

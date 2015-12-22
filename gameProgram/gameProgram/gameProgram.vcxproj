@@ -16,6 +16,7 @@
     <ClCompile Include="commandmanager\commandmanager.cpp" />
     <ClCompile Include="commandmanager\commandteam\commandEffect\commandEffect.cpp" />
     <ClCompile Include="commandmanager\commandteam\commandteam.cpp" />
+    <ClCompile Include="common\random\random.cpp" />
     <ClCompile Include="debugproc\debugproc.cpp" />
     <ClCompile Include="effectManager\effectManager.cpp" />
     <ClCompile Include="ggy2DAnimationManager\ggy2DAnimationManager.cpp" />
@@ -78,6 +79,7 @@
     <ClInclude Include="commandmanager\commandteam\commandEffect\commandEffect.h" />
     <ClInclude Include="commandmanager\commandteam\commandteam.h" />
     <ClInclude Include="common\complement\complement.h" />
+    <ClInclude Include="common\random\random.h" />
     <ClInclude Include="common\safe.h" />
     <ClInclude Include="debugproc\debugproc.h" />
     <ClInclude Include="effectManager\effectManager.h" />

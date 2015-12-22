@@ -10,6 +10,7 @@
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 #include "DemoMaster.h"
 #include "..\..\..\common\safe.h"
+#include "..\..\..\common\random\random.h"
 
 #include "..\..\..\manager\manager.h"
 #include "..\..\..\import\main\mainImport.h"
@@ -429,8 +430,8 @@ void DemoMaster::DetermineTeamScore()
 void DemoMaster::SelectAnimation( const int judge,Player *player,Ggy2DAnimationManager *ggy,CUTIN *cutIn,Sound::SOUND_TABLE *soundTable )
 {
 	//	ここでランダムで違うポーズをだす
-	int r = rand() %2;
-	int s = (int)RandRange( 2.0f,0.0f);
+	int r = Random::Rand() %2;
+	int s = Random::Rand( 0,2);
 
 	switch( judge )
 	{

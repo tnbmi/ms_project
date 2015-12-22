@@ -81,11 +81,11 @@ inline float Lerp( const float st,const float ed,float min,float max,float elaps
 	return st * ( 1.0f - rate ) + ed * rate;
 }
 
-inline float RandRange( const float Max,const float Min )
+/*inline float RandRange( const float Max,const float Min )
 {
 	float ans =	Min + ( rand() * ( Max - Min + 1.0f) / (1.0f + RAND_MAX) );
 	return ans;
-}
-	
+}*/
+
 //=============================================================================
 #endif

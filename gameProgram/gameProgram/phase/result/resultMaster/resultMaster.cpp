@@ -10,6 +10,7 @@
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 #include "resultMaster.h"
 #include "..\..\..\common\safe.h"
+#include "..\..\..\common\random\random.h"
 
 #include "..\..\..\manager\manager.h"
 
@@ -253,18 +254,18 @@ void ResultMaster::Update(void)
 		{
 			D3DXVECTOR3 pos;
 			pos.y = 1300;
-			pos.x = RandRange(-400,-800);
-			pos.z = RandRange(700,500);
+			pos.x = Random::Rand(-800.0f,-400.0f);
+			pos.z = Random::Rand(500.0f,700.0f);
 
 			m_effectManager->AddEffectFromDataBase( 0,pos );
 
-			pos.x = RandRange(400,-400);
-			pos.z = RandRange(700,500);
+			pos.x = Random::Rand(-400.0f,400.0f);
+			pos.z = Random::Rand( 500.0f,700.0f);
 
 			m_effectManager->AddEffectFromDataBase( 1,pos);
 
-			pos.x = RandRange(800,400);
-			pos.z = RandRange(700,500);
+			pos.x = Random::Rand(400.0f,800.0f);
+			pos.z = Random::Rand(500.0f,700.0f);
 
 			m_effectManager->AddEffectFromDataBase( 2,pos );
 

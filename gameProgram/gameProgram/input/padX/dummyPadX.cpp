@@ -9,6 +9,8 @@
 // インクルードファイル
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 #include "dummyPadX.h"
+#include "..\..\common\random\random.h"
+
 #include "..\..\debugproc\debugproc.h"
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -84,7 +86,7 @@ bool DummyPadX::Initialize(int no, int patternMax, unsigned int* commandList, in
 	else if(per > 100)
 		per = 100;
 
-	m_per = per;
+	m_per = (unsigned int)per;
 
 	return true;
 }
@@ -122,11 +124,11 @@ void DummyPadX::Update(void)
 	{
 		WORD com = _commandData[m_commandList[m_commandPrev*10 + m_commandCnt]];
 
-		if(rand()%100 <= m_per)
+		if(Random::Rand()%100 <= m_per)
 			padInput.wButtons = com;
 		else
 		{
-			WORD missCom = _commandData[rand()%4];
+			WORD missCom = _commandData[Random::Rand()%4];
 			padInput.wButtons = missCom & ~com;
 		}
 

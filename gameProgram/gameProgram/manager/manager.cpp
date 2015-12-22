@@ -10,6 +10,7 @@
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 #include "manager.h"
 #include "..\common\safe.h"
+#include "..\common\random\random.h"
 
 #include "..\renderer\renderer.h"
 #include "..\debugproc\debugproc.h"
@@ -96,7 +97,7 @@ bool Manager::Initialize(HINSTANCE hInstance, HWND hWnd, bool windowFlg)
 	//----------------------------
 	// —”‰Šú‰»
 	//----------------------------
-	srand(timeGetTime());
+	Random::SetRandom((unsigned int)time(NULL));
 
 	//----------------------------
 	// “ü—Í
