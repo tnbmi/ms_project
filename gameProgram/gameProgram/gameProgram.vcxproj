@@ -61,6 +61,7 @@
     <ClCompile Include="phase\standby\standby.cpp" />
     <ClCompile Include="phase\standby\standbyMaster\standbyMaster.cpp" />
     <ClCompile Include="phase\title\title.cpp" />
+    <ClCompile Include="rainManager\rainManager.cpp" />
     <ClCompile Include="renderer\renderer.cpp" />
     <ClCompile Include="score\score.cpp" />
     <ClCompile Include="shader\shader.cpp" />
@@ -77,7 +78,7 @@
     <ClInclude Include="commandmanager\commandmanager.h" />
     <ClInclude Include="commandmanager\commandteam\commandEffect\commandEffect.h" />
     <ClInclude Include="commandmanager\commandteam\commandteam.h" />
-    <ClInclude Include="common\complement\complement.h" />
+    <ClInclude Include="common\complement.h" />
     <ClInclude Include="common\safe.h" />
     <ClInclude Include="debugproc\debugproc.h" />
     <ClInclude Include="effectManager\effectManager.h" />
@@ -124,6 +125,7 @@
     <ClInclude Include="phase\standby\standby.h" />
     <ClInclude Include="phase\standby\standbyMaster\standbyMaster.h" />
     <ClInclude Include="phase\title\title.h" />
+    <ClInclude Include="rainManager\rainManager.h" />
     <ClInclude Include="renderer\renderer.h" />
     <ClInclude Include="score\score.h" />
     <ClInclude Include="shader\shader.h" />
