@@ -34,6 +34,7 @@ Tex2DAnimation::~Tex2DAnimation(void)
 bool Tex2DAnimation::Create(Tex2DAnimation** outPointer)
 {
 	Tex2DAnimation* pointer = new Tex2DAnimation();
+
 	if(!pointer->Initialize())
 		return false;
 
@@ -50,6 +51,8 @@ bool Tex2DAnimation::Initialize(void)
 	// ƒRƒƒ“ƒg
 	//----------------------------
 	m_isRoop = false;
+	m_isReverse = false;
+	m_valNum = 1;
 
 	return true;
 }
@@ -76,18 +79,28 @@ void Tex2DAnimation::Update(void)
 	uv[2] = m_startUv[2] + offset;
 	uv[3] = m_startUv[3] + offset;
 
-	m_time++;
-	if( animNum >= m_animSum -1 )
+	m_time+= m_valNum;
+	if( ((int)( m_time / m_wait ) >= m_animSum) || ((int)( m_time / m_wait ) < 0) )
 	{
-		m_time--;
-		m_isEndAnimation = true;
-
 		if( m_isRoop )
 		{
-			m_time =0;
 			m_isEndAnimation = false;
-		}
 
+			if( m_isReverse )
+			{
+				m_valNum*=-1;
+				m_time+= m_valNum;
+			}
+			else
+			{
+				m_time = 0;
+			}
+		}
+		else
+		{
+			m_time -=m_valNum;
+			m_isEndAnimation = true;
+		}
 	}
 
 	m_poly->texcoord(0,uv[0].x,uv[0].y );

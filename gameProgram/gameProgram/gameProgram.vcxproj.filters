@@ -101,9 +101,6 @@
     <Filter Include="objectBase\fbxModel">
       <UniqueIdentifier>{e6267e24-6b7e-4e8f-aed4-2871a0b52e8e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="common\complement">
-      <UniqueIdentifier>{d1869292-41c5-4d24-8edd-64072ce09913}</UniqueIdentifier>
-    </Filter>
     <Filter Include="object\player">
       <UniqueIdentifier>{af306e68-396e-4c20-bf34-c9e69a53436a}</UniqueIdentifier>
     </Filter>
@@ -206,6 +203,12 @@
     <Filter Include="import\game">
       <UniqueIdentifier>{12217eeb-87ef-4676-a3d1-0e6ab8d0233e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="common\random">
+      <UniqueIdentifier>{039f3863-f310-4264-afee-a837c3003e1a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="rainManager">
+      <UniqueIdentifier>{51198cf4-00e3-42be-9b5a-dfe55bdef4b8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main\main.h">
@@ -301,9 +304,6 @@
     <ClInclude Include="view\light\light.h">
       <Filter>view\light</Filter>
     </ClInclude>
-    <ClInclude Include="common\complement\complement.h">
-      <Filter>common\complement</Filter>
-    </ClInclude>
     <ClInclude Include="object\player\player.h">
       <Filter>object\player</Filter>
     </ClInclude>
@@ -390,6 +390,15 @@
     </ClInclude>
     <ClInclude Include="phase\demo\demoMaster\demoMaster.h">
       <Filter>phase\demo\demoMastar</Filter>
+    </ClInclude>
+    <ClInclude Include="common\random\random.h">
+      <Filter>common\random</Filter>
+    </ClInclude>
+    <ClInclude Include="rainManager\rainManager.h">
+      <Filter>rainManager</Filter>
+    </ClInclude>
+    <ClInclude Include="common\complement.h">
+      <Filter>common</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -569,6 +578,12 @@
     </ClCompile>
     <ClCompile Include="phase\demo\demoMaster\demoMaster.cpp">
       <Filter>phase\demo\demoMastar</Filter>
+    </ClCompile>
+    <ClCompile Include="common\random\random.cpp">
+      <Filter>common\random</Filter>
+    </ClCompile>
+    <ClCompile Include="rainManager\rainManager.cpp">
+      <Filter>rainManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

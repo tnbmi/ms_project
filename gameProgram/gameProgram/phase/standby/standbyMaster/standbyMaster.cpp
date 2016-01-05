@@ -21,13 +21,11 @@
 #include "..\..\..\effectManager\effectManager.h"
 #include "..\..\..\object\player\player.h"
 #include "..\..\..\objectBase\fbxModel\fbxModel.h"
-#include "..\..\..\common\complement\complement.h"
+#include "..\..\..\common\complement.h"
 
 #include "..\..\..\view\light\light.h"
 #include "..\..\..\objectBase\polygon2D\polygon2D.h"
 #include "..\..\..\import\standby\StandbyImport.h"
-
-#include "..\..\..\common\complement\complement.h"
 #include "..\..\..\input\padX\padXManager.h"
 #include "..\..\..\input\padX\padX.h"
 #include "..\..\..\ggy2DAnimationManager\ggy2DAnimationManager.h"
@@ -108,6 +106,10 @@ bool StandbyMaster::Initialize(void)
 
 	m_ggyRedAnimManager->StartAnimation(0,true);
 
+	//‰Šú‰»‘Îô
+	m_ggyRedAnimManager->Update();
+	m_ggyBlueAnimManager->Update();
+
 
 
 	//”wŒiƒŠƒ“ƒN
@@ -127,7 +129,7 @@ bool StandbyMaster::Initialize(void)
 
 	//Ÿ•‰ƒƒSƒŠƒ“ƒN
 	m_updateList->Link( m_battle );
-	m_drawListManager->Link( m_battle,2,Shader::PAT_2D );
+	m_drawListManager->Link( m_battle,3,Shader::PAT_2D );
 
 	//ƒƒS
 	m_updateList->Link( m_blueLogo.pol );
@@ -439,7 +441,7 @@ bool StandbyMaster::Update(void)
 		}
 
 		//ƒƒ“ƒo[‘S‚Ä‚ª€”õŠ®—¹‚È‚ç
-		if( m_blueTeamStandby[0].isStandby && m_blueTeamStandby[0].isStandby && m_redTeamStandby[0].isStandby && m_redTeamStandby[1].isStandby
+		if( m_blueTeamStandby[0].isStandby && m_blueTeamStandby[1].isStandby && m_redTeamStandby[0].isStandby && m_redTeamStandby[1].isStandby
 			&& m_blueTeamStandby[0].time >= _compFrame && m_blueTeamStandby[1].time >= _compFrame 
 			&& m_redTeamStandby[0].time >= _compFrame  && m_redTeamStandby[1].time >= _compFrame)
 		{

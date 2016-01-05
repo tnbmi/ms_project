@@ -10,6 +10,7 @@
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 #include "GameMaster.h"
 #include "..\..\..\common\safe.h"
+#include "..\..\..\common\random\random.h"
 
 #include "..\..\..\manager\manager.h"
 #include "..\..\..\import\main\mainImport.h"
@@ -27,7 +28,7 @@
 #include "..\..\..\object\player\player.h"
 #include "..\..\..\ggy2DAnimationManager\ggy2DAnimationManager.h"
 #include "..\..\..\import\game\gameImport.h"
-#include "..\..\..\common\complement\complement.h"
+#include "..\..\..\common\complement.h"
 
 #include "..\..\..\objectBase\polygon2D\polygon2D.h"
 #include "..\..\..\sound\sound.h"
@@ -98,7 +99,7 @@ bool GameMaster::Initialize(void)
 	//観客制御生成
 	AudienceManager *audience;
 	if(!AudienceManager::Create( &audience,m_device,m_objectList,m_updateList,m_drawListManager,0,ObjectBase::TYPE_3D,
-							 "./resources/texture/boy.png",_ScoreMax,D3DXVECTOR3( 100.0f,50.0f,-1000.0f),D3DXVECTOR3(1000.0f,200.0f,-700.0f ),D3DXVECTOR3(  -1000.0f,50.0f,-1000.0f),D3DXVECTOR3( -100.0f,200.0f,-700.0f ) ))
+							 "./resources/texture/boy.png",_ScoreMax,D3DXVECTOR3( 100.0f,50.0f,-1500.0f),D3DXVECTOR3(1500.0f,200.0f,-450.0f ),D3DXVECTOR3(  -1500.0f,50.0f,-1500.0f),D3DXVECTOR3( -100.0f,200.0f,-450.0f ) ))
 		return false;
 
 	//エフェクトマネージャ
@@ -128,9 +129,8 @@ bool GameMaster::Initialize(void)
 	Tex2DAnimation::Create( &m_countDown );
 	m_countDown->Set2DPolygon( m_call );
 	m_countDown->SetTexture( m_import->texture( GameImport::COUNTDOWN ) );
-	m_countDown->SetAnimationData(60,4,D3DXVECTOR2(0.0f,0.0f),D3DXVECTOR2(0.2f,0.0f),D3DXVECTOR2(0.0f,1.0f),D3DXVECTOR2(0.2f,1.0f),D3DXVECTOR2(0.2f,0.0f) );
-	m_countDown->StartAnimaton(false);
-	//
+	m_countDown->SetAnimationData(60,3,D3DXVECTOR2(0.0f,0.0f),D3DXVECTOR2(0.2f,0.0f),D3DXVECTOR2(0.0f,1.0f),D3DXVECTOR2(0.2f,1.0f),D3DXVECTOR2(0.2f,0.0f) );
+	m_countDown->StartAnimation(false);
 	MainImport* mainImport = Manager::mainImport();
 	m_blueGgyAnim->SetTexture(0,mainImport->texture( MainImport::GGYBLUE_WAIT ) );
 	m_blueGgyAnim->SetTexture(1,mainImport->texture( MainImport::GGYBLUE_WIN ) );
@@ -145,6 +145,7 @@ bool GameMaster::Initialize(void)
 	m_blueGgyAnim->pos(D3DXVECTOR3( 280,580,0 ));
 	m_blueGgyAnim->scl(D3DXVECTOR3( 320,256,0 ));
 	m_blueGgyAnim->StartAnimation(0,true);
+	m_blueGgyAnim->Update();
 
 	m_redGgyAnim->SetTexture(0,mainImport->texture( MainImport::GGYRED_WAIT ) );
 	m_redGgyAnim->SetTexture(1,mainImport->texture( MainImport::GGYRED_WIN ) );
@@ -159,6 +160,7 @@ bool GameMaster::Initialize(void)
 	m_redGgyAnim->pos(D3DXVECTOR3( 1000,580,0 ));
 	m_redGgyAnim->scl(D3DXVECTOR3( 320,256,0 ));
 	m_redGgyAnim->StartAnimation(0,true);
+	m_redGgyAnim->Update();
 
 
 	redTeam->StartAnimationSecondChild( 1,570,true );
@@ -186,21 +188,26 @@ bool GameMaster::Initialize(void)
 	m_updateList->Link( m_blueTeamCutIn.pol );
 	m_drawListManager->Link( m_blueTeamCutIn.pol,0,Shader::PAT_2D );
 
-	m_redTeamCutIn.pol->pos(0,10000,0);
-	m_redTeamCutIn.pol->scl(450,300,0);
+	m_redTeamCutIn.pol->pos(0.0f,1500.0f,0.0f);
+	m_redTeamCutIn.pol->scl(450.0f,300.0f,0.0f);
 	m_redTeamCutIn.addVal = 0;
 	m_redTeamCutIn.time = 0;
-	m_redTeamCutIn.stPos = D3DXVECTOR3( SCREEN_WIDTH + 200,500,0 );
-	m_redTeamCutIn.edPos = D3DXVECTOR3( SCREEN_WIDTH - 420,500,0 );
+	m_redTeamCutIn.stPos = D3DXVECTOR3( SCREEN_WIDTH + 200.0f,500.0f,0.0f );
+	m_redTeamCutIn.edPos = D3DXVECTOR3( SCREEN_WIDTH - 420.0f,500.0f,0.0f );
 	m_redTeamCutIn.isCutIn = false;
 
-	m_blueTeamCutIn.pol->pos(0,10000,0);
-	m_blueTeamCutIn.pol->scl(450,300,0);
+	m_blueTeamCutIn.pol->pos(0.0f,1500.0f,0.0f);
+	m_blueTeamCutIn.pol->scl(450.0f,300.0f,0.0f);
 	m_blueTeamCutIn.addVal = 0;
 	m_blueTeamCutIn.time = 0;
-	m_blueTeamCutIn.stPos = D3DXVECTOR3( -200,500,0 );
-	m_blueTeamCutIn.edPos = D3DXVECTOR3( 420,500,0 );
+	m_blueTeamCutIn.stPos = D3DXVECTOR3( -200.0f,500.0f,0.0f );
+	m_blueTeamCutIn.edPos = D3DXVECTOR3( 420.0f,500.0f,0.0f );
 	m_blueTeamCutIn.isCutIn = false;
+
+	m_redTeamCutIn.stBufPos = m_redTeamCutIn.stPos;
+	m_redTeamCutIn.edBufPos = m_redTeamCutIn.edPos;
+	m_blueTeamCutIn.stBufPos = m_blueTeamCutIn.stPos;
+	m_blueTeamCutIn.edBufPos = m_blueTeamCutIn.edPos;
 
 	//----------------------------
 	// 配置
@@ -355,6 +362,10 @@ bool GameMaster::Update(void)
 			break;
 	}
 
+	m_blueGgyAnim->Update();
+	m_redGgyAnim->Update();
+	UpdateCutIn();
+
 	return false;
 }
 
@@ -415,8 +426,8 @@ void GameMaster::DetermineTeamScore()
 void GameMaster::SelectAnimation( const int judge,Player *player,Ggy2DAnimationManager *ggy,CUTIN *cutIn,Sound::SOUND_TABLE *soundTable )
 {
 	//	ここでランダムで違うポーズをだす
-	int r = rand() %2;
-	int s = (int)RandRange( 2.0f,0.0f);
+	int r = Random::Rand() %2;
+	int s = Random::Rand( 0,2 );
 
 	switch( judge )
 	{
@@ -451,7 +462,7 @@ void GameMaster::SelectAnimation( const int judge,Player *player,Ggy2DAnimationM
 
 			player->StartAnimationSecondChild( m_nebAnim[ NANIM_SAME1+s ].stFrame,m_nebAnim[ NANIM_SAME1 +s].edFrame,false );
 			ggy->StartAnimation(m_nebAnim[ NANIM_SAME1+s ].polyGgyAnimIdx,false );
-			m_effectManager->AddEffectFromDataBase(0,D3DXVECTOR3(0,900,1000));
+			m_effectManager->AddEffectFromDataBase(0,D3DXVECTOR3(0,900,400));
 
 			//汎用同時押し音
 			Sound::Play( Sound::SE_SAME );
@@ -648,10 +659,6 @@ void GameMaster::UpdateGame()
 
 	m_blueTeamAddVal = 0;
 	m_redTeamAddVal	 = 0;
-
-	m_blueGgyAnim->Update();
-	m_redGgyAnim->Update();
-	UpdateCutIn();
 }
 
 //=============================================================================

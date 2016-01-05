@@ -10,7 +10,8 @@
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 #include "audienceManager.h"
 #include "..\objectBase\instancingBillboard\instancingBillboard.h"
-#include "..\common\complement\complement.h"
+#include "..\common\random\random.h"
+#include "..\common\complement.h"
 #include "..\list\updateList\updateList.h"
 #include "..\list\drawList\drawListManager.h"
 #include <math.h>
@@ -375,10 +376,10 @@ void AudienceStateStayRedTeam::Init( AudienceManager::AUDIENCEDATA *audienceData
 
 	float offset = audienceData->scl.x*2;
 
-	end.x = RandRange( m_rightLimit.x,m_leftLimit.x+offset );
-	end.y = RandRange( m_rightLimit.y,m_leftLimit.y );
-	end.z = RandRange( m_rightLimit.z,m_leftLimit.z );
-
+	end.x = Random::Rand( m_leftLimit.x+offset,m_rightLimit.x );
+	end.y = Random::Rand( m_leftLimit.y,m_rightLimit.y );
+	end.z = Random::Rand( m_leftLimit.z,m_rightLimit.z );
+	audienceData->addY = 1;
 	audienceData->edPos = end;
 	audienceData->stPos = audienceData->pos;
 	
@@ -391,10 +392,10 @@ void AudienceStateStayBlueTeam::Init( AudienceManager::AUDIENCEDATA *audienceDat
 
 	D3DXVECTOR3 end;
 	float offset = audienceData->scl.x*2;
-	end.x = RandRange( m_rightLimit.x-offset,m_leftLimit.x );
-	end.y = RandRange( m_rightLimit.y,m_leftLimit.y );
-	end.z = RandRange( m_rightLimit.z,m_leftLimit.z );
-
+	end.x = Random::Rand( m_leftLimit.x,m_rightLimit.x-offset );
+	end.y = Random::Rand( m_leftLimit.y,m_rightLimit.y );
+	end.z = Random::Rand( m_leftLimit.z,m_rightLimit.z );
+	audienceData->addY = 1;
 	audienceData->edPos = end;
 	audienceData->stPos = audienceData->pos;
 }
@@ -407,10 +408,11 @@ void AudienceStateMoveRedTeam::Init( AudienceManager::AUDIENCEDATA *audienceData
 
 	D3DXVECTOR3 end;
 
-	end.x = RandRange( m_rightLimit.x,m_leftLimit.x );
-	end.y = RandRange( m_rightLimit.y,m_leftLimit.y );
-	end.z = RandRange( m_rightLimit.z,m_leftLimit.z );
+	end.x = Random::Rand( m_leftLimit.x,m_rightLimit.x );
+	end.y = Random::Rand( m_leftLimit.y,m_rightLimit.y );
+	end.z = Random::Rand( m_leftLimit.z,m_rightLimit.z );
 
+	audienceData->addY = 1;
 	audienceData->edPos = end;
 	
 }
@@ -423,10 +425,10 @@ void AudienceStateMoveBlueTeam::Init( AudienceManager::AUDIENCEDATA *audienceDat
 
 	D3DXVECTOR3 end;
 
-	end.x = RandRange( m_rightLimit.x,m_leftLimit.x );
-	end.y = RandRange( m_rightLimit.y,m_leftLimit.y );
-	end.z = RandRange( m_rightLimit.z,m_leftLimit.z );
-
+	end.x = Random::Rand( m_leftLimit.x,m_rightLimit.x );
+	end.y = Random::Rand( m_leftLimit.y,m_rightLimit.y );
+	end.z = Random::Rand( m_leftLimit.z,m_rightLimit.z );
+	audienceData->addY = 1;
 	audienceData->edPos = end;
 }
 
@@ -437,20 +439,19 @@ void AudienceStateStayRedTeam::Update( AudienceManager::AUDIENCEDATA *audienceDa
 	audienceData->pos.x = Lerp( audienceData->stPos.x,audienceData->edPos.x,0,audienceData->compTime,audienceData->eraseTime,Cube );
 	audienceData->pos.z = Lerp( audienceData->stPos.z,audienceData->edPos.z,0,audienceData->compTime,audienceData->eraseTime,Cube );
 	audienceData->pos.y = Lerp( audienceData->stPos.y,audienceData->edPos.y,0,audienceData->compTime/4,audienceData->eraseTimeY,EaseIn );
-	audienceData->eraseTimeY++;
+	audienceData->eraseTimeY+= audienceData->addY;
 	audienceData->eraseTime++;
 
 
 	//Ｙ方向補完終了　上下ループ
-	if( audienceData->eraseTimeY >= audienceData->compTime/4 )
+	if( audienceData->eraseTimeY >= audienceData->compTime/4 || audienceData->eraseTimeY < 0 )
 	{
-		float buf = audienceData->stPos.y;
-		audienceData->stPos.y = audienceData->pos.y;
-		audienceData->edPos.y = buf;
-		audienceData->eraseTimeY = 0;
+		audienceData->addY *= -1;
+		audienceData->eraseTimeY += audienceData->addY;
 	}
 
 		//移動終了
+	/*
 	if( audienceData->eraseTime >= audienceData->compTime && audienceData->eraseTimeY == 0 )
 	{
 		D3DXVECTOR3 end;
@@ -468,7 +469,7 @@ void AudienceStateStayRedTeam::Update( AudienceManager::AUDIENCEDATA *audienceDa
 	{
 		audienceData->eraseTime = audienceData->compTime;
 	}
-
+	*/
 	audienceData->poly->col = audienceData->col;
 	audienceData->poly->pos = audienceData->pos;
 }
@@ -480,21 +481,20 @@ void AudienceStateStayBlueTeam::Update( AudienceManager::AUDIENCEDATA *audienceD
 	audienceData->pos.x = Lerp( audienceData->stPos.x,audienceData->edPos.x,0,audienceData->compTime,audienceData->eraseTime,Cube );
 	audienceData->pos.z = Lerp( audienceData->stPos.z,audienceData->edPos.z,0,audienceData->compTime,audienceData->eraseTime,Cube );
 	audienceData->pos.y = Lerp( audienceData->stPos.y,audienceData->edPos.y,0,audienceData->compTime/4,audienceData->eraseTimeY,EaseIn );
-	audienceData->eraseTimeY++;
+	audienceData->eraseTimeY+=audienceData->addY;
 	audienceData->eraseTime++;
 
 
 	//Ｙ方向補完終了　上下ループ
-	if( audienceData->eraseTimeY >= audienceData->compTime/4 )
+	if( audienceData->eraseTimeY >= audienceData->compTime/4 || audienceData->eraseTimeY < 0 )
 	{
-		float buf = audienceData->stPos.y;
-		audienceData->stPos.y = audienceData->pos.y;
-		audienceData->edPos.y = buf;
-		audienceData->eraseTimeY = 0;
+		audienceData->addY *= -1;
+		audienceData->eraseTimeY += audienceData->addY;
 	}
 
 
 	//移動終了
+	/*
 	if( audienceData->eraseTime >= audienceData->compTime && audienceData->eraseTimeY == 0 )
 	{
 		D3DXVECTOR3 end;
@@ -511,7 +511,7 @@ void AudienceStateStayBlueTeam::Update( AudienceManager::AUDIENCEDATA *audienceD
 	{
 		audienceData->eraseTime = audienceData->compTime;
 	}
-
+	*/
 	audienceData->poly->col = audienceData->col;
 	audienceData->poly->pos = audienceData->pos;
 }
@@ -523,17 +523,14 @@ void AudienceStateMoveRedTeam::Update( AudienceManager::AUDIENCEDATA *audienceDa
 	audienceData->pos.x = Lerp( audienceData->stPos.x,audienceData->edPos.x,0,audienceData->compTime,audienceData->eraseTime,Cube );
 	audienceData->pos.z = Lerp( audienceData->stPos.z,audienceData->edPos.z,0,audienceData->compTime,audienceData->eraseTime,Cube );
 	audienceData->pos.y = Lerp( audienceData->stPos.y,audienceData->edPos.y,0,audienceData->compTime/4,audienceData->eraseTimeY,EaseIn );
-	audienceData->eraseTimeY++;
+	audienceData->eraseTimeY+=audienceData->addY;
 	audienceData->eraseTime++;
 
 
-	//Ｙ方向補完終了　上下ループ
-	if( audienceData->eraseTimeY >= audienceData->compTime/4 )
+	if( audienceData->eraseTimeY >= audienceData->compTime/4 || audienceData->eraseTimeY < 0 )
 	{
-		float buf = audienceData->stPos.y;
-		audienceData->stPos.y = audienceData->pos.y;
-		audienceData->edPos.y = buf;
-		audienceData->eraseTimeY = 0;
+		audienceData->addY *= -1;
+		audienceData->eraseTimeY += audienceData->addY;
 	}
 
 	audienceData->poly->pos = audienceData->pos;
@@ -572,17 +569,14 @@ void AudienceStateMoveBlueTeam::Update( AudienceManager::AUDIENCEDATA *audienceD
 	audienceData->pos.x = Lerp( audienceData->stPos.x,audienceData->edPos.x,0,audienceData->compTime,audienceData->eraseTime,Cube );
 	audienceData->pos.z = Lerp( audienceData->stPos.z,audienceData->edPos.z,0,audienceData->compTime,audienceData->eraseTime,Cube );
 	audienceData->pos.y = Lerp( audienceData->stPos.y,audienceData->edPos.y,0,audienceData->compTime/4,audienceData->eraseTimeY,EaseIn );
-	audienceData->eraseTimeY++;
+	audienceData->eraseTimeY+=audienceData->addY;
 	audienceData->eraseTime++;
 
 
-	//Ｙ方向補完終了　上下ループ
-	if( audienceData->eraseTimeY >= audienceData->compTime/4 )
+	if( audienceData->eraseTimeY >= audienceData->compTime/4 || audienceData->eraseTimeY < 0 )
 	{
-		float buf = audienceData->stPos.y;
-		audienceData->stPos.y = audienceData->pos.y;
-		audienceData->edPos.y = buf;
-		audienceData->eraseTimeY = 0;
+		audienceData->addY *= -1;
+		audienceData->eraseTimeY += audienceData->addY;
 	}
 
 	audienceData->poly->pos = audienceData->pos;

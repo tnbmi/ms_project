@@ -29,6 +29,7 @@ public:
 		TITLE_LOGO,
 		BG,
 		SKY,
+		START_LOGO,
 
 		TEX_MAX
 	};

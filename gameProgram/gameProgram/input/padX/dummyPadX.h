@@ -34,7 +34,7 @@ public:
 
 private:
 	unsigned int* m_commandList;
-	int m_per;
+	unsigned int m_per;
 };
 
 //=============================================================================

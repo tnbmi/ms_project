@@ -10,6 +10,7 @@
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 #include "manager.h"
 #include "..\common\safe.h"
+#include "..\common\random\random.h"
 
 #include "..\renderer\renderer.h"
 #include "..\debugproc\debugproc.h"
@@ -96,7 +97,7 @@ bool Manager::Initialize(HINSTANCE hInstance, HWND hWnd, bool windowFlg)
 	//----------------------------
 	// 乱数初期化
 	//----------------------------
-	srand(timeGetTime());
+	Random::SetRandom((unsigned int)time(NULL));
 
 	//----------------------------
 	// 入力
@@ -131,7 +132,7 @@ bool Manager::Initialize(HINSTANCE hInstance, HWND hWnd, bool windowFlg)
 	// フェーズ
 	//----------------------------
 	// 生成
-	m_phase = (Phase*)new Title(device);
+	m_phase = (Phase*)new Result(device);
 
 	// 入力設定
 	m_phase->padXManager(m_padXManager);

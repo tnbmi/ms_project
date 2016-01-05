@@ -32,20 +32,11 @@ const char* _sound_path = "./resources/sound";
 const SOUND_PARAM _sound_data[] =
 {
 	// BGM
-	{"/bgm/TitleBGM01.wav", true},	// BGM_TITLE01
-	{"/bgm/TitleBGM02.wav", true},	// BGM_TITLE02
 	{"/bgm/TitleBGM03.wav", true},	// BGM_TITLE03
-	{"/bgm/TitleBGM04.wav", true},	// BGM_TITLE04
 
-	{"/bgm/StandbyBGM01.wav", true},	// BGM_STANDBY01
 	{"/bgm/StandbyBGM02.wav", true},	// BGM_STANDBY02
-	{"/bgm/StandbyBGM03.wav", true},	// BGM_STANDBY03
-	{"/bgm/StandbyBGM04.wav", true},	// BGM_STANDBY04
 
 	{"/bgm/GameBGM01.wav", true},	// BGM_GAME01
-	{"/bgm/GameBGM02.wav", true},	// BGM_GAME02
-	{"/bgm/GameBGM03.wav", true},	// BGM_GAME03
-	{"/bgm/GameBGM04.wav", true},	// BGM_GAME04
 
 	{"/bgm/ResultBgm.wav",true},
 
@@ -57,9 +48,9 @@ const SOUND_PARAM _sound_data[] =
 	{"/se/iza.wav",false},//SE_VOICE_IZA
 	{"/se/syoubu.wav",false},//SE_VOICE_BATTLE
 	{"/se/dodon.wav",false},
+	{"/se/moriagariMid.wav",false},
 	{"/se/syouriBlue.wav",false},
 	{"/se/syouriRed.wav",false},
-	{"/se/moriagariMid.wav",false},
 	{"/se/attackBlue1.wav",false},
 	{"/se/attackBlue2.wav",false},
 	{"/se/attackBlue3.wav",false},
