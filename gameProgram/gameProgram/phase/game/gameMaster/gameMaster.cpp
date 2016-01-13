@@ -302,7 +302,7 @@ bool GameMaster::Initialize(void)
 	m_gamePhase = PHASE_COUNTDOWN;
 
 	//debug
-	//m_gamePhase = PHASE_GAME;
+	m_gamePhase = PHASE_GAME;
 
 	return true;
 }
