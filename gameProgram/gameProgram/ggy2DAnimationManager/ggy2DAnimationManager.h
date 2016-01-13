@@ -49,6 +49,7 @@ public:
 	bool isEndAnimation();
 
 private:
+	LPDIRECT3DTEXTURE9 m_debug_tex;
 	D3DXVECTOR3 m_pos;
 	D3DXVECTOR3 m_scl;
 	LPDIRECT3DDEVICE9 m_device;

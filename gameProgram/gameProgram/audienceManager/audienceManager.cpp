@@ -442,6 +442,7 @@ void AudienceStateStayRedTeam::Update( AudienceManager::AUDIENCEDATA *audienceDa
 	audienceData->eraseTimeY+= audienceData->addY;
 	audienceData->eraseTime++;
 
+	audienceData->poly->uvOffset=D3DXVECTOR2(1,0);
 
 	//Ｙ方向補完終了　上下ループ
 	if( audienceData->eraseTimeY >= audienceData->compTime/4 || audienceData->eraseTimeY < 0 )
@@ -449,6 +450,7 @@ void AudienceStateStayRedTeam::Update( AudienceManager::AUDIENCEDATA *audienceDa
 		audienceData->addY *= -1;
 		audienceData->eraseTimeY += audienceData->addY;
 	}
+
 
 		//移動終了
 	/*
@@ -484,6 +486,7 @@ void AudienceStateStayBlueTeam::Update( AudienceManager::AUDIENCEDATA *audienceD
 	audienceData->eraseTimeY+=audienceData->addY;
 	audienceData->eraseTime++;
 
+	audienceData->poly->uvOffset=D3DXVECTOR2(0,0);
 
 	//Ｙ方向補完終了　上下ループ
 	if( audienceData->eraseTimeY >= audienceData->compTime/4 || audienceData->eraseTimeY < 0 )

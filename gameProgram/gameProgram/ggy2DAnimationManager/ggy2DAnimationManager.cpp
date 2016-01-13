@@ -58,8 +58,7 @@ bool Ggy2DAnimationManager::Create(Ggy2DAnimationManager** outPointer,LPDIRECT3D
 // ‰Šú‰»
 //=============================================================================
 bool Ggy2DAnimationManager::Initialize(void)
-{
-
+{	
 	Polygon2D *p;
 	Polygon2D::Create( &p,m_device,m_objectList,NULL,ObjectBase::TYPE_2D );
 	
@@ -79,6 +78,7 @@ bool Ggy2DAnimationManager::Initialize(void)
 		Tex2DAnimation::Create( &m_animArray[i] );
 		m_animArray[i]->Set2DPolygon( p );
 	}
+
 
 	m_animArray[0]->SetAnimationData( 3.0f,10,D3DXVECTOR2(0.0f,0.0f),D3DXVECTOR2(0.1f,0.0f),D3DXVECTOR2(0.0f,1.0f),D3DXVECTOR2(0.1f,1.0f),D3DXVECTOR2(0.1f,0.0f));
 	m_animArray[1]->SetAnimationData( 1.5f,20,D3DXVECTOR2(0.0f,0.0f),D3DXVECTOR2(0.05f,0.0f),D3DXVECTOR2(0.0f,1.0f),D3DXVECTOR2(0.05f,1.0f),D3DXVECTOR2(0.05f,0.0f));
@@ -139,8 +139,8 @@ void Ggy2DAnimationManager::SetTexture( const int idx,LPDIRECT3DTEXTURE9 tex )
 void Ggy2DAnimationManager::StartAnimation( const int idx,bool isRoop )
 {
 	m_animArray[idx]->StartAnimation(isRoop);
-	m_animIdx = idx;
-	m_poly->texture(m_animArray[idx]->texture());
+	m_animIdx = idx;//FPS‚É‰e‹¿‚È‚µ
+	m_poly->texture(m_animArray[idx]->texture());//‚±‚êH
 }
 
 bool Ggy2DAnimationManager::isEndAnimation()

@@ -81,6 +81,8 @@ void Tex2DAnimation::Update(void)
 	uv[3] = m_startUv[3] + offset;
 	
 	m_time+= m_valNum;
+	
+	
 	if( ((int)( m_time / m_wait ) >= m_animSum) || ((int)( m_time / m_wait ) < 0) )
 	{
 		if( m_isRoop )
@@ -103,7 +105,8 @@ void Tex2DAnimation::Update(void)
 			m_isEndAnimation = true;
 		}
 	}
-
+	
+	
 	m_poly->texcoord(0,uv[0].x,uv[0].y );
 	m_poly->texcoord(1,uv[1].x,uv[1].y );
 	m_poly->texcoord(2,uv[2].x,uv[2].y );
