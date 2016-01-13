@@ -38,7 +38,7 @@ public:
 	void Draw(LPD3DXCONSTANTTABLE vsc, LPD3DXCONSTANTTABLE psc, D3DXMATRIX vp);
 
 	void StartAnimation( const int startKeyFrame,const int endKeyFrame,const bool isRoop );
-
+	bool IsPlayAnim(){ return m_isPlayAnim;}
 private:
 
 	int m_noBone;//int値として使いたいんで
@@ -134,6 +134,7 @@ private:
 	int m_animTime;
 
 	//ブレンド
+	bool m_isPlayAnim;
 	bool m_isBlendRoop;
 	int  m_blendStartKeyFrame;
 	int  m_blendCurKeyFrame;
@@ -150,7 +151,7 @@ private:
 	void SetUpUsingBoneArray( D3DXMATRIX *mtxArray,const int idx1,const int idx2 );
 
 	//ロードするんご
-	bool LoadFbxModel( const char *loadModelPath );
+	bool LoadFbxModel( const char *loadModelPath ); 
 };
 
 //=============================================================================

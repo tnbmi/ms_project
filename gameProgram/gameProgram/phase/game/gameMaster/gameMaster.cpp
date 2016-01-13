@@ -300,6 +300,10 @@ bool GameMaster::Initialize(void)
 
 	//ゲームフェーズ設定
 	m_gamePhase = PHASE_COUNTDOWN;
+
+	//debug
+	//m_gamePhase = PHASE_GAME;
+
 	return true;
 }
 

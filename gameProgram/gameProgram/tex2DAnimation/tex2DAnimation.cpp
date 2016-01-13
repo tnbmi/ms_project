@@ -79,7 +79,7 @@ void Tex2DAnimation::Update(void)
 	uv[1] = m_startUv[1] + offset;
 	uv[2] = m_startUv[2] + offset;
 	uv[3] = m_startUv[3] + offset;
-
+	
 	m_time+= m_valNum;
 	if( ((int)( m_time / m_wait ) >= m_animSum) || ((int)( m_time / m_wait ) < 0) )
 	{

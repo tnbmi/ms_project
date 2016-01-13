@@ -64,6 +64,7 @@ const SOUND_PARAM _sound_data[] =
 	{"/se/nebtaDouziRed.wav",false},
 	{"/se/hazime.wav",false},
 	{"/se/soremade.wav",false},
+	{"/se/kaimaku.wav",false},
 };
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
