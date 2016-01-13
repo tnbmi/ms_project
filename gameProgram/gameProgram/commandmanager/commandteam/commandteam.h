@@ -51,7 +51,7 @@ public:
 	typedef struct{
 		unsigned int num_data;
 		Polygon2D* polygon_pointer;
-		CommandEffect* effect_pointer;
+		CommandEffect* effect_pointer[30];
 		float pos_y;
 		bool hit;
 		COMMAND_STATE state;
@@ -117,7 +117,6 @@ private:
 
 	bool	InitObject(void);
 	void	SetPolygon(int player);
-	CommandEffect*	CreateEffect(int num, D3DXVECTOR3 pos, COMMAND_STATE state);
 };
 
 //=============================================================================
