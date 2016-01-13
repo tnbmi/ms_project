@@ -241,24 +241,24 @@ bool Title::InitObject(void)
 		D3DXVECTOR2(8, 3), 2500.0f, 2000.0f, m_import->texture(TitleImport::SKY)))
 		return false;
 	m_updateList->Link(dome);
-	m_drawListManager->Link(dome, 2, Shader::PAT_NONE_LIGHT);
+	m_drawListManager->Link(dome, 0, Shader::PAT_NONE_LIGHT);
 	dome->pos(0.0f, -150.0f, 1000.0f);
 	dome->rot_y(PAI * 0.5f);
 
 	//----------------------------
 	// 背景3Dポリゴン
 	//----------------------------
-/*	Polygon3D* bg3D;
+	Polygon3D* bg3D;
 	if(!Polygon3D::Create(&bg3D, m_device, m_objectList, m_import->texture(TitleImport::BG)))
 		return false;
 	m_updateList->Link(bg3D);
 	m_drawListManager->Link(bg3D, 1, Shader::PAT_NONE_LIGHT);
 	D3DXVECTOR3 size = D3DXVECTOR3(1800.0f, 720.0f, 0.0f);
 	bg3D->scl(size);
-	bg3D->pos(0.0f, size.y*0.5f, 512.0f*2.5f);
+	bg3D->pos(0.0f, size.y*0.5f, 1000.0f*2.5f);
 	bg3D->texcoord(0, 0.0f, 0.01f);
 	bg3D->texcoord(1, 1.0f, 0.01f);
-*/
+/**/
 	//------------------------------
 	//プッシュロゴ
 	//------------------------------

@@ -42,7 +42,9 @@ public:
 	void StartAnimation( const bool isRoop ){ m_time = 0; m_isRoop = isRoop;m_isReverse = false; }
 	void StartAnimation( const bool isRoop,const bool isReverse ){ m_time = 0; m_isRoop = isRoop; m_isReverse = isReverse; }
 	bool isEndAnimation(){ return m_isEndAnimation; }
-							
+
+	LPDIRECT3DTEXTURE9 texture(void){return m_tex;}
+	void SetTextureToPolygon(void);
 
 private:
 	LPDIRECT3DTEXTURE9 m_tex;

@@ -28,6 +28,8 @@ Ggy2DAnimationManager::Ggy2DAnimationManager( LPDIRECT3DDEVICE9 device,ObjectLis
 	m_objectList = objectList;
 	m_updateList = updateList;
 	m_drawListManager = drawList;
+
+	m_animIdx = 0;
 }
 
 //=============================================================================
@@ -138,6 +140,7 @@ void Ggy2DAnimationManager::StartAnimation( const int idx,bool isRoop )
 {
 	m_animArray[idx]->StartAnimation(isRoop);
 	m_animIdx = idx;
+	m_poly->texture(m_animArray[idx]->texture());
 }
 
 bool Ggy2DAnimationManager::isEndAnimation()

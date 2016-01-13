@@ -131,6 +131,7 @@ bool GameMaster::Initialize(void)
 	m_countDown->SetTexture( m_import->texture( GameImport::COUNTDOWN ) );
 	m_countDown->SetAnimationData(60,3,D3DXVECTOR2(0.0f,0.0f),D3DXVECTOR2(0.2f,0.0f),D3DXVECTOR2(0.0f,1.0f),D3DXVECTOR2(0.2f,1.0f),D3DXVECTOR2(0.2f,0.0f) );
 	m_countDown->StartAnimation(false);
+	m_countDown->SetTextureToPolygon();
 	MainImport* mainImport = Manager::mainImport();
 	m_blueGgyAnim->SetTexture(0,mainImport->texture( MainImport::GGYBLUE_WAIT ) );
 	m_blueGgyAnim->SetTexture(1,mainImport->texture( MainImport::GGYBLUE_WIN ) );

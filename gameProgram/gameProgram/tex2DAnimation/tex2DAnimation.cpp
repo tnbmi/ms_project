@@ -8,7 +8,7 @@
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // インクルードファイル
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-#include "Tex2DAnimation.h"
+#include "tex2DAnimation.h"
 #include "..\objectBase\polygon2D\polygon2D.h"
 
 //=============================================================================
@@ -19,6 +19,7 @@ Tex2DAnimation::Tex2DAnimation(void)
 	//----------------------------
 	// メンバー初期化
 	//----------------------------
+	m_tex = nullptr;
 }
 
 //=============================================================================
@@ -107,8 +108,6 @@ void Tex2DAnimation::Update(void)
 	m_poly->texcoord(1,uv[1].x,uv[1].y );
 	m_poly->texcoord(2,uv[2].x,uv[2].y );
 	m_poly->texcoord(3,uv[3].x,uv[3].y );
-
-	m_poly->texture( m_tex );
 }
 
 //=============================================================================
@@ -135,6 +134,14 @@ void Tex2DAnimation::SetAnimationData( const float wait,const int animSum,
 	m_startUv[3] = startUv3;
 	m_offset = offset;
 	m_isEndAnimation = false;
+}
+
+//=============================================================================
+//
+//=============================================================================
+void Tex2DAnimation::SetTextureToPolygon(void)
+{
+	m_poly->texture(m_tex);
 }
 
 // EOF
