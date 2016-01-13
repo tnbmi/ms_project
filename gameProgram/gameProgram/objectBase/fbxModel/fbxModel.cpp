@@ -42,6 +42,8 @@ FbxModel::FbxModel(LPDIRECT3DDEVICE9 device, ObjectList* objectList, int priorit
 	m_blendEndKeyFrame   = 0;
 	m_blendCurKeyFrame   = 0;
 
+	m_isPlayAnim = false;
+
 }
 
 //=============================================================================
@@ -265,6 +267,9 @@ void FbxModel::StartAnimation( const int startKeyFrame,const int endKeyFrame,con
 	m_endKeyFrame   = endKeyFrame;
 	m_isAnimRoop = isRoop;
 	m_animTime = 0;
+	
+	//アニメーションフラグon
+	m_isPlayAnim = true;
 
 	m_blendWeight = 0;
 }
@@ -403,6 +408,10 @@ void FbxModel::UpdateAnimation()
 				time = 0;
 				m_animTime = 0;
 				m_curKeyFrame = m_startKeyFrame;
+			}
+			else
+			{
+				m_isPlayAnim = false;
 			}
 		}
 }

@@ -183,8 +183,8 @@ bool ResultMaster::Initialize(void)
 
 	RainManager::Create( &m_rainManager,m_device,m_objectList,m_updateList,m_drawListManager,5000,"./resources/texture/sakura.png",D3DXVECTOR2(1,1),D3DXVECTOR2(1,1) );
 
-	m_rainManager->SetRainSeed(0,30,100,200,200,400,D3DXVECTOR3(0.001f,0,0),D3DXVECTOR3(0.002f,0,0),D3DXVECTOR3(-2800,1500,-300),D3DXVECTOR3(-2850,2000,300) );
-
+	m_rainManager->SetRainSeed(0,30,100,200,200,400,D3DXVECTOR3(0.001f,0,0),D3DXVECTOR3(0.002f,0,0),D3DXVECTOR3(-2000,1000,-300),D3DXVECTOR3(-2500,500,300) );
+	
 	return true;
 }
 
@@ -223,6 +223,7 @@ void ResultMaster::Update(void)
 			m_light->dirLightAmbient(0.5,0.5,0.5,1);
 			m_phase = PHASE_ANNOUNCEFINISH;
 
+			//ÔŸ‚¿
 			if( m_redTeamScore->score() > m_blueTeamScore->score() )
 			{
 				m_winPoly->scl( 300,450,1);
@@ -234,8 +235,8 @@ void ResultMaster::Update(void)
 				m_redTeam->StartAnimationSecondChild( 511,570,false ); 
 				Sound::Play( Sound::SE_SYOURI_RED );
 
-			}
-			else
+			}//ÂŸ‚¿
+			else if( m_redTeamScore->score() < m_blueTeamScore->score() )
 			{
 
 				m_winPoly->scl( 300,450,1);
@@ -246,6 +247,18 @@ void ResultMaster::Update(void)
 				m_redTeam->StartAnimationSecondChild( 451,510,false ); 
 				m_blueTeam->StartAnimationSecondChild( 511,570,false );
 				Sound::Play( Sound::SE_SYOURI_BLUE );
+			}//ˆø‚«•ª‚¯
+			else
+			{
+				//m_winPoly->scl( 300,450,1);
+				//m_winPoly->pos(200,500,0);
+				//m_winPoly->texture( m_import->texture( ResultImport::SYOURIBLUE ) );
+				m_redGgy->StartAnimation(31,90,false );
+				m_blueGgy->StartAnimation(31,90,false );
+				m_redTeam->StartAnimationSecondChild( 451,510,false ); 
+				m_blueTeam->StartAnimationSecondChild( 451,510,false );
+				Sound::Play( Sound::SE_SYOURI_BLUE );
+				Sound::Play( Sound::SE_SYOURI_RED );
 			}
 
 		}
@@ -264,17 +277,17 @@ void ResultMaster::Update(void)
 			pos.x = Random::Rand(-800.0f,-400.0f);
 			pos.z = Random::Rand(500.0f,700.0f);
 
-		//	m_effectManager->AddEffectFromDataBase( 0,pos );
+			m_effectManager->AddEffectFromDataBase( 0,pos );
 
 			pos.x = Random::Rand(-400.0f,400.0f);
 			pos.z = Random::Rand( 500.0f,700.0f);
 
-		//	m_effectManager->AddEffectFromDataBase( 1,pos);
+			m_effectManager->AddEffectFromDataBase( 1,pos);
 
 			pos.x = Random::Rand(400.0f,800.0f);
 			pos.z = Random::Rand(500.0f,700.0f);
 
-		//	m_effectManager->AddEffectFromDataBase( 2,pos );
+			m_effectManager->AddEffectFromDataBase( 2,pos );
 
 			m_fireTime = 0;
 		}

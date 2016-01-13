@@ -154,10 +154,9 @@ void RainManager::Update(void)
 		{
 			//d—Í
 			m_rainDataArray[i].force.y += m_gravity;
-			m_rainDataArray[i].force += m_wind;
-			m_rainDataArray[i].acc += m_rainDataArray[i].force / m_rainDataArray[i].mass;
+			m_rainDataArray[i].acc += (m_rainDataArray[i].force + m_wind )/ m_rainDataArray[i].mass;
 
-			m_rainDataArray[i].spd += m_rainDataArray[i].acc;
+			m_rainDataArray[i].spd += m_rainDataArray[i].acc * 0.8;
 			m_rainDataArray[i].pos += m_rainDataArray[i].spd;
 
 			m_rainDataArray[i].poly->pos = m_rainDataArray[i].pos;

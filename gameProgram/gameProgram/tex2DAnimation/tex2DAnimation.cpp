@@ -78,7 +78,7 @@ void Tex2DAnimation::Update(void)
 	uv[1] = m_startUv[1] + offset;
 	uv[2] = m_startUv[2] + offset;
 	uv[3] = m_startUv[3] + offset;
-
+	
 	m_time+= m_valNum;
 	if( ((int)( m_time / m_wait ) >= m_animSum) || ((int)( m_time / m_wait ) < 0) )
 	{
@@ -107,7 +107,7 @@ void Tex2DAnimation::Update(void)
 	m_poly->texcoord(1,uv[1].x,uv[1].y );
 	m_poly->texcoord(2,uv[2].x,uv[2].y );
 	m_poly->texcoord(3,uv[3].x,uv[3].y );
-
+	
 	m_poly->texture( m_tex );
 }
 

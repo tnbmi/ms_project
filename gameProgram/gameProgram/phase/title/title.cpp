@@ -199,15 +199,35 @@ void Title::Update(void)
 	//----------------------------
 	m_updateList->AllUpdate();
 	
+	//テーブル更新
+	if( !m_nebRed->IsPlayAnim() )
+	{
+		m_animIdx++;
+
+		if( m_animIdx >= 8 )
+		{
+			m_animIdx = 0;
+		}
+
+		m_nebRed->StartAnimation( m_animTable[m_animIdx].nebSt,m_animTable[m_animIdx].nebEd,false );
+		m_nebBlue->StartAnimation( m_animTable[m_animIdx].nebSt,m_animTable[m_animIdx].nebEd,false );
+
+	}
 
 	//----------------------------
 	// 画面遷移
 	//----------------------------
 	if(m_padXManager->InputChk(0xf03f) || m_keyboard->trigger(DIK_RETURN))
+	{
 		Manager::nextPhase((Phase*)new Standby(m_device));
+		Sound::Play( Sound::SE_KAIMAKU );
+	}
 
 	if(m_padXManager->InputChk(0x0100) || m_keyboard->trigger(DIK_0))
+	{
 		Manager::nextPhase((Phase*)new Demo(m_device));
+		Sound::Play( Sound::SE_KAIMAKU );
+	}
 }
 
 //=============================================================================
@@ -279,7 +299,7 @@ bool Title::InitObject(void)
 									D3DXVECTOR2( 0.0f,0.1f) );
 	m_pushLogo->StartAnimation(true);
 	p->pos( SCREEN_WIDTH/2,SCREEN_HEIGHT - SCREEN_HEIGHT/4,0);
-	p->scl( 883,162,0 );
+	p->scl( 441,81,0 );
 
 	//初期化対策
 	m_pushLogo->Update();
@@ -296,9 +316,36 @@ bool Title::InitObject(void)
 	fbx->pos( D3DXVECTOR3( -0,0,0 ) );
 	fbx->rot( D3DXVECTOR3(0,PAI,0 ) );
 
+	//じじーに合わせたアニメーションテーブル
+	m_animTable[0].nebSt = 1;
+	m_animTable[0].nebEd = 30;
+
+	m_animTable[1].nebSt = 451;
+	m_animTable[1].nebEd = 510;
+
+	m_animTable[2].nebSt = 511;
+	m_animTable[2].nebEd = 570;
+
+	m_animTable[3].nebSt = 31;
+	m_animTable[3].nebEd = 60;
+
+	m_animTable[4].nebSt = 91;
+	m_animTable[4].nebEd = 120;
+
+	m_animTable[5].nebSt = 151;
+	m_animTable[5].nebEd = 180;
+
+	m_animTable[6].nebSt = 211;
+	m_animTable[6].nebEd = 240;
+
+	m_animTable[7].nebSt = 271;
+	m_animTable[7].nebEd = 330;
+
+	m_animIdx = 0;
+
 	FbxModel *nebBlue;
 	FbxModel::Create( &nebBlue,m_device,m_objectList,0,ObjectBase::TYPE_3D,"./resources/fbxModel/nebta_blue.bin",m_fbxTexImport );
-	nebBlue->StartAnimation( 1,30,true );
+	nebBlue->StartAnimation( m_animTable[0].nebSt,m_animTable[0].nebEd,false );
 	m_updateList->Link( nebBlue );
 	m_drawListManager->Link( nebBlue,0,Shader::PAT_FBX );
 
@@ -307,16 +354,41 @@ bool Title::InitObject(void)
 
 	FbxModel *nebRed;
 	FbxModel::Create( &nebRed,m_device,m_objectList,0,ObjectBase::TYPE_3D,"./resources/fbxModel/nebta_red.bin",m_fbxTexImport );
-	nebRed->StartAnimation( 1,30,true );
+	nebRed->StartAnimation(  m_animTable[0].nebSt,m_animTable[0].nebEd,false );
 	m_updateList->Link( nebRed );
 	m_drawListManager->Link( nebRed,0,Shader::PAT_FBX );
 
 	nebRed->pos( D3DXVECTOR3( 1000,0,1300 ) );
 	nebRed->rot( D3DXVECTOR3(0,-3*PAI /4,0 ) );
 
+	//代入
+	m_nebRed = nebRed;
+	m_nebBlue= nebBlue;
+
+
+	//ggy
+	//一通りアニメーション
+	FbxModel *ggyRed,*ggyBlue;
+	FbxModel::Create( &ggyRed,m_device,m_objectList,0,ObjectBase::TYPE_3D,"./resources/fbxModel/ggy_red_title.bin",m_fbxTexImport );
+	ggyRed->pos( D3DXVECTOR3( 200,0,0 ) );
+	ggyRed->rot( D3DXVECTOR3(0,-3*PAI /4,0 ) );
+	ggyRed->StartAnimation( 1,330,true );
+	m_updateList->Link( ggyRed );
+	m_drawListManager->Link( ggyRed,0,Shader::PAT_FBX );
+
+	FbxModel::Create( &ggyBlue,m_device,m_objectList,0,ObjectBase::TYPE_3D,"./resources/fbxModel/ggy_blue_title.bin",m_fbxTexImport );
+	ggyBlue->pos( D3DXVECTOR3( -200,0,0 ) );
+	ggyBlue->rot( D3DXVECTOR3(0,3*PAI /4,0 ) );
+	ggyBlue->StartAnimation( 1,330,true );
+	m_updateList->Link( ggyBlue );
+	m_drawListManager->Link( ggyBlue,0,Shader::PAT_FBX );
+
+
 	//初期化対策
 	nebRed->Update();
 	nebBlue->Update();
+	ggyRed->Update();
+	ggyBlue->Update();
 	fbx->Update();
 	//----------------------------
 	// タイトルロゴ

@@ -55,6 +55,7 @@ public:
 		SE_SAME_NEB_RED,
 		SE_START_VOICE,
 		SE_END_VOICE,
+		SE_KAIMAKU,
 		SOUND_MAX
 	};
 

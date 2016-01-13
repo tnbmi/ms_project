@@ -28,6 +28,7 @@ class ObjectList;
 class UpdateList;
 class DrawListManager;
 class Tex2DAnimation;
+class FbxModel;
 
 class Title : public Phase
 {
@@ -53,6 +54,20 @@ private:
 	UpdateList*		 m_updateList;
 	DrawListManager* m_drawListManager;
 	Tex2DAnimation * m_pushLogo;
+
+	//
+	struct TitleAnimTable
+	{
+		int nebSt,nebEd;
+		int ggySt,ggyEd;
+	};
+
+	TitleAnimTable m_animTable[8];
+
+	//neb
+	FbxModel *m_nebRed;
+	FbxModel *m_nebBlue;
+	int m_animIdx;
 };
 
 //=============================================================================
