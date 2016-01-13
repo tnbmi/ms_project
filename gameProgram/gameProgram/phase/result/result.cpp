@@ -236,14 +236,14 @@ bool Result::InitObject(void)
 		D3DXVECTOR2(8, 7), 2000.0f, 2500.0f, m_import->texture(ResultImport::SKY)))
 		return false;
 	m_updateList->Link(dome);
-	m_drawListManager->Link(dome, 2, Shader::PAT_NONE_LIGHT);
+	m_drawListManager->Link(dome, 0, Shader::PAT_NONE_LIGHT);
 	dome->pos_y(-150.0f);
 	dome->rot_y(PAI * 0.5f);
 
 	//----------------------------
 	// ”wŒi3Dƒ|ƒŠƒSƒ“
 	//----------------------------
-/*	Polygon3D* bg3D;
+	Polygon3D* bg3D;
 	if(!Polygon3D::Create(&bg3D, m_device, m_objectList, m_import->texture(ResultImport::BG)))
 		return false;
 	m_updateList->Link(bg3D);
@@ -253,7 +253,7 @@ bool Result::InitObject(void)
 	bg3D->pos(0.0f, size.y*0.5f, 512.0f*2.5f);
 	bg3D->texcoord(0, 0.0f, 0.01f);
 	bg3D->texcoord(1, 1.0f, 0.01f);
-*/
+
 	//----------------------------
 	// ’n–Ê3Dƒ|ƒŠƒSƒ“
 	//----------------------------

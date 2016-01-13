@@ -273,12 +273,13 @@ bool Title::InitObject(void)
 		return false;
 	m_updateList->Link(bg3D);
 	m_drawListManager->Link(bg3D, 1, Shader::PAT_NONE_LIGHT);
-	D3DXVECTOR3 size = D3DXVECTOR3(1800.0f, 720.0f, 0.0f);
+	D3DXVECTOR3 size = D3DXVECTOR3(540.0f*2.3f, 720.0f*2.3f, 0.0f);
 	bg3D->scl(size);
-	bg3D->pos(0.0f, size.y*0.5f, 1000.0f*2.5f);
+	bg3D->pos(0.0f, 400.0f, 2500.0f);
 	bg3D->texcoord(0, 0.0f, 0.01f);
-	bg3D->texcoord(1, 1.0f, 0.01f);
-/**/
+	bg3D->texcoord(1, 0.3f, 0.01f);
+	bg3D->texcoord(3, 0.3f, 1.0f);
+
 	//------------------------------
 	//ƒvƒbƒVƒ…ƒƒS
 	//------------------------------

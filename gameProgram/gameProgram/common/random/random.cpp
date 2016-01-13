@@ -100,10 +100,10 @@ float Random::Rand(float minimum, float maximum)
 	//----------------------------
 	// 上限下限のチェック
 	//----------------------------
-	float chkMax = maximum;
-
 	maximum *= 10000;
 	minimum *= 10000;
+
+	float chkMax = maximum;
 	maximum = max(minimum, maximum);
 	minimum = min(minimum, chkMax);
 
