@@ -132,7 +132,7 @@ bool Manager::Initialize(HINSTANCE hInstance, HWND hWnd, bool windowFlg)
 	// フェーズ
 	//----------------------------
 	// 生成
-	m_phase = (Phase*)new Result(device);
+	m_phase = (Phase*)new Title(device);
 
 	// 入力設定
 	m_phase->padXManager(m_padXManager);
