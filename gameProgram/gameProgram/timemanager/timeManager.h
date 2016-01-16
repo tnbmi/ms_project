@@ -46,7 +46,7 @@ public:
 	bool Update(void);
 	void Draw(void);
 
-	int GetCount(void){return m_count;}
+	int GetTime(void){return m_time;}
 
 private:
 	bool InitObject(void);
@@ -59,7 +59,6 @@ private:
 	DrawListManager*	m_drawListManager;
 
 	int m_time;
-	int m_count;
 	Number* m_poly_list[2];
 };
 

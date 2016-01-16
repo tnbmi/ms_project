@@ -59,6 +59,7 @@ CommandManager::CommandManager(void)
 	m_drawListManager = nullptr;
 
 	m_demoFlg = false;
+	m_climax_flag = false;
 }
 
 //=============================================================================
@@ -223,7 +224,10 @@ CommandManager::COM_MANA_RTN CommandManager::Update(void)
 		if(get.flag)
 		{
 			m_team[i]->commandPrev(m_command_prev[i]);
-			m_command_prev[i] = (Random::Rand() % 5 * 2) + (1 - m_command_prev[i] % 2);
+			if(m_climax_flag)	//-----------------------------------------------------------------------‚±‚Ì‚Ö‚ñ
+				m_command_prev[i] = ((Random::Rand() % 5 * 2) + 10) + (1 - m_command_prev[i] % 2);
+			else
+				m_command_prev[i] = (Random::Rand() % 5 * 2) + (1 - m_command_prev[i] % 2);
 			m_team[i]->SetCommandNext(m_command_list[0] + m_command_prev[i] * 10, 0);
 			m_team[i]->SetCommandNext(m_command_list[1] + m_command_prev[i] * 10, 1);
 		}

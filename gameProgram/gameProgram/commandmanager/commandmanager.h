@@ -64,6 +64,8 @@ public:
 	COM_MANA_RTN Update(void);
 	void Draw(void);
 
+	void SetClimaxFlag(bool b){m_climax_flag = b;}
+
 private:
 	CommandDataLoad* m_commandDataLoad;
 
@@ -82,6 +84,7 @@ private:
 	Debugproc*		m_debugproc;
 
 	bool m_demoFlg;
+	bool m_climax_flag;
 };
 
 //=============================================================================

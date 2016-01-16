@@ -41,12 +41,12 @@ const int _return_score2 = 20;
 const int	_polygon_num = 6;
 const int	_effect_time = 30;
 const int	_effect_max = 20;
-const int	_effect_max_wait = 3;
+const int	_effect_max_wait = 5;
 const float	_add_scl_effect_success = 1.5f;
 const float	_add_alpha_effect_success = -0.02f;
 const float	_defalut_alpha_success = 0.7f;
-const float	_add_alpha_effect_wait = -0.04f;
-const float	_defalut_alpha_wait = 0.2f;
+const float	_add_alpha_effect_wait = -0.02f;
+const float	_defalut_alpha_wait = 0.7f;
 const int	_same_check_time = 16;
 typedef struct{
 	float list[4];
@@ -248,7 +248,10 @@ CommandTeam::COM_TEAM_RTN CommandTeam::Update(void)
 				for(int num = 0; num < _effect_max_wait; num++)
 				{
 					m_command_data[i][j].effect_pointer[num]->pos(m_command_data[i][j].polygon_pointer->pos());
-					m_command_data[i][j].effect_pointer[num]->color_a(m_command_data[i][j].effect_pointer[num]->color().a - _add_alpha_effect_wait);
+					m_command_data[i][j].effect_pointer[num]->color_a(m_command_data[i][j].effect_pointer[num]->color().a + _add_alpha_effect_wait);
+					m_command_data[i][j].effect_pointer[num]->scl(m_command_data[i][j].effect_pointer[num]->scl().x - 0.25f,
+																  m_command_data[i][j].effect_pointer[num]->scl().y - 0.25f,
+																  0.0f);
 				}
 				break;
 			default:
@@ -375,7 +378,17 @@ CommandTeam::COM_TEAM_RTN CommandTeam::Update(void)
 				}
 				else
 				{// Ž¸”s
-					m_same_count = 0;
+					// “¯Žž‰Ÿ‚µ2l–Ú‚ÅŽ¸”s‚¾‚Á‚½ê‡
+					if(m_same_count != 0)
+					{
+						m_same_count = 0;
+						m_command_data[1-(i%2)][command_count].polygon_pointer->color(0.75f, 0.75f, 0.75f, 0.5f);
+						for(int num = 0; num < _effect_max; num++)
+						{
+							m_command_data[1-(i%2)][command_count].effect_pointer[num]->color_a(0.0f);
+						}
+						m_command_data[1-(i%2)][command_count].state = STATE_FAIL;
+					}
 					m_speed = 0.0f;
 					m_command_data[i][command_count].polygon_pointer->color(0.75f, 0.75f, 0.75f, 0.5f);
 					m_command_data[i][command_count].state = STATE_FAIL;
