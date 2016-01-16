@@ -40,13 +40,14 @@ const int _return_score1 = 10;
 const int _return_score2 = 20;
 const int	_polygon_num = 6;
 const int	_effect_time = 30;
-const int	_effect_max = 30;
+const int	_effect_max = 20;
+const int	_effect_max_wait = 3;
 const float	_add_scl_effect_success = 1.5f;
 const float	_add_alpha_effect_success = -0.02f;
-const float	_defalut_alpha_success = 1.0f;
+const float	_defalut_alpha_success = 0.7f;
 const float	_add_alpha_effect_wait = -0.04f;
-const float	_defalut_alpha_wait = 0.8f;
-const int	_same_check_time = 17;
+const float	_defalut_alpha_wait = 0.2f;
+const int	_same_check_time = 16;
 typedef struct{
 	float list[4];
 }UV_LIST;
@@ -244,7 +245,7 @@ CommandTeam::COM_TEAM_RTN CommandTeam::Update(void)
 			// 同時押し待機時
 			case STATE_WAIT:
 				// エフェクトオブジェクトの更新を行う
-				for(int num = 0; num < _effect_max; num++)
+				for(int num = 0; num < _effect_max_wait; num++)
 				{
 					m_command_data[i][j].effect_pointer[num]->pos(m_command_data[i][j].polygon_pointer->pos());
 					m_command_data[i][j].effect_pointer[num]->color_a(m_command_data[i][j].effect_pointer[num]->color().a - _add_alpha_effect_wait);
@@ -308,14 +309,14 @@ CommandTeam::COM_TEAM_RTN CommandTeam::Update(void)
 					{
 						m_command_data[i][command_count].state = STATE_WAIT;
 						// エフェクトオブジェクトの表示
-						for(int num = 0; num < _effect_max; num++)
+						for(int num = 0; num < _effect_max_wait; num++)
 						{
 							m_command_data[i][command_count].effect_pointer[num]->pos(m_command_data[i][command_count].polygon_pointer->pos());
+							m_command_data[i][command_count].effect_pointer[num]->scl(_polygon_size_x, _polygon_size_x, 0.0f);
 							m_command_data[i][command_count].effect_pointer[num]->texture(m_import->texture(GameImport::EFFECT));
 							for(int n = 0; n < 4; n++)
 							{
-								m_command_data[i][command_count].effect_pointer[num]->scl(_polygon_size_x, _polygon_size_x, 0.0f);
-								m_command_data[i][command_count].effect_pointer[num]->texcoord_u(n, _comtexU_list[5].list[n]);
+								m_command_data[i][command_count].effect_pointer[num]->texcoord_u(n, _comtexU_list[4].list[n]);
 							}
 							m_command_data[i][command_count].effect_pointer[num]->color_a(_defalut_alpha_wait);
 						}
@@ -379,6 +380,14 @@ CommandTeam::COM_TEAM_RTN CommandTeam::Update(void)
 					m_command_data[i][command_count].polygon_pointer->color(0.75f, 0.75f, 0.75f, 0.5f);
 					m_command_data[i][command_count].state = STATE_FAIL;
 					rtn.state = m_command_data[i][command_count].state;
+					// 同時押し1人目失敗だった場合、相方も失敗に
+					if(m_command_data[1-(i%2)][command_count].hit == false)
+					{
+						m_command_data[1-(i%2)][command_count].polygon_pointer->color(0.75f, 0.75f, 0.75f, 0.5f);
+						m_command_data[1-(i%2)][command_count].state = STATE_FAIL;
+						m_command_data[1-(i%2)][command_count].hit = true;
+					}
+
 				}
 				m_command_data[i][command_count].hit = true;
 			}
@@ -388,6 +397,7 @@ CommandTeam::COM_TEAM_RTN CommandTeam::Update(void)
 	if(m_command_data[0][command_count].pos_y > m_polygon_pos.y - _end_line)
 	{
 		m_command_count++;
+		m_same_count = 0;
 
 		for(int i = 0; i < 2; i++)
 		{

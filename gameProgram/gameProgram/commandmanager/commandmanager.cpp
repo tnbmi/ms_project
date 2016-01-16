@@ -30,7 +30,7 @@
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // É}ÉNÉçíËã`
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-const char* _command_data = "./resources/command/comData.txt";
+const char* _command_data = "./resources/command/comDataTest.txt";
 const int _team_max = 2;
 const int _list_pattern_max = 20;
 const D3DXVECTOR3 _team_position[2] = {D3DXVECTOR3(24.0f, 482.0f, 0.0f),D3DXVECTOR3(1112.0f, 482.0f, 0.0f)};
