@@ -43,7 +43,7 @@ private:
 		char *texPath;
 	};
 
-	static const int _buffMax = 10;
+	static const int _buffMax = 20;
 	FBXTEXDATA m_texDataArray[_buffMax];
 };
 

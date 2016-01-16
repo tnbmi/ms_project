@@ -116,6 +116,9 @@ public:
 
 	void SetViewMtx( const D3DXMATRIX &viewMtx );
 
+	//生成
+	void SetEffectGenData( const int genIdx,const int genTime,const int effectIdx,const D3DXVECTOR3 &pos );
+
 private:
 
 	LPDIRECT3DDEVICE9 m_device;
@@ -129,6 +132,20 @@ private:
 	const static int kEffectDataBaseMax = 10;
 	int m_databaseCursol;//データ入れる先のカーソル
 	EFFECTDATABASE m_effectDatabase[ kEffectDataBaseMax ];
+
+	//エフェクト生成シード
+	struct EFFECTGENDATA
+	{
+		int time;//時間
+		int genTime;//生成時間
+		int effectIdx;
+		D3DXVECTOR3 pos;
+	};
+
+	const static int _effectGenMax = 5;
+
+	//生成シード
+	EFFECTGENDATA m_effectGenArray[ _effectGenMax ];
 };
 
 //=============================================================================

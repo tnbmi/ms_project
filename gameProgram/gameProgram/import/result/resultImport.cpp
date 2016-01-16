@@ -28,7 +28,9 @@ const char* _result_texture_name[] =
 	"/number.png",
 	"/syouriscrollRed.png",
 	"/syouriscrollBlue.png",
-	"/kekkaUI.png"
+	"/kekkaUI.png",
+	"/redougi.png",
+	"/blueougi.png",
 };
 
 //=============================================================================

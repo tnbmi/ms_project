@@ -35,7 +35,7 @@
 Phase* Manager::m_nextPhase	= nullptr;
 
 int Manager::m_scoreBlue = 600;
-int Manager::m_scoreRed = 400;
+int Manager::m_scoreRed = 600;
 
 FbxTexImport*	Manager::m_fbxTexImport = nullptr;
 MainImport*		Manager::m_mainImport	= nullptr;
@@ -132,7 +132,7 @@ bool Manager::Initialize(HINSTANCE hInstance, HWND hWnd, bool windowFlg)
 	// フェーズ
 	//----------------------------
 	// 生成
-	m_phase = (Phase*)new Title(device);
+	m_phase = (Phase*)new Result(device);
 
 	// 入力設定
 	m_phase->padXManager(m_padXManager);

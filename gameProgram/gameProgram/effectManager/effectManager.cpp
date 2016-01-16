@@ -100,6 +100,11 @@ bool EffectManager::Initialize(void)
 
 	m_cursol = 0;
 
+	for( int i = 0 ; i < _effectGenMax ; i++ )
+	{
+		m_effectGenArray[i].genTime = -1;
+	}
+
 	return true;
 }
 
@@ -127,6 +132,21 @@ void EffectManager::Finalize(void)
 //=============================================================================
 void EffectManager::Update(void)
 {
+	//エフェクトループ
+	for( int i = 0 ; i < _effectGenMax ; i++ )
+	{
+		if( m_effectGenArray[i].genTime > 0 )
+		{
+			m_effectGenArray[i].time++;
+
+			if( m_effectGenArray[i].time >= m_effectGenArray[i].genTime )
+			{
+				m_effectGenArray[i].time = 0;
+				AddEffectFromDataBase( m_effectGenArray[i].effectIdx,m_effectGenArray[i].pos );
+			}
+		}
+	}
+
 	for( int i = 0 ; i < m_particleMax ; i++ )
 	{
 		//エフェクト死亡
@@ -449,6 +469,23 @@ void EffectManager::SetOption( InstancingBillboard::OPTION option )
 void EffectManager::SetViewMtx( const D3DXMATRIX &viewMtx )
 {
 	m_insBill->SetViewMtx( viewMtx );
+}
+
+//---------------------------------------------------------------------------------------
+//エフェクト生成データをセット
+//---------------------------------------------------------------------------------------
+
+void EffectManager::SetEffectGenData( const int genIdx,const int genTime,const int effectIdx,const D3DXVECTOR3 &pos )
+{
+	if( genIdx < 0 || genIdx > _effectGenMax )
+	{
+		return ;
+	}
+
+	m_effectGenArray[genIdx].effectIdx = effectIdx;
+	m_effectGenArray[genIdx].pos = pos;
+	m_effectGenArray[genIdx].time = 0;
+	m_effectGenArray[genIdx].genTime = genTime;
 }
 
 

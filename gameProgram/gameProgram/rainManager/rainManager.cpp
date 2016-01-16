@@ -14,6 +14,7 @@
 #include "..\list\updateList\updateList.h"
 #include "..\common\complement.h"
 #include "..\objectBase\instancingBillboard\instancingBillboard.h"
+#include "..\common\random\random.h"
 //=============================================================================
 // コンストラクタ
 //=============================================================================
@@ -84,8 +85,8 @@ bool RainManager::Initialize(InstancingBillboard *bill)
 
 	m_cursol = 0;
 	m_seedCursol =0;
-	m_gravity = -0.01f;
-	m_wind = D3DXVECTOR3(0.001f,0,0 );
+	m_gravity = -0.05f;
+	m_wind = D3DXVECTOR3(0,0,0);
 	return true;
 }
 
@@ -154,14 +155,19 @@ void RainManager::Update(void)
 		{
 			//重力
 			m_rainDataArray[i].force.y += m_gravity;
-			m_rainDataArray[i].acc += (m_rainDataArray[i].force + m_wind )/ m_rainDataArray[i].mass;
+			//m_rainDataArray[i].acc += (m_rainDataArray[i].force + m_wind )/ m_rainDataArray[i].mass;
 
-			m_rainDataArray[i].spd += m_rainDataArray[i].acc * 0.8;
+			if ( m_rainDataArray[i].force.y < -2 )
+			{
+				m_rainDataArray[i].force.y = -2;
+			}
+
+			m_rainDataArray[i].spd = m_rainDataArray[i].force;
 			m_rainDataArray[i].pos += m_rainDataArray[i].spd;
 
 			m_rainDataArray[i].poly->pos = m_rainDataArray[i].pos;
 			m_rainDataArray[i].poly->rot = D3DXVECTOR3(0,0,0);
-			m_rainDataArray[i].poly->scl = D3DXVECTOR3(100,100,0);
+			m_rainDataArray[i].poly->scl = D3DXVECTOR3(20,20,0);
 			m_rainDataArray[i].poly->col = D3DXCOLOR(1,1,1,1);
 			m_rainDataArray[i].poly->uvOffset = D3DXVECTOR2(0,0);
 

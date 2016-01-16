@@ -57,7 +57,7 @@ private:
 	UpdateList*		 m_updateList;
 	DrawListManager* m_drawListManager;
 	static const int _animMax = 9;
-	Tex2DAnimation **m_animArray;
+	Tex2DAnimation *m_animArray[_animMax];
 	Polygon2D*		m_poly;
 	int m_animIdx;
 };

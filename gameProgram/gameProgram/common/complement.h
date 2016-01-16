@@ -83,6 +83,11 @@ inline float Lerp( const float st,const float ed,float min,float max,float elaps
 
 inline float RandRange( const float Max,const float Min )
 {
+	if( ( Max - Min ) == 0 )
+	{
+		return Max;
+	}
+
 	float ans =	Min + ( rand() * ( Max - Min + 1.0f) / (1.0f + RAND_MAX) );
 	return ans;
 }
