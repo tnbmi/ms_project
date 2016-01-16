@@ -45,8 +45,8 @@
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // マクロ定義
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-const D3DXVECTOR3 _at	= D3DXVECTOR3(0.0f, 1050.0f, 10000.0f);
-const D3DXVECTOR3 _eye	= D3DXVECTOR3(0.0f, 350.0f, -2250.0f);
+const D3DXVECTOR3 _at	= D3DXVECTOR3(0.0f, 500.0f, -200.0f);
+const D3DXVECTOR3 _eye	= D3DXVECTOR3(0.0f, 300.0f, -700.0f);
 
 //=============================================================================
 // コンストラクタ
@@ -278,7 +278,8 @@ bool Demo::InitObject(void)
 	//----------------------------
 	//デモマスター生成
 	//----------------------------
-	DemoMaster::Create( &m_demoMaster,m_device,m_objectList,m_updateList,m_drawListManager,m_import,m_fbxTexImport,m_debugproc,m_padXManager);
+	DemoMaster::Create( &m_demoMaster,m_device,m_objectList,m_updateList,m_drawListManager,
+						m_import,m_fbxTexImport,m_debugproc,m_padXManager,m_camera );
 
 	return true;
 }

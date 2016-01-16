@@ -45,9 +45,8 @@
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // マクロ定義
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-const D3DXVECTOR3 _at	= D3DXVECTOR3(0.0f, 1050.0f, 10000.0f);
-//const D3DXVECTOR3 _eye	= D3DXVECTOR3(0.0f,  850.0f, 9000.0f);
-const D3DXVECTOR3 _eye	= D3DXVECTOR3(0.0f, 350.0f, -2250.0f);
+const D3DXVECTOR3 _at	= D3DXVECTOR3(0.0f, 500.0f, -200.0f);
+const D3DXVECTOR3 _eye	= D3DXVECTOR3(0.0f, 300.0f, -700.0f);
 
 //=============================================================================
 // コンストラクタ
@@ -264,7 +263,7 @@ bool Game::InitObject(void)
 	m_drawListManager->Link(bg3D, 1, Shader::PAT_NONE_LIGHT);
 	D3DXVECTOR3 size = D3DXVECTOR3(1800.0f*0.6f, 720.0f*0.6f, 0.0f);
 	bg3D->scl(size);
-	bg3D->pos(0.0f, size.y*0.5f, 512.0f*2.5f);
+	bg3D->pos(0.0f, size.y*0.48f, 512.0f*2.5f);
 	bg3D->texcoord(0, 0.0f, 0.01f);
 	bg3D->texcoord(1, 1.0f, 0.01f);
 

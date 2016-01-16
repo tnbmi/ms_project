@@ -168,7 +168,6 @@ private:
 	TimeManager*	m_time_manager;
 
 	Camera* m_camera;
-	D3DXVECTOR3 m_defEyePos;
 
 	int m_totalScore;
 	int m_redTeamAddVal;

@@ -14,6 +14,7 @@
 
 #include "..\..\..\manager\manager.h"
 #include "..\..\..\import\main\mainImport.h"
+#include "..\..\..\view\camera\camera.h"
 
 #include "..\..\..\list\objectList\objectList.h"
 #include "..\..\..\list\updateList\updateList.h"
@@ -41,10 +42,14 @@
 const int _time_max		= 1860;
 const D3DXVECTOR3 _effect_pos[2] = {D3DXVECTOR3(-900.0f, 400.0f, 0.0f),D3DXVECTOR3(900.0f, 400.0f, 0.0f)};
 
+const D3DXVECTOR3 _at	= D3DXVECTOR3(0.0f, 1050.0f, 10000.0f);
+const D3DXVECTOR3 _eye	= D3DXVECTOR3(0.0f, 350.0f, -2250.0f);
+
 //=============================================================================
 // コンストラクタ
 //=============================================================================
-DemoMaster::DemoMaster( LPDIRECT3DDEVICE9 device,ObjectList *objectList,UpdateList *updateList,DrawListManager *drawList,DemoImport *import,FbxTexImport *fbxTexImport,Debugproc *proc,PadXManager* padXMaster )
+DemoMaster::DemoMaster( LPDIRECT3DDEVICE9 device,ObjectList *objectList,UpdateList *updateList,DrawListManager *drawList,
+				DemoImport *import,FbxTexImport *fbxTexImport,Debugproc *proc,PadXManager* padXMaster,Camera* camera )
 {
 	//----------------------------
 	// メンバー初期化
@@ -59,6 +64,7 @@ DemoMaster::DemoMaster( LPDIRECT3DDEVICE9 device,ObjectList *objectList,UpdateLi
 	m_fbxTexImport = fbxTexImport;
 	m_command_manager	= nullptr;
 	m_time_manager		= nullptr;
+	m_camera			= camera;
 }
 
 //=============================================================================
@@ -73,10 +79,11 @@ DemoMaster::~DemoMaster(void)
 //=============================================================================
 bool DemoMaster::Create(DemoMaster** outPointer,LPDIRECT3DDEVICE9 device,
 						ObjectList* objectList,UpdateList *updateList,DrawListManager *drawList,
-						DemoImport* import,FbxTexImport *fbxTexImport,Debugproc* debugproc,PadXManager* padXManager)
+						DemoImport* import,FbxTexImport *fbxTexImport,Debugproc* debugproc,PadXManager* padXManager,
+						Camera* camera)
 {
 	//デモマスター生成
-	DemoMaster* pointer = new DemoMaster( device,objectList,updateList,drawList,import,fbxTexImport,debugproc,padXManager );
+	DemoMaster* pointer = new DemoMaster( device,objectList,updateList,drawList,import,fbxTexImport,debugproc,padXManager,camera );
 	if(!pointer->Initialize())
 		return false;
 
@@ -596,6 +603,14 @@ void DemoMaster::UpdateCountDown()
 
 		Sound::Play(Sound::SE_START_VOICE);
 	}
+
+	D3DXVECTOR3 atPos = m_camera->at();
+	D3DXVECTOR3 atMove = (_at - atPos) * 0.02f;
+	m_camera->at(atPos + atMove);
+
+	D3DXVECTOR3 eyePos = m_camera->eye();
+	D3DXVECTOR3 eyeMove = (_eye - eyePos) * 0.02f;
+	m_camera->eye(eyePos + eyeMove);
 }
 
 //=============================================================================

@@ -42,6 +42,7 @@
 const int _time_max		= 5460;
 const D3DXVECTOR3 _effect_pos[2] = {D3DXVECTOR3(-900.0f, 400.0f, 0.0f),D3DXVECTOR3(900.0f, 400.0f, 0.0f)};
 
+const D3DXVECTOR3 _at	= D3DXVECTOR3(0.0f, 1050.0f, 10000.0f);
 const D3DXVECTOR3 _eye	= D3DXVECTOR3(0.0f, 350.0f, -2250.0f);
 
 //=============================================================================
@@ -306,9 +307,6 @@ bool GameMaster::Initialize(void)
 	m_redGgyAnim->StartAnimation( m_nebAnim[NANIM_WAIT].polyGgyAnimIdx,true );
 	blueTeam->StartAnimationSecondChild( m_nebAnim[NANIM_WAIT].stFrame,m_nebAnim[NANIM_WAIT].edFrame,true );
 	m_blueGgyAnim->StartAnimation( m_nebAnim[NANIM_WAIT].polyGgyAnimIdx,true );
-
-	// カメラの移動
-	m_defEyePos = m_camera->eye();
 
 	//ゲームフェーズ設定
 	m_gamePhase = PHASE_COUNTDOWN;
@@ -610,6 +608,14 @@ void GameMaster::UpdateCountDown()
 
 		Sound::Play(Sound::SE_START_VOICE);
 	}
+
+	D3DXVECTOR3 atPos = m_camera->at();
+	D3DXVECTOR3 atMove = (_at - atPos) * 0.02f;
+	m_camera->at(atPos + atMove);
+
+	D3DXVECTOR3 eyePos = m_camera->eye();
+	D3DXVECTOR3 eyeMove = (_eye - eyePos) * 0.02f;
+	m_camera->eye(eyePos + eyeMove);
 }
 
 //=============================================================================
