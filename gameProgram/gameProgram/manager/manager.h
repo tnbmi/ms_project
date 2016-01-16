@@ -40,7 +40,7 @@ public:
 	bool Update(void);
 	void Draw(void);
 
-	void CalculateFPS(DWORD frameCnt, DWORD curTime, DWORD FPSLastTime);
+	void CalculateFPS(DWORD frameCnt, DWORD curTime, DWORD FPSLastTime, DWORD updateTime, DWORD drawTime);
 
 	static void nextPhase(Phase* nextPhase) {m_nextPhase = nextPhase;}
 	static void score(int scoreBlue, int scoreRed) {m_scoreBlue = scoreBlue; m_scoreRed = scoreRed;}
@@ -52,6 +52,8 @@ public:
 
 private:
 	int m_countFPS;
+	int m_countUpdateTime;
+	int m_countDrawTime;
 
 	Phase*			m_phase;
 	static Phase*	m_nextPhase;

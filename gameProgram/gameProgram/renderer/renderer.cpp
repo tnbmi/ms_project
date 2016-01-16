@@ -90,10 +90,11 @@ bool Renderer::Initialize(HWND hWnd, bool windowFlg)
 	//----------------------------
 	// ウィンドウ分岐
 	//----------------------------
+	presenParam.PresentationInterval = D3DPRESENT_INTERVAL_IMMEDIATE;	// インターバル
+
 	if(windowFlg)
 	{// ウィンドウモード
 		presenParam.FullScreen_RefreshRateInHz	= 0;								// リフレッシュレート
-		presenParam.PresentationInterval		= D3DPRESENT_INTERVAL_IMMEDIATE;	// インターバル
 	}
 	else
 	{// フルスクリーンモード

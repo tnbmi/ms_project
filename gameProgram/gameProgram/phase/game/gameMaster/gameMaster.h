@@ -36,16 +36,19 @@ class FbxTexImport;
 class Ggy2DAnimationManager;
 class Polygon2D;
 class Tex2DAnimation;
+class Camera;
 
 class GameMaster
 {
 public:
-	GameMaster( LPDIRECT3DDEVICE9 device,ObjectList *objectList,UpdateList *updateList,DrawListManager *drawList,GameImport *import,FbxTexImport *fbxTexImport,Debugproc *proc,PadXManager* padXMaster );
+	GameMaster( LPDIRECT3DDEVICE9 device,ObjectList *objectList,UpdateList *updateList,DrawListManager *drawList,
+				GameImport *import,FbxTexImport *fbxTexImport,Debugproc *proc,PadXManager* padXMaster,Camera* camera );
 	virtual ~GameMaster(void);
 
 	static bool Create(GameMaster** outPointer,LPDIRECT3DDEVICE9 device,
 						ObjectList* objectList,UpdateList *updateList,DrawListManager *drawList,
-						GameImport* import,FbxTexImport *fbxTexImport,Debugproc* debugproc,PadXManager* padXManager);
+						GameImport* import,FbxTexImport *fbxTexImport,Debugproc* debugproc,PadXManager* padXManager,
+						Camera* camera);
 	bool Initialize(void);
 	void Finalize(void);
 	bool Update(void);
@@ -164,7 +167,8 @@ private:
 	// タイマーマネージャ
 	TimeManager*	m_time_manager;
 
-	
+	Camera* m_camera;
+	D3DXVECTOR3 m_defEyePos;
 
 	int m_totalScore;
 	int m_redTeamAddVal;

@@ -31,13 +31,6 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, LPSTR cmdLine,
 	UNREFERENCED_PARAMETER(cmdLine);		// 無くても良いけど、警告が出る
 
 	//----------------------------
-	// ウィンドウ生成
-	//----------------------------
-	Window window;
-	if(!window.Initialize(hInstance, cmdShow))
-		return -1;
-
-	//----------------------------
 	// フルスクリーン設定
 	//----------------------------
 	bool windowFlg = true;
@@ -47,6 +40,13 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, LPSTR cmdLine,
 	else
 		//通常の 初期化処理(ウィンドウを作成してから行う)
 		windowFlg = TRUE;
+
+	//----------------------------
+	// ウィンドウ生成
+	//----------------------------
+	Window window;
+	if(!window.Initialize(hInstance, cmdShow))
+		return -1;
 
 	//----------------------------
 	// マネージャー生成
@@ -73,7 +73,11 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, LPSTR cmdLine,
 	// メッセージループ
 	//----------------------------
 	MSG msg;
+	DWORD updateTime = 0;
+	DWORD drawTime = 0;
+	DWORD workTime = 0;
 
+	// ウィンドウ表示
 	while(true)
 	{
 		if(PeekMessage(&msg, NULL, 0, 0, PM_REMOVE)) // メッセージを取得しなかった場合"0"を返す
@@ -91,9 +95,9 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, LPSTR cmdLine,
 		else
 		{
 			curTime = timeGetTime();			// システム時刻を取得
-			if((curTime - FPSLastTime) >= 500)
+			if((curTime - FPSLastTime) >= 300)
 			{// FPSを測定
-				manager->CalculateFPS(frameCnt, curTime, FPSLastTime);
+				manager->CalculateFPS(frameCnt, curTime, FPSLastTime, updateTime, drawTime);
 				FPSLastTime = curTime;
 				frameCnt = 0;
 			}
@@ -101,10 +105,15 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, LPSTR cmdLine,
 			if((curTime - execLastTime) >= (1000 / 60))	// 1/60秒ごとに実行
 			{
 				execLastTime = curTime;	// 処理した時刻を保存
-				++frameCnt;
 
 				manager->Update();
+				updateTime = timeGetTime() - curTime;
+
+				workTime = timeGetTime();
 				manager->Draw();
+				drawTime = timeGetTime() - workTime;
+
+				++frameCnt;
 			}
 		}
 	}

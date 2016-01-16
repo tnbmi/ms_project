@@ -128,10 +128,6 @@ LRESULT CALLBACK Window::WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lPar
 	//----------------------------
 	switch(msg)
 	{
-	// ウインドウ生成
-	case WM_CREATE:
-		break;
-
 	// ウインドウ破棄
 	case WM_DESTROY:
 		PostQuitMessage(0);

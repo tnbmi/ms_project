@@ -14,6 +14,7 @@
 
 #include "..\..\..\manager\manager.h"
 #include "..\..\..\import\main\mainImport.h"
+#include "..\..\..\view\camera\camera.h"
 
 #include "..\..\..\list\objectList\objectList.h"
 #include "..\..\..\list\updateList\updateList.h"
@@ -41,12 +42,17 @@
 const int _time_max		= 5460;
 const D3DXVECTOR3 _effect_pos[2] = {D3DXVECTOR3(-900.0f, 400.0f, 0.0f),D3DXVECTOR3(900.0f, 400.0f, 0.0f)};
 
+const D3DXVECTOR3 _eye	= D3DXVECTOR3(0.0f, 350.0f, -2250.0f);
+
 //=============================================================================
 // コンストラクタ
 //=============================================================================
-GameMaster::GameMaster( LPDIRECT3DDEVICE9 device,ObjectList *objectList,UpdateList *updateList,DrawListManager *drawList,GameImport *import,FbxTexImport *fbxTexImport,Debugproc *proc,PadXManager* padXMaster )
+GameMaster::GameMaster( LPDIRECT3DDEVICE9 device,ObjectList *objectList,UpdateList *updateList,DrawListManager *drawList,
+						GameImport *import,FbxTexImport *fbxTexImport,Debugproc *proc,PadXManager* padXMaster,Camera* camera)
 {
-	//
+	//----------------------------
+	// メンバー初期化
+	//----------------------------
 	m_device = device;
 	m_objectList = objectList;
 	m_updateList = updateList;
@@ -57,9 +63,7 @@ GameMaster::GameMaster( LPDIRECT3DDEVICE9 device,ObjectList *objectList,UpdateLi
 	m_fbxTexImport = fbxTexImport;
 	m_command_manager	= nullptr;
 	m_time_manager		= nullptr;
-	//----------------------------
-	// メンバー初期化
-	//----------------------------
+	m_camera			= camera;
 }
 
 //=============================================================================
@@ -74,10 +78,11 @@ GameMaster::~GameMaster(void)
 //=============================================================================
 bool GameMaster::Create(GameMaster** outPointer,LPDIRECT3DDEVICE9 device,
 						ObjectList* objectList,UpdateList *updateList,DrawListManager *drawList,
-						GameImport* import,FbxTexImport *fbxTexImport,Debugproc* debugproc,PadXManager* padXManager)
+						GameImport* import,FbxTexImport *fbxTexImport,Debugproc* debugproc,PadXManager* padXManager,
+						Camera* camera)
 {
 	//ゲームマスター生成
-	GameMaster* pointer = new GameMaster( device,objectList,updateList,drawList,import,fbxTexImport,debugproc,padXManager );
+	GameMaster* pointer = new GameMaster( device,objectList,updateList,drawList,import,fbxTexImport,debugproc,padXManager,camera );
 	if(!pointer->Initialize())
 		return false;
 
@@ -299,11 +304,14 @@ bool GameMaster::Initialize(void)
 	blueTeam->StartAnimationSecondChild( m_nebAnim[NANIM_WAIT].stFrame,m_nebAnim[NANIM_WAIT].edFrame,true );
 	m_blueGgyAnim->StartAnimation( m_nebAnim[NANIM_WAIT].polyGgyAnimIdx,true );
 
+	// カメラの移動
+	m_defEyePos = m_camera->eye();
+
 	//ゲームフェーズ設定
 	m_gamePhase = PHASE_COUNTDOWN;
 
 	//debug
-	m_gamePhase = PHASE_GAME;
+	//m_gamePhase = PHASE_GAME;
 
 	return true;
 }
@@ -443,6 +451,7 @@ void GameMaster::SelectAnimation( const int judge,Player *player,Ggy2DAnimationM
 			ggy->StartAnimation(m_nebAnim[ NANIM_ACOMUP ].polyGgyAnimIdx,false );
 			Sound::Play( soundTable[0] );
 			break;
+
 		case 1:
 
 			player->StartAnimationSecondChild( m_nebAnim[ NANIM_ACOMDOWN +r].stFrame,m_nebAnim[ NANIM_ACOMDOWN +r].edFrame,false );

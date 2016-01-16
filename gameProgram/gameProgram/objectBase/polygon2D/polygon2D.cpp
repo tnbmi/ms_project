@@ -79,12 +79,6 @@ void Polygon2D::Update(void)
 void Polygon2D::Draw(LPD3DXCONSTANTTABLE vsc, LPD3DXCONSTANTTABLE psc, D3DXMATRIX vp)
 {
 	//----------------------------
-	// αテスト数値
-	//----------------------------
-	if(m_color.a <= 0x80)
-		m_device->SetRenderState(D3DRS_ALPHAREF, 0x00);	// 不透明にする値の設定
-
-	//----------------------------
 	// ワールド行列計算
 	//----------------------------
 	D3DXMATRIX wvp;
@@ -146,12 +140,6 @@ void Polygon2D::Draw(LPD3DXCONSTANTTABLE vsc, LPD3DXCONSTANTTABLE psc, D3DXMATRI
 		m_device->SetTexture(texSumpler, nullptr);
 	else
 		m_device->SetTexture(0, nullptr);
-
-	//----------------------------
-	// αテスト数値戻し
-	//----------------------------
-	if(m_color.a <= 0x80)
-		m_device->SetRenderState(D3DRS_ALPHAREF, 0x80);	// 不透明にする値の設定
 }
 
 //=============================================================================

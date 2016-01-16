@@ -219,7 +219,9 @@ bool Manager::Update(void)
 	// デバッグ表示
 	//----------------------------
 	m_debugproc->Update();
-	m_debugproc->PrintDebugProc("FPS:%d\n", m_countFPS);
+	m_debugproc->PrintDebugProc("FPS:%d fps\n", m_countFPS);
+	m_debugproc->PrintDebugProc("UdateTime:%d ms\n", m_countUpdateTime);
+	m_debugproc->PrintDebugProc("DrawTime:%d ms\n", m_countDrawTime);
 #endif
 
 	//----------------------------
@@ -274,9 +276,11 @@ void Manager::Draw(void)
 //=============================================================================
 // FPS測定
 //=============================================================================
-void Manager::CalculateFPS(DWORD frameCnt, DWORD curTime, DWORD FPSLastTime)
+void Manager::CalculateFPS(DWORD frameCnt, DWORD curTime, DWORD FPSLastTime, DWORD updateTime, DWORD drawTime)
 {
 	m_countFPS = frameCnt * 1000 / (curTime - FPSLastTime);
+	m_countUpdateTime = updateTime;
+	m_countDrawTime = drawTime;
 }
 
 // [EOF]
