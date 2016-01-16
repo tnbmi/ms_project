@@ -742,8 +742,10 @@ bool FbxModel::LoadFbxModel( const char *loadModelPath )
 	fclose( file );
 
 	//一旦ボーン全体に行列を設定
-	UpdateAnimation();
-
+	if( m_noBone == 0 )
+	{
+	 UpdateAnimation();
+	}
 	return true;
 
 }

@@ -29,6 +29,7 @@ class UpdateList;
 class DrawListManager;
 class Tex2DAnimation;
 class FbxModel;
+class EffectManager;
 
 class Title : public Phase
 {
@@ -68,6 +69,9 @@ private:
 	FbxModel *m_nebRed;
 	FbxModel *m_nebBlue;
 	int m_animIdx;
+
+	//effect
+	EffectManager *m_effectManager;
 };
 
 //=============================================================================

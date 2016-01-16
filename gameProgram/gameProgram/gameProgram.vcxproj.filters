@@ -537,9 +537,6 @@
     <ClCompile Include="shader\shader.cpp">
       <Filter>shader</Filter>
     </ClCompile>
-    <ClCompile Include="phase\standby\standby.cpp">
-      <Filter>phase\standby</Filter>
-    </ClCompile>
     <ClCompile Include="import\standby\standbyImport.cpp">
       <Filter>import\standby</Filter>
     </ClCompile>
@@ -584,6 +581,9 @@
     </ClCompile>
     <ClCompile Include="rainManager\rainManager.cpp">
       <Filter>rainManager</Filter>
+    </ClCompile>
+    <ClCompile Include="phase\standby\standby.cpp">
+      <Filter>phase\standby</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

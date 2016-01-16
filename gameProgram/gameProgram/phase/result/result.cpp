@@ -40,7 +40,7 @@
 // マクロ定義
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 const D3DXVECTOR3 _at	= D3DXVECTOR3(0.0f, 1000.0f, 2000.0f);
-const D3DXVECTOR3 _eye	= D3DXVECTOR3(0.0f, 50.0f, -1600.0f);
+const D3DXVECTOR3 _eye	= D3DXVECTOR3(0.0f, 120.0f, -600.0f);
 
 //=============================================================================
 // コンストラクタ
@@ -231,19 +231,23 @@ bool Result::InitObject(void)
 	//----------------------------
 	// 空メッシュドーム
 	//----------------------------
+	
 	MeshDome* dome;
+	//if(!MeshDome::Create(&dome, m_device, m_objectList,
+	//	D3DXVECTOR2(8, 7), 2000.0f, 2500.0f, m_import->texture(ResultImport::SKY)))
+
 	if(!MeshDome::Create(&dome, m_device, m_objectList,
-		D3DXVECTOR2(8, 7), 2000.0f, 2500.0f, m_import->texture(ResultImport::SKY)))
+		D3DXVECTOR2(8, 7), 2500.0f, 2500.0f, m_import->texture(ResultImport::SKY)))
 		return false;
 	m_updateList->Link(dome);
 	m_drawListManager->Link(dome, 0, Shader::PAT_NONE_LIGHT);
 	dome->pos_y(-150.0f);
 	dome->rot_y(PAI * 0.5f);
-
+	
 	//----------------------------
 	// 背景3Dポリゴン
 	//----------------------------
-	Polygon3D* bg3D;
+	/*Polygon3D* bg3D;
 	if(!Polygon3D::Create(&bg3D, m_device, m_objectList, m_import->texture(ResultImport::BG)))
 		return false;
 	m_updateList->Link(bg3D);
@@ -253,7 +257,7 @@ bool Result::InitObject(void)
 	bg3D->pos(0.0f, size.y*0.5f, 512.0f*2.5f);
 	bg3D->texcoord(0, 0.0f, 0.01f);
 	bg3D->texcoord(1, 1.0f, 0.01f);
-
+	
 	//----------------------------
 	// 地面3Dポリゴン
 	//----------------------------
@@ -264,7 +268,7 @@ bool Result::InitObject(void)
 	m_drawListManager->Link(ground, 2, Shader::PAT_NONE_LIGHT);
 	ground->scl(512.0f*5, 512.0f*5, 0.0f);
 	ground->rot_x(PAI * 0.5f);
-
+	*/
 	//---------------------------
 	//リザルトマスター
 	//---------------------------

@@ -70,14 +70,14 @@ bool Ggy2DAnimationManager::Initialize(void)
 	//----------------------------
 	// コメント
 	//----------------------------
-	m_animArray = new Tex2DAnimation*[ _animMax ];
-
+	//m_animArray = new Tex2DAnimation*[ _animMax ];
 
 	for( int i = 0 ; i < _animMax ; i++ )
 	{
 		Tex2DAnimation::Create( &m_animArray[i] );
 		m_animArray[i]->Set2DPolygon( p );
 	}
+
 
 
 	m_animArray[0]->SetAnimationData( 3.0f,10,D3DXVECTOR2(0.0f,0.0f),D3DXVECTOR2(0.1f,0.0f),D3DXVECTOR2(0.0f,1.0f),D3DXVECTOR2(0.1f,1.0f),D3DXVECTOR2(0.1f,0.0f));
@@ -103,7 +103,7 @@ void Ggy2DAnimationManager::Finalize(void)
 		SafeDelete( m_animArray[i] );
 	}
 
-	SafeDeleteArray( m_animArray );
+	//SafeDeleteArray( m_animArray );
 }
 
 //=============================================================================
@@ -140,7 +140,10 @@ void Ggy2DAnimationManager::StartAnimation( const int idx,bool isRoop )
 {
 	m_animArray[idx]->StartAnimation(isRoop);
 	m_animIdx = idx;//FPSに影響なし
-	m_poly->texture(m_animArray[idx]->texture());//これ？
+
+	LPDIRECT3DTEXTURE9 tex = m_animArray[idx]->texture();
+
+	m_poly->texture(tex);//これ？
 }
 
 bool Ggy2DAnimationManager::isEndAnimation()

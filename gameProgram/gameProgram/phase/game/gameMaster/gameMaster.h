@@ -132,7 +132,7 @@ private:
 	CUTIN m_blueTeamCutIn;
 
 	//soundTableにはかならず5つの配列に攻撃1~3 敗北　同時押しのサウンドデータを差し込むこと
-	void SelectAnimation( const int judge,Player *player,Ggy2DAnimationManager *ggy,CUTIN *cutIn,Sound::SOUND_TABLE *soundTable );
+	void SelectAnimation( const int judge,Player *player,Ggy2DAnimationManager *ggy,CUTIN *cutIn,Sound::SOUND_TABLE *soundTable,const D3DXVECTOR3 &effectPos,const int EffectIdx );
 	void UpdateCutIn();
 
 	NEBTAANIMATIONFRAME m_nebAnim[Max];

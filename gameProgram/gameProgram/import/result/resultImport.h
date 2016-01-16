@@ -34,6 +34,8 @@ public:
 		SYOURIRED,
 		SYOURIBLUE,
 		KEKKA,
+		REDOUGI,
+		BLUEOUGI,
 
 		TEX_MAX
 	};

@@ -50,6 +50,10 @@ public:
 	void Update(void);
 	void Draw(void);
 
+	bool InitializeN(void);
+	void FinalizeN(void);
+	void UpdateN(void);
+
 private:
 
 	enum PHASE
@@ -57,6 +61,12 @@ private:
 		PHASE_RESULTSTART,
 		PHASE_ANNOUNCEMENT,
 		PHASE_ANNOUNCEFINISH,
+		PHASE_FANROT,
+		PHASE_MODELIN,
+		PHASE_MODELROT,
+		PHASE_MODELPOSE,
+		PHASE_FIREWORKSANDRAIN,
+		PHASE_FINISH,
 		PHASE_MAX
 	};
 
@@ -83,6 +93,34 @@ private:
 	//ポリゴン
 	Polygon2D*	m_resultPoly;//結果発表のポリゴン
 	Polygon2D*	m_winPoly;//勝ち表示ポリゴン
+
+	//新リザルト用
+	//ねぶた赤青
+	FbxModel *m_redNeb;
+	FbxModel *m_blueNeb;
+
+	D3DXVECTOR3 m_redNebPos;
+	D3DXVECTOR3 m_blueNebPos;
+	D3DXVECTOR3 m_redGgyPos;
+	D3DXVECTOR3 m_blueGgyPos;
+	float m_redGgyRot;
+	float m_blueGgyRot;
+	int m_time;
+
+	//背景モデル
+	FbxModel *m_back;
+
+	//じじいは↑で宣言済み
+
+	//扇二種
+	Polygon2D *m_fanLeft;
+	Polygon2D *m_fanRight;
+	float m_fanLeftRot;
+	float m_fanRightRot;
+
+	void WinRedTeam();
+	void WinBlueTeam();
+	void DrawTeam();
 
 
 	int m_fireTime;

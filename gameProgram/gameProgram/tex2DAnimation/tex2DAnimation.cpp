@@ -111,6 +111,8 @@ void Tex2DAnimation::Update(void)
 	m_poly->texcoord(1,uv[1].x,uv[1].y );
 	m_poly->texcoord(2,uv[2].x,uv[2].y );
 	m_poly->texcoord(3,uv[3].x,uv[3].y );
+
+	//m_poly->texture( m_tex );
 }
 
 //=============================================================================

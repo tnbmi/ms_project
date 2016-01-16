@@ -235,11 +235,8 @@ bool GameMaster::Initialize(void)
 	m_redTeam->ApplySclRotPos();
 	m_blueTeam->ApplySclRotPos();
 
-	m_effectManager->LoadEffectData( "./resources/effect/FireWorks.OEF" );
-	m_effectManager->LoadEffectData( "./resources/effect/FireWorks2.OEF" );
-	m_effectManager->LoadEffectData( "./resources/effect/FireWorks3.OEF" );
-	m_effectManager->LoadEffectData( "./resources/effect/Ene.OEF" );
-	m_effectManager->LoadEffectData( "./resources/effect/Effect.OEF" );
+	m_effectManager->LoadEffectData( "./resources/effect/FireWorks_TeamRed.OEF" );
+	m_effectManager->LoadEffectData( "./resources/effect/FireWorks_TeamBlue.OEF" );
 	m_effectManager->SetOption( InstancingBillboard::OPTION( true,false,false ));
 
 	//アニメーションデータいれてやる
@@ -298,7 +295,13 @@ bool GameMaster::Initialize(void)
 	m_nebAnim[NANIM_LOSE].stFrame = 391;
 	m_nebAnim[NANIM_LOSE].edFrame = 450;
 	m_nebAnim[NANIM_LOSE].polyGgyAnimIdx = 2;
-
+	/*
+	for( int i = 0 ; i < 14 ; i++ )
+	{
+		m_redGgyAnim->StartAnimation(m_nebAnim[ i ].polyGgyAnimIdx,false );
+		m_blueGgyAnim->StartAnimation(m_nebAnim[ i ].polyGgyAnimIdx,false );
+	}
+	*/
 	redTeam->StartAnimationSecondChild( m_nebAnim[NANIM_WAIT].stFrame,m_nebAnim[NANIM_WAIT].edFrame,true );
 	m_redGgyAnim->StartAnimation( m_nebAnim[NANIM_WAIT].polyGgyAnimIdx,true );
 	blueTeam->StartAnimationSecondChild( m_nebAnim[NANIM_WAIT].stFrame,m_nebAnim[NANIM_WAIT].edFrame,true );
@@ -437,7 +440,7 @@ void GameMaster::DetermineTeamScore()
 //アニメーション選択
 //=============================================================================
 
-void GameMaster::SelectAnimation( const int judge,Player *player,Ggy2DAnimationManager *ggy,CUTIN *cutIn,Sound::SOUND_TABLE *soundTable )
+void GameMaster::SelectAnimation( const int judge,Player *player,Ggy2DAnimationManager *ggy,CUTIN *cutIn,Sound::SOUND_TABLE *soundTable,const D3DXVECTOR3 &effectPos,const int effectIdx  )
 {
 	//	ここでランダムで違うポーズをだす
 	int r = Random::Rand() %2;
@@ -477,7 +480,8 @@ void GameMaster::SelectAnimation( const int judge,Player *player,Ggy2DAnimationM
 
 			player->StartAnimationSecondChild( m_nebAnim[ NANIM_SAME1+s ].stFrame,m_nebAnim[ NANIM_SAME1 +s].edFrame,false );
 			ggy->StartAnimation(m_nebAnim[ NANIM_SAME1+s ].polyGgyAnimIdx,false );
-			m_effectManager->AddEffectFromDataBase(0,D3DXVECTOR3(0,900,400));
+			m_effectManager->AddEffectFromDataBase( effectIdx,effectPos );
+			//0 900 400
 
 			//汎用同時押し音
 			Sound::Play( Sound::SE_SAME );
@@ -646,8 +650,8 @@ void GameMaster::UpdateGame()
 	Sound::SOUND_TABLE blueTable[5]={ Sound::SE_ATTACK_BLUE1,Sound::SE_ATTACK_BLUE2,Sound::SE_ATTACK_BLUE3,Sound::SE_FAIL_BLUE,Sound::SE_SAME_NEB_BLUE };
 	Sound::SOUND_TABLE redTable[5] ={ Sound::SE_ATTACK_RED1,Sound::SE_ATTACK_RED2,Sound::SE_ATTACK_RED3,Sound::SE_FAIL_RED,Sound::SE_SAME_NEB_RED };;
 
-	SelectAnimation( get.state[1],m_redTeam,m_redGgyAnim,&m_redTeamCutIn,redTable );
-	SelectAnimation( get.state[0],m_blueTeam,m_blueGgyAnim,&m_blueTeamCutIn,blueTable );
+	SelectAnimation( get.state[1],m_redTeam,m_redGgyAnim,&m_redTeamCutIn,redTable,D3DXVECTOR3(300,900,400 ),0);
+	SelectAnimation( get.state[0],m_blueTeam,m_blueGgyAnim,&m_blueTeamCutIn,blueTable,D3DXVECTOR3(-300,900,400 ),1);
 
 	//スコア確定
 	DetermineTeamScore();

@@ -21,7 +21,12 @@ const char *_fbxTexName[]=
 	"/Blue_Model.png",
 	"/Red_Model.png",
 	"/Title.png",
-	"/Title_Ground_UV",
+	"/Title_Ground_UV.png",
+	"/Ground_Texture.tga",
+	"/Mon_Texture.png",
+	"/Stone_Texture.png",
+	"/Syouridai_Texture.tga",
+	"/Tree_Texture.png",
 };
 
 //=============================================================================

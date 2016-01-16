@@ -39,6 +39,9 @@
 #include "..\..\import\fbx\fbxTexImport.h"
 #include "..\..\tex2DAnimation\tex2DAnimation.h"
 
+#include "..\..\effectManager\effectManager.h"
+#include "..\..\objectBase\instancingBillboard\instancingBillboard.h"
+
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // マクロ定義
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -161,6 +164,9 @@ void Title::Finalize(void)
 	// オブジェクトリスト
 	SafeDelete(m_objectList);
 
+	//エフェクト
+	SafeFinalizeDelete( m_effectManager );
+
 	//----------------------------
 	// ビュー
 	//----------------------------
@@ -198,6 +204,8 @@ void Title::Update(void)
 	// オブジェクト更新
 	//----------------------------
 	m_updateList->AllUpdate();
+
+	m_effectManager->Update();
 	
 	//テーブル更新
 	if( !m_nebRed->IsPlayAnim() )
@@ -401,6 +409,23 @@ bool Title::InitObject(void)
 	m_drawListManager->Link(poly2d, 4, Shader::PAT_2D);
 	poly2d->scl(701.0f, 248.0f, 0.0f);
 	poly2d->pos(SCREEN_WIDTH * 0.5f, 200.0f, 0.0f);
+
+	//----------------------------
+	//エフェクトマネージャ
+	//----------------------------
+	EffectManager::Create( &m_effectManager,m_device,m_objectList,m_updateList,m_drawListManager,3000,"./resources/texture/effect.jpg",D3DXVECTOR2(1,1),D3DXVECTOR2(1,1) );
+	m_effectManager->LoadEffectData( "./resources/effect/FireWorks_TeamBlue.OEF" );
+	m_effectManager->LoadEffectData( "./resources/effect/FireWorks_TeamRed.OEF" );
+	m_effectManager->LoadEffectData( "./resources/effect/FireWorks_Title1.OEF" );
+	m_effectManager->LoadEffectData( "./resources/effect/FireWorks_Title2.OEF" );	
+
+	m_effectManager->SetOption( InstancingBillboard::OPTION( true,false,false ) );
+
+	m_effectManager->SetEffectGenData( 0,120,0,D3DXVECTOR3( -500,850,2500 ) );
+	m_effectManager->SetEffectGenData( 1,120,1,D3DXVECTOR3( 500,850,2500 ) );
+
+	m_effectManager->SetEffectGenData( 2,240,2,D3DXVECTOR3( -1200,1250,1300 ) );
+	m_effectManager->SetEffectGenData( 3,240,3,D3DXVECTOR3( 1200,1250,1300 ) );
 
 	return true;
 }
