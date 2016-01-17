@@ -40,6 +40,7 @@
 // マクロ定義
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 const int _time_max		= 1860;
+const int _time_climax	= 900;
 const D3DXVECTOR3 _effect_pos[2] = {D3DXVECTOR3(-900.0f, 400.0f, 0.0f),D3DXVECTOR3(900.0f, 400.0f, 0.0f)};
 
 const D3DXVECTOR3 _at	= D3DXVECTOR3(0.0f, 1050.0f, 10000.0f);
@@ -644,6 +645,8 @@ void DemoMaster::UpdateDemo()
 	m_blueTeam->Update();
 
 	// コマンドマネージャ
+	if(m_time_manager->GetTime() < _time_climax)
+		m_command_manager->SetClimaxFlag(true);
 	CommandManager::COM_MANA_RTN get = {0,0};
 	get = m_command_manager->Update();
 	AddTeamScore(get.score[1], get.score[0]);

@@ -40,7 +40,6 @@ TimeManager::TimeManager(void)
 	m_drawListManager = nullptr;
 
 	m_time = 0;
-	m_count = 0;
 	m_poly_list[0] = nullptr;
 	m_poly_list[1] = nullptr;
 }
@@ -114,7 +113,6 @@ bool TimeManager::Update(void)
 {
 	m_time--;
 
-	float time = 0;
 	int j = 0;
 	for(int i = 2; i > 0; i--)
 	{
@@ -122,7 +120,7 @@ bool TimeManager::Update(void)
 		j++;
 	}
 
-	if(m_count > m_time)
+	if(m_time <= 0)
 		return true;
 	return false;
 }
