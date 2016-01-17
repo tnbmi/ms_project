@@ -542,10 +542,10 @@ void ResultMaster::UpdateN()
 			m_fanLeftRot += PAI * 0.04f;
 			m_fanRightRot+= -PAI * 0.04f;
 
-			if( m_fanLeftRot > PAI/3.5 )
+			if( m_fanLeftRot > PAI/3.5f )
 			{
-				m_fanLeftRot = PAI/3.5;
-				m_fanRightRot= -PAI/3.5;
+				m_fanLeftRot = PAI/3.5f;
+				m_fanRightRot= -PAI/3.5f;
 
 				m_fanLeft->rot(0,0,m_fanLeftRot);
 				m_fanRight->rot(0,0,m_fanRightRot);
@@ -669,8 +669,8 @@ void ResultMaster::UpdateN()
 
 void ResultMaster::WinRedTeam()
 {
-	m_redNebPos = LerpVec3( D3DXVECTOR3( 0,2000,712 ),D3DXVECTOR3(0,-220,712 ),0,40,m_time,Cube );
-	m_redGgyPos = LerpVec3( D3DXVECTOR3( 2000,2000,-82),D3DXVECTOR3(0,100,-82 ),0,40,m_time,Cube);
+	m_redNebPos = LerpVec3( D3DXVECTOR3( 0.0f,2000.0f,712.0f ),D3DXVECTOR3(0.0f,-220.0f,712.0f ),0.0f,40.0f,(float)m_time,Cube );
+	m_redGgyPos = LerpVec3( D3DXVECTOR3( 2000.0f,2000.0f,-82.0f),D3DXVECTOR3(0.0f,100.0f,-82.0f ),0.0f,40.0f,(float)m_time,Cube);
 
 	m_redNeb->pos( m_redNebPos );
 	m_redGgy->pos( m_redGgyPos );
@@ -685,8 +685,8 @@ void ResultMaster::WinRedTeam()
 
 void ResultMaster::WinBlueTeam()
 {
-	m_blueNebPos = LerpVec3( D3DXVECTOR3( 0,2000,712 ),D3DXVECTOR3(0,-220,712 ),0,40,m_time,Cube );
-	m_blueGgyPos = LerpVec3( D3DXVECTOR3( -2000,2000,-82),D3DXVECTOR3(0,100,-82 ),0,40,m_time,Cube);
+	m_blueNebPos = LerpVec3( D3DXVECTOR3( 0,2000,712 ),D3DXVECTOR3(0,-220,712 ),0.0f,40.0f,(float)m_time,Cube );
+	m_blueGgyPos = LerpVec3( D3DXVECTOR3( -2000,2000,-82),D3DXVECTOR3(0,100,-82 ),0.0f,40.0f,(float)m_time,Cube);
 
 	m_blueNeb->pos( m_blueNebPos );
 	m_blueGgy->pos( m_blueGgyPos );
@@ -701,21 +701,21 @@ void ResultMaster::WinBlueTeam()
 
 void ResultMaster::DrawTeam()
 {
-	m_blueNebPos = LerpVec3( D3DXVECTOR3( -334,2000,712 ),D3DXVECTOR3(-334,-220,712 ),0,60,m_time,Cube );
-	m_blueGgyPos = LerpVec3( D3DXVECTOR3( -2000,2000,-82),D3DXVECTOR3(-134,100,-82 ),0,60,m_time,Cube);
+	m_blueNebPos = LerpVec3( D3DXVECTOR3( -334.0f,2000.0f,712.0f ),D3DXVECTOR3(-334.0f,-220.0f,712.0f ),0.0f,40.0f,(float)m_time,Cube );
+	m_blueGgyPos = LerpVec3( D3DXVECTOR3( -2000.0f,2000.0f,-82.0f),D3DXVECTOR3(-134.0f,100.0f,-82.0f ),0.0f,60.0f,(float)m_time,Cube);
 
 	m_blueNeb->pos( m_blueNebPos );
 	m_blueGgy->pos( m_blueGgyPos );
 
-	m_redNebPos = LerpVec3( D3DXVECTOR3( 334,2000,712 ),D3DXVECTOR3(334,-220,712 ),0,60,m_time,Cube );
-	m_redGgyPos = LerpVec3( D3DXVECTOR3( 2000,2000,-82),D3DXVECTOR3(134,100,-82 ),0,60,m_time,Cube);
+	m_redNebPos = LerpVec3( D3DXVECTOR3( 334.0f,2000.0f,712.0f ),D3DXVECTOR3(334.0f,-220.0f,712.0f ),0.0f,40.0f,(float)m_time,Cube );
+	m_redGgyPos = LerpVec3( D3DXVECTOR3( 2000.0f,2000.0f,-82.0f),D3DXVECTOR3(134.0f,100.0f,-82.0f ),0.0f,40.0f,(float)m_time,Cube);
 
 	m_redNeb->pos( m_redNebPos );
 	m_redGgy->pos( m_redGgyPos );
 
 	m_time++;
 
-	if( m_time >= 60 )
+	if( m_time >= 40 )
 	{
 		m_phase = PHASE_MODELROT;
 	}

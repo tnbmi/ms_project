@@ -297,13 +297,7 @@ bool GameMaster::Initialize(void)
 	m_nebAnim[NANIM_LOSE].stFrame = 391;
 	m_nebAnim[NANIM_LOSE].edFrame = 450;
 	m_nebAnim[NANIM_LOSE].polyGgyAnimIdx = 2;
-	/*
-	for( int i = 0 ; i < 14 ; i++ )
-	{
-		m_redGgyAnim->StartAnimation(m_nebAnim[ i ].polyGgyAnimIdx,false );
-		m_blueGgyAnim->StartAnimation(m_nebAnim[ i ].polyGgyAnimIdx,false );
-	}
-	*/
+
 	redTeam->StartAnimationSecondChild( m_nebAnim[NANIM_WAIT].stFrame,m_nebAnim[NANIM_WAIT].edFrame,true );
 	m_redGgyAnim->StartAnimation( m_nebAnim[NANIM_WAIT].polyGgyAnimIdx,true );
 	blueTeam->StartAnimationSecondChild( m_nebAnim[NANIM_WAIT].stFrame,m_nebAnim[NANIM_WAIT].edFrame,true );
