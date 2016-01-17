@@ -31,6 +31,8 @@ const char* _result_texture_name[] =
 	"/kekkaUI.png",
 	"/redougi.png",
 	"/blueougi.png",
+	"/redhikiwake.png",
+	"/bluehikiwake.png",
 };
 
 //=============================================================================

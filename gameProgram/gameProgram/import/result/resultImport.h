@@ -36,6 +36,8 @@ public:
 		KEKKA,
 		REDOUGI,
 		BLUEOUGI,
+		REDHIKIWAKE,
+		BLUEHIKIWAKE,
 
 		TEX_MAX
 	};
