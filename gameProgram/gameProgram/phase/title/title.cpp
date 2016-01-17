@@ -66,6 +66,8 @@ Title::Title(LPDIRECT3DDEVICE9 device) : Phase(device)
 	m_updateList		= nullptr;
 	m_drawListManager	= nullptr;
 	m_fbxTexImport		= nullptr;
+
+	m_timerCnt = 60 * 30;
 }
 
 //=============================================================================
@@ -225,13 +227,16 @@ void Title::Update(void)
 	//----------------------------
 	// ‰æ–Ê‘JˆÚ
 	//----------------------------
+	// ƒJƒEƒ“ƒg
+	m_timerCnt--;
+
 	if(m_padXManager->InputChk(0xf03f) || m_keyboard->trigger(DIK_RETURN))
 	{
 		Manager::nextPhase((Phase*)new Standby(m_device));
 		Sound::Play( Sound::SE_KAIMAKU );
 	}
 
-	if(m_padXManager->InputChk(0x0100) || m_keyboard->trigger(DIK_0))
+	if(m_padXManager->InputChk(0x0100) || m_timerCnt <= 0 || m_keyboard->trigger(DIK_0))
 	{
 		Manager::nextPhase((Phase*)new Demo(m_device));
 		Sound::Play( Sound::SE_KAIMAKU );

@@ -72,6 +72,8 @@ private:
 
 	//effect
 	EffectManager *m_effectManager;
+
+	int m_timerCnt;
 };
 
 //=============================================================================
