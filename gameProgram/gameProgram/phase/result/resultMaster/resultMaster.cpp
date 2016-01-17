@@ -311,6 +311,34 @@ bool ResultMaster::InitializeN()
 	RainManager::Create( &m_rainManager,m_device,m_objectList,m_updateList,m_drawListManager,5000,"./resources/texture/sakura.png",D3DXVECTOR2(1,1),D3DXVECTOR2(1,1) );
 	//m_rainManager->SetRainSeed(1,30,100,200,200,400,D3DXVECTOR3(0.001f,0,0),D3DXVECTOR3(0.002f,0,0),D3DXVECTOR3(-0,200,-300),D3DXVECTOR3(-100,500,300) );
 
+
+	//スコア生成
+	Score *redTeamScore;
+	Score *blueTeamScore;
+	Score::Create( &redTeamScore,m_device,m_objectList,m_updateList,m_drawListManager,0,ObjectBase::TYPE_2D,m_import );
+	Score::Create( &blueTeamScore,m_device,m_objectList,m_updateList,m_drawListManager,0,ObjectBase::TYPE_2D,m_import );
+
+	m_redTeamScore = redTeamScore;
+	m_blueTeamScore= blueTeamScore;
+
+	m_redTeamScore->pos( D3DXVECTOR3( 10000+640 +320,180,0 ) );
+	m_blueTeamScore->pos( D3DXVECTOR3( 10000+320,180,0 ) );
+	m_redTeamScore->StartRandView(200);
+	m_redTeamScore->score(Manager::scoreRed());
+	m_redTeamScore->col(D3DXCOLOR(1,0,0,1));
+	
+	m_blueTeamScore->StartRandView(200);
+	m_blueTeamScore->score(Manager::scoreBlue());
+	m_blueTeamScore->col(D3DXCOLOR(0,0,1,1));
+
+	m_redTeamScore->scl( D3DXVECTOR3( 0,0,0) );
+	m_blueTeamScore->scl( D3DXVECTOR3( 0,0,0) );
+
+	//初期化対策
+	m_redTeamScore->Update();
+	m_blueTeamScore->Update();
+
+
 	//扇二種用ポリゴン生成
 	int rscore,bscore;
 
@@ -345,12 +373,12 @@ bool ResultMaster::InitializeN()
 	else
 	{
 		//レフトファン
-		Polygon2D::Create( &m_fanLeft,m_device,m_objectList,m_import->texture(ResultImport::BLUEOUGI),ObjectBase::TYPE_2D );
+		Polygon2D::Create( &m_fanLeft,m_device,m_objectList,m_import->texture(ResultImport::BLUEHIKIWAKE),ObjectBase::TYPE_2D );
 		m_updateList->Link( m_fanLeft );
 		m_drawListManager->Link( m_fanLeft,0,Shader::PAT_2D );
 
 		//ライトファン
-		Polygon2D::Create( &m_fanRight,m_device,m_objectList,m_import->texture(ResultImport::REDOUGI),ObjectBase::TYPE_2D );
+		Polygon2D::Create( &m_fanRight,m_device,m_objectList,m_import->texture(ResultImport::REDHIKIWAKE),ObjectBase::TYPE_2D );
 		m_updateList->Link( m_fanRight );
 		m_drawListManager->Link( m_fanRight,0,Shader::PAT_2D );
 	}
@@ -371,8 +399,8 @@ bool ResultMaster::InitializeN()
 	
 	if( rscore > bscore )
 	{
-		FbxModel::Create( &m_redGgy,m_device,m_objectList,0,ObjectBase::TYPE_3D,"./resources/fbxmodel/gg_red.bin",m_fbxTexImport );
-		FbxModel::Create( &m_redNeb,m_device,m_objectList,0,ObjectBase::TYPE_3D,"./resources/fbxmodel/nebta_red.bin",m_fbxTexImport );
+		FbxModel::Create( &m_redGgy,m_device,m_objectList,0,ObjectBase::TYPE_3D,"./resources/fbxmodel/result_ggy_red.bin",m_fbxTexImport );
+		FbxModel::Create( &m_redNeb,m_device,m_objectList,0,ObjectBase::TYPE_3D,"./resources/fbxmodel/result_nebuta_red.bin",m_fbxTexImport );
 
 		m_updateList->Link( m_redGgy );
 		m_drawListManager->Link( m_redGgy,0,Shader::PAT_FBX );
@@ -382,8 +410,8 @@ bool ResultMaster::InitializeN()
 	}
 	else if( bscore > rscore )
 	{
-		FbxModel::Create( &m_blueGgy,m_device,m_objectList,0,ObjectBase::TYPE_3D,"./resources/fbxmodel/gg_blue.bin",m_fbxTexImport );
-		FbxModel::Create( &m_blueNeb,m_device,m_objectList,0,ObjectBase::TYPE_3D,"./resources/fbxmodel/nebta_blue.bin",m_fbxTexImport );
+		FbxModel::Create( &m_blueGgy,m_device,m_objectList,0,ObjectBase::TYPE_3D,"./resources/fbxmodel/result_ggy_blue.bin",m_fbxTexImport );
+		FbxModel::Create( &m_blueNeb,m_device,m_objectList,0,ObjectBase::TYPE_3D,"./resources/fbxmodel/result_nebuta_blue.bin",m_fbxTexImport );
 
 		m_updateList->Link( m_blueGgy );
 		m_drawListManager->Link( m_blueGgy,0,Shader::PAT_FBX );
@@ -393,8 +421,8 @@ bool ResultMaster::InitializeN()
 	}
 	else
 	{
-		FbxModel::Create( &m_redGgy,m_device,m_objectList,0,ObjectBase::TYPE_3D,"./resources/fbxmodel/gg_red.bin",m_fbxTexImport );
-		FbxModel::Create( &m_redNeb,m_device,m_objectList,0,ObjectBase::TYPE_3D,"./resources/fbxmodel/nebta_red.bin",m_fbxTexImport );
+		FbxModel::Create( &m_redGgy,m_device,m_objectList,0,ObjectBase::TYPE_3D,"./resources/fbxmodel/result_ggy_red.bin",m_fbxTexImport );
+		FbxModel::Create( &m_redNeb,m_device,m_objectList,0,ObjectBase::TYPE_3D,"./resources/fbxmodel/result_nebuta_red.bin",m_fbxTexImport );
 
 		m_updateList->Link( m_redGgy );
 		m_drawListManager->Link( m_redGgy,0,Shader::PAT_FBX );
@@ -402,8 +430,8 @@ bool ResultMaster::InitializeN()
 		m_updateList->Link( m_redNeb );
 		m_drawListManager->Link( m_redNeb,0,Shader::PAT_FBX );
 
-		FbxModel::Create( &m_blueGgy,m_device,m_objectList,0,ObjectBase::TYPE_3D,"./resources/fbxmodel/gg_blue.bin",m_fbxTexImport );
-		FbxModel::Create( &m_blueNeb,m_device,m_objectList,0,ObjectBase::TYPE_3D,"./resources/fbxmodel/nebta_blue.bin",m_fbxTexImport );
+		FbxModel::Create( &m_blueGgy,m_device,m_objectList,0,ObjectBase::TYPE_3D,"./resources/fbxmodel/result_ggy_blue.bin",m_fbxTexImport );
+		FbxModel::Create( &m_blueNeb,m_device,m_objectList,0,ObjectBase::TYPE_3D,"./resources/fbxmodel/result_nebuta_blue.bin",m_fbxTexImport );
 
 		m_updateList->Link( m_blueGgy );
 		m_drawListManager->Link( m_blueGgy,0,Shader::PAT_FBX );
@@ -422,11 +450,11 @@ bool ResultMaster::InitializeN()
 	m_fanLeftRot = -PAI/2;
 	m_fanRightRot= PAI/2;
 
-	m_fanLeft->scl(660,660,0);
+	m_fanLeft->scl(600,600,0);
 	m_fanLeft->pos(0,SCREEN_HEIGHT,0 );
 	m_fanLeft->rot(0,0,m_fanLeftRot );
 
-	m_fanRight->scl(660,660,0);
+	m_fanRight->scl(600,600,0);
 	m_fanRight->pos(SCREEN_WIDTH,SCREEN_HEIGHT,0 );
 	m_fanRight->rot(0,0,m_fanRightRot);
 
@@ -473,6 +501,8 @@ void ResultMaster::FinalizeN()
 {
 	SafeFinalizeDelete( m_effectManager );
 	SafeFinalizeDelete( m_rainManager );
+	SafeFinalizeDelete( m_redTeamScore );
+	SafeFinalizeDelete( m_blueTeamScore );
 }
 
 //=============================================================================
@@ -484,11 +514,27 @@ void ResultMaster::UpdateN()
 	switch( m_phase )
 	{
 		case PHASE_RESULTSTART:
-
-			//ねぶたと爺の初期位置設定
+			m_redTeamScore->pos( D3DXVECTOR3( 640 +320,100,0 ) );
+			m_blueTeamScore->pos( D3DXVECTOR3( 320,100,0 ) );
+			m_redTeamScore->scl( D3DXVECTOR3( 50,50,0) );
+			m_blueTeamScore->scl( D3DXVECTOR3( 50,50,0) );
+			m_redTeamScore->col(D3DXCOLOR(1,0,0,1));
+			m_blueTeamScore->col(D3DXCOLOR(0,0,1,1));
+			m_redTeamScore->StartRandView( 60 * 3 );
+			m_blueTeamScore->StartRandView( 60 * 3 );
+			m_phase = PHASE_ANNOUNCEMENT;
+			Sound::Play( Sound::SE_DRUM_DODON );
 			m_time = 0;
-			m_phase = PHASE_FANROT;
-		break;
+			break;
+
+		case PHASE_ANNOUNCEMENT:
+
+			if( !m_redTeamScore->isRandView() )
+			{
+				m_phase = PHASE_FANROT;
+			}
+
+			break;
 
 		case PHASE_FANROT:
 			//扇の回転
@@ -496,14 +542,34 @@ void ResultMaster::UpdateN()
 			m_fanLeftRot += PAI * 0.04f;
 			m_fanRightRot+= -PAI * 0.04f;
 
-			if( m_fanLeftRot > PAI/3 )
+			if( m_fanLeftRot > PAI/3.5 )
 			{
-				m_fanLeftRot = PAI/3;
-				m_fanRightRot= -PAI/3;
+				m_fanLeftRot = PAI/3.5;
+				m_fanRightRot= -PAI/3.5;
 
 				m_fanLeft->rot(0,0,m_fanLeftRot);
 				m_fanRight->rot(0,0,m_fanRightRot);
 
+				if( m_redGgy != nullptr )
+				{
+					m_redGgy->StartAnimation(1,90,false );
+				}
+
+				if( m_blueGgy != nullptr )
+				{
+					m_blueGgy->StartAnimation( 1,90,false );
+				}
+
+				if( m_redNeb != nullptr )
+				{
+					m_redNeb->StartAnimation(1,90,false);
+				}
+
+				if( m_blueNeb != nullptr )
+				{
+					m_blueNeb->StartAnimation( 1,90,false );
+				}
+				
 				m_phase = PHASE_MODELIN;
 			}
 
@@ -597,12 +663,14 @@ void ResultMaster::UpdateN()
 
 	m_effectManager->Update();
 	m_rainManager->Update();
+	m_redTeamScore->Update();
+	m_blueTeamScore->Update();
 }
 
 void ResultMaster::WinRedTeam()
 {
 	m_redNebPos = LerpVec3( D3DXVECTOR3( 0,2000,712 ),D3DXVECTOR3(0,-220,712 ),0,40,m_time,Cube );
-	m_redGgyPos = LerpVec3( D3DXVECTOR3( 2000,2000,-82),D3DXVECTOR3(0,114,-82 ),0,40,m_time,Cube);
+	m_redGgyPos = LerpVec3( D3DXVECTOR3( 2000,2000,-82),D3DXVECTOR3(0,100,-82 ),0,40,m_time,Cube);
 
 	m_redNeb->pos( m_redNebPos );
 	m_redGgy->pos( m_redGgyPos );
@@ -618,7 +686,7 @@ void ResultMaster::WinRedTeam()
 void ResultMaster::WinBlueTeam()
 {
 	m_blueNebPos = LerpVec3( D3DXVECTOR3( 0,2000,712 ),D3DXVECTOR3(0,-220,712 ),0,40,m_time,Cube );
-	m_blueGgyPos = LerpVec3( D3DXVECTOR3( -2000,2000,-82),D3DXVECTOR3(0,114,-82 ),0,40,m_time,Cube);
+	m_blueGgyPos = LerpVec3( D3DXVECTOR3( -2000,2000,-82),D3DXVECTOR3(0,100,-82 ),0,40,m_time,Cube);
 
 	m_blueNeb->pos( m_blueNebPos );
 	m_blueGgy->pos( m_blueGgyPos );
@@ -633,21 +701,21 @@ void ResultMaster::WinBlueTeam()
 
 void ResultMaster::DrawTeam()
 {
-	m_blueNebPos = LerpVec3( D3DXVECTOR3( -334,2000,712 ),D3DXVECTOR3(-334,-220,712 ),0,40,m_time,Cube );
-	m_blueGgyPos = LerpVec3( D3DXVECTOR3( -2000,2000,-82),D3DXVECTOR3(-134,114,-82 ),0,40,m_time,Cube);
+	m_blueNebPos = LerpVec3( D3DXVECTOR3( -334,2000,712 ),D3DXVECTOR3(-334,-220,712 ),0,60,m_time,Cube );
+	m_blueGgyPos = LerpVec3( D3DXVECTOR3( -2000,2000,-82),D3DXVECTOR3(-134,100,-82 ),0,60,m_time,Cube);
 
 	m_blueNeb->pos( m_blueNebPos );
 	m_blueGgy->pos( m_blueGgyPos );
 
-	m_redNebPos = LerpVec3( D3DXVECTOR3( 334,2000,712 ),D3DXVECTOR3(334,-220,712 ),0,40,m_time,Cube );
-	m_redGgyPos = LerpVec3( D3DXVECTOR3( 2000,2000,-82),D3DXVECTOR3(134,114,-82 ),0,40,m_time,Cube);
+	m_redNebPos = LerpVec3( D3DXVECTOR3( 334,2000,712 ),D3DXVECTOR3(334,-220,712 ),0,60,m_time,Cube );
+	m_redGgyPos = LerpVec3( D3DXVECTOR3( 2000,2000,-82),D3DXVECTOR3(134,100,-82 ),0,60,m_time,Cube);
 
 	m_redNeb->pos( m_redNebPos );
 	m_redGgy->pos( m_redGgyPos );
 
 	m_time++;
 
-	if( m_time >= 40 )
+	if( m_time >= 60 )
 	{
 		m_phase = PHASE_MODELROT;
 	}

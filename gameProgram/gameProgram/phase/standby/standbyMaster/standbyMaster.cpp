@@ -448,7 +448,7 @@ bool StandbyMaster::Update(void)
 			m_phase = PHASE_MOTION;
 			//m_ggyRedAnimManager->StartAnimation(8,false);
 			//m_ggyBlueAnimManager->StartAnimation(8,false);
-			Sound::Play( Sound::SE_SELECT_VOICE_IZA );
+			//Sound::Play( Sound::SE_SELECT_VOICE_IZA );
 		}
 
 		break;
