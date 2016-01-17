@@ -35,6 +35,7 @@ const float _first_line = 144.0f;
 const float _middlet_line = 120.5f;
 const float _end_line = 72.0f;
 const float _speed_max = 1.5f;
+const float _speed_climax = 1.6f;
 const float _speed_add = 0.04f;
 const int _return_score1 = 10;
 const int _return_score2 = 20;
@@ -111,6 +112,7 @@ CommandTeam::CommandTeam(void)
 	m_same_count = 0;
 	m_speed = 0.0f;
 	m_offset = 0.0f;
+	m_climaxFlg = false;
 
 	m_objectList		= nullptr;
 	m_updateList		= nullptr;
@@ -403,6 +405,10 @@ CommandTeam::COM_TEAM_RTN CommandTeam::Update(void)
 
 				}
 				m_command_data[i][command_count].hit = true;
+
+				// クライマックススピードマックス
+				if(m_climaxFlg)
+					m_speed = _speed_climax;
 			}
 		}
 	}

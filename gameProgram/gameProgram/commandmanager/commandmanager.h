@@ -43,6 +43,13 @@ public:
 		CommandTeam::COMMAND_STATE state[2];
 	}COM_MANA_RTN;
 
+	enum CLIMAX_PHASE
+	{
+		CLIMAX_NONE = 0,
+		CLIMAX_SET,
+		CLIMAX_NOW
+	};
+
 	static bool Create(CommandManager** outPointer,
 					   PadXManager* padXManager,
 					   Debugproc* debugproc,
@@ -64,7 +71,7 @@ public:
 	COM_MANA_RTN Update(void);
 	void Draw(void);
 
-	void SetClimaxFlag(bool b){m_climax_flag = b;}
+	void SetClimaxOffset(void){m_climaxOffset = 10;}
 
 private:
 	CommandDataLoad* m_commandDataLoad;
@@ -84,7 +91,8 @@ private:
 	Debugproc*		m_debugproc;
 
 	bool m_demoFlg;
-	bool m_climax_flag;
+	int m_climaxOffset;
+	CLIMAX_PHASE m_climaxPhase[2];
 };
 
 //=============================================================================

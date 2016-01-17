@@ -59,7 +59,9 @@ CommandManager::CommandManager(void)
 	m_drawListManager = nullptr;
 
 	m_demoFlg = false;
-	m_climax_flag = false;
+	m_climaxOffset = 0;
+	m_climaxPhase[0] = CLIMAX_NONE;
+	m_climaxPhase[1] = CLIMAX_NONE;
 }
 
 //=============================================================================
@@ -132,10 +134,10 @@ bool CommandManager::Initialize(PadXManager* padXManager,
 		//----------------------------
 		if(m_demoFlg)
 		{
-			DummyPadX::Create(&m_pad[i*2], i*2, _list_pattern_max, m_command_list[0], Random::Rand(75, 97));
+			DummyPadX::Create(&m_pad[i*2], i*2, _list_pattern_max, m_command_list[0], Random::Rand(85, 97));
 			m_pad[i*2]->debugproc(m_debugproc);
 
-			DummyPadX::Create(&m_pad[i*2+1], i*2+1, _list_pattern_max, m_command_list[1], Random::Rand(75, 97));
+			DummyPadX::Create(&m_pad[i*2+1], i*2+1, _list_pattern_max, m_command_list[1], Random::Rand(85, 97));
 			m_pad[i*2+1]->debugproc(m_debugproc);
 		}
 		else
@@ -144,7 +146,7 @@ bool CommandManager::Initialize(PadXManager* padXManager,
 				m_pad[i*2] = padXManager->pad(i*2);
 			else
 			{
-				DummyPadX::Create(&m_pad[i*2], i*2, _list_pattern_max, m_command_list[0], Random::Rand(75, 97));
+				DummyPadX::Create(&m_pad[i*2], i*2, _list_pattern_max, m_command_list[0], Random::Rand(85, 97));
 				m_pad[i*2]->debugproc(m_debugproc);
 			}
 
@@ -152,7 +154,7 @@ bool CommandManager::Initialize(PadXManager* padXManager,
 				m_pad[i*2+1] = padXManager->pad(i*2+1);
 			else
 			{
-				DummyPadX::Create(&m_pad[i*2+1], i*2+1, _list_pattern_max, m_command_list[1], Random::Rand(75, 97));
+				DummyPadX::Create(&m_pad[i*2+1], i*2+1, _list_pattern_max, m_command_list[1], Random::Rand(85, 97));
 				m_pad[i*2+1]->debugproc(m_debugproc);
 			}
 		}
@@ -224,12 +226,21 @@ CommandManager::COM_MANA_RTN CommandManager::Update(void)
 		if(get.flag)
 		{
 			m_team[i]->commandPrev(m_command_prev[i]);
-			if(m_climax_flag)	//-----------------------------------------------------------------------‚±‚Ì‚Ö‚ñ
-				m_command_prev[i] = ((Random::Rand() % 5 * 2) + 10) + (1 - m_command_prev[i] % 2);
-			else
-				m_command_prev[i] = (Random::Rand() % 5 * 2) + (1 - m_command_prev[i] % 2);
+			//-----------------------------------------------------------------------‚±‚Ì‚Ö‚ñ
+			m_command_prev[i] = (Random::Rand() % 5 * 2) + (1 - m_command_prev[i] % 2) + m_climaxOffset;
 			m_team[i]->SetCommandNext(m_command_list[0] + m_command_prev[i] * 10, 0);
 			m_team[i]->SetCommandNext(m_command_list[1] + m_command_prev[i] * 10, 1);
+
+			if(m_climaxPhase[i] == CLIMAX_NONE)
+			{
+				if(m_climaxOffset == 10)
+					m_climaxPhase[i] = CLIMAX_SET;
+			}
+			else if(m_climaxPhase[i] == CLIMAX_SET)
+			{
+				m_team[i]->climaxFlg(true);
+				m_climaxPhase[i] = CLIMAX_NOW;
+			}
 		}
 	}
 	return rtn;

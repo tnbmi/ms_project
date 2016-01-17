@@ -91,6 +91,9 @@ public:
 
 	void commandPrev(int commandPrev) {m_commandPrev = commandPrev;}
 
+	void climaxFlg(bool flg){m_climaxFlg = flg;}
+	bool climaxFlg(void){return m_climaxFlg;}
+
 private:
 	unsigned int*	m_command_pointer_Next[2];
 	COMMAND_DATA	m_command_data[2][10];
@@ -105,6 +108,7 @@ private:
 	float			m_speed;
 	float			m_offset;
 	int				m_commandPrev;
+	bool			m_climaxFlg;
 
 	Import*	m_import;
 	LPDIRECT3DDEVICE9	m_device;
