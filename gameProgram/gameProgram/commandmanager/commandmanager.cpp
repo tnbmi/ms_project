@@ -63,9 +63,6 @@ CommandManager::CommandManager(void)
 	m_climaxOffset = 0;
 	m_climaxPhase[0] = CLIMAX_NONE;
 	m_climaxPhase[1] = CLIMAX_NONE;
-
-	m_pinch[0] = false;
-	m_pinch[1] = false;
 }
 
 //=============================================================================
@@ -237,18 +234,13 @@ CommandManager::COM_MANA_RTN CommandManager::Update(void)
 
 			if(m_climaxPhase[i] == CLIMAX_NONE)
 			{
-				if(m_pinch[i] && m_climaxOffset == 10)
+				if(m_climaxOffset == 10)
 					m_climaxPhase[i] = CLIMAX_SET;
 			}
 			else if(m_climaxPhase[i] == CLIMAX_SET)
 			{
 				m_team[i]->rushFlg(true);
 				m_climaxPhase[i] = CLIMAX_NOW;
-			}
-			else if(m_climaxPhase[i] == CLIMAX_NOW)
-			{
-				if(!m_pinch[i])
-					m_team[i]->rushFlg(false);
 			}
 		}
 	}

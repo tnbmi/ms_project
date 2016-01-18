@@ -37,6 +37,7 @@ const float _end_line = 72.0f;
 const float _speed_max = 1.5f;
 const float _speed_climax = 1.6f;
 const float _speed_add = 0.04f;
+const float _speed_rush_add = 0.04f;
 const int _return_score1 = 10;
 const int _return_score2 = 20;
 const int	_polygon_num = 6;
