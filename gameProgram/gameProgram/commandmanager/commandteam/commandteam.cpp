@@ -35,9 +35,9 @@ const float _first_line = 144.0f;
 const float _middlet_line = 120.5f;
 const float _end_line = 72.0f;
 const float _speed_max = 1.5f;
-const float _speed_climax = 1.7f;
+const float _speed_climax = 1.6f;
 const float _speed_add = 0.04f;
-const float _speed_rush_add = 0.1f;
+const float _speed_rush_min = 0.5f;
 const int _return_score1 = 10;
 const int _return_score2 = 20;
 const int	_polygon_num = 6;
@@ -331,7 +331,7 @@ CommandTeam::COM_TEAM_RTN CommandTeam::Update(void)
 					else if(m_same_count > 0)
 					{// ¬Œ÷(“¯Žž‰Ÿ‚µ2l–Ú)
 						if(m_rushFlg)
-							m_speed += _speed_rush_add;
+							m_speed = _speed_climax;
 						else
 							m_speed += _speed_add;
 						m_command_data[i][command_count].state = STATE_DOUBLE;
@@ -403,7 +403,10 @@ CommandTeam::COM_TEAM_RTN CommandTeam::Update(void)
 						}
 						m_command_data[1-(i%2)][command_count].state = STATE_FAIL;
 					}
-					m_speed = 0.0f;
+					if(m_rushFlg)
+						m_speed = _speed_rush_min;
+					else
+						m_speed = 0.0f;
 					m_command_data[i][command_count].polygon_pointer->color(0.75f, 0.75f, 0.75f, 0.5f);
 					m_command_data[i][command_count].state = STATE_FAIL;
 					rtn.state = m_command_data[i][command_count].state;
