@@ -95,7 +95,7 @@ void PadXManager::debugproc(Debugproc* debugproc)
 //=============================================================================
 // “ü—Í‚Ì—L–³”»’è
 //=============================================================================
-bool PadXManager::InputChk(void)
+bool PadXManager::InputChkTrigger(void)
 {
 	for(int cnt = 0; cnt < PAD_MAX; ++cnt)
 		if(m_pad[cnt]->buttonTrigger(0xffff))
@@ -106,10 +106,32 @@ bool PadXManager::InputChk(void)
 //=============================================================================
 // ”CˆÓ“ü—Í‚Ì—L–³”»’è
 //=============================================================================
-bool PadXManager::InputChk(WORD wButton)
+bool PadXManager::InputChkTrigger(WORD wButton)
 {
 	for(int cnt = 0; cnt < PAD_MAX; ++cnt)
 		if(m_pad[cnt]->buttonTrigger(wButton))
+			return true;
+	return false;
+}
+
+//=============================================================================
+// “ü—Í‚Ì—L–³”»’è
+//=============================================================================
+bool PadXManager::InputChkPress(void)
+{
+	for(int cnt = 0; cnt < PAD_MAX; ++cnt)
+		if(m_pad[cnt]->buttonPress(0xffff))
+			return true;
+	return false;
+}
+
+//=============================================================================
+// ”CˆÓ“ü—Í‚Ì—L–³”»’è
+//=============================================================================
+bool PadXManager::InputChkPress(WORD wButton)
+{
+	for(int cnt = 0; cnt < PAD_MAX; ++cnt)
+		if(m_pad[cnt]->buttonPress(wButton))
 			return true;
 	return false;
 }

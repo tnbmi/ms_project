@@ -199,7 +199,7 @@ void Result::Update(void)
 	//----------------------------
 	// ‰æ–Ê‘JˆÚ
 	//----------------------------
-	if(m_padXManager->InputChk() || m_keyboard->trigger(DIK_RETURN))
+	if(m_padXManager->InputChkTrigger() || m_keyboard->trigger(DIK_RETURN))
 	{
 		Manager::nextPhase((Phase*)new Title(m_device));
 	}

@@ -40,8 +40,10 @@ public:
 
 	PadX* pad(int no) {return m_pad[no];}
 
-	bool InputChk(void);
-	bool InputChk(WORD wButton);
+	bool InputChkTrigger(void);
+	bool InputChkTrigger(WORD wButton);
+	bool InputChkPress(void);
+	bool InputChkPress(WORD wButton);
 
 private:
 	PadX* m_pad[PAD_MAX];

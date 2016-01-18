@@ -206,7 +206,7 @@ void Game::Update(void)
 	//----------------------------
 	//GameMasterXV
 	//----------------------------
-	if(m_gameMaster->Update() || m_keyboard->trigger(DIK_RETURN))
+	if(m_gameMaster->Update() || m_padXManager->InputChkPress(XINPUT_GAMEPAD_LEFT_THUMB | XINPUT_GAMEPAD_START) || m_keyboard->trigger(DIK_RETURN))
 	{
 		Manager::score(m_gameMaster->blueTeamScore(), m_gameMaster->redTeamScore());
 		Manager::nextPhase((Phase*)new Result(m_device));

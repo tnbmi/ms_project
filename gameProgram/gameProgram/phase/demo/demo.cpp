@@ -206,7 +206,7 @@ void Demo::Update(void)
 	//----------------------------
 	//DemoMasterXV
 	//----------------------------
-	if(m_demoMaster->Update() || m_padXManager->InputChk() || m_keyboard->trigger(DIK_RETURN))
+	if(m_demoMaster->Update() || m_padXManager->InputChkTrigger() || m_keyboard->trigger(DIK_RETURN))
 		Manager::nextPhase((Phase*)new Title(m_device));
 }
 
