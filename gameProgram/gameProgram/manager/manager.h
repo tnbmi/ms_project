@@ -50,6 +50,9 @@ public:
 	static MainImport	*mainImport(void) { return m_mainImport; }
 	static FbxTexImport	*fbxTexImport(void) { return m_fbxTexImport; }
 
+	static void dummyFlg(int no, bool flg) {m_dummyFlg[no] = flg;}
+	static bool dummyFlg(int no) {return m_dummyFlg[no];}
+
 private:
 	int m_countFPS;
 	int m_countUpdateTime;
@@ -62,6 +65,7 @@ private:
 	static int m_scoreRed;
 	static MainImport*	 m_mainImport;
 	static FbxTexImport* m_fbxTexImport;
+	static bool m_dummyFlg[4];
 
 	Renderer*	m_renderer;
 	Sound*		m_sound;

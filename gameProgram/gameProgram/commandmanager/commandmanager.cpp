@@ -17,6 +17,7 @@
 #include "..\input\padX\dummyPadX.h"
 
 #include "..\debugproc\debugproc.h"
+#include "..\manager\manager.h"
 
 #include "..\list\objectList\objectList.h"
 #include "..\list\updateList\updateList.h"
@@ -142,7 +143,7 @@ bool CommandManager::Initialize(PadXManager* padXManager,
 		}
 		else
 		{
-			if(padXManager->pad(i*2)->conected())
+			if(padXManager->pad(i*2)->conected() && !Manager::dummyFlg(i*2))
 				m_pad[i*2] = padXManager->pad(i*2);
 			else
 			{
@@ -150,7 +151,7 @@ bool CommandManager::Initialize(PadXManager* padXManager,
 				m_pad[i*2]->debugproc(m_debugproc);
 			}
 
-			if(padXManager->pad(i*2+1)->conected())
+			if(padXManager->pad(i*2+1)->conected() && !Manager::dummyFlg(i*2+1))
 				m_pad[i*2+1] = padXManager->pad(i*2+1);
 			else
 			{

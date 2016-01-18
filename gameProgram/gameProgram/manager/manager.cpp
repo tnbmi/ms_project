@@ -40,6 +40,8 @@ int Manager::m_scoreRed = 600;
 FbxTexImport*	Manager::m_fbxTexImport = nullptr;
 MainImport*		Manager::m_mainImport	= nullptr;
 
+bool Manager::m_dummyFlg[4] = {false};
+
 //=============================================================================
 // コンストラクタ
 //=============================================================================

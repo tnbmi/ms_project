@@ -301,7 +301,16 @@ bool StandbyMaster::Update(void)
 			else if( m_padXManager->pad(i)->buttonTrigger( XINPUT_GAMEPAD_BACK ) )
 			{
 				m_blueTeamStandby[i].isStandby = false;
+			}
+			else if( (m_padXManager->pad(i)->buttonTrigger( XINPUT_GAMEPAD_LEFT_THUMB ) 
+					&& m_padXManager->pad(i)->buttonTrigger( XINPUT_GAMEPAD_START )) 
+				|| (i==0 && m_keyboard->trigger(DIK_RETURN) && m_keyboard->trigger(DIK_0)))
+			{
+				m_blueTeamStandby[i].isStandby = true;
+				Sound::Play( Sound::SE_DRUM );
 
+				// ダミープレイヤー
+				Manager::dummyFlg(i, true);
 			}
 		}
 
@@ -317,6 +326,15 @@ bool StandbyMaster::Update(void)
 			else if( m_padXManager->pad(i+2)->buttonTrigger( XINPUT_GAMEPAD_BACK ) )
 			{
 				m_redTeamStandby[i].isStandby = false;
+			}
+			else if( m_padXManager->pad(i+2)->buttonTrigger( XINPUT_GAMEPAD_LEFT_THUMB ) 
+			&& m_padXManager->pad(i+2)->buttonTrigger( XINPUT_GAMEPAD_START ))
+			{
+				m_redTeamStandby[i].isStandby = true;
+				Sound::Play( Sound::SE_DRUM );
+
+				// ダミープレイヤー
+				Manager::dummyFlg(i+2, true);
 			}
 		}
 

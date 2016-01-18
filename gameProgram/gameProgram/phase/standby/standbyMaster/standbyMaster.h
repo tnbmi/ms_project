@@ -100,6 +100,8 @@ private:
 	Ggy2DAnimationManager *m_ggyBlueAnimManager;
 
 	Keyboard* m_keyboard;
+
+	bool m_dummyFlg[4];
 };
 
 //=============================================================================
