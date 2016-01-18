@@ -302,7 +302,8 @@ bool StandbyMaster::Update(void)
 			{
 				m_blueTeamStandby[i].isStandby = false;
 			}
-			else if( m_padXManager->pad(i)->buttonPress( XINPUT_GAMEPAD_LEFT_THUMB | XINPUT_GAMEPAD_START ) )
+			else if( m_padXManager->pad(i)->buttonPress( XINPUT_GAMEPAD_LEFT_THUMB ) 
+				&& m_padXManager->pad(i)->buttonPress( XINPUT_GAMEPAD_START ))
 			{
 				m_blueTeamStandby[i].isStandby = true;
 				Sound::Play( Sound::SE_DRUM );
@@ -325,7 +326,8 @@ bool StandbyMaster::Update(void)
 			{
 				m_redTeamStandby[i].isStandby = false;
 			}
-			else if( m_padXManager->pad(i+2)->buttonPress( XINPUT_GAMEPAD_LEFT_THUMB | XINPUT_GAMEPAD_START ) )
+			else if( m_padXManager->pad(i+2)->buttonPress( XINPUT_GAMEPAD_LEFT_THUMB )
+				&& m_padXManager->pad(i+2)->buttonPress( XINPUT_GAMEPAD_START ) )
 			{
 				m_redTeamStandby[i].isStandby = true;
 				Sound::Play( Sound::SE_DRUM );
