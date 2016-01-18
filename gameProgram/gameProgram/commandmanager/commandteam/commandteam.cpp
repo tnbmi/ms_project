@@ -35,9 +35,9 @@ const float _first_line = 144.0f;
 const float _middlet_line = 120.5f;
 const float _end_line = 72.0f;
 const float _speed_max = 1.5f;
-const float _speed_climax = 1.6f;
+const float _speed_climax = 1.7f;
 const float _speed_add = 0.04f;
-const float _speed_rush_add = 0.04f;
+const float _speed_rush_add = 0.1f;
 const int _return_score1 = 10;
 const int _return_score2 = 20;
 const int	_polygon_num = 6;
@@ -330,7 +330,10 @@ CommandTeam::COM_TEAM_RTN CommandTeam::Update(void)
 					}
 					else if(m_same_count > 0)
 					{// 成功(同時押し2人目)
-						m_speed += _speed_add;
+						if(m_rushFlg)
+							m_speed += _speed_rush_add;
+						else
+							m_speed += _speed_add;
 						m_command_data[i][command_count].state = STATE_DOUBLE;
 						m_command_data[1-(i%2)][command_count].state = STATE_DOUBLE;
 						rtn.state = m_command_data[i][command_count].state;
@@ -352,8 +355,16 @@ CommandTeam::COM_TEAM_RTN CommandTeam::Update(void)
 							m_command_data[1-(i%2)][command_count].effect_pointer[num]->color_a(_defalut_alpha_success);
 						}
 						m_same_count = 0;
-						if(m_speed > _speed_max)
-							m_speed = _speed_max;
+						if(m_rushFlg)
+						{
+							if(m_speed > _speed_climax)
+								m_speed = _speed_climax;
+						}
+						else
+						{
+							if(m_speed > _speed_max)
+								m_speed = _speed_max;
+						}
 						rtn.return_score = _return_score2;
 					}
 					else
@@ -406,10 +417,6 @@ CommandTeam::COM_TEAM_RTN CommandTeam::Update(void)
 
 				}
 				m_command_data[i][command_count].hit = true;
-
-				// クライマックススピードマックス
-				if(m_rushFlg)
-					m_speed = _speed_climax;
 			}
 		}
 	}
