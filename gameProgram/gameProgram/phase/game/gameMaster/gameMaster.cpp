@@ -643,7 +643,24 @@ void GameMaster::UpdateGame()
 	m_redTeam->Update();
 	m_blueTeam->Update();
 
+
 	// コマンドマネージャ
+	int diff = m_blueTeamScore - m_redTeamScore;	// ピンチジャッジ
+	if(diff < -10)
+	{
+		m_command_manager->pinchBlue(true);
+		m_command_manager->pinchRed(false);
+	}
+	else if(diff > 10)
+	{
+		m_command_manager->pinchBlue(false);
+		m_command_manager->pinchRed(true);
+	}
+	else
+	{
+		m_command_manager->pinchBlue(false);
+		m_command_manager->pinchRed(false);
+	}
 	if(m_time_manager->GetTime() == _time_climax)
 		m_command_manager->SetClimaxOffset();
 	CommandManager::COM_MANA_RTN get = {0,0};

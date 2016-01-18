@@ -91,8 +91,8 @@ public:
 
 	void commandPrev(int commandPrev) {m_commandPrev = commandPrev;}
 
-	void climaxFlg(bool flg){m_climaxFlg = flg;}
-	bool climaxFlg(void){return m_climaxFlg;}
+	void rushFlg(bool flg){m_rushFlg = flg; if(!m_rushFlg){m_speed = 0.7f;}}
+	bool rushFlg(void){return m_rushFlg;}
 
 private:
 	unsigned int*	m_command_pointer_Next[2];
@@ -108,7 +108,7 @@ private:
 	float			m_speed;
 	float			m_offset;
 	int				m_commandPrev;
-	bool			m_climaxFlg;
+	bool			m_rushFlg;
 
 	Import*	m_import;
 	LPDIRECT3DDEVICE9	m_device;

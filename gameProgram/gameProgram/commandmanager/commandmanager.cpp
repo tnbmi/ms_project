@@ -63,6 +63,9 @@ CommandManager::CommandManager(void)
 	m_climaxOffset = 0;
 	m_climaxPhase[0] = CLIMAX_NONE;
 	m_climaxPhase[1] = CLIMAX_NONE;
+
+	m_pinch[0] = false;
+	m_pinch[1] = false;
 }
 
 //=============================================================================
@@ -143,7 +146,7 @@ bool CommandManager::Initialize(PadXManager* padXManager,
 		}
 		else
 		{
-			if(/*padXManager->pad(i*2)->conected() && */!Manager::dummyFlg(i*2))
+			if(padXManager->pad(i*2)->conected() && !Manager::dummyFlg(i*2))
 				m_pad[i*2] = padXManager->pad(i*2);
 			else
 			{
@@ -151,7 +154,7 @@ bool CommandManager::Initialize(PadXManager* padXManager,
 				m_pad[i*2]->debugproc(m_debugproc);
 			}
 
-			if(/*padXManager->pad(i*2+1)->conected() && */!Manager::dummyFlg(i*2+1))
+			if(padXManager->pad(i*2+1)->conected() && !Manager::dummyFlg(i*2+1))
 				m_pad[i*2+1] = padXManager->pad(i*2+1);
 			else
 			{
@@ -234,13 +237,18 @@ CommandManager::COM_MANA_RTN CommandManager::Update(void)
 
 			if(m_climaxPhase[i] == CLIMAX_NONE)
 			{
-				if(m_climaxOffset == 10)
+				if(m_pinch[i] && m_climaxOffset == 10)
 					m_climaxPhase[i] = CLIMAX_SET;
 			}
 			else if(m_climaxPhase[i] == CLIMAX_SET)
 			{
-				m_team[i]->climaxFlg(true);
+				m_team[i]->rushFlg(true);
 				m_climaxPhase[i] = CLIMAX_NOW;
+			}
+			else if(m_climaxPhase[i] == CLIMAX_NOW)
+			{
+				if(!m_pinch[i])
+					m_team[i]->rushFlg(false);
 			}
 		}
 	}

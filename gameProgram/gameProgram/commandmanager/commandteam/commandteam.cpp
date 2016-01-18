@@ -112,7 +112,7 @@ CommandTeam::CommandTeam(void)
 	m_same_count = 0;
 	m_speed = 0.0f;
 	m_offset = 0.0f;
-	m_climaxFlg = false;
+	m_rushFlg = false;
 
 	m_objectList		= nullptr;
 	m_updateList		= nullptr;
@@ -407,7 +407,7 @@ CommandTeam::COM_TEAM_RTN CommandTeam::Update(void)
 				m_command_data[i][command_count].hit = true;
 
 				// クライマックススピードマックス
-				if(m_climaxFlg)
+				if(m_rushFlg)
 					m_speed = _speed_climax;
 			}
 		}

@@ -73,6 +73,9 @@ public:
 
 	void SetClimaxOffset(void){m_climaxOffset = 10;}
 
+	void pinchBlue(bool flg) {m_pinch[0] = flg;}
+	void pinchRed(bool flg) {m_pinch[1] = flg;}
+
 private:
 	CommandDataLoad* m_commandDataLoad;
 
@@ -93,6 +96,8 @@ private:
 	bool m_demoFlg;
 	int m_climaxOffset;
 	CLIMAX_PHASE m_climaxPhase[2];
+
+	bool m_pinch[2];
 };
 
 //=============================================================================
