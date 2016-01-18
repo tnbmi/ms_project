@@ -679,6 +679,7 @@ void ResultMaster::WinRedTeam()
 
 	if( m_time >= 40 )
 	{
+		Sound::Play( Sound::SE_SYOURI_RED );
 		m_phase = PHASE_MODELROT;
 	}
 }
@@ -695,6 +696,7 @@ void ResultMaster::WinBlueTeam()
 
 	if( m_time >= 40 )
 	{
+		Sound::Play( Sound::SE_SYOURI_BLUE );
 		m_phase = PHASE_MODELROT;
 	}
 }
@@ -702,7 +704,7 @@ void ResultMaster::WinBlueTeam()
 void ResultMaster::DrawTeam()
 {
 	m_blueNebPos = LerpVec3( D3DXVECTOR3( -334.0f,2000.0f,712.0f ),D3DXVECTOR3(-334.0f,-220.0f,712.0f ),0.0f,40.0f,(float)m_time,Cube );
-	m_blueGgyPos = LerpVec3( D3DXVECTOR3( -2000.0f,2000.0f,-82.0f),D3DXVECTOR3(-134.0f,100.0f,-82.0f ),0.0f,60.0f,(float)m_time,Cube);
+	m_blueGgyPos = LerpVec3( D3DXVECTOR3( -2000.0f,2000.0f,-82.0f),D3DXVECTOR3(-134.0f,100.0f,-82.0f ),0.0f,40.0f,(float)m_time,Cube);
 
 	m_blueNeb->pos( m_blueNebPos );
 	m_blueGgy->pos( m_blueGgyPos );
@@ -717,6 +719,8 @@ void ResultMaster::DrawTeam()
 
 	if( m_time >= 40 )
 	{
+		Sound::Play( Sound::SE_SYOURI_BLUE );
+		Sound::Play( Sound::SE_SYOURI_RED );
 		m_phase = PHASE_MODELROT;
 	}
 }
