@@ -199,7 +199,8 @@ void Result::Update(void)
 	//----------------------------
 	// ‰æ–Ê‘JˆÚ
 	//----------------------------
-	if(m_padXManager->InputChkTrigger() || m_keyboard->trigger(DIK_RETURN))
+	if((m_padXManager->InputChkPress(XINPUT_GAMEPAD_LEFT_THUMB ) && m_padXManager->InputChkPress(XINPUT_GAMEPAD_START))
+	|| m_keyboard->trigger(DIK_RETURN))
 	{
 		Manager::nextPhase((Phase*)new Title(m_device));
 	}

@@ -12,7 +12,11 @@
 #include "..\..\..\common\safe.h"
 #include "..\..\..\common\random\random.h"
 
+#include "..\..\..\debugproc\debugproc.h"
 #include "..\..\..\manager\manager.h"
+#include "..\..\title\title.h"
+
+#include "..\..\..\input\padX\padXManager.h"
 
 #include "..\..\..\list\objectList\objectList.h"
 #include "..\..\..\list\updateList\updateList.h"
@@ -275,7 +279,6 @@ void ResultMaster::Update(void)
 		break;
 
 	case PHASE_ANNOUNCEFINISH:
-
 
 
 		break;
@@ -656,7 +659,13 @@ void ResultMaster::UpdateN()
 		break;
 
 		case PHASE_FINISH:
-
+#ifdef _DEBUG
+			m_debugProc->PrintDebugProc("Œ‹‰Ê”­•\Š®—¹\n");
+#endif
+			if(m_padXManager->InputChkTrigger())
+			{
+				Manager::nextPhase((Phase*)new Title(m_device));
+			}
 
 		break;
 	}
