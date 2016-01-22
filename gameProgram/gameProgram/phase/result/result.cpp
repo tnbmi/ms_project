@@ -94,7 +94,7 @@ bool Result::Initialize(void)
 	// ƒ‰ƒCƒg
 	if(!Light::Create(&m_light, m_device))
 		return false;
-	m_light->dirLightAmbient(0.1f, 0.1f, 0.1f, 1.0f);
+	m_light->dirLightAmbient(0.5f, 0.5f, 0.5f, 1.0f);
 	m_light->dirLightDiffuse(0.3f, 0.3f, 0.3f, 1.0f);
 	m_light->dirLightVector(0.0f, -1.0f, -2.0f);
 

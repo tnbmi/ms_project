@@ -79,226 +79,7 @@ bool ResultMaster::Create(ResultMaster** outPointer,LPDIRECT3DDEVICE9 device,
 //=============================================================================
 bool ResultMaster::Initialize(void)
 {
-	m_light->dirLightAmbient(0.5,0.5,0.5,1);
-	InitializeN();
-	return true;
-	//スコア生成
-	Score *redTeamScore;
-	Score *blueTeamScore;
-	Score::Create( &redTeamScore,m_device,m_objectList,m_updateList,m_drawListManager,0,ObjectBase::TYPE_2D,m_import );
-	Score::Create( &blueTeamScore,m_device,m_objectList,m_updateList,m_drawListManager,0,ObjectBase::TYPE_2D,m_import );
-
-	m_redTeamScore = redTeamScore;
-	m_blueTeamScore= blueTeamScore;
-
-	//ねぶた生成
-	Player *redTeam;
-	Player *blueTeam;
-	Player::Create( &blueTeam,m_device,m_objectList,m_updateList,m_drawListManager,0,ObjectBase::TYPE_3D,"./resources/fbxModel/daisya.bin","./resources/fbxModel/ground.bin","./resources/fbxModel/nebta_red.bin",m_fbxTexImport);
-	Player::Create( &redTeam,m_device,m_objectList,m_updateList,m_drawListManager,0,ObjectBase::TYPE_3D,"./resources/fbxModel/daisya.bin","./resources/fbxModel/ground.bin","./resources/fbxModel/nebta_blue.bin",m_fbxTexImport);
-
-	m_redTeam = redTeam;
-	m_blueTeam= blueTeam;
-
-	redTeam->StartAnimationChild( 1,60,true );
-	blueTeam->StartAnimationChild( 1,60,true );
-
-	redTeam->StartAnimationParent( 1,60,true );
-	blueTeam->StartAnimationParent( 1,60,true );
-
-	//おじいちゃん生成
-	FbxModel *redGgy;
-	FbxModel *blueGgy;
-	FbxModel::Create( &redGgy,m_device,m_objectList,0,ObjectBase::TYPE_3D,"./resources/fbxModel/gg_red.bin",m_fbxTexImport );
-	FbxModel::Create( &blueGgy,m_device,m_objectList,0,ObjectBase::TYPE_3D,"./resources/fbxModel/gg_blue.bin",m_fbxTexImport );
-
-	//初期化対策
-	redGgy->Update();
-	blueGgy->Update();
-	m_redGgy = redGgy;
-	m_blueGgy= blueGgy;
-
-	m_updateList->Link( redGgy );
-	m_drawListManager->Link( redGgy,0,Shader::PAT_FBX );
-	m_updateList->Link( blueGgy );
-	m_drawListManager->Link( blueGgy,0,Shader::PAT_FBX );
-
-	//エフェクトマネージャ生成
-	EffectManager *effectManager;
-	EffectManager::Create( &effectManager,m_device,m_objectList,m_updateList,m_drawListManager,10000,"./resources/texture/effect.jpg",D3DXVECTOR2(1,1),D3DXVECTOR2(1,1) );
-
-	m_effectManager = effectManager;
-
-	//polygon2D
-	Polygon2D *pol;
-	Polygon2D::Create( &pol,m_device,m_objectList,m_import->texture(ResultImport::KEKKA),ObjectBase::TYPE_2D );
-	m_updateList->Link( pol );
-	m_drawListManager->Link( pol,0,Shader::PAT_2D );
-
-	m_resultPoly = pol;
-	m_resultPoly->pos(640,600,0);
-	m_resultPoly->scl(300,200,0);
-	m_resultPoly->color(1,1,1,1);
-
-	Polygon2D::Create( &pol,m_device,m_objectList,m_import->texture(ResultImport::SYOURIRED),ObjectBase::TYPE_2D );
-	m_updateList->Link( pol );
-	m_drawListManager->Link( pol,0,Shader::PAT_2D );
-
-	m_winPoly = pol;
-	m_winPoly->scl(0,0,0);
-	m_winPoly->color(1,1,1,1);
-	
-
-	//----------------------------
-	//初期位置
-	//----------------------------
-	m_redTeamScore->pos( D3DXVECTOR3( 640 +320,180,0 ) );
-	m_blueTeamScore->pos( D3DXVECTOR3( 320,180,0 ) );
-	m_redTeamScore->StartRandView(200);
-	m_redTeamScore->score(Manager::scoreRed());
-	m_redTeamScore->col(D3DXCOLOR(1,0,0,1));
-	
-	m_blueTeamScore->StartRandView(200);
-	m_blueTeamScore->score(Manager::scoreBlue());
-	m_blueTeamScore->col(D3DXCOLOR(0,0,1,1));
-
-	m_redTeam->rot( D3DXVECTOR3(0,PAI,0 ) );
-	m_blueTeam->rot( D3DXVECTOR3(0,PAI,0 ) );
-	m_redTeam->Move( D3DXVECTOR3(-500,0,0),D3DXVECTOR3(-500,0,0),300 );
-	m_blueTeam->Move( D3DXVECTOR3(500,0,0),D3DXVECTOR3(500,0,0),300 );
-
-	m_redTeam->ApplySclRotPos();
-	m_blueTeam->ApplySclRotPos();
-
-	m_redGgy->pos( D3DXVECTOR3(100,0,-1200) );
-	m_blueGgy->pos( D3DXVECTOR3(-100,0,-1200) );
-	m_redGgy->rot( D3DXVECTOR3(0,PAI,0));
-	m_blueGgy->rot( D3DXVECTOR3(0,PAI,0));
-
-	m_effectManager->LoadEffectData( "./resources/effect/FireWorks.OEF" );
-	m_effectManager->LoadEffectData( "./resources/effect/FireWorks2.OEF" );
-	m_effectManager->LoadEffectData( "./resources/effect/FireWorks3.OEF" );
-	m_effectManager->LoadEffectData( "./resources/effect/Ene.OEF" );
-	m_effectManager->SetOption( InstancingBillboard::OPTION( true,false,false ));
-
-	m_redTeam->StartAnimationSecondChild(1,30,true );
-	m_blueTeam->StartAnimationSecondChild(1,30,true );
-	m_redGgy->StartAnimation(1,30,true );
-	m_blueGgy->StartAnimation(1,30,true );
-
-	m_phase = PHASE_RESULTSTART;
-
-	return true;
-}
-
-//=============================================================================
-// 終了
-//=============================================================================
-void ResultMaster::Finalize(void)
-{
-	FinalizeN();
-	return;
-	SafeFinalizeDelete( m_redTeamScore );
-	SafeFinalizeDelete( m_blueTeamScore );
-	SafeFinalizeDelete( m_redTeam );
-	SafeFinalizeDelete( m_blueTeam );
-	SafeFinalizeDelete( m_effectManager );
-	SafeFinalizeDelete( m_rainManager );
-}
-
-//=============================================================================
-// 更新
-//=============================================================================
-void ResultMaster::Update(void)
-{
-	UpdateN();
-	return;
-
-	switch( m_phase )
-	{
-	case PHASE_RESULTSTART:
-
-		m_redTeamScore->StartRandView( 60 * 3 );
-		m_blueTeamScore->StartRandView( 60 * 3 );
-		m_phase = PHASE_ANNOUNCEMENT;
-		Sound::Play( Sound::SE_DRUM_DODON );
-		break;
-
-	case PHASE_ANNOUNCEMENT:
-
-		if( !m_redTeamScore->isRandView() )
-		{
-			m_light->dirLightAmbient(0.5,0.5,0.5,1);
-			m_phase = PHASE_ANNOUNCEFINISH;
-
-			//赤勝ち
-			if( m_redTeamScore->score() > m_blueTeamScore->score() )
-			{
-				m_winPoly->scl( 300,450,1);
-				m_winPoly->pos( 1100,500,0);
-				m_winPoly->texture( m_import->texture( ResultImport::SYOURIRED ) );
-				m_redGgy->StartAnimation(31,90,false );
-				m_blueGgy->StartAnimation(91,150,false );
-				m_blueTeam->StartAnimationSecondChild( 451,510,false ); 
-				m_redTeam->StartAnimationSecondChild( 511,570,false ); 
-				Sound::Play( Sound::SE_SYOURI_RED );
-
-			}//青勝ち
-			else if( m_redTeamScore->score() < m_blueTeamScore->score() )
-			{
-
-				m_winPoly->scl( 300,450,1);
-				m_winPoly->pos(200,500,0);
-				m_winPoly->texture( m_import->texture( ResultImport::SYOURIBLUE ) );
-				m_redGgy->StartAnimation(91,150,false );
-				m_blueGgy->StartAnimation(31,90,false );
-				m_redTeam->StartAnimationSecondChild( 451,510,false ); 
-				m_blueTeam->StartAnimationSecondChild( 511,570,false );
-				Sound::Play( Sound::SE_SYOURI_BLUE );
-			}//引き分け
-			else
-			{
-				//m_winPoly->scl( 300,450,1);
-				//m_winPoly->pos(200,500,0);
-				//m_winPoly->texture( m_import->texture( ResultImport::SYOURIBLUE ) );
-				m_redGgy->StartAnimation(31,90,false );
-				m_blueGgy->StartAnimation(31,90,false );
-				m_redTeam->StartAnimationSecondChild( 451,510,false ); 
-				m_blueTeam->StartAnimationSecondChild( 451,510,false );
-				Sound::Play( Sound::SE_SYOURI_BLUE );
-				Sound::Play( Sound::SE_SYOURI_RED );
-			}
-
-			Sound::Play( Sound::SE_MORIAGARI );
-			m_effectManager->SetEffectGenData(0,140,0,D3DXVECTOR3(-800,1300,600) );
-			m_effectManager->SetEffectGenData(1,120,1,D3DXVECTOR3(-0,1000,600) );
-			m_effectManager->SetEffectGenData(2,300,2,D3DXVECTOR3(800,1300,600) );
-		}
-
-
-		break;
-
-	case PHASE_ANNOUNCEFINISH:
-
-
-		break;
-	}
-
-	m_redTeamScore->Update();
-	m_blueTeamScore->Update();
-	m_redTeam->Update();
-	m_blueTeam->Update();
-	m_effectManager->Update();
-	m_rainManager->Update();
-}
-
-//=============================================================================
-//初期化処理
-//=============================================================================
-
-bool ResultMaster::InitializeN()
-{
-	//エフェクトマネージャ生成
+//エフェクトマネージャ生成
 	EffectManager *effectManager;
 	EffectManager::Create( &effectManager,m_device,m_objectList,m_updateList,m_drawListManager,10000,"./resources/texture/effect.jpg",D3DXVECTOR2(1,1),D3DXVECTOR2(1,1) );
 
@@ -494,13 +275,13 @@ bool ResultMaster::InitializeN()
 
 	m_phase = PHASE_RESULTSTART;
 	return true;
+	return true;
 }
 
 //=============================================================================
-//終了処理
+// 終了
 //=============================================================================
-
-void ResultMaster::FinalizeN()
+void ResultMaster::Finalize(void)
 {
 	SafeFinalizeDelete( m_effectManager );
 	SafeFinalizeDelete( m_rainManager );
@@ -509,10 +290,9 @@ void ResultMaster::FinalizeN()
 }
 
 //=============================================================================
-//更新処理
+// 更新
 //=============================================================================
-
-void ResultMaster::UpdateN()
+void ResultMaster::Update(void)
 {
 	switch( m_phase )
 	{
@@ -678,8 +458,8 @@ void ResultMaster::UpdateN()
 
 void ResultMaster::WinRedTeam()
 {
-	m_redNebPos = LerpVec3( D3DXVECTOR3( 0.0f,2000.0f,712.0f ),D3DXVECTOR3(0.0f,-220.0f,712.0f ),0.0f,40.0f,(float)m_time,Cube );
-	m_redGgyPos = LerpVec3( D3DXVECTOR3( 2000.0f,2000.0f,-82.0f),D3DXVECTOR3(0.0f,100.0f,-82.0f ),0.0f,40.0f,(float)m_time,Cube);
+	m_redNebPos = LerpVec3( D3DXVECTOR3( 0,2000,712 ),D3DXVECTOR3(0,-220,712 ),0.0f,40.0f,(float)m_time,Cube );
+	m_redGgyPos = LerpVec3( D3DXVECTOR3( -2000,2000,-82),D3DXVECTOR3(0,100,-82 ),0.0f,40.0f,(float)m_time,Cube);
 
 	m_redNeb->pos( m_redNebPos );
 	m_redGgy->pos( m_redGgyPos );
