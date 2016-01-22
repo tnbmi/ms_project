@@ -49,18 +49,12 @@ public:
 	void Finalize(void);
 	void Update(void);
 	void Draw(void);
-
-	bool InitializeN(void);
-	void FinalizeN(void);
-	void UpdateN(void);
-
 private:
 
 	enum PHASE
 	{
 		PHASE_RESULTSTART,
 		PHASE_ANNOUNCEMENT,
-		PHASE_ANNOUNCEFINISH,
 		PHASE_FANROT,
 		PHASE_MODELIN,
 		PHASE_MODELROT,
@@ -83,10 +77,6 @@ private:
 	PHASE			m_phase;
 	Score*			m_redTeamScore;
 	Score*			m_blueTeamScore;
-	Player*			m_redTeam;
-	Player*			m_blueTeam;
-	FbxModel*		m_redGgy;
-	FbxModel*		m_blueGgy;
 	EffectManager*	m_effectManager;
 	RainManager*	m_rainManager;
 
@@ -111,6 +101,8 @@ private:
 	FbxModel *m_back;
 
 	//Ç∂Ç∂Ç¢ÇÕÅ™Ç≈êÈåæçœÇ›
+	FbxModel *m_redGgy;
+	FbxModel *m_blueGgy;
 
 	//êÓìÒéÌ
 	Polygon2D *m_fanLeft;
@@ -121,10 +113,6 @@ private:
 	void WinRedTeam();
 	void WinBlueTeam();
 	void DrawTeam();
-
-
-	int m_fireTime;
-	static const int _shotFrame = 200;
 };
 
 //=============================================================================
