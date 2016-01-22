@@ -230,7 +230,7 @@ void Title::Update(void)
 	// ƒJƒEƒ“ƒg
 	m_timerCnt--;
 
-	if(m_padXManager->InputChkTrigger() || m_keyboard->trigger(DIK_RETURN))
+	if(m_padXManager->InputChkTrigger(0xf33f) || m_keyboard->trigger(DIK_RETURN))
 	{
 		Manager::nextPhase((Phase*)new Standby(m_device));
 		Sound::Play( Sound::SE_KAIMAKU );
